@@ -1,0 +1,21 @@
+// Namespace and scoping test
+
+namespace org.fudgemsg.tests.nspace {
+
+	message Foo {
+	
+	  subnamespace.Bar bar;
+	
+	}
+
+	namespace subnamespace {
+	
+		message Bar {
+		
+			Foo foo; 
+		 
+		}
+	
+	}
+
+}

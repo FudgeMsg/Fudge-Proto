@@ -1,0 +1,34 @@
+// Taxonomy test
+
+namespace org.fudgemsg.tests.taxon {
+
+	taxonomy Fruit {
+		APPLE = 1;
+		BANANA;
+		PEAR;
+	}
+	
+	taxonomy ImportTest {
+		import Literals;
+	}
+	
+	taxonomy ImportTest2 {
+		import Message1;
+	}
+	
+	taxonomy ImportTest3 {
+		import Message1;
+		import Message2;
+	}
+	
+	message Message1 {
+		int foo;
+		int bar;
+	}
+	
+	message Message2 {
+		int bar = 10;
+		int cow;
+	}
+	
+}

@@ -1,0 +1,31 @@
+// Tests for the lexer and literal logics
+
+message Literals {
+
+	double nullDouble;
+	double zeroDouble [default = 0];
+	double posDouble [default = +4];
+	double negDouble [default = -4];
+	double piDouble [default = 3.141592];
+	double bigDouble [default = 3.0e8];
+	double tinyDouble [default = 3.0e-8];
+
+	float nullFloat;
+	float zeroFloat [default = 0];
+	float posFloat [default = +4];
+	float negFloat [default = -4];
+	float piFloat [default = 3.141592];
+	float bigFloat [default = 3.0e8];
+	float tinyFloat [default = 3.0e-8];
+	
+	int nullInt;
+	int zeroInt [default = 0];
+	int posInt [default = +42];
+	int negInt [default = -42];
+
+	string nullString;
+	string emptyString [default = ""];
+	string simpleString [default = "abc123"];
+	string escapeString [default = "\"\\\r\n\"\0\377"];
+	
+}

@@ -1,0 +1,293 @@
+/*
+ * Copyright 2009 by OpenGamma Inc and other contributors.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package org.fudgemsg.proto.proto;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
+import org.fudgemsg.proto.CodeGenerator;
+import org.fudgemsg.proto.Compiler;
+import org.fudgemsg.proto.EnumDefinition;
+import org.fudgemsg.proto.FieldDefinition;
+import org.fudgemsg.proto.IndentWriter;
+import org.fudgemsg.proto.MessageDefinition;
+import org.fudgemsg.proto.TaxonomyDefinition;
+import org.fudgemsg.proto.Definition;
+
+/**
+ * Implementation of a code generator for languages that have class, struct or message constructs. The main work
+ * is delegated to a ClassCode instance. Note that a tightly coupled subclass has slightly modified behaviours
+ * for languages that can support "inner" or "nested" constructs.
+ * 
+ * @author Andrew
+ */
+public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerator {
+  
+  private static final String _headerFilesOpen = ClassCodeGenerator.class.getName () + ":headerFilesOpen"; // Set<File>
+  
+  private static final String _implementationFilesOpen = ClassCodeGenerator.class.getName () + ":implementationFilesOpen"; // Set<File>
+  
+  protected ClassCodeGenerator (final ClassCode delegate) {
+    super (delegate);
+  }
+  
+  private Set<File> getHeaderFilesOpen (final Compiler.Context context) {
+    Set<File> state = context.getUserState (_headerFilesOpen);
+    if (state == null) {
+      context.setUserState (_headerFilesOpen, state = new HashSet<File> ()); 
+    }
+    return state;
+  }
+  
+  private Set<File> getImplementationFilesOpen (final Compiler.Context context) {
+    Set<File> state = context.getUserState (_implementationFilesOpen);
+    if (state == null) {
+      context.setUserState (_implementationFilesOpen, state = new HashSet<File> ());
+    }
+    return state;
+  }
+  
+  private void writeClassHeaderAttributes (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
+    final Iterator<FieldDefinition> fields = message.getFieldDefinitions ();
+    while (fields.hasNext ()) {
+      writeClassHeaderAttribute (context, fields.next (), writer);
+    }
+  }
+  
+  private void writeClassHeaderAccessors (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
+    final Iterator<FieldDefinition> fields = message.getFieldDefinitions ();
+    while (fields.hasNext ()) {
+      writeClassHeaderAccessor (context, fields.next (), writer);
+    }
+  }
+  
+  protected void writeEnumHeaderDeclarations (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
+    final Iterator<EnumDefinition> enums = message.getEnumDefinitions ();
+    while (enums.hasNext ()) {
+      writeEnumHeaderDeclaration (context, enums.next (), writer);
+    }
+  }
+  
+  private void writeClassImplementationAttributes (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
+    final Iterator<FieldDefinition> fields = message.getFieldDefinitions ();
+    while (fields.hasNext ()) {
+      writeClassImplementationAttribute (context, fields.next (), writer);
+    }
+  }
+  
+  private void writeClassImplementationAccessors (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
+    final Iterator<FieldDefinition> fields = message.getFieldDefinitions ();
+    while (fields.hasNext ()) {
+      writeClassImplementationAccessor (context, fields.next (), writer);
+    }
+  }
+  
+  protected void writeEnumImplementationDeclarations (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
+    final Iterator<EnumDefinition> enums = message.getEnumDefinitions ();
+    while (enums.hasNext ()) {
+      writeEnumImplementationDeclaration (context, enums.next (), writer);
+    }
+  }
+  
+  private IndentWriter createFile (final File file) throws IOException {
+    return createIndentWriter (new BufferedWriter (new FileWriter (file, false)));
+  }
+  
+  private IndentWriter appendFile (final File file) throws IOException {
+    return createIndentWriter (new BufferedWriter (new FileWriter (file, true)));
+  }
+  
+  private IndentWriter openHeaderFile (final Compiler.Context context, final Definition definition, final File targetPath) throws IOException {
+    final File header = getHeaderFile (context, definition, targetPath);
+    // Abort if implementation doesn't want a header file to be written
+    if (header == null) return null;
+    final Set<File> filesOpen = getHeaderFilesOpen (context);
+    if (filesOpen.contains (header)) {
+      // Open the file in "append" mode
+      return appendFile (header);
+    } else {
+      // Create the file and write out the header
+      final IndentWriter writer = createFile (header);
+      filesOpen.add (header);
+      writeHeaderFileHeader (context, header, writer);
+      return writer;
+    }
+  }
+  
+  private IndentWriter openImplementationFile (final Compiler.Context context, final Definition definition, final File targetPath) throws IOException {
+    final File implementation = getImplementationFile (context, definition, targetPath);
+    // Abort if implementation doesn't want an implementation file to be written
+    if (implementation == null) return null;
+    final Set<File> filesOpen = getImplementationFilesOpen (context);
+    if (filesOpen.contains (implementation)) {
+      // Open the file in "append" mode
+      return appendFile (implementation);
+    } else {
+      // Create the file and write out the header
+      final IndentWriter writer = createFile (implementation);
+      filesOpen.add (implementation);
+      writeImplementationFileHeader (context, implementation, writer);
+      return writer;
+    }
+  }
+  
+  private void writeImplementationFileFooters (final Compiler.Context context) throws IOException {
+    for (File file : getImplementationFilesOpen (context)) {
+      final IndentWriter writer = appendFile (file);
+      try {
+        writeImplementationFileFooter (context, file, writer);
+      } finally {
+        writer.close ();
+      }
+    }
+  }
+  
+  private void writeHeaderFileFooters (final Compiler.Context context) throws IOException {
+    for (File file : getHeaderFilesOpen (context)) {
+      final IndentWriter writer = appendFile (file);
+      try {
+        writeHeaderFileFooter (context, file, writer);
+      } finally {
+        writer.close ();
+      }
+    }
+  }
+  
+  protected void writeClassHeader (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
+    writeEnumHeaderDeclarations (context, message, writer);
+    beginClassHeaderDeclaration (context, message, writer);
+    writeClassHeaderAttributes (context, message, writer);
+    writeClassHeaderConstructor (context, message, writer);
+    writeClassHeaderAccessors (context, message, writer);
+    endClassHeaderDeclaration (context, message, writer);
+  }
+  
+  protected void writeClassImplementation (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
+    writeEnumImplementationDeclarations (context, message, writer);
+    beginClassImplementationDeclaration (context, message, writer);
+    writeClassImplementationAttributes (context, message, writer);
+    writeClassImplementationConstructor (context, message, writer);
+    writeClassImplementationAccessors (context, message, writer);
+    endClassImplementationDeclaration (context, message, writer);
+  }
+  
+  @Override
+  public void generateCode (final Compiler.Context context, final EnumDefinition enumDefinition, final File targetPath) {
+    // Header output if required
+    try {
+      final IndentWriter writer = openHeaderFile (context, enumDefinition, targetPath);
+      if (writer != null) {
+        try {
+          writeEnumHeaderDeclaration (context, enumDefinition, writer);
+        } finally {
+          writer.close ();
+        }
+      }
+    } catch (IOException e) {
+      context.error (enumDefinition.getCodePosition (), e.getMessage ());
+    }
+    // Implementation output if required
+    try {
+      final IndentWriter writer = openImplementationFile (context, enumDefinition, targetPath);
+      if (writer != null) {
+        try {
+          writeEnumImplementationDeclaration (context, enumDefinition, writer);
+        } finally {
+          writer.close ();
+        }
+      }
+    } catch (IOException e) {
+      context.error (enumDefinition.getCodePosition (), e.getMessage ());
+    }
+  }
+  
+  @Override
+  public void generateCode (final Compiler.Context context, final MessageDefinition message, final File targetPath) {
+    // Header output if required
+    try {
+      final IndentWriter writer = openHeaderFile (context, message, targetPath);
+      if (writer != null) {
+        try {
+          writeClassHeader (context, message, writer);
+        } finally {
+          writer.close ();
+        }
+      }
+    } catch (IOException e) {
+      context.error (message.getCodePosition (), e.getMessage ());
+    }
+    // Implementation output if required
+    try {
+      final IndentWriter writer = openImplementationFile (context, message, targetPath);
+      if (writer != null) {
+        try {
+          writeClassImplementation (context, message, writer);
+        } finally {
+          writer.close ();
+        }
+      }
+    } catch (IOException e) {
+      context.error (message.getCodePosition (), e.getMessage ());
+    }
+  }
+  
+  @Override
+  public void generateCode (final Compiler.Context context, final TaxonomyDefinition taxonomy, final File targetPath) {
+    // Header output if required
+    try {
+      final IndentWriter writer = openHeaderFile (context, taxonomy, targetPath);
+      if (writer != null) {
+        try {
+          writeTaxonomyHeaderDeclaration (context, taxonomy, writer);
+        } finally {
+          writer.close ();
+        }
+      }
+    } catch (IOException e) {
+      context.error (taxonomy.getCodePosition (), e.getMessage ());
+    }
+    // Implementation output if required
+    try {
+      final IndentWriter writer = openImplementationFile (context, taxonomy, targetPath);
+      if (writer != null) {
+        try {
+          writeTaxonomyImplementationDeclaration (context, taxonomy, writer);
+        } finally {
+          writer.close ();
+        }
+      }
+    } catch (IOException e) {
+      context.error (taxonomy.getCodePosition (), e.getMessage ());
+    }
+  }
+  
+  @Override
+  public void generationComplete (final Compiler.Context context, final File targetPath) {
+    try {
+      writeImplementationFileFooters (context);
+      writeHeaderFileFooters (context);
+    } catch (IOException e) {
+      context.error (null, e.getMessage ());
+    }
+  }
+  
+}

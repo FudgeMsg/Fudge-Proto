@@ -1,0 +1,81 @@
+// All field types available
+
+namespace org.fudgemsg.tests {
+
+	message SubMessage {
+		required int	i;
+		required string s;
+	}
+	
+	enum CustomEnum {
+		FIRST	=	1;
+		SECOND;
+		THIRD;
+		FOURTH;
+	}
+	
+	message TypeTest {
+	
+		bool		sBool;
+		byte		sByte;
+		double		sDouble;
+		float		sFloat;
+		indicator	sIndicator;
+		int			sInt;
+		long		sLong;
+		short		sShort;
+		string		sString;
+		SubMessage	sSubMessage;
+		CustomEnum	sCustomEnum;
+
+		bool[]			aBool;
+		byte[]			aByte;
+		double[]		aDouble;
+		float[]			aFloat;
+		indicator[]		aIndicator;
+		int[]			aInt;
+		long[]			aLong;
+		short[]			aShort;
+		string[]		aString;
+		SubMessage[]	aSubMessage;
+		CustomEnum[]	aCustomEnum;
+		
+		repeated bool		rsBool;
+		repeated byte		rsByte;
+		repeated double		rsDouble;
+		repeated float		rsFloat;
+		repeated indicator	rsIndicator;
+		repeated int		rsInt;
+		repeated long		rsLong;
+		repeated short		rsShort;
+		repeated string		rsString;
+		repeated SubMessage	rsSubMessage;
+		repeated CustomEnum	rsCustomEnum;
+
+		repeated bool[]			raBool;
+		repeated byte[]			raByte;
+		repeated double[]		raDouble;
+		repeated float[]		raFloat;
+		repeated indicator[]	raIndicator;
+		repeated int[]			raInt;
+		repeated long[]			raLong;
+		repeated short[]		raShort;
+		repeated string[]		raString;
+		repeated SubMessage[]	raSubMessage;
+		repeated CustomEnum[]	raCustomEnum;
+	
+		bool[][]		aaBool;
+		byte[][]		aaByte;
+		double[][]		aaDouble;
+		float[][]		aaFloat;
+		indicator[][]	aaIndicator;
+		int[][]			aaInt;
+		long[][]		aaLong;
+		short[][]		aaShort;
+		string[][]		aaString;
+		SubMessage[][]	aaSubMessage;
+		CustomEnum[][]	aaCustomEnum;
+		
+	}
+
+}

@@ -1,0 +1,36 @@
+<project name="fudge-proto" default="compile">
+	<property file="build.properties"/>
+
+	<target name="parser"
+		description="--> build the grammar parser">
+		<exec executable="antlr3" dir="src">
+			<arg value="-o" />
+			<arg value="." />
+			<arg value="org/fudgemsg/proto/antlr/Proto.g" />
+		</exec>
+	</target>
+
+	<target name="clean-tests" depends="clean-tests-c,clean-tests-cs,clean-tests-cpp,clean-tests-default,clean-tests-java,clean-tests-proto"
+		description="--> delete the output from the test scripts">
+	</target>
+
+	<target name="clean-tests-c" description="--> delete the output from C test scripts"><delete dir="${tests.dir}/out_C" /></target>
+	<target name="clean-tests-cs" description="--> delete the output from C# test scripts"><delete dir="${tests.dir}/out_C#" /></target>
+	<target name="clean-tests-cpp" description="--> delete the output from C++ test scripts"><delete dir="${tests.dir}/out_C++" /></target>
+	<target name="clean-tests-default" description="--> delete the output from default test scripts"><delete dir="${tests.dir}/out_default" /></target>
+	<target name="clean-tests-java" description="--> delete the output from Java test scripts"><delete dir="${tests.dir}/out_Java" /></target>
+	<target name="clean-tests-proto" description="--> delete the output from .proto test scripts"><delete dir="${tests.dir}/out_proto" /></target>
+
+	<target name="compile-proto-java" depends="tests"
+		description="--> compile the output of the Java code generator">
+                <javac	srcdir="${tests.dir}/out_Java"
+                	destdir="${tests.dir}/out_Java"
+                	classpathref="lib.path.id"
+                	debug="${build.debug}"
+                	optimize="${build.optimize}"
+                	verbose="${build.verbose}"
+                	listfiles="${build.listfiles}" />
+	</target>
+
+	<import file="${common.dir}/common.xml"/>
+</project>
