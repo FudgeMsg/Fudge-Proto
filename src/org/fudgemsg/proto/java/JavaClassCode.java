@@ -53,36 +53,11 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   private static final String CLASS_FUDGECONTEXT = org.fudgemsg.FudgeContext.class.getName ();
   private static final String CLASS_FUDGETAXONOMY = org.fudgemsg.taxon.FudgeTaxonomy.class.getName ();
   private static final String CLASS_LIST = java.util.List.class.getName ();
+  private static final String CLASS_ARRAYS = java.util.Arrays.class.getName ();
   private static final String CLASS_FUDGEFIELD = org.fudgemsg.FudgeField.class.getName ();
-  private static final String CLASS_BYTEARRAYFIELDTYPE = org.fudgemsg.types.ByteArrayFieldType.class.getName ();
+  private static final String CLASS_INDICATOR = org.fudgemsg.types.IndicatorType.class.getName ();
   
-  private static final String TYPE_INDICATOR = org.fudgemsg.types.IndicatorFieldType.class.getName () + ".INSTANCE";
-  private static final String TYPE_BOOLEAN = org.fudgemsg.types.PrimitiveFieldTypes.class.getName () + ".BOOLEAN_TYPE";
-  private static final String TYPE_BYTE = org.fudgemsg.types.PrimitiveFieldTypes.class.getName () + ".BYTE_TYPE";
-  private static final String TYPE_SHORT = org.fudgemsg.types.PrimitiveFieldTypes.class.getName () + ".SHORT_TYPE";
-  private static final String TYPE_INT = org.fudgemsg.types.PrimitiveFieldTypes.class.getName () + ".INT_TYPE";
-  private static final String TYPE_LONG = org.fudgemsg.types.PrimitiveFieldTypes.class.getName () + ".LONG_TYPE";
-  private static final String TYPE_FLOAT = org.fudgemsg.types.PrimitiveFieldTypes.class.getName () + ".FLOAT_TYPE";
-  private static final String TYPE_DOUBLE = org.fudgemsg.types.PrimitiveFieldTypes.class.getName () + ".DOUBLE_TYPE";
-  private static final String TYPE_STRING = org.fudgemsg.types.StringFieldType.class.getName () + ".INSTANCE";
-  private static final String TYPE_SUBMESSAGE = org.fudgemsg.types.FudgeMsgFieldType.class.getName () + ".INSTANCE";
-  private static final String TYPE_DOUBLEARRAY = org.fudgemsg.types.DoubleArrayFieldType.class.getName () + ".INSTANCE";
-  private static final String TYPE_FLOATARRAY = org.fudgemsg.types.FloatArrayFieldType.class.getName () + ".INSTANCE";
-  private static final String TYPE_INTARRAY = org.fudgemsg.types.IntArrayFieldType.class.getName () + ".INSTANCE";
-  private static final String TYPE_LONGARRAY = org.fudgemsg.types.LongArrayFieldType.class.getName () + ".INSTANCE";
-  private static final String TYPE_SHORTARRAY = org.fudgemsg.types.ShortArrayFieldType.class.getName () + ".INSTANCE";
-  private static final String TYPE_BYTEARRAY = CLASS_BYTEARRAYFIELDTYPE + ".VARIABLE_SIZED_INSTANCE";
-  private static final String TYPE_BYTEARRAY4 = CLASS_BYTEARRAYFIELDTYPE + ".LENGTH_4_INSTANCE";
-  private static final String TYPE_BYTEARRAY8 = CLASS_BYTEARRAYFIELDTYPE + ".LENGTH_8_INSTANCE";
-  private static final String TYPE_BYTEARRAY16 = CLASS_BYTEARRAYFIELDTYPE + ".LENGTH_16_INSTANCE";
-  private static final String TYPE_BYTEARRAY20 = CLASS_BYTEARRAYFIELDTYPE + ".LENGTH_20_INSTANCE";
-  private static final String TYPE_BYTEARRAY32 = CLASS_BYTEARRAYFIELDTYPE + ".LENGTH_32_INSTANCE";
-  private static final String TYPE_BYTEARRAY64 = CLASS_BYTEARRAYFIELDTYPE + ".LENGTH_64_INSTANCE";
-  private static final String TYPE_BYTEARRAY128 = CLASS_BYTEARRAYFIELDTYPE + ".LENGTH_128_INSTANCE";
-  private static final String TYPE_BYTEARRAY256 = CLASS_BYTEARRAYFIELDTYPE + ".LENGTH_256_INSTANCE";
-  private static final String TYPE_BYTEARRAY512 = CLASS_BYTEARRAYFIELDTYPE + ".LENGTH_512_INSTANCE";
-
-  private static final String VALUE_INDICATOR = org.fudgemsg.types.IndicatorType.class.getName () + ".INSTANCE";
+  private static final String VALUE_INDICATOR = CLASS_INDICATOR + ".INSTANCE";
 
   private JavaClassCode () {
     super (new DocumentedClassCode (blockCodeDelegate (new CBlockCode (literalCodeDelegate (JavaLiteralCode.INSTANCE)))));
@@ -309,15 +284,17 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   private void endStmt (final JavaWriter writer) throws IOException {
     endStmt (writer.getWriter ());
   }
-  
+
+  /* This version should be more efficient but uses a hardcoded type dictionary which isn't in the spirit of the FudgeContext of the message being built.
   private void writeAddToFudgeMsg (JavaWriter writer, final String msg, final String name, final String ordinal, String value, final FieldType type) throws IOException {
     final String fudgeType;
     switch (type.getFudgeFieldType ()) {
     case FudgeTypeDictionary.BYTE_ARRAY_TYPE_ID :
-      fudgeType = TYPE_BYTEARRAY;
-      if (!((FieldType.ArrayType)type).isFixedLength ()) {
+      if (((FieldType.ArrayType)type).isFixedLength ()) {
+        fudgeType = TYPE_BYTEARRAY;
+      } else {
         // arbitrary length - might be one of the optimal ones
-        value = CLASS_BYTEARRAYFIELDTYPE + ".getBestMatch (" + value + ")";
+        fudgeType = CLASS_BYTEARRAYFIELDTYPE + ".getBestMatch (" + value + ")";
       }
       break;
     case FudgeTypeDictionary.BYTE_ARR_4_TYPE_ID :
@@ -427,6 +404,52 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     writer.invoke (msg, "add", name + ", " + ordinal + ", " + fudgeType + ", " + value);
     endStmt (writer);
   }
+  */
+  
+  private void writeAddToFudgeMsg (JavaWriter writer, final String msg, final String name, final String ordinal, String value, final FieldType type) throws IOException {
+    // special value substitutions for some types
+    switch (type.getFudgeFieldType ()) {
+    case FudgeTypeDictionary.INT_ARRAY_TYPE_ID :
+      if (((FieldType.ArrayType)type).getBaseType () instanceof FieldType.EnumType) {
+        final String temp1 = writer.localVariable ("int[]", true, "new int[" + value + ".length]");
+        endStmt (writer);
+        final String temp2 = writer.forEachIndex (temp1, "length");
+        writer = beginBlock (writer);
+        writer.assignment (temp1 + "[" + temp2 + "]", value + "[" + temp2 + "].getFudgeEncoding ()");
+        endStmt (writer);
+        writer = endBlock (writer);
+        value = temp1;
+      }
+      break;
+    case FudgeTypeDictionary.INDICATOR_TYPE_ID :
+      writer.ifBool (value); // indicators are present if the bool we are using is set
+      value = VALUE_INDICATOR;
+      break;
+    case FudgeTypeDictionary.INT_TYPE_ID :
+      if (type instanceof FieldType.EnumType) {
+        value = value + ".getFudgeEncoding ()";
+      }
+      break;
+    case FudgeTypeDictionary.FUDGE_MSG_TYPE_ID :
+      if (type instanceof FieldType.ArrayType) {
+        final String temp1 = writer.localVariable (CLASS_FUDGEMSG, true, "new " + CLASS_FUDGEMSG + " (context)");
+        endStmt (writer);
+        final FieldType baseType = ((FieldType.ArrayType)type).getBaseType ();
+        final String temp2 = writer.forEach (getJavaType (baseType, false), value);
+        writer = beginBlock (writer);
+        writeAddToFudgeMsg (writer, temp1, "null", "null", temp2, baseType);
+        writer = endBlock (writer);
+        value = temp1;
+      } else if (type instanceof FieldType.MessageType) {
+        value = value + ".toFudgeMsg (context)";
+      } else {
+        throw new IllegalStateException ("type '" + type + "' is not an expected submessage type");
+      }
+      break;
+    }
+    writer.invoke (msg, "add", name + ", " + ordinal + ", " + value);
+    endStmt (writer);
+  }
   
   private void writeToFudgeMsg (JavaWriter writer, final MessageDefinition message) throws IOException {
     writer.method (false, CLASS_FUDGEMSG, "toFudgeMsg", "final " + CLASS_FUDGECONTEXT + " context");
@@ -529,14 +552,16 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     }
   }
   
-  private String writeDecodeSimpleFudgeField (final JavaWriter writer, final String fudgeType, final String displayType, final String javaType, final MessageDefinition message, final String fieldData, final String fieldRef, final String assignTo, final String appendTo) throws IOException {
-    writer.ifNotFieldTypeMatch (fudgeType, fieldData);
+  private String writeDecodeSimpleFudgeField (final JavaWriter writer, final String displayType, final String javaType, final MessageDefinition message, final String fieldData, final String fieldRef, final String assignTo, final String appendTo) throws IOException {
+    writer.anonGetValue (fieldData);
+    endStmt (writer);
+    writer.anonIfNotInstanceOf (javaType);
     writer.throwInvalidFudgeFieldException (message, fieldRef, displayType, null);
     endStmt (writer);
     if (appendTo != null) {
-      return "(" + javaType + ")" + fieldData + ".getValue ()";
+      return "(" + javaType + ")value";
     } else {
-      writer.assignmentGetValueCast (assignTo, fieldData, javaType);
+      writer.anonAssignment (assignTo, javaType);
       endStmt (writer);
       return assignTo;
     }
@@ -561,19 +586,23 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
           assignTo = writer.localVariable ("byte[]", true);
           endStmt (writer);
         }
-        writer.ifInstanceOf (fieldData, CLASS_BYTEARRAYFIELDTYPE);
-        writer.assignmentGetValueCast (assignTo, fieldData, "byte[]");
+        writer.anonGetValue (fieldData);
+        endStmt (writer);
+        writer.anonIfInstanceOf ("byte[]");
+        writer.anonAssignment (assignTo, "byte[]");
         endStmt (writer);
         writer.elseThrowInvalidFudgeFieldException (message, fieldRef, "byte[]", null);
         endStmt (writer);
         break;
       case FudgeTypeDictionary.SHORT_ARRAY_TYPE_ID :
-        assignTo = writeDecodeSimpleFudgeField (writer, TYPE_SHORTARRAY, "short[]", "short[]", message, fieldData, fieldRef, assignTo, appendTo);
+        assignTo = writeDecodeSimpleFudgeField (writer, "short[]", "short[]", message, fieldData, fieldRef, assignTo, appendTo);
         break;
       case FudgeTypeDictionary.INT_ARRAY_TYPE_ID : {
         if (baseType instanceof FieldType.EnumType) {
           final EnumDefinition enumDefinition = ((FieldType.EnumType)baseType).getEnumDefinition ();
-          writer.ifNotFieldTypeMatch (TYPE_INTARRAY, fieldData);
+          writer.anonGetValue (fieldData);
+          endStmt (writer);
+          writer.anonIfNotInstanceOf ("int[]");
           writer.throwInvalidFudgeFieldException (message, fieldRef, type.toString (), null);
           endStmt (writer);
           if (appendTo != null) {
@@ -582,11 +611,11 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
           }
           writer.guard ();
           writer = beginBlock (writer); // try
-          final String intArray = writer.localVariable ("int[]", true, "(int[])" + fieldData + ".getValue ()");
+          final String intArray = writer.localVariable ("int[]", true, "(int[])value");
           endStmt (writer);
           writer.assignment (assignTo, "new " + enumDefinition.getIdentifier () + "[" + intArray + ".length]");
           endStmt (writer);
-          final String index = writer.forEachIndex (intArray);
+          final String index = writer.forEachIndex (intArray, "length");
           writer = beginBlock (writer); // for
           writer.assignment (assignTo + "[" + index + "]", enumDefinition.getIdentifier () + ".fromFudgeEncoding (" + intArray + "[" + index + "])");
           endStmt (writer);
@@ -598,24 +627,26 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
           endStmt (writer);
           writer = endBlock (writer); // catch
         } else {
-          assignTo = writeDecodeSimpleFudgeField (writer, TYPE_INTARRAY, "int[]", "int[]", message, fieldData, fieldRef, assignTo, appendTo);
+          assignTo = writeDecodeSimpleFudgeField (writer, "int[]", "int[]", message, fieldData, fieldRef, assignTo, appendTo);
         }
         break;
       }
       case FudgeTypeDictionary.LONG_ARRAY_TYPE_ID :
-        assignTo = writeDecodeSimpleFudgeField (writer, TYPE_LONGARRAY, "long[]", "long[]", message, fieldData, fieldRef, assignTo, appendTo);
+        assignTo = writeDecodeSimpleFudgeField (writer, "long[]", "long[]", message, fieldData, fieldRef, assignTo, appendTo);
         break;
       case FudgeTypeDictionary.FLOAT_ARRAY_TYPE_ID :
-        assignTo = writeDecodeSimpleFudgeField (writer, TYPE_FLOATARRAY, "float[]", "float[]", message, fieldData, fieldRef, assignTo, appendTo);
+        assignTo = writeDecodeSimpleFudgeField (writer, "float[]", "float[]", message, fieldData, fieldRef, assignTo, appendTo);
         break;
       case FudgeTypeDictionary.DOUBLE_ARRAY_TYPE_ID :
-        assignTo = writeDecodeSimpleFudgeField (writer, TYPE_DOUBLEARRAY, "double[]", "double[]", message, fieldData, fieldRef, assignTo, appendTo);
+        assignTo = writeDecodeSimpleFudgeField (writer, "double[]", "double[]", message, fieldData, fieldRef, assignTo, appendTo);
         break;
       case FudgeTypeDictionary.FUDGE_MSG_TYPE_ID :
-        writer.ifNotFieldTypeMatch (TYPE_SUBMESSAGE, fieldData);
+        writer.anonGetValue (fieldData);
+        endStmt (writer);
+        writer.anonIfNotInstanceOf (CLASS_FUDGEMSG);
         writer.throwInvalidFudgeFieldException (message, fieldRef, "sub message (array)", null);
         endStmt (writer);
-        final String subMessage = writer.localVariable (CLASS_FUDGEMSG, true, "(" + CLASS_FUDGEMSG + ")" + fieldData + ".getValue ()");
+        final String subMessage = writer.localVariable (CLASS_FUDGEMSG, true, "(" + CLASS_FUDGEMSG + ")value");
         endStmt (writer);
         if (appendTo != null) {
           assignTo = writer.localVariable (getListType (baseType, false), true, "new " + getListType (baseType, true) + " ()");
@@ -646,12 +677,14 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         assignTo = writer.localVariable (msg.getIdentifier (), true);
         endStmt (writer);
       }
-      writer.ifNotFieldTypeMatch (TYPE_SUBMESSAGE, fieldData);
+      writer.anonGetValue (fieldData);
+      endStmt (writer);
+      writer.anonIfNotInstanceOf (CLASS_FUDGEMSG);
       writer.throwInvalidFudgeFieldException (message, fieldRef, msg.getName (), null);
       endStmt (writer);
       writer.guard ();
       writer = beginBlock (writer); // try
-      writer.assignment (assignTo, msg.getIdentifier () + ".fromFudgeMsg ((" + CLASS_FUDGEMSG + ")" + fieldData + ".getValue ())");
+      writer.assignment (assignTo, msg.getIdentifier () + ".fromFudgeMsg ((" + CLASS_FUDGEMSG + ")value)");
       endStmt (writer);
       writer = endBlock (writer); // try
       writer.catchIllegalArgumentException ();
@@ -667,14 +700,16 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         assignTo = writer.localVariable (enumDefinition.getIdentifier (), true);
         endStmt (writer);
       }
-      writer.ifFieldTypeMatch (TYPE_INT, fieldData);
-      writer.assignmentGetValueCast (intValue, fieldData, "Integer");
+      writer.anonGetValue (fieldData);
       endStmt (writer);
-      writer.elseIfFieldTypeMatch (TYPE_SHORT, fieldData);
-      writer.assignmentGetValueCast (intValue, fieldData, "Short");
+      writer.anonIfInstanceOf ("Integer");
+      writer.anonAssignment (intValue, "Integer");
       endStmt (writer);
-      writer.elseIfFieldTypeMatch (TYPE_BYTE, fieldData);
-      writer.assignmentGetValueCast (intValue, fieldData, "Byte");
+      writer.anonElseIfInstanceOf ("Short");
+      writer.anonAssignment (intValue, "Short");
+      endStmt (writer);
+      writer.anonElseIfInstanceOf ("Byte");
+      writer.anonAssignment (intValue, "Byte");
       endStmt (writer);
       writer.elseThrowInvalidFudgeFieldException (message, fieldRef, enumDefinition.getName (), null);
       endStmt (writer);
@@ -691,6 +726,11 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     } else {
       switch (type.getFudgeFieldType ()) {
       case FudgeTypeDictionary.INDICATOR_TYPE_ID :
+        writer.anonGetValue (fieldData);
+        endStmt (writer);
+        writer.anonIfNotInstanceOf (CLASS_INDICATOR);
+        writer.throwInvalidFudgeFieldException (message, fieldRef, "indicator", null);
+        endStmt (writer);
         // using a boolean internally, so just set to true to indicate this is in the message
         if (appendTo != null) {
           assignTo = "true";
@@ -700,11 +740,11 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         }
         break;
       case FudgeTypeDictionary.BOOLEAN_TYPE_ID : {
-        assignTo = writeDecodeSimpleFudgeField (writer, TYPE_BOOLEAN, "boolean", "Boolean", message, fieldData, fieldRef, assignTo, appendTo);
+        assignTo = writeDecodeSimpleFudgeField (writer, "boolean", "Boolean", message, fieldData, fieldRef, assignTo, appendTo);
         break;
       }
       case FudgeTypeDictionary.BYTE_TYPE_ID : {
-        assignTo = writeDecodeSimpleFudgeField (writer, TYPE_BYTE, "byte", "Byte", message, fieldData, fieldRef, assignTo, appendTo);
+        assignTo = writeDecodeSimpleFudgeField (writer, "byte", "Byte", message, fieldData, fieldRef, assignTo, appendTo);
         break;
       }
       case FudgeTypeDictionary.SHORT_TYPE_ID :
@@ -712,11 +752,13 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
           assignTo = writer.localVariable ("short", true);
           endStmt (writer);
         }
-        writer.ifFieldTypeMatch (TYPE_SHORT, fieldData);
-        writer.assignmentGetValueCast (assignTo, fieldData, "Short");
+        writer.anonGetValue (fieldData);
         endStmt (writer);
-        writer.elseIfFieldTypeMatch (TYPE_BYTE, fieldData);
-        writer.assignmentGetValueCast (assignTo, fieldData, "Byte");
+        writer.anonIfInstanceOf ("Short");
+        writer.anonAssignment (assignTo, "Short");
+        endStmt (writer);
+        writer.anonElseIfInstanceOf ("Byte");
+        writer.anonAssignment (assignTo, "Byte");
         endStmt (writer);
         writer.elseThrowInvalidFudgeFieldException (message, fieldRef, "short", null);
         endStmt (writer);
@@ -726,14 +768,16 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
           assignTo = writer.localVariable ("int", true);
           endStmt (writer);
         }
-        writer.ifFieldTypeMatch (TYPE_INT, fieldData);
-        writer.assignmentGetValueCast (assignTo, fieldData, "Integer");
+        writer.anonGetValue (fieldData);
         endStmt (writer);
-        writer.elseIfFieldTypeMatch (TYPE_SHORT, fieldData);
-        writer.assignmentGetValueCast (assignTo, fieldData, "Short");
+        writer.anonIfInstanceOf ("Integer");
+        writer.anonAssignment (assignTo, "Integer");
         endStmt (writer);
-        writer.elseIfFieldTypeMatch (TYPE_BYTE, fieldData);
-        writer.assignmentGetValueCast (assignTo, fieldData, "Byte");
+        writer.anonElseIfInstanceOf ("Short");
+        writer.anonAssignment (assignTo, "Short");
+        endStmt (writer);
+        writer.anonElseIfInstanceOf ("Byte");
+        writer.anonAssignment (assignTo, "Byte");
         endStmt (writer);
         writer.elseThrowInvalidFudgeFieldException (message, fieldRef, "int", null);
         endStmt (writer);
@@ -743,23 +787,25 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
           assignTo = writer.localVariable ("long", true);
           endStmt (writer);
         }
-        writer.ifFieldTypeMatch (TYPE_LONG, fieldData);
-        writer.assignmentGetValueCast (assignTo, fieldData, "Long");
+        writer.anonGetValue (fieldData);
         endStmt (writer);
-        writer.elseIfFieldTypeMatch (TYPE_INT, fieldData);
-        writer.assignmentGetValueCast (assignTo, fieldData, "Integer");
+        writer.anonIfInstanceOf ("Long");
+        writer.anonAssignment (assignTo, "Long");
         endStmt (writer);
-        writer.elseIfFieldTypeMatch (TYPE_SHORT, fieldData);
-        writer.assignmentGetValueCast (assignTo, fieldData, "Short");
+        writer.anonElseIfInstanceOf ("Integer");
+        writer.anonAssignment (assignTo, "Integer");
         endStmt (writer);
-        writer.elseIfFieldTypeMatch (TYPE_BYTE, fieldData);
-        writer.assignmentGetValueCast (assignTo, fieldData, "Byte");
+        writer.anonElseIfInstanceOf ("Short");
+        writer.anonAssignment (assignTo, "Short");
+        endStmt (writer);
+        writer.anonElseIfInstanceOf ("Byte");
+        writer.anonAssignment (assignTo, "Byte");
         endStmt (writer);
         writer.elseThrowInvalidFudgeFieldException (message, fieldRef, "long", null);
         endStmt (writer);
         break;
       case FudgeTypeDictionary.FLOAT_TYPE_ID : {
-        assignTo = writeDecodeSimpleFudgeField (writer, TYPE_FLOAT, "float", "Float", message, fieldData, fieldRef, assignTo, appendTo);
+        assignTo = writeDecodeSimpleFudgeField (writer, "float", "Float", message, fieldData, fieldRef, assignTo, appendTo);
         break;
       }
       case FudgeTypeDictionary.DOUBLE_TYPE_ID :
@@ -767,11 +813,13 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
           assignTo = writer.localVariable ("double", true);
           endStmt (writer);
         }
-        writer.ifFieldTypeMatch (TYPE_DOUBLE, fieldData);
-        writer.assignmentGetValueCast (assignTo, fieldData, "Double");
+        writer.anonGetValue (fieldData);
         endStmt (writer);
-        writer.elseIfFieldTypeMatch (TYPE_FLOAT, fieldData);
-        writer.assignmentGetValueCast (assignTo, fieldData, "Float");
+        writer.anonIfInstanceOf ("Double");
+        writer.anonAssignment (assignTo, "Double");
+        endStmt (writer);
+        writer.anonElseIfInstanceOf ("Float");
+        writer.anonAssignment (assignTo, "Float");
         endStmt (writer);
         writer.elseThrowInvalidFudgeFieldException (message, fieldRef, "double", null);
         endStmt (writer);
@@ -893,14 +941,136 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     endStmt (writer); // create and return object
     endBlock (writer); // fromFudgeMsg
   }
+  
+  private void writeEquals (JavaWriter writer, final MessageDefinition message) throws IOException {
+    writer.method (false, "boolean", "equals", "final Object o");
+    writer = beginBlock (writer);
+    final Iterator<FieldDefinition> fields = message.getFieldDefinitions ();
+    writer.ifNull ("o");
+    writer.returnFalse ();
+    endStmt (writer);
+    writer.ifNotInstanceOf ("o", message.getName ());
+    writer.returnFalse ();
+    endStmt (writer);
+    writer.namedLocalVariable (message.getName (), "msg", "(" + message.getName () + ")o");
+    endStmt (writer);
+    while (fields.hasNext ()) {
+      final FieldDefinition field = fields.next ();
+      final String a = privateFieldName (field);
+      final String b = "msg." + a;
+      final FieldType type = field.getType ();
+      if (type instanceof FieldType.ArrayType) {
+        if (field.isRepeated ()) {
+          writer.ifNotNull (a);
+          writer.ifNotNull (b);
+          writer = beginBlock (writer);
+          writer.ifBool (a + ".size () != " + b + ".size ()");
+          writer.returnFalse (); // lists are different lengths
+          endStmt (writer);
+          final String i = writer.forEachIndex (a, "size ()");
+          writer = beginBlock (writer); // for
+          writer.ifNotBool (CLASS_ARRAYS + "." + (isObjectArray ((FieldType.ArrayType)type) ? "deepEquals" : "equals") + " (" + a + ".get (" + i + "), " + b + ".get (" + i + "))");
+          writer.returnFalse ();
+          endStmt (writer);
+          writer = endBlock (writer); // for
+          writer = endBlock (writer); // if
+          writer.elseReturnFalse (); // a is not null, but b is null
+          endStmt (writer);
+          writer.elseIfNotNull (b);
+          writer.returnFalse (); // a is null, b is not null
+        } else {
+          writer.ifNotBool (CLASS_ARRAYS + "." + (isObjectArray ((FieldType.ArrayType)type) ? "deepEquals" : "equals") + " (" + a + ", " + b + ")");
+          writer.returnFalse ();
+        }
+      } else {
+        if (isObject (type) || field.isRepeated ()) {
+          writer.ifNotNull (a);
+          writer.ifNotNull (b);
+          writer = beginBlock (writer);
+          writer.ifNotBool (a + ".equals (" + b + ")");
+          writer.returnFalse (); // a is not equal to b
+          endStmt (writer);
+          writer = endBlock (writer);
+          writer.elseReturnFalse (); // a is not null, but b is null
+          endStmt (writer);
+          writer.elseIfNotNull (b);
+          writer.returnFalse (); // a is null, b is not null
+        } else {
+          writer.ifBool (a + " != " + b);
+          writer.returnFalse ();
+        }
+      }
+      endStmt (writer);
+    }
+    writer.returnTrue ();
+    endStmt (writer);
+    writer = endBlock (writer);
+  }
+  
+  private void writeHashCode (JavaWriter writer, final MessageDefinition message) throws IOException {
+    writer.method (false, "int", "hashCode", null);
+    writer = beginBlock (writer);
+    final Iterator<FieldDefinition> fields = message.getFieldDefinitions ();
+    writer.namedLocalVariable ("int", "hc", null);
+    endStmt (writer);
+    writer.assignment ("hc", "17");
+    endStmt (writer);
+    while (fields.hasNext ()) {
+      final FieldDefinition field = fields.next ();
+      final String name = privateFieldName (field);
+      final FieldType type = field.getType ();
+      if (type instanceof FieldType.ArrayType) {
+        if (field.isRepeated ()) {
+          final String repeated = writer.forEach (getJavaType (type, true), name);
+          writer = beginBlock (writer);
+          writer.assignment ("hc", "hc * 31");
+          endStmt (writer);
+          writer.ifNotNull (repeated);
+          writer.assignment ("hc", "hc + " + CLASS_ARRAYS + "." + (isObjectArray ((FieldType.ArrayType)type) ? "deepHashCode" : "hashCode") + " (" + repeated + ")");
+          endStmt (writer);
+          writer = endBlock (writer);
+        } else {
+          writer.assignment ("hc", "hc * 31");
+          endStmt (writer);
+          writer.ifNotNull (name);
+          writer.assignment ("hc", "hc + " + CLASS_ARRAYS + "." + (isObjectArray ((FieldType.ArrayType)type) ? "deepHashCode" : "hashCode") + " (" + name + ")");
+          endStmt (writer);
+        }
+      } else {
+        if (isObject (type) || field.isRepeated ()) {
+          writer.assignment ("hc", "hc * 31");
+          endStmt (writer);
+          writer.ifNotNull (name);
+          writer.assignment ("hc", "hc + " + name + ".hashCode ()");
+        } else {
+          switch (type.getFudgeFieldType ()) {
+          case FudgeTypeDictionary.BOOLEAN_TYPE_ID :
+          case FudgeTypeDictionary.INDICATOR_TYPE_ID :
+            writer.ifBool (name);
+            writer.assignment ("hc", "(hc * 31) + 1");
+            break;
+          default :
+            writer.assignment ("hc", "(hc * 31) + (int)" + name);
+            break;
+          }
+        }
+        endStmt (writer);
+      }
+    }
+    writer.returnVariable ("hc");
+    endStmt (writer);
+    writer = endBlock (writer);
+  }
 
   @Override
-  public void writeClassImplementationConstructor(final Compiler.Context context, MessageDefinition message, final IndentWriter iWriter) throws IOException {
+  public void writeClassImplementationConstructor(final Compiler.Context context, final MessageDefinition message, final IndentWriter iWriter) throws IOException {
     final JavaWriter writer = new JavaWriter (iWriter);
     writeBuilderClass (writer, message);
     writePrivateConstructor (writer, message);
     writeToFudgeMsg (writer, message);
     writeFromFudgeMsg (writer, message);
+    writeEquals (writer, message);
+    writeHashCode (writer, message);
   }
 
   @Override

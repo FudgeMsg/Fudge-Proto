@@ -17,17 +17,15 @@ package org.fudgemsg.proto;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
 
-import org.junit.Test;
-import java.io.File;
 import java.util.Arrays;
 
 import org.fudgemsg.FudgeContext;
 import org.fudgemsg.FudgeMsg;
-import org.fudgemsg.tests.TypeTest;
+import org.fudgemsg.tests.CustomEnum;
 import org.fudgemsg.tests.SubMessage;
+import org.fudgemsg.tests.TypeTest;
+import org.junit.Test;
 
 public class UseTypeTest {
   
@@ -35,8 +33,8 @@ public class UseTypeTest {
     if ((object1 == null) && (object2 == null)) return;
     assertNotNull (object1);
     assertNotNull (object2);
-    assertSame (object1.getI (), object2.getI ());
-    assertSame (object1.getS (), object2.getS ());
+    assertEquals (object1.getI (), object2.getI ());
+    assertEquals (object1.getS (), object2.getS ());
   }
   
   private void compareTypetest (final TypeTest object1, final TypeTest object2) {
@@ -44,17 +42,17 @@ public class UseTypeTest {
     assertNotNull (object1);
     assertNotNull (object2);
     // single variables
-    assertSame (object1.getSBool (), object2.getSBool ());
-    assertSame (object1.getSByte (), object2.getSByte ());
-    assertSame (object1.getSDouble (), object2.getSDouble ());
-    assertSame (object1.getSFloat (), object2.getSFloat ());
-    assertSame (object1.getSIndicator (), object2.getSIndicator ());
-    assertSame (object1.getSInt (), object2.getSInt ());
-    assertSame (object1.getSLong (), object2.getSLong ());
-    assertSame (object1.getSShort (), object2.getSShort ());
-    assertSame (object1.getSString (), object2.getSString ());
+    assertEquals (object1.getSBool (), object2.getSBool ());
+    assertEquals (object1.getSByte (), object2.getSByte ());
+    assertEquals (object1.getSDouble (), object2.getSDouble (), 0);
+    assertEquals (object1.getSFloat (), object2.getSFloat (), 0);
+    assertEquals (object1.getSIndicator (), object2.getSIndicator ());
+    assertEquals (object1.getSInt (), object2.getSInt ());
+    assertEquals (object1.getSLong (), object2.getSLong ());
+    assertEquals (object1.getSShort (), object2.getSShort ());
+    assertEquals (object1.getSString (), object2.getSString ());
     compareSubMessage (object1.getSSubMessage (), object2.getSSubMessage ());
-    assertSame (object1.getSCustomEnum (), object2.getSCustomEnum ());
+    assertEquals (object1.getSCustomEnum (), object2.getSCustomEnum ());
     // arrays
     assertEquals (Arrays.equals (object1.getABool (), object2.getABool ()), true);
     assertEquals (Arrays.equals (object1.getAByte (), object2.getAByte ()), true);
@@ -159,47 +157,103 @@ public class UseTypeTest {
     }
     // arrays of arrays
     boolean[][] aaBool1 = object1.getAaBool (), aaBool2 = object2.getAaBool ();
-    assertEquals (n = aaBool1.length, aaBool2.length);
-    for (i = 0; i < n; i++) {
-      assertEquals (Arrays.equals (aaBool1[i], aaBool2[i]), true);
+    if ((aaBool1 != null) || (aaBool2 != null)) {
+      assertNotNull (aaBool1);
+      assertNotNull (aaBool2);
+      assertEquals (n = aaBool1.length, aaBool2.length);
+      for (i = 0; i < n; i++) {
+        assertEquals (Arrays.equals (aaBool1[i], aaBool2[i]), true);
+      }
     }
     byte[][] aaByte1 = object1.getAaByte (), aaByte2 = object2.getAaByte ();
-    assertEquals (n = aaByte1.length, aaByte2.length);
-    for (i = 0; i < n; i++) {
-      assertEquals (Arrays.equals (aaByte1[i], aaByte2[i]), true);
+    if ((aaByte1 != null) || (aaByte2 != null)) {
+      assertNotNull (aaByte1);
+      assertNotNull (aaByte2);
+      assertEquals (n = aaByte1.length, aaByte2.length);
+      for (i = 0; i < n; i++) {
+        assertEquals (Arrays.equals (aaByte1[i], aaByte2[i]), true);
+      }
     }
     double[][] aaDouble1 = object1.getAaDouble (), aaDouble2 = object2.getAaDouble ();
-    assertEquals (n = aaDouble1.length, aaDouble2.length);
-    for (i = 0; i < n; i++) {
-      assertEquals (Arrays.equals (aaDouble1[i], aaDouble2[i]), true);
+    if ((aaDouble1 != null) || (aaDouble2 != null)) {
+      assertNotNull (aaDouble1);
+      assertNotNull (aaDouble2);
+      assertEquals (n = aaDouble1.length, aaDouble2.length);
+      for (i = 0; i < n; i++) {
+        assertEquals (Arrays.equals (aaDouble1[i], aaDouble2[i]), true);
+      }
     }
     float[][] aaFloat1 = object1.getAaFloat (), aaFloat2 = object2.getAaFloat ();
-    assertEquals (n = aaFloat1.length, aaFloat2.length);
-    for (i = 0; i < n; i++) {
-      assertEquals (Arrays.equals (aaFloat1[i], aaFloat2[i]), true);
+    if ((aaFloat1 != null) || (aaFloat2 != null)) {
+      assertNotNull (aaFloat1);
+      assertNotNull (aaFloat2);
+      assertEquals (n = aaFloat1.length, aaFloat2.length);
+      for (i = 0; i < n; i++) {
+        assertEquals (Arrays.equals (aaFloat1[i], aaFloat2[i]), true);
+      }
     }
-    boolean[][] aaIndicator1 = object1.getAaIndicator (), aaFloat2 = object2.getAaIndicator ();
-    assertEquals (n = aaIndicator1.length, aaIndicator2.length);
-    public boolean[][] getAaIndicator () {
-      return _aaIndicator;
+    boolean[][] aaIndicator1 = object1.getAaIndicator (), aaIndicator2 = object2.getAaIndicator ();
+    if ((aaIndicator1 != null) || (aaIndicator2 != null)) {
+      assertNotNull (aaIndicator1);
+      assertNotNull (aaIndicator2);
+      assertEquals (n = aaIndicator1.length, aaIndicator2.length);
+      for (i = 0; i < n; i++) {
+        assertEquals (Arrays.equals (aaIndicator1[i], aaIndicator2[i]), true);
+      }
     }
-    public int[][] getAaInt () {
-      return _aaInt;
+    int[][] aaInt1 = object1.getAaInt (), aaInt2 = object2.getAaInt ();
+    if ((aaInt1 != null) || (aaInt2 != null)) {
+      assertNotNull (aaInt1);
+      assertNotNull (aaInt2);
+      assertEquals (n = aaInt1.length, aaInt2.length);
+      for (i = 0; i < n; i++) {
+        assertEquals (Arrays.equals (aaInt1[i], aaInt2[i]), true);
+      }
     }
-    public long[][] getAaLong () {
-      return _aaLong;
+    long[][] aaLong1 = object1.getAaLong (), aaLong2 = object2.getAaLong ();
+    if ((aaLong1 != null) || (aaLong2 != null)) {
+      assertNotNull (aaLong1);
+      assertNotNull (aaLong2);
+      assertEquals (n = aaLong1.length, aaLong2.length);
+      for (i = 0; i < n; i++) {
+        assertEquals (Arrays.equals (aaLong1[i], aaLong2[i]), true);
+      }
     }
-    public short[][] getAaShort () {
-      return _aaShort;
+    short[][] aaShort1 = object1.getAaShort (), aaShort2 = object2.getAaShort ();
+    if ((aaShort1 != null) || (aaShort2 != null)) {
+      assertNotNull (aaShort1);
+      assertNotNull (aaShort2);
+      assertEquals (n = aaShort1.length, aaShort2.length);
+      for (i = 0; i < n; i++) {
+        assertEquals (Arrays.equals (aaShort1[i], aaShort2[i]), true);
+      }
     }
-    public String[][] getAaString () {
-      return _aaString;
+    String[][] aaString1 = object1.getAaString (), aaString2 = object2.getAaString ();
+    if ((aaString1 != null) || (aaString2 != null)) {
+      assertNotNull (aaString1);
+      assertNotNull (aaString2);
+      assertEquals (n = aaString1.length, aaString2.length);
+      for (i = 0; i < n; i++) {
+        assertEquals (Arrays.equals (aaString1[i], aaString2[i]), true);
+      }
     }
-    public org.fudgemsg.tests.SubMessage[][] getAaSubMessage () {
-      return _aaSubMessage;
+    SubMessage[][] aaSubMessage1 = object1.getAaSubMessage (), aaSubMessage2 = object2.getAaSubMessage ();
+    if ((aaSubMessage1 != null) || (aaSubMessage2 != null)) {
+      assertNotNull (aaSubMessage1);
+      assertNotNull (aaSubMessage2);
+      assertEquals (n = aaSubMessage1.length, aaSubMessage2.length);
+      for (i = 0; i < n; i++) {
+        assertEquals (Arrays.equals (aaSubMessage1[i], aaSubMessage2[i]), true);
+      }
     }
-    public org.fudgemsg.tests.CustomEnum[][] getAaCustomEnum () {
-      return _aaCustomEnum;
+    CustomEnum[][] aaCustomEnum1 = object1.getAaCustomEnum (), aaCustomEnum2 = object2.getAaCustomEnum ();
+    if ((aaCustomEnum1 != null) || (aaCustomEnum2 != null)) {
+      assertNotNull (aaCustomEnum1);
+      assertNotNull (aaCustomEnum2);
+      assertEquals (n = aaCustomEnum1.length, aaCustomEnum2.length);
+      for (i = 0; i < n; i++) {
+        assertEquals (Arrays.equals (aaCustomEnum1[i], aaCustomEnum2[i]), true);
+      }
     }
   }
   
@@ -208,7 +262,46 @@ public class UseTypeTest {
     final FudgeContext context = new FudgeContext ();
     final TypeTest object = new TypeTest.Builder ().build ();
     final FudgeMsg message = object.toFudgeMsg (context);
-    System.out.println (message.toString ());
+    final TypeTest object2 = TypeTest.fromFudgeMsg (message);
+    compareTypetest (object, object2);
+  }
+  
+  @Test
+  public void builderSingleValues () {
+    final FudgeContext context = new FudgeContext ();
+    final TypeTest object = new TypeTest.Builder ().sBool (true).sByte ((byte)1).sDouble (2).sFloat (3).sIndicator (true).sInt (4).sLong (5).sShort ((short)6).sString ("7").sSubMessage (new SubMessage.Builder (8, "9").build ()).sCustomEnum (CustomEnum.SECOND).build ();
+    final FudgeMsg message = object.toFudgeMsg (context);
+    final TypeTest object2 = TypeTest.fromFudgeMsg (message);
+    compareTypetest (object, object2);
+  }
+  
+  @Test
+  public void builderArrayValues () {
+    final FudgeContext context = new FudgeContext ();
+    final TypeTest.Builder builder = new TypeTest.Builder ();
+    final boolean[] aBool = new boolean[32];
+    final byte[] aByte = new byte[32];
+    final double[] aDouble = new double[32];
+    final float[] aFloat = new float[32];
+    final int[] aInt = new int[32];
+    final short[] aShort = new short[32];
+    final String[] aString = new String[32];
+    final SubMessage[] aSubMessage = new SubMessage[32];
+    final CustomEnum[] aCustomEnum = new CustomEnum[32];
+    for (int i = 0; i < 32; i++) {
+      aBool[i] = ((i % 3) == 0) || ((i % 7) == 0);
+      aByte[i] = (byte)i;
+      aDouble[i] = (double)i * 3.1415;
+      aFloat[i] = (float)i * 3.1415f;
+      aInt[i] = i;
+      aShort[i] = (short)i;
+      aString[i] = Integer.toString (i);
+      aSubMessage[i] = new SubMessage.Builder (i, Integer.toString (i)).build ();
+      aCustomEnum[i] = CustomEnum.fromFudgeEncoding ((i & 3) + 1);
+    }
+    final TypeTest object = builder.aBool(aBool).aByte (aByte).aDouble (aDouble).aFloat (aFloat).aInt (aInt).aShort (aShort).aString (aString).aSubMessage (aSubMessage).aCustomEnum (aCustomEnum).build ();
+    final FudgeMsg message = object.toFudgeMsg (context);
+    System.out.println (message);
     final TypeTest object2 = TypeTest.fromFudgeMsg (message);
     compareTypetest (object, object2);
   }

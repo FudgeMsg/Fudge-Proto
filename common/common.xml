@@ -121,6 +121,7 @@
 		<path id="tests.build.classpath.id">
 			<path refid="lib.path.id" />
 			<pathelement path="${classes.dir}" />
+			<pathelement path="${tests.dir}/out_Java" /> <!-- aiwg: this is a horrible hack that will hinder a clean build -->
 		</path>
 		<javac srcdir="${tests.src.dir}" destdir="${tests.classes.dir}"
 			classpathref="tests.build.classpath.id" debug="${build.debug}"
@@ -141,6 +142,7 @@
 	      <path refid="lib.path.id" />
 	      <pathelement path="${classes.dir}" />
 				<pathelement path="${tests.classes.dir}" />
+				<pathelement path="${tests.dir}/out_Java" /> <!-- aiwg: this is a horrible hack -->
 			</classpath>
 			<assertions>
 				<enable />

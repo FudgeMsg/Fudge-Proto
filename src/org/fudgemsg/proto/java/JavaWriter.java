@@ -33,16 +33,20 @@ import org.fudgemsg.proto.EnumDefinition;
   
   private int _scope;
   
+  private boolean _anonValue;
+  
   /* package */ JavaWriter (final IndentWriter writer) {
     _writer = writer;
     _parent = null;
     _scope = 1;
+    _anonValue = false;
   }
   
   /* package */ JavaWriter (final JavaWriter parent) {
     _parent = parent;
     _writer = parent._writer;
     _scope = parent._scope;
+    _anonValue = parent._anonValue;
   }
   
   /* package */ void namedLocalVariable (final String type, final String name, final String value) throws IOException {
@@ -83,14 +87,16 @@ import org.fudgemsg.proto.EnumDefinition;
     return field;
   }
   
-  /* package */ String forEachIndex (final String array) throws IOException {
+  /* package */ String forEachIndex (final String array, final String limit) throws IOException {
     _writer.write ("for (");
     final String index = localVariable ("int", false, "0");
     _writer.write ("; ");
     _writer.write (index);
     _writer.write (" < ");
     _writer.write (array);
-    _writer.write (".length; ");
+    _writer.write ('.');
+    _writer.write (limit);
+    _writer.write ("; ");
     _writer.write (index);
     _writer.write ("++)");
     return index;
@@ -124,30 +130,6 @@ import org.fudgemsg.proto.EnumDefinition;
     throwInvalidFudgeFieldException (message, fieldRef, expected, cause);
   }
   
-  /* package */ void ifNotFieldTypeMatch (final String fudgeType, final String localVariable) throws IOException {
-    _writer.write ("if (!");
-    _writer.write (fudgeType);
-    _writer.write (".equals (");
-    _writer.write (localVariable);
-    _writer.write (".getType ())) ");
-  }
-    
-  /* package */ void ifFieldTypeMatch (final String fudgeType, final String localVariable) throws IOException {
-    _writer.write ("if (");
-    _writer.write (fudgeType);
-    _writer.write (".equals (");
-    _writer.write (localVariable);
-    _writer.write (".getType ())) ");
-  }
-  
-  /* package */ void ifInstanceOf (final String test, final String clazz) throws IOException {
-    _writer.write ("if (");
-    _writer.write (test);
-    _writer.write (" instanceof ");
-    _writer.write (clazz);
-    _writer.write (") ");
-  }
-
   /* package */ void ifNull (final String test) throws IOException {
     _writer.write ("if (");
     _writer.write (test);
@@ -177,10 +159,11 @@ import org.fudgemsg.proto.EnumDefinition;
     _writer.write (test);
     _writer.write (") ");
   }
-
-  /* package */ void elseIfFieldTypeMatch (final String fudgeType, final String localVariable) throws IOException {
-    _writer.write ("else ");
-    ifFieldTypeMatch (fudgeType, localVariable);
+  
+  /* package */ void ifNotBool (final String test) throws IOException {
+    _writer.write ("if (!");
+    _writer.write (test);
+    _writer.write (") ");
   }
   
   /* package */ void assignment (final String variable, final String value) throws IOException {
@@ -189,15 +172,49 @@ import org.fudgemsg.proto.EnumDefinition;
     _writer.write (value);
   }
   
-  /* package */ void assignmentGetValueCast (final String target, final String source, final String type) throws IOException {
-    _writer.write (target);
-    _writer.write (" = (");
-    _writer.write (type);
-    _writer.write (')');
+  /* package */ void anonGetValue (final String source) throws IOException {
+    if (!_anonValue) {
+      _writer.write ("Object ");
+      _anonValue = true;
+    }
+    _writer.write ("value = ");
     _writer.write (source);
     _writer.write (".getValue ()");
   }
   
+  /* package */ void ifNotInstanceOf (final String test, final String clazz) throws IOException {
+    _writer.write ("if (!(");
+    _writer.write (test);
+    _writer.write (" instanceof ");
+    _writer.write (clazz);
+    _writer.write (")) ");
+  }
+  
+  /* package */ void anonIfInstanceOf (final String clazz) throws IOException {
+    _writer.write ("if (value instanceof ");
+    _writer.write (clazz);
+    _writer.write (") ");
+  }
+  
+  /* package */ void anonElseIfInstanceOf (final String clazz) throws IOException {
+    _writer.write ("else if (value instanceof ");
+    _writer.write (clazz);
+    _writer.write (") ");
+  }
+  
+  /* package */ void anonIfNotInstanceOf (final String clazz) throws IOException {
+    _writer.write ("if (!(value instanceof ");
+    _writer.write (clazz);
+    _writer.write (")) ");
+  }
+  
+  /* package */ void anonAssignment (final String target, final String type) throws IOException {
+    _writer.write (target);
+    _writer.write (" = (");
+    _writer.write (type);
+    _writer.write (")value");
+  }
+
   /* package */ void invoke (final String object, final String method, final String params) throws IOException {
     _writer.write (object);
     _writer.write ('.');
@@ -278,6 +295,14 @@ import org.fudgemsg.proto.EnumDefinition;
     _writer.write ("return this");
   }
   
+  /* package */ void returnTrue () throws IOException {
+    _writer.write ("return true");
+  }
+  
+  /* package */ void returnFalse () throws IOException {
+    _writer.write ("return false");
+  }
+  
   /* package */ void returnConstruct (final String clazz, final String params) throws IOException {
     _writer.write ("return new ");
     _writer.write (clazz);
@@ -322,6 +347,16 @@ import org.fudgemsg.proto.EnumDefinition;
       _writer.write (" extends ");
       _writer.write (extendsClass);
     }
+  }
+
+  /* package */ void elseReturnFalse () throws IOException {
+    _writer.write ("else return false");
+  }
+  
+  /* package */ void elseIfNotNull (final String test) throws IOException {
+    _writer.write ("else if (");
+    _writer.write (test);
+    _writer.write (" != null) ");
   }
   
   /* package */ void packageDef (final String namespace) throws IOException {
