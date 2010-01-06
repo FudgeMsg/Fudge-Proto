@@ -29,8 +29,8 @@ tokens {
 	FIELD;
 	IMPORT			= 'import';
 	MESSAGE			= 'message';
+	MUTABLE			= 'mutable';
 	NAMESPACE		= 'namespace';
-	OPTIONAL		= 'optional';
 	ORDINAL;
 	REPEATED		= 'repeated';
 	REQUIRED		= 'required';
@@ -126,9 +126,11 @@ field_constraints : '['! field_constraint (','! field_constraint)* ']'! ;
 
 field_ordinal : '=' INTEGER -> ^(ORDINAL INTEGER); 
 
+// optional is the default on all fields, recognised here for compatibility with GPB
 field_modifier
-	: OPTIONAL
+	: MUTABLE
 	| REQUIRED
+	| 'optional'!
 	| REPEATED
 	;
 
@@ -195,6 +197,7 @@ message_field : field_modifier* field_type IDENTIFIER field_ordinal? field_const
 
 message_submsg : MESSAGE^ IDENTIFIER '{'! message_element* '}'! ;
 
+// This hasn't been tested and isn't supported within the compiler; it's for warning if a message uses fields that aren't in given taxonomies
 message_uses : USES^ fullidentifier (','! fullidentifier)* ;
 
 namespace : NAMESPACE^ fullidentifier '{'! root_object* '}'! ;

@@ -97,7 +97,7 @@ class ProtoClassCode extends ImplementationlessClassCode {
     final LiteralValue defaultValue = field.getDefaultValue();
     if (defaultValue != null) {
       writer.write(" [default = ");
-      writeLiteral (writer, defaultValue);
+      writer.write (getLiteral (defaultValue));
       writer.write("]");
     }
     endStmt (writer);

@@ -16,7 +16,6 @@
 
 package org.fudgemsg.proto.c;
 
-import java.io.IOException;
 import java.io.Writer;
 import java.util.HashMap;
 
@@ -75,82 +74,83 @@ public abstract class CStyleLiteralCode implements LiteralCode {
    * for any languages which differ only slightly from C-style literal encodings.
    */
   @Override
-  public final void writeLiteral (final Writer writer, final LiteralValue value) throws IOException {
+  public final String getLiteral (final LiteralValue value) {
     if (value instanceof LiteralValue.DoubleValue) {
-      writeLiteral (writer, (LiteralValue.DoubleValue)value);
+      return getLiteral ((LiteralValue.DoubleValue)value);
     } else if (value instanceof LiteralValue.EnumValue) {
-      writeLiteral (writer, (LiteralValue.EnumValue)value);
+      return getLiteral ((LiteralValue.EnumValue)value);
     } else if (value instanceof LiteralValue.FloatValue) {
-      writeLiteral (writer, (LiteralValue.FloatValue)value);
+      return getLiteral ((LiteralValue.FloatValue)value);
     } else if (value instanceof LiteralValue.IntegerValue) {
-      writeLiteral (writer, (LiteralValue.IntegerValue)value);
+      return getLiteral ((LiteralValue.IntegerValue)value);
     } else if (value instanceof LiteralValue.NumericValue) {
-      writeLiteral (writer, (LiteralValue.NumericValue)value);
+      return getLiteral ((LiteralValue.NumericValue)value);
     } else if (value instanceof LiteralValue.StringValue) {
-      writeLiteral (writer, (LiteralValue.StringValue)value);
+      return getLiteral ((LiteralValue.StringValue)value);
+    } else {
+      throw new IllegalStateException ("LiteralValue '" + value + "' is not an expected type");
     }
   }
   
   /**
    * Default uses the NumericLiteral handler.
    */
-  protected void writeLiteral (final Writer writer, final LiteralValue.DoubleValue value) throws IOException {
-    writeLiteral (writer, (LiteralValue.NumericValue)value);
+  protected String getLiteral (final LiteralValue.DoubleValue value) {
+    return getLiteral ((LiteralValue.NumericValue)value);
   }
 
   /**
    * This is a bit too language specific things normally descended from C - must be implemented specifically for each one.
    */
-  protected abstract void writeLiteral (final Writer writer, final LiteralValue.EnumValue value) throws IOException;
+  protected abstract String getLiteral (final LiteralValue.EnumValue value);
 
-  protected void writeLiteral (final Writer writer, final LiteralValue.FloatValue value) throws IOException {
-    writer.write (value.getNumber ().toString ());
-    writer.write ('f');
+  protected String getLiteral (final LiteralValue.FloatValue value) {
+    final StringBuilder sb = new StringBuilder (value.getNumber ().toString ()).append ('f');
+    return sb.toString ();
   }
 
   /**
    * Default uses the NumericLiteral handler.
    */
-  protected void writeLiteral (final Writer writer, final LiteralValue.IntegerValue value) throws IOException {
-    writeLiteral (writer, (LiteralValue.NumericValue)value);
+  protected String getLiteral (final LiteralValue.IntegerValue value) {
+    return getLiteral ((LiteralValue.NumericValue)value);
   }
 
-  protected void writeLiteral (final Writer writer, final LiteralValue.NumericValue value) throws IOException {
-    writer.write (value.getNumber ().toString ());
+  protected String getLiteral (final LiteralValue.NumericValue value) {
+    return value.getNumber ().toString ();
   }
 
-  protected void writeLiteral (final Writer writer, final LiteralValue.StringValue value) throws IOException {
+  protected String getLiteral (final LiteralValue.StringValue value) {
+    final StringBuilder sb = new StringBuilder ();
     final char[] c = value.get ().toCharArray ();
-    writer.write ('\"');
+    sb.append ('\"');
     for (int i = 0; i < c.length; i++) {
       final String seq = _escapeChars.get (c[i]); 
       if (seq != null) {
-        writer.write (seq);
+        sb.append (seq);
       } else if (c[i] < 32) {
         // Deal with the standard C-ish escapes
         if (c[i] < 8) {
-          writer.write ("\\00");
-          writer.write (Integer.toOctalString (c[i]));
+          sb.append ("\\00").append (Integer.toOctalString (c[i]));
         } else if (c[i] < 64) {
-          writer.write ("\\0");
-          writer.write (Integer.toOctalString (c[i]));
+          sb.append ("\\0").append (Integer.toOctalString (c[i]));
         }
       } else if (c[i] < 128) {
         // Printable characters
-        writer.write (c[i]);
+        sb.append (c[i]);
       } else if (c[i] < 256) {
         // Non-printable characters
-        writer.write ('\\');
-        writer.write (Integer.toOctalString (c[i]));
+        sb.append ('\\').append (Integer.toOctalString (c[i]));
       } else {
         // Unicode sequence
-        writer.write ("\\u");
+        sb.append ("\\u");
         final String hex = Integer.toHexString (c[i]);
-        for (int j = hex.length (); j < 4; j++) writer.write ('0');
-        writer.write (hex);
+        for (int j = hex.length (); j < 4; j++) sb.append ('0');
+        sb.append (hex);
       }
     }
-    writer.write ('\"');
+    sb.append ('\"');
+    return sb.toString ();
   }
 
 }

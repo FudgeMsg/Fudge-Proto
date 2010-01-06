@@ -14,7 +14,7 @@ namespace org.fudgemsg.tests {
 		FOURTH;
 	}
 	
-	message TypeTest {
+	message Types {
 	
 		bool		sBool;
 		byte		sByte;

@@ -16,9 +16,6 @@
 
 package org.fudgemsg.proto.proto;
 
-import java.io.IOException;
-import java.io.Writer;
-
 import org.fudgemsg.proto.FieldDefinition;
 import org.fudgemsg.proto.LiteralValue;
 
@@ -31,8 +28,8 @@ public abstract class LiteralCodeAdapter implements LiteralCode {
   }
   
   @Override
-  public void writeLiteral (final Writer writer, final LiteralValue value) throws IOException {
-    _delegate.writeLiteral (writer, value);
+  public String getLiteral (final LiteralValue value) {
+    return _delegate.getLiteral (value);
   }
   
   @Override

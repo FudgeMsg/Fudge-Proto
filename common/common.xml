@@ -121,7 +121,6 @@
 		<path id="tests.build.classpath.id">
 			<path refid="lib.path.id" />
 			<pathelement path="${classes.dir}" />
-			<pathelement path="${tests.dir}/out_Java" /> <!-- aiwg: this is a horrible hack that will hinder a clean build -->
 		</path>
 		<javac srcdir="${tests.src.dir}" destdir="${tests.classes.dir}"
 			classpathref="tests.build.classpath.id" debug="${build.debug}"
@@ -133,7 +132,7 @@
 		</copy>
 	</target>
 	
-	<target name="tests" depends="junit-batch,junit-report" description="--> run unit tests and generate report"/>
+	<target name="tests" depends="junit-report" description="--> run unit tests and generate report"/>
 
 	<target name="junit-batch" depends="compile-tests">
 		<mkdir dir="${tests.junit.dir}/xml" />
@@ -142,7 +141,6 @@
 	      <path refid="lib.path.id" />
 	      <pathelement path="${classes.dir}" />
 				<pathelement path="${tests.classes.dir}" />
-				<pathelement path="${tests.dir}/out_Java" /> <!-- aiwg: this is a horrible hack -->
 			</classpath>
 			<assertions>
 				<enable />

@@ -57,7 +57,12 @@ public class CommandLineTest {
   
   @Test
   public void typesFileAllCodeGenerators () {
-    fileAllCodeGenerators ("types.proto");
+    fileAllCodeGenerators ("Types.proto");
+  }
+  
+  @Test
+  public void mutablesFileAllCodeGenerators () {
+    fileAllCodeGenerators ("Mutables.proto");
   }
   
   private void fileAllCodeGenerators (final String filename) {

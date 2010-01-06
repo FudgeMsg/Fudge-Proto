@@ -24,10 +24,10 @@ import org.fudgemsg.FudgeContext;
 import org.fudgemsg.FudgeMsg;
 import org.fudgemsg.tests.CustomEnum;
 import org.fudgemsg.tests.SubMessage;
-import org.fudgemsg.tests.TypeTest;
+import org.fudgemsg.tests.Types;
 import org.junit.Test;
 
-public class UseTypeTest {
+public class TypesTest {
   
   private void compareSubMessage (final SubMessage object1, final SubMessage object2) {
     if ((object1 == null) && (object2 == null)) return;
@@ -37,7 +37,7 @@ public class UseTypeTest {
     assertEquals (object1.getS (), object2.getS ());
   }
   
-  private void compareTypetest (final TypeTest object1, final TypeTest object2) {
+  private void compareTypes (final Types object1, final Types object2) {
     if ((object1 == null) && (object2 == null)) return;
     assertNotNull (object1);
     assertNotNull (object2);
@@ -260,25 +260,25 @@ public class UseTypeTest {
   @Test
   public void builderDefaultValues () {
     final FudgeContext context = new FudgeContext ();
-    final TypeTest object = new TypeTest.Builder ().build ();
+    final Types object = new Types.Builder ().build ();
     final FudgeMsg message = object.toFudgeMsg (context);
-    final TypeTest object2 = TypeTest.fromFudgeMsg (message);
-    compareTypetest (object, object2);
+    final Types object2 = Types.fromFudgeMsg (message);
+    compareTypes (object, object2);
   }
   
   @Test
   public void builderSingleValues () {
     final FudgeContext context = new FudgeContext ();
-    final TypeTest object = new TypeTest.Builder ().sBool (true).sByte ((byte)1).sDouble (2).sFloat (3).sIndicator (true).sInt (4).sLong (5).sShort ((short)6).sString ("7").sSubMessage (new SubMessage.Builder (8, "9").build ()).sCustomEnum (CustomEnum.SECOND).build ();
+    final Types object = new Types.Builder ().sBool (true).sByte ((byte)1).sDouble (2).sFloat (3).sIndicator (true).sInt (4).sLong (5).sShort ((short)6).sString ("7").sSubMessage (new SubMessage.Builder (8, "9").build ()).sCustomEnum (CustomEnum.SECOND).build ();
     final FudgeMsg message = object.toFudgeMsg (context);
-    final TypeTest object2 = TypeTest.fromFudgeMsg (message);
-    compareTypetest (object, object2);
+    final Types object2 = Types.fromFudgeMsg (message);
+    compareTypes (object, object2);
   }
   
   @Test
   public void builderArrayValues () {
     final FudgeContext context = new FudgeContext ();
-    final TypeTest.Builder builder = new TypeTest.Builder ();
+    final Types.Builder builder = new Types.Builder ();
     final boolean[] aBool = new boolean[32];
     final byte[] aByte = new byte[32];
     final double[] aDouble = new double[32];
@@ -299,11 +299,11 @@ public class UseTypeTest {
       aSubMessage[i] = new SubMessage.Builder (i, Integer.toString (i)).build ();
       aCustomEnum[i] = CustomEnum.fromFudgeEncoding ((i & 3) + 1);
     }
-    final TypeTest object = builder.aBool(aBool).aByte (aByte).aDouble (aDouble).aFloat (aFloat).aInt (aInt).aShort (aShort).aString (aString).aSubMessage (aSubMessage).aCustomEnum (aCustomEnum).build ();
+    final Types object = builder.aBool(aBool).aByte (aByte).aDouble (aDouble).aFloat (aFloat).aInt (aInt).aShort (aShort).aString (aString).aSubMessage (aSubMessage).aCustomEnum (aCustomEnum).build ();
     final FudgeMsg message = object.toFudgeMsg (context);
     System.out.println (message);
-    final TypeTest object2 = TypeTest.fromFudgeMsg (message);
-    compareTypetest (object, object2);
+    final Types object2 = Types.fromFudgeMsg (message);
+    compareTypes (object, object2);
   }
   
 }

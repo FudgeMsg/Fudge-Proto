@@ -172,6 +172,15 @@ import org.fudgemsg.proto.EnumDefinition;
     _writer.write (value);
   }
   
+  /* package */ void assignmentConstruct (final String variable, final String clazz, final String params) throws IOException {
+    _writer.write (variable);
+    _writer.write (" = new ");
+    _writer.write (clazz);
+    _writer.write (" (");
+    if (params != null) _writer.write (params);
+    _writer.write (')');
+  }
+  
   /* package */ void anonGetValue (final String source) throws IOException {
     if (!_anonValue) {
       _writer.write ("Object ");

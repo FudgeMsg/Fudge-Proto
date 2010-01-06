@@ -321,11 +321,11 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
       case ProtoLexer.DEFAULT :
         fieldSetDefaultValue (context, field, element.getChildNodes ().get (0));
         break;
+      case ProtoLexer.MUTABLE :
+        field.setMutable (true);
+        break;
       case ProtoLexer.ORDINAL :
         fieldSetOrdinal (context, field, element.getChildNodes ().get (0));
-        break;
-      case ProtoLexer.OPTIONAL :
-        field.setRequired (false);
         break;
       case ProtoLexer.REPEATED :
         field.setRepeated (true);

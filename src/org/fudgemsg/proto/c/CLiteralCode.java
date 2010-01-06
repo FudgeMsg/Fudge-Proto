@@ -16,9 +16,6 @@
 
 package org.fudgemsg.proto.c;
 
-import java.io.IOException;
-import java.io.Writer;
-
 import org.fudgemsg.proto.LiteralValue;
 import org.fudgemsg.proto.proto.LiteralCode;
 
@@ -37,8 +34,9 @@ public class CLiteralCode extends CStyleLiteralCode {
   }
   
   @Override
-  protected void writeLiteral (final Writer writer, final LiteralValue.EnumValue value) throws IOException {
-    // TODO 2009-12-29 Andrew -- write out a C ENUM value
+  protected String getLiteral (final LiteralValue.EnumValue value) {
+    // TODO 2009-12-29 Andrew -- generate a C ENUM value
+    return "TODO-CLiteralCode::getLiteral";
   }
   
 }

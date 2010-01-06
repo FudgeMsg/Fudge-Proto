@@ -32,5 +32,29 @@
                 	listfiles="${build.listfiles}" />
 	</target>
 
+	<target name="test-proto-java" depends="compile-proto-java"
+		description="--> test the output of the Java code generator">
+                <mkdir dir="${tests.dir}/out_Java/xml" />
+                <junit printSummary="true" fork="true" forkmode="once">
+                        <classpath>
+				<path refid="lib.path.id" />
+				<pathelement path="${classes.dir}" />
+                                <pathelement path="${tests.dir}/out_Java" />
+                        </classpath>
+                        <assertions>
+                                <enable />
+                        </assertions>
+                        <formatter type="xml" />
+                        <batchtest todir="${tests.dir}/out_Java/xml">
+                                <fileset dir="${tests.dir}/unit_Java" includes="**/*Test.java" />
+                        </batchtest>
+                </junit>
+                <mkdir dir="${tests.dir}/out_Java/html" />
+                <junitreport todir="${tests.dir}/out_Java/xml">
+                        <fileset dir="${tests.dir}/out_Java/xml" includes="TEST-*.xml" />
+                        <report todir="${tests.dir}/out_Java/html" />
+                </junitreport>
+        </target>
+
 	<import file="${common.dir}/common.xml"/>
 </project>

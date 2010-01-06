@@ -16,9 +16,6 @@
 
 package org.fudgemsg.proto.java;
 
-import java.io.IOException;
-import java.io.Writer;
-
 import org.fudgemsg.proto.LiteralValue;
 import org.fudgemsg.proto.c.CStyleLiteralCode;
 import org.fudgemsg.proto.proto.LiteralCode;
@@ -36,10 +33,11 @@ public class JavaLiteralCode extends CStyleLiteralCode {
   }
   
   @Override
-  protected void writeLiteral (final Writer writer, final LiteralValue.EnumValue value) throws IOException {
-    writer.write (value.getEnumDefinition ().getIdentifier ());
-    writer.write ('.');
-    writer.write (value.get ());
+  protected String getLiteral (final LiteralValue.EnumValue value) {
+    final StringBuilder sb = new StringBuilder (value.getEnumDefinition ().getIdentifier ());
+    sb.append ('.');
+    sb.append (value.get ());
+    return sb.toString ();
   }
   
 }

@@ -23,6 +23,7 @@ import java.util.Iterator;
 import org.fudgemsg.proto.Compiler;
 import org.fudgemsg.proto.IndentWriter;
 import org.fudgemsg.proto.MessageDefinition;
+import org.fudgemsg.proto.EnumDefinition;
 
 /**
  * Modification of the ClassCodeGenerator to process messages "inline" within their parents.
@@ -78,11 +79,19 @@ public class InnerClassCodeGenerator extends ClassCodeGenerator {
   }  
   
   @Override
-  public void generateCode (final Compiler.Context context, final MessageDefinition message, File targetPath) {
+  public void generateCode (final Compiler.Context context, final MessageDefinition message, final File targetPath) {
     // Any sub-message types are handled as part of the containing message
     if (message.getOuterMessage () != null) return;
     // Now use the superclass behaviour
     super.generateCode (context, message, targetPath);
+  }
+  
+  @Override
+  public void generateCode (final Compiler.Context context, final EnumDefinition enumDefinition, final File targetPath) {
+    // Any sub-message types are handled as part of the containing message
+    if (enumDefinition.getOuterMessage () != null) return;
+    // Now use the superclass behaviour
+    super.generateCode (context, enumDefinition, targetPath);
   }
   
 }

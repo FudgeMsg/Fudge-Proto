@@ -22,7 +22,7 @@ package org.fudgemsg.proto;
  */
 public class FieldDefinition extends Definition {
   
-  private Integer _ordinal = null; // ordinal is optional - if we have a taxonomy we'll work with just ordinals where possible, otherwise we'll work with names or both if available
+  private Integer _ordinal = null;
   
   private final FieldType _type;
   
@@ -31,6 +31,8 @@ public class FieldDefinition extends Definition {
   private boolean _flagRequired = false;
   
   private boolean _flagRepeated = false;
+  
+  private boolean _flagMutable = false;
   
   /* package */ FieldDefinition (final String identifier, final CodePosition codePosition, final MessageDefinition outerMessage, final FieldType type) {
     super (identifier, codePosition, outerMessage);
@@ -64,6 +66,14 @@ public class FieldDefinition extends Definition {
   
   public void setRepeated (final boolean repeated) {
     _flagRepeated = repeated;
+  }
+  
+  public boolean isMutable () {
+    return _flagMutable;
+  }
+  
+  public void setMutable (final boolean mutable) {
+    _flagMutable = mutable;
   }
   
   public LiteralValue getDefaultValue () {

@@ -16,15 +16,12 @@
 
 package org.fudgemsg.proto.proto;
 
-import java.io.IOException;
-import java.io.Writer;
-
 import org.fudgemsg.proto.FieldDefinition;
 import org.fudgemsg.proto.LiteralValue;
 
 public interface LiteralCode {
   
-  public void writeLiteral (final Writer writer, final LiteralValue value) throws IOException;
+  public String getLiteral (final LiteralValue value);
   
   public String privateFieldName (final FieldDefinition field);
   

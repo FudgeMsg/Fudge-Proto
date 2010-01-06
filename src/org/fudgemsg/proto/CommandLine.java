@@ -120,7 +120,7 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
     try {
       Class.forName ("org.antlr.runtime.Parser", false, CommandLine.class.getClassLoader ());
     } catch (ClassNotFoundException e) {
-      compilerMessage (MSG_ERROR, null, "The ANTLR2 runtime is not available in the classpath");
+      compilerMessage (MSG_ERROR, null, "The ANTLR runtime is not available in the classpath");
       System.exit (1);
     }
     System.exit (compile (args));
