@@ -204,6 +204,7 @@
 			<manifest>
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Build-Version" value="${version}" />
+				<attribute name="Main-Class" value="${jar.entrypoint}" />
 			</manifest>
 		</jar>
 	</target>

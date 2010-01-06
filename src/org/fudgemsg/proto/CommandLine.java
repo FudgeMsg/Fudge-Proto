@@ -34,7 +34,7 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
   private CommandLine () {
   }
   
-  private void compilerMessage (final String pfx, final CodePosition position, final String message) {
+  private static void compilerMessage (final String pfx, final CodePosition position, final String message) {
     final StringBuilder sb = new StringBuilder ();
     if (position != null) sb.append (position.toString ()).append (": ");
     sb.append (pfx).append (": ");
@@ -69,9 +69,10 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
   }
   
   /**
-   * Actual implementation of the program entry point, but returns the exit code. This is to facilitate testing.
+   * Actual implementation of the program entry point, but returns the exit code. This is to facilitate testing, or crudely embedding the
+   * compiler into an IDE or something.
    */
-  /* package */ static int compile (final String[] args) {
+  public static int compile (final String[] args) {
     final CommandLine cmdLine = new CommandLine ();
     final Compiler compiler = new Compiler ();
     final CodeGeneratorFactory codeGeneratorFactory = new CodeGeneratorFactory ();
@@ -107,7 +108,7 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
     final int warnings = compiler.getWarningCount ();
     final int errors = compiler.getErrorCount ();
     if ((warnings > 0) || (errors > 0)) {
-      cmdLine.compilerMessage (MSG_INFO, null, "" + warnings + " warning(s), " + errors + " error(s)");  
+      compilerMessage (MSG_INFO, null, "" + warnings + " warning(s), " + errors + " error(s)");  
     }
     return (errors > 0) ? 1 : 0;
   }
@@ -116,6 +117,12 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
    * Program entry point.
    */
   public static void main (final String[] args) {
+    try {
+      Class.forName ("org.antlr.runtime.Parser", false, CommandLine.class.getClassLoader ());
+    } catch (ClassNotFoundException e) {
+      compilerMessage (MSG_ERROR, null, "The ANTLR2 runtime is not available in the classpath");
+      System.exit (1);
+    }
     System.exit (compile (args));
   }
   
