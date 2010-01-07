@@ -29,12 +29,12 @@ public class EnumDefinition extends StringIntPairDefinition {
   }
   
   @Override
-  public void addElement (final String name, final int value) {
+  /* package */ void addElement (final String name, final int value) {
     if (value >= _nextAutoValue) _nextAutoValue = value + 1;
     super.addElement (name, value);
   }
   
-  public void addElement (final String name) {
+  /* package */ void addElement (final String name) {
     addElement (name, _nextAutoValue);
   }
   

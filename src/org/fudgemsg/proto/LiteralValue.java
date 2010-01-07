@@ -133,9 +133,9 @@ public abstract class LiteralValue {
     
     @Override
     protected FloatValue floatCast (final Compiler.Context context) {
-      float fValue = (float)_value;
-      double dValue = (double)fValue;
-      if (dValue != _value) context.warning (getCodePosition (), "double precision value being cast to single precision type");
+      final String asFloat = Float.toString ((float)_value);
+      final String asDouble = Double.toString (_value);
+      if (!asFloat.equals (asDouble)) context.warning (getCodePosition (), "double precision value (" + asDouble + ") being cast to single precision type");
       return super.floatCast (context);
     }
 

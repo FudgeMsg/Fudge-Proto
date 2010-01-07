@@ -32,6 +32,7 @@ import org.fudgemsg.proto.FieldDefinition;
 import org.fudgemsg.proto.FieldType;
 import org.fudgemsg.proto.IndentWriter;
 import org.fudgemsg.proto.MessageDefinition;
+import org.fudgemsg.proto.Binding;
 import org.fudgemsg.proto.TaxonomyDefinition;
 import org.fudgemsg.proto.c.CBlockCode;
 import org.fudgemsg.proto.proto.DocumentedClassCode;
@@ -43,6 +44,8 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
  * @author Andrew
  */
 /* package */ class JavaClassCode extends HeaderlessClassCode {
+  
+  // TODO 2010-01-07 Andrew -- we don't need the JavaWriter class; temporary local variable names can be tracked using the call stack, and the other methods can be brought back in here
   
   /* package */ static final JavaClassCode INSTANCE = new JavaClassCode ();
   
@@ -63,7 +66,12 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     super (new DocumentedClassCode (blockCodeDelegate (new CBlockCode (literalCodeDelegate (JavaLiteralCode.INSTANCE)))));
   }
   
-  private JavaWriter beginClass (JavaWriter writer, final Definition definition, final String extendsClass, final String interfaceClass) throws IOException {
+  private String getBinding (final Definition definition, final String key) {
+    final Binding.Data data = definition.getLanguageBinding ("Java").getData (key);
+    return (data != null) ? data.getValue () : null;
+  }
+  
+  private JavaWriter beginClass (JavaWriter writer, final Definition definition, final String extendsClass, String interfaceClass) throws IOException {
     if (definition.getOuterDefinition () == null) {
       final String namespace = definition.getNamespace ();
       if (namespace != null) {
@@ -71,8 +79,26 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         endStmt (writer);
       }
     }
+    final String classJavadoc = getBinding (definition, "javadoc");
+    if (classJavadoc != null) {
+      writer.javadoc (classJavadoc);
+    }
+    final String extraImplements = getBinding (definition, "implements");
+    if (extraImplements != null) {
+      if (interfaceClass == null) {
+        interfaceClass = extraImplements;
+      } else {
+        interfaceClass = interfaceClass + ", " + extraImplements;
+      }
+    }
     writer.classDef (definition.getOuterDefinition () != null, definition.getName (), extendsClass, interfaceClass);
-    return beginBlock (writer); // class definition
+    writer = beginBlock (writer); // class definition
+    final String bodyCode = getBinding (definition, "body");
+    if (bodyCode != null) {
+      writer.getWriter ().write (bodyCode);
+      writer.getWriter ().newLine ();
+    }
+    return writer;
   }
 
   @Override
@@ -538,6 +564,9 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   private void writeToFudgeMsg (JavaWriter writer, final MessageDefinition message) throws IOException {
     writer.method (false, CLASS_FUDGEMSG, "toFudgeMsg", "final " + CLASS_FUDGECONTEXT + " context");
     writer = beginBlock (writer); // toFudgeMsg
+    writer.ifNull ("context");
+    writer.throwNullParameterException ("context");
+    endStmt (writer);
     writer.namedLocalVariable (CLASS_FUDGEMSG, "msg", "context.newMessage ()");
     endStmt (writer);
     final Iterator<FieldDefinition> fields = message.getFieldDefinitions ();
@@ -643,7 +672,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     writer.throwInvalidFudgeFieldException (message, fieldRef, displayType, null);
     endStmt (writer);
     if (appendTo != null) {
-      return "(" + javaType + ")value";
+      return "(" + javaType + ")fudge0";
     } else {
       writer.anonAssignment (assignTo, javaType);
       endStmt (writer);
@@ -695,7 +724,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
           }
           writer.guard ();
           writer = beginBlock (writer); // try
-          final String intArray = writer.localVariable ("int[]", true, "(int[])value");
+          final String intArray = writer.localVariable ("int[]", true, "(int[])fudge0");
           endStmt (writer);
           writer.assignment (assignTo, "new " + enumDefinition.getIdentifier () + "[" + intArray + ".length]");
           endStmt (writer);
@@ -731,7 +760,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         writer.anonIfNotInstanceOf (CLASS_FUDGEMSG);
         writer.throwInvalidFudgeFieldException (message, fieldRef, "sub message (array)", null);
         endStmt (writer);
-        final String subMessage = writer.localVariable (CLASS_FUDGEFIELDCONTAINER, true, "(" + CLASS_FUDGEFIELDCONTAINER + ")value");
+        final String subMessage = writer.localVariable (CLASS_FUDGEFIELDCONTAINER, true, "(" + CLASS_FUDGEFIELDCONTAINER + ")fudge0");
         endStmt (writer);
         if (appendTo != null) {
           // TODO 2010-01-06 Andrew -- we could call getNumFields on the subMessage and allocate a proper array once, but might that be slower if we have a FudgeMsg implementation that makes data available as soon as its received & decoded - i.e. a big array submessage would have to be decoded in its entirety to get the length
@@ -770,7 +799,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       endStmt (writer);
       writer.guard ();
       writer = beginBlock (writer); // try
-      writer.assignment (assignTo, msg.getIdentifier () + ".fromFudgeMsg ((" + CLASS_FUDGEFIELDCONTAINER + ")value)");
+      writer.assignment (assignTo, msg.getIdentifier () + ".fromFudgeMsg ((" + CLASS_FUDGEFIELDCONTAINER + ")fudge0)");
       endStmt (writer);
       writer = endBlock (writer); // try
       writer.catchIllegalArgumentException ();
@@ -931,9 +960,9 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   }
   
   private void writeDecodeFudgeFieldsToList (JavaWriter writer, final FieldDefinition field, final String localName) throws IOException {
-    writer.assignmentConstruct (localName, getListType (field.getType (), true), "fields.size ()");
+    writer.assignmentConstruct (localName, getListType (field.getType (), true), "fudgeFields.size ()");
     endStmt (writer); // list construction
-    final String fieldData = writer.forEach (CLASS_FUDGEFIELD, "fields");
+    final String fieldData = writer.forEach (CLASS_FUDGEFIELD, "fudgeFields");
     beginBlock (writer.getWriter ()); // iteration
     writeDecodeFudgeField (writer, field.getType (), field.getOuterMessage (), fieldData, field.getName (), null, localName + ".add");
     endBlock (writer.getWriter ()); // iteration
@@ -950,13 +979,13 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       } else {
         sbGetField.append ("Name (\"").append (field.getName ()).append ("\")");
       }
-      writer.assignment (field.isRepeated () ? "fields" : "field", sbGetField.toString ());
+      writer.assignment (field.isRepeated () ? "fudgeFields" : "fudgeField", sbGetField.toString ());
       endStmt (writer); // field(s) assignment
       if (localAssign) {
         if (field.isRepeated ()) {
-          writer.ifZero ("fields.size ()");
+          writer.ifZero ("fudgeFields.size ()");
         } else {
-          writer.ifNull ("field");
+          writer.ifNull ("fudgeField");
         }
         writer.throwInvalidFudgeFieldException (field.getOuterMessage (), field.getName (), "present", null);
         endStmt (writer); // if & throw
@@ -965,25 +994,25 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         if (field.isRepeated ()) {
           writeDecodeFudgeFieldsToList (writer, field, localFieldName (field));
         } else {
-          writeDecodeFudgeField (writer, field.getType (), field.getOuterMessage (), "field", field.getName (), localFieldName (field), null);
+          writeDecodeFudgeField (writer, field.getType (), field.getOuterMessage (), "fudgeField", field.getName (), localFieldName (field), null);
         }
       } else {
         if (field.isRepeated ()) {
-          writer.ifGtZero ("fields.size ()");
+          writer.ifGtZero ("fudgeFields.size ()");
           writer = beginBlock (writer); // if guard
           final String tempList = writer.localVariable (getListType (field.getType (), false), true);
           endStmt (writer); // temp variable
           writeDecodeFudgeFieldsToList (writer, field, tempList);
           if (builder) {
-            writer.invoke ("objBuilder", localFieldName (field), tempList);
+            writer.invoke ("fudgeBuilder", localFieldName (field), tempList);
           } else {
-            writer.invoke ("obj", "set" + camelCaseFieldName (field), tempList);
+            writer.invoke ("fudgeObject", "set" + camelCaseFieldName (field), tempList);
           }
           endStmt (writer); // add to builder or object
         } else {
-          writer.ifNotNull ("field");
+          writer.ifNotNull ("fudgeField");
           writer = beginBlock (writer); // if guard
-          writeDecodeFudgeField (writer, field.getType (), field.getOuterMessage (), "field", field.getName (), null, builder ? "objBuilder." + localFieldName (field) : "obj.set" + camelCaseFieldName (field));
+          writeDecodeFudgeField (writer, field.getType (), field.getOuterMessage (), "fudgeField", field.getName (), null, builder ? "fudgeBuilder." + localFieldName (field) : "fudgeObject.set" + camelCaseFieldName (field));
         }
         writer = endBlock (writer); // if guard
       }
@@ -1016,24 +1045,24 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     writer.method (true, message.getName (), "fromFudgeMsg", "final " + CLASS_FUDGEFIELDCONTAINER + " fudgeMsg");
     writer = beginBlock (writer); // fromFudgeMsg
     if (hasRepeatedFields) {
-      writer.namedLocalVariable (CLASS_LIST + "<" + CLASS_FUDGEFIELD + ">", "fields", null);
+      writer.namedLocalVariable (CLASS_LIST + "<" + CLASS_FUDGEFIELD + ">", "fudgeFields", null);
       endStmt (writer); // fields declaration
     }
     if (hasNonRepeatedFields) {
-      writer.namedLocalVariable (CLASS_FUDGEFIELD, "field", null);
+      writer.namedLocalVariable (CLASS_FUDGEFIELD, "fudgeField", null);
       endStmt (writer); // field declaration
     }
     writeGetFudgeFields (writer, required, true, false);
     if (useBuilder) {
-      writer.namedLocalVariable ("Builder", "objBuilder", "new Builder (" + sbBuilderParams.toString () + ")");
+      writer.namedLocalVariable ("Builder", "fudgeBuilder", "new Builder (" + sbBuilderParams.toString () + ")");
       endStmt (writer); // objBuilder creation
       writeGetFudgeFields (writer, optional, false, true);
-      writer.returnInvoke ("objBuilder.build", null, null);
+      writer.returnInvoke ("fudgeBuilder.build", null, null);
     } else {
-      writer.namedLocalVariable (message.getName (), "obj", "new " + message.getName () + "(" + sbBuilderParams.toString () + ")");
+      writer.namedLocalVariable (message.getName (), "fudgeObject", "new " + message.getName () + "(" + sbBuilderParams.toString () + ")");
       endStmt (writer); // obj creation
       writeGetFudgeFields (writer, optional, false, false);
-      writer.returnVariable ("obj");
+      writer.returnVariable ("fudgeObject");
     }
     endStmt (writer); // create and return object
     endBlock (writer); // fromFudgeMsg

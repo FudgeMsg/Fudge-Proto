@@ -22,6 +22,7 @@ options {
 
 tokens {
 	ARRAY;
+	BINDING			= 'binding';
 	DEFAULT			= 'default';
 	DIM_FIXED;
 	DIM_VARIANT;
@@ -106,8 +107,45 @@ IDENTIFIER : ('a'..'z'|'A'..'Z'|'_')('a'..'z'|'A'..'Z'|'0'..'9'|'_')* ;
 INTEGER : ('+'|'-')? '0'..'9'+ ;
 FLOAT : ('+'|'-')? ('0'..'9')* '.' ('0'..'9')+ ( ('e'|'E') ('+'|'-')? ('0'..'9')+ )? ;
 ML_COMMENT : '/*' ( options { greedy = false; } : . )* '*/' { skip (); } ;
+// Note: the lex rule below is NOT correct
+ML_STRING : '<<<' ('a'..'z'|'A'..'Z')+ ('\r'|'\n') ( options { greedy = false; } : . )* ('\r'|'\n') ('a'..'z'|'A'..'Z')+ ';' ('\r'|'\n') ;
 STRING : '"' ( options { greedy = false; } : ('\\'.|.) )* '"' ;
 WHITESPACE : (' '|'\t'|'\r'|'\n')+ { skip (); } ;
+
+binding : BINDING^ binding_anyword '{'! binding_element * '}'! ;
+
+binding_anyword
+	: fullidentifier
+	| BINDING
+	| DEFAULT
+	| ENUM
+	| IMPORT
+	| MESSAGE
+	| MUTABLE
+	| NAMESPACE
+	| REPEATED
+	| REQUIRED
+	| T_BOOL
+	| T_BYTE
+	| T_DOUBLE
+	| T_FLOAT
+	| T_INDICATOR
+	| T_INT
+	| T_LONG
+	| T_SHORT
+	| T_STRING
+	| TAXONOMY
+	| USES
+	| STRING
+	;
+
+binding_element	: binding_anyword binding_text ;
+
+binding_text
+	: STRING ';'!
+	| ML_STRING
+	| fullidentifier ';'!
+	;
 
 constraint_default : DEFAULT^ '='! literal ;
 
@@ -189,6 +227,7 @@ message_element
 	: message_enum
 	| message_field
 	| message_submsg
+	| binding
 	;
 
 message_enum : ENUM^ IDENTIFIER '{'! enum_element* '}'! ;

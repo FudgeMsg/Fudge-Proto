@@ -44,7 +44,7 @@ public class FieldDefinition extends Definition {
     return _ordinal;
   }
   
-  public void setOrdinal (final Integer ordinal) {
+  /* package */ void setOrdinal (final Integer ordinal) {
     _ordinal = ordinal;
   }
   
@@ -56,7 +56,7 @@ public class FieldDefinition extends Definition {
     return _flagRequired;
   }
   
-  public void setRequired (final boolean required) {
+  /* package */ void setRequired (final boolean required) {
     _flagRequired = required;
   }
   
@@ -64,7 +64,7 @@ public class FieldDefinition extends Definition {
     return _flagRepeated;
   }
   
-  public void setRepeated (final boolean repeated) {
+  /* package */ void setRepeated (final boolean repeated) {
     _flagRepeated = repeated;
   }
   
@@ -72,7 +72,7 @@ public class FieldDefinition extends Definition {
     return _flagMutable;
   }
   
-  public void setMutable (final boolean mutable) {
+  /* package */ void setMutable (final boolean mutable) {
     _flagMutable = mutable;
   }
   
@@ -80,7 +80,7 @@ public class FieldDefinition extends Definition {
     return _defaultValue;
   }
   
-  public void setDefaultValue (final LiteralValue defaultValue) {
+  /* package */ void setDefaultValue (final LiteralValue defaultValue) {
     _defaultValue = defaultValue;
   }
   

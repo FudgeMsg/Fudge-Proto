@@ -65,6 +65,12 @@ public class CommandLineTest {
     fileAllCodeGenerators ("Mutables.proto");
   }
   
+  @Test
+  public void bindingFileAllCodeGenerators () {
+    fileAllCodeGenerators ("BindingJava.proto");
+    // TODO 2010-01-07 Andrew -- binding test file for other code generators
+  }
+  
   private void fileAllCodeGenerators (final String filename) {
     final CodeGeneratorFactory factory = new CodeGeneratorFactory ();
     // Don't assert on each call so that we get a plethora of error behaviours from all generators, not just the first one to fall over!

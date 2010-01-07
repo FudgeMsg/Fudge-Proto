@@ -40,6 +40,47 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
     return new ASTNode (node, children);
   }
   
+  private String getString (final AST node) {
+    switch (node.getNodeLabel ()) {
+    case ProtoLexer.IDENTIFIER : {
+      final StringBuilder sb = new StringBuilder (node.getNodeValue ());
+      final List<AST> children = node.getChildNodes ();
+      if (children != null) {
+        for (AST child : children) {
+          sb.append ('.').append (child.getNodeValue ());
+        }
+      }
+      return sb.toString ();
+    }
+    case ProtoLexer.STRING :
+      return ((LiteralValue.StringValue)LiteralValue.parse (node)).get ();
+    case ProtoLexer.ML_STRING : {
+      final String s = node.getNodeValue ().trim ().replace ("\r\n", "\n").replace ("\r", "\n");
+      int i = s.indexOf ('\n');
+      int j = s.lastIndexOf ('\n');
+      return s.substring (i + 1, j);
+    }
+    default :
+      return node.getNodeValue (); 
+    }
+  }
+  
+  private void walkBindingNode (final Compiler.Context context, final AST node, final MessageDefinition message) {
+    List<AST> children = node.getChildNodes ();
+    final String identifier = getString (children.get (0));
+    final Binding binding = message.createLanguageBinding (identifier);
+    for (int i = 1; i < children.size (); i += 2) {
+      final String key = getString (children.get (i));
+      final String value = getString (children.get (i + 1));
+      final Binding.Data prev = binding.getData (key);
+      if (prev != null) {
+        context.error (node.getCodePosition (), identifier + " language binding for " + message.getName () + " already defined for '" + key + "'");
+        context.warning (prev.getCodePosition (), "this was the location of the previous definition");
+      }
+      binding.setData (key, value, node.getCodePosition ());
+    }
+  }
+  
   private AST walkMessageNode (final Compiler.Context context, final AST node, final String namespace, final MessageDefinition outerMessage) {
     final List<AST> children = node.getChildNodes ();
     final String localNamespace;
@@ -54,6 +95,11 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
     for (int i = 1; i < children.size (); i++) {
       final AST element = children.get (i);
       switch (element.getNodeLabel ()) {
+      case ProtoLexer.BINDING :
+        walkBindingNode (context, element, messageDefinition);
+        children.remove (i);
+        i--;
+        break;
       case ProtoLexer.ENUM :
         children.set (i, walkEnumNode (context, element, localNamespace, messageDefinition));
         break;
@@ -118,9 +164,8 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
     final List<AST> children = node.getChildNodes ();
     if ((children == null) || (children.size () == 0)) return node;
     final StringBuilder identifier = new StringBuilder (node.getNodeValue ());
-    for (int i = 0; i < children.size (); i++) {
-      identifier.append ('.');
-      identifier.append (children.get (i).getNodeValue ());
+    for (AST child : children) {
+      identifier.append ('.').append (child.getNodeValue ());
     }
     return new ASTNode (ProtoLexer.IDENTIFIER, identifier.toString (), null, node.getCodePosition ()); 
   }

@@ -42,7 +42,7 @@ public abstract class StringIntPairDefinition extends Definition {
     return _elementsByIndex.get (index);    
   }
   
-  public void addElement (final String name, final int value) {
+  /* package */ void addElement (final String name, final int value) {
     _elementsByName.put (name, value);
     _elementsByIndex.put (value, name);
   }

@@ -15,6 +15,9 @@
 
 package org.fudgemsg.proto;
 
+import java.util.Map;
+import java.util.HashMap;
+
 /**
  * Base class for any 'definition' objects. There are some common behaviours for all such as
  * tracking the source code positions, but also this allows some item types to share a unique
@@ -30,10 +33,25 @@ public abstract class Definition {
   
   private final CodePosition _codePosition;
   
+  private final Map<String,Binding> _languageBindings = new HashMap<String,Binding> ();
+  
   /* package */ Definition (final String identifier, final CodePosition codePosition, final Definition outerDefinition) {
     _identifier = identifier;
     _codePosition = codePosition;
     _outerDefinition = outerDefinition;
+  }
+  
+  /* package */ Binding createLanguageBinding (final String identifier) {
+    Binding b = _languageBindings.get (identifier);
+    if (b != null) return b;
+    b = new Binding ();
+    _languageBindings.put (identifier, b);
+    return b;
+  }
+  
+  public Binding getLanguageBinding (final String identifier) {
+    final Binding b = _languageBindings.get (identifier);
+    return (b != null) ? b : Binding.EMPTY_BINDING;
   }
   
   public String getIdentifier () {

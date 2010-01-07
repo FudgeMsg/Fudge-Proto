@@ -26,6 +26,7 @@ lexer grammar Proto;
   import org.fudgemsg.proto.Source;
 }
 
+BINDING : 'binding' ;
 DEFAULT : 'default' ;
 ENUM : 'enum' ;
 IMPORT : 'import' ;
@@ -45,46 +46,49 @@ T_SHORT : 'short' ;
 T_STRING : 'string' ;
 TAXONOMY : 'taxonomy' ;
 USES : 'uses' ;
-T__37 : '=' ;
-T__38 : '[' ;
-T__39 : ']' ;
-T__40 : ';' ;
-T__41 : ',' ;
-T__42 : 'optional' ;
-T__43 : 'boolean' ;
-T__44 : 'int8' ;
-T__45 : 'int16' ;
-T__46 : 'int32' ;
-T__47 : 'uint32' ;
-T__48 : 'sint32' ;
-T__49 : 'fixed32' ;
-T__50 : 'sfixed32' ;
-T__51 : 'integer' ;
-T__52 : 'int64' ;
-T__53 : 'uint64' ;
-T__54 : 'sint64' ;
-T__55 : 'fixed64' ;
-T__56 : 'sfixed64' ;
-T__57 : 'float32' ;
-T__58 : 'float64' ;
-T__59 : '.' ;
-T__60 : '{' ;
-T__61 : '}' ;
+T__39 : '{' ;
+T__40 : '}' ;
+T__41 : ';' ;
+T__42 : '=' ;
+T__43 : '[' ;
+T__44 : ']' ;
+T__45 : ',' ;
+T__46 : 'optional' ;
+T__47 : 'boolean' ;
+T__48 : 'int8' ;
+T__49 : 'int16' ;
+T__50 : 'int32' ;
+T__51 : 'uint32' ;
+T__52 : 'sint32' ;
+T__53 : 'fixed32' ;
+T__54 : 'sfixed32' ;
+T__55 : 'integer' ;
+T__56 : 'int64' ;
+T__57 : 'uint64' ;
+T__58 : 'sint64' ;
+T__59 : 'fixed64' ;
+T__60 : 'sfixed64' ;
+T__61 : 'float32' ;
+T__62 : 'float64' ;
+T__63 : '.' ;
 
-// $ANTLR src "org/fudgemsg/proto/antlr/Proto.g" 103
-COMMENT : '//' ( options { greedy = false; } : . )* ('\n'|'\r') { skip (); } ;
 // $ANTLR src "org/fudgemsg/proto/antlr/Proto.g" 104
-DOC_COMMENT : '/**' (' '|'\t'|'\r'|'\n') ( options { greedy = false; } : . )* '*/' ;
+COMMENT : '//' ( options { greedy = false; } : . )* ('\n'|'\r') { skip (); } ;
 // $ANTLR src "org/fudgemsg/proto/antlr/Proto.g" 105
-IDENTIFIER : ('a'..'z'|'A'..'Z'|'_')('a'..'z'|'A'..'Z'|'0'..'9'|'_')* ;
+DOC_COMMENT : '/**' (' '|'\t'|'\r'|'\n') ( options { greedy = false; } : . )* '*/' ;
 // $ANTLR src "org/fudgemsg/proto/antlr/Proto.g" 106
-INTEGER : ('+'|'-')? '0'..'9'+ ;
+IDENTIFIER : ('a'..'z'|'A'..'Z'|'_')('a'..'z'|'A'..'Z'|'0'..'9'|'_')* ;
 // $ANTLR src "org/fudgemsg/proto/antlr/Proto.g" 107
-FLOAT : ('+'|'-')? ('0'..'9')* '.' ('0'..'9')+ ( ('e'|'E') ('+'|'-')? ('0'..'9')+ )? ;
+INTEGER : ('+'|'-')? '0'..'9'+ ;
 // $ANTLR src "org/fudgemsg/proto/antlr/Proto.g" 108
-ML_COMMENT : '/*' ( options { greedy = false; } : . )* '*/' { skip (); } ;
+FLOAT : ('+'|'-')? ('0'..'9')* '.' ('0'..'9')+ ( ('e'|'E') ('+'|'-')? ('0'..'9')+ )? ;
 // $ANTLR src "org/fudgemsg/proto/antlr/Proto.g" 109
+ML_COMMENT : '/*' ( options { greedy = false; } : . )* '*/' { skip (); } ;
+// Note: the lex rule below is NOT correct
+// $ANTLR src "org/fudgemsg/proto/antlr/Proto.g" 111
+ML_STRING : '<<<' ('a'..'z'|'A'..'Z')+ ('\r'|'\n') ( options { greedy = false; } : . )* ('\r'|'\n') ('a'..'z'|'A'..'Z')+ ';' ('\r'|'\n') ;
+// $ANTLR src "org/fudgemsg/proto/antlr/Proto.g" 112
 STRING : '"' ( options { greedy = false; } : ('\\'.|.) )* '"' ;
-// $ANTLR src "org/fudgemsg/proto/antlr/Proto.g" 110
+// $ANTLR src "org/fudgemsg/proto/antlr/Proto.g" 113
 WHITESPACE : (' '|'\t'|'\r'|'\n')+ { skip (); } ;
 
