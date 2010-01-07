@@ -109,12 +109,30 @@ import org.fudgemsg.proto.EnumDefinition;
     _writer.write (fieldRef);
     _writer.write ("' is not ");
     _writer.write (expected);
-    _writer.write ("\"");
+    _writer.write ('\"');
     if (cause != null) {
       _writer.write (", ");
       _writer.write (cause);
     }
-    _writer.write (")");
+    _writer.write (')');
+  }
+  
+  /* package */ void throwAssertionError (final String message) throws IOException {
+    _writer.write ("throw new AssertionError (\"");
+    _writer.write (message);
+    _writer.write ("\")");
+  }
+  
+  /* package */ void throwNullParameterException (final String variable) throws IOException {
+    _writer.write ("throw new NullPointerException (\"");
+    _writer.write (variable);
+    _writer.write (" must not be null\")");
+  }
+  
+  /* package */ void throwEmptyListException (final String variable) throws IOException {
+    _writer.write ("throw new IllegalArgumentException (\"");
+    _writer.write (variable);
+    _writer.write (" must not be an empty list\")");
   }
 
   /* package */ void defaultThrowInvalidFudgeEnumException (final EnumDefinition enumDefinition, final String encodedValueExpr) throws IOException {
@@ -146,6 +164,12 @@ import org.fudgemsg.proto.EnumDefinition;
     _writer.write ("if (");
     _writer.write (test);
     _writer.write (" == 0) ");
+  }
+  
+  /* package */ void ifEmptyList (final String test) throws IOException {
+    _writer.write ("if (");
+    _writer.write (test);
+    _writer.write (".size () == 0) ");
   }
   
   /* package */ void ifGtZero (final String test) throws IOException {
@@ -245,6 +269,14 @@ import org.fudgemsg.proto.EnumDefinition;
     _writer.write ("catch (IllegalArgumentException e)");
   }
   
+  /* package */ void catchCloneNotSupportedException () throws IOException {
+    _writer.write ("catch (CloneNotSupportedException e)");
+  }
+  
+  /* package */ void otherwise () throws IOException {
+    _writer.write ("else");
+  }
+  
   /* package */ void method (final boolean isStatic, final String returnType, final String name, final String params) throws IOException {
     _writer.write ("public ");
     if (isStatic) _writer.write ("static ");
@@ -281,8 +313,13 @@ import org.fudgemsg.proto.EnumDefinition;
     _writer.write (value);
   }
 
-  /* package */ void returnInvoke (final String target, final String params) throws IOException {
+  /* package */ void returnInvoke (final String target, final String params, final String cast) throws IOException {
     _writer.write ("return ");
+    if (cast != null) {
+      _writer.write ('(');
+      _writer.write (cast);
+      _writer.write (')');
+    }
     invoke (target, params);
   }
   
@@ -347,7 +384,7 @@ import org.fudgemsg.proto.EnumDefinition;
     _writer.write (retValue);
   }
   
-  /* package */ void classDef (final boolean isStatic, final String clazz, final String extendsClass) throws IOException {
+  /* package */ void classDef (final boolean isStatic, final String clazz, final String extendsClass, final String interfaceClass) throws IOException {
     _writer.write ("public ");
     if (isStatic) _writer.write ("static ");
     _writer.write (" final class ");
@@ -356,6 +393,10 @@ import org.fudgemsg.proto.EnumDefinition;
       _writer.write (" extends ");
       _writer.write (extendsClass);
     }
+    if (interfaceClass != null) {
+      _writer.write (" implements ");
+      _writer.write (interfaceClass);
+    }      
   }
 
   /* package */ void elseReturnFalse () throws IOException {
