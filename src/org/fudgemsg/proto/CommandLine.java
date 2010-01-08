@@ -112,17 +112,22 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
     }
     return (errors > 0) ? 1 : 0;
   }
+  
+  private static boolean checkPackage (final String testClass, final String packageName) {
+    try {
+      Class.forName (testClass, false, CommandLine.class.getClassLoader ());
+      return true;
+    } catch (ClassNotFoundException e) {
+      compilerMessage (MSG_ERROR, null, "The " + packageName + " is not available in the classpath");
+      return false;
+    }
+  }
     
   /**
    * Program entry point.
    */
   public static void main (final String[] args) {
-    try {
-      Class.forName ("org.antlr.runtime.Parser", false, CommandLine.class.getClassLoader ());
-    } catch (ClassNotFoundException e) {
-      compilerMessage (MSG_ERROR, null, "The ANTLR runtime is not available in the classpath");
-      System.exit (1);
-    }
+    if (!checkPackage ("org.antlr.runtime.Parser", "antlr3") || !checkPackage ("org.fudgemsg.FudgeMsg", "fudge-java")) System.exit (1);
     System.exit (compile (args));
   }
   

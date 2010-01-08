@@ -269,7 +269,7 @@ public class TypesTest {
   @Test
   public void builderSingleValues () {
     final FudgeContext context = new FudgeContext ();
-    final Types object = new Types.Builder ().sBool (true).sByte ((byte)1).sDouble (2).sFloat (3).sIndicator (true).sInt (4).sLong (5).sShort ((short)6).sString ("7").sSubMessage (new SubMessage.Builder (8, "9").build ()).sCustomEnum (CustomEnum.SECOND).build ();
+    final Types object = new Types.Builder ().sBool (true).sByte ((byte)1).sDouble (2).sFloat (3).sIndicator (true).sInt (4).sLong (5).sShort ((short)6).sString ("7").sSubMessage (new SubMessage (8, "9")).sCustomEnum (CustomEnum.SECOND).build ();
     final FudgeMsg message = object.toFudgeMsg (context);
     final Types object2 = Types.fromFudgeMsg (message);
     compareTypes (object, object2);
@@ -296,7 +296,7 @@ public class TypesTest {
       aInt[i] = i;
       aShort[i] = (short)i;
       aString[i] = Integer.toString (i);
-      aSubMessage[i] = new SubMessage.Builder (i, Integer.toString (i)).build ();
+      aSubMessage[i] = new SubMessage (i, Integer.toString (i));
       aCustomEnum[i] = CustomEnum.fromFudgeEncoding ((i & 3) + 1);
     }
     final Types object = builder.aBool(aBool).aByte (aByte).aDouble (aDouble).aFloat (aFloat).aInt (aInt).aShort (aShort).aString (aString).aSubMessage (aSubMessage).aCustomEnum (aCustomEnum).build ();
