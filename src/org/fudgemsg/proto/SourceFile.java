@@ -32,10 +32,16 @@ public class SourceFile implements Source {
   public static interface Resolver {
     
     /**
-     * Returns a candidate file to contain the identifier, or null if no logics are available.
+     * Returns a candidate target file to contain the identifier, or null if no logics are available.
      * The files doesn't have to exist - we will check for that before continuing. 
      */
-    public File findSource (final String identifier) throws IOException;
+    public File findCompilationTargetSource (final String identifier) throws IOException;
+    
+    /**
+     * Returns a candidate non-target file to contain the identifier, or null if no logics are available.
+     * The files doesn't have to exist - we will check for that before continuing. 
+     */
+    public File findNonCompilationTargetSource (final String identifier) throws IOException;
     
   }
   
@@ -43,13 +49,24 @@ public class SourceFile implements Source {
   
   private final Resolver _resolver;
   
+  private final boolean _isCompilationTarget;
+  
   public SourceFile (final File file) {
-    this (file, null);
+    this (file, null, true);
+  }
+  
+  public SourceFile (final File file, final boolean isCompilationTarget) {
+    this (file, null, isCompilationTarget);
   }
   
   public SourceFile (final File file, final Resolver resolver) {
+    this (file, resolver, true);
+  }
+  
+  public SourceFile (final File file, final Resolver resolver, final boolean isCompilationTarget) {
     _file = file;
     _resolver = resolver;
+    _isCompilationTarget = isCompilationTarget;
   }
   
   @Override
@@ -60,10 +77,16 @@ public class SourceFile implements Source {
   @Override
   public Source findSource (final String identifier) throws IOException {
     if (_resolver == null) return null;
-    final File f = _resolver.findSource (identifier);
-    if (f == null) return null;
-    if (!f.exists ()) return null;
-    return new SourceFile (f, _resolver);
+    File f = _resolver.findCompilationTargetSource (identifier);
+    if ((f != null) && (f.exists ())) return new SourceFile (f, _resolver, true);
+    f = _resolver.findNonCompilationTargetSource (identifier);
+    if ((f != null) && (f.exists ())) return new SourceFile (f, _resolver, false);
+    return null;
+  }
+  
+  @Override
+  public boolean isCompilationTarget () {
+    return _isCompilationTarget;
   }
   
   @Override

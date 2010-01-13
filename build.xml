@@ -63,6 +63,16 @@
                 </junitreport>
         </target>
 
+	<target name="test-ant" depends="compile-src" description="--> test the ant task">
+		<path id="fudge.proto.path.id">
+			<path refid="lib.path.id" />
+			<pathelement path="${classes.dir}" />
+		</path>
+		<taskdef name="fudgeproto" classname="org.fudgemsg.proto.AntTask" classpathref="fudge.proto.path.id" />
+		<mkdir dir="${tests.dir}/out_ant" />
+		<fudgeproto srcdir="${tests.dir}/proto" destdir="${tests.dir}/out_ant" verbose="${build.verbose}" />
+	</target>
+
 	<target name="rpm" depends="jar,javadoc-jar" description="--> build the RPM distribution">
 		<copy file="rpm/fudge-proto.spec" todir="${rpmbuild.dir}/SPECS" />
 		<copy file="classes/fudge-proto.jar" todir="${rpmbuild.dir}/SOURCES" />

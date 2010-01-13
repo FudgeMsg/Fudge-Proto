@@ -80,6 +80,10 @@ public abstract class Definition {
     return _outerDefinition;
   }
   
+  /* package */ boolean isCompilationTarget () {
+    return _codePosition.getSource ().isCompilationTarget ();
+  }
+  
   @Override
   public String toString () {
     return _identifier + "[" + _codePosition + "] = " + getClass ().getName ();

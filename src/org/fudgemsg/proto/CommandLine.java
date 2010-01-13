@@ -17,6 +17,8 @@ package org.fudgemsg.proto;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * A basic command line compiler.
@@ -31,6 +33,8 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
   
   private File _sourceDir = new File (".");
   
+  private List<File> _searchDirs = new ArrayList<File> ();
+  
   private CommandLine () {
   }
   
@@ -40,6 +44,10 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
     sb.append (pfx).append (": ");
     sb.append (message);
     System.err.println (sb.toString ());
+  }
+  
+  private void addSearchDir (final File path) {
+    _searchDirs.add (path);
   }
   
   @Override
@@ -52,18 +60,34 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
     compilerMessage (MSG_ERROR, position, message);
   }
   
-  @Override
-  public File findSource (final String identifier) throws IOException {
-    final String[] identifierAsArray = identifier.split ("\\.");
+  private File findSource (final File dir, final String[] identifier) throws IOException {
     final StringBuilder stem = new StringBuilder ();
-    for (int i = 0; i < identifierAsArray.length; i++) {
+    for (int i = 0; i < identifier.length; i++) {
       if (i > 0) stem.append (File.separatorChar);
-      stem.append (identifierAsArray[i]);
+      stem.append (identifier[i]);
       final int ext = stem.length ();
       stem.append (".proto");
-      final File f = new File (_sourceDir, stem.toString ());
+      final File f = new File (dir, stem.toString ());
       stem.delete (ext, ext + 6);
       if (f.exists ()) return f;
+    }
+    return null;
+  }
+  
+  @Override
+  public File findCompilationTargetSource (final String identifier) throws IOException {
+    final String[] identifierAsArray = identifier.split ("\\.");
+    final File f;
+    if ((f = findSource (_sourceDir, identifierAsArray)) != null) return f;
+    return null;
+  }
+  
+  @Override
+  public File findNonCompilationTargetSource (final String identifier) throws IOException {
+    final String[] identifierAsArray = identifier.split ("\\.");
+    for (File dir : _searchDirs) {
+      final File f;
+      if ((f = findSource (dir, identifierAsArray)) != null) return f;
     }
     return null;
   }
@@ -84,11 +108,14 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
         case 'd' : // -d<path>        Select an output folder for the generated files
           compiler.setTargetPath (new File (args[i].substring (2)));
           break;
-        case 'l': // -l<language>     Select a language binding for the output files
+        case 'l' : // -l<language>    Select a language binding for the output files
           compiler.setCodeGenerator(codeGeneratorFactory.createCodeGenerator(args[i].substring(2)));
           break;
-        case 's': // -s<path>         Select a source folder for loading in referenced files
+        case 's' : // -s<path>        Select a source folder for loading in referenced files
           cmdLine._sourceDir = new File (args[i].substring (2));
+          break;
+        case 'p' : // -p<path>        Add a source folder for loading additional .proto files from (no code will be generated)
+          cmdLine.addSearchDir (new File (args[i].substring (2)));
           break;
         default:
           cmdLine.compilerError (null, "invalid command line option " + args[i]);

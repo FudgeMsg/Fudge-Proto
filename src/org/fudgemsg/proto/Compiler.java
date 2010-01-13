@@ -333,19 +333,21 @@ public class Compiler {
       }
       // Phase 6 - generate output code from the model
       for (Definition definition : _definitions.values ()) {
-        try {
-          if (definition instanceof EnumDefinition) {
-            _codeGenerator.generateCode (_context, (EnumDefinition)definition, _targetPath);
-          } else if (definition instanceof MessageDefinition) {
-            _codeGenerator.generateCode (_context, (MessageDefinition)definition, _targetPath);
-          } else if (definition instanceof TaxonomyDefinition) {
-            _codeGenerator.generateCode (_context, (TaxonomyDefinition)definition, _targetPath);
+        if (definition.isCompilationTarget ()) {
+          try {
+            if (definition instanceof EnumDefinition) {
+              _codeGenerator.generateCode (_context, (EnumDefinition)definition, _targetPath);
+            } else if (definition instanceof MessageDefinition) {
+              _codeGenerator.generateCode (_context, (MessageDefinition)definition, _targetPath);
+            } else if (definition instanceof TaxonomyDefinition) {
+              _codeGenerator.generateCode (_context, (TaxonomyDefinition)definition, _targetPath);
+            }
+          } catch (CompilationException e) {
+            throw e; // default error handler
+          } catch (RuntimeException e) {
+            error (definition.getCodePosition (), "uncaught exception from code generator");
+            if (_rethrowExceptions) throw new CompilationException ("uncaught exception from code generator", e);
           }
-        } catch (CompilationException e) {
-          throw e; // default error handler
-        } catch (RuntimeException e) {
-          error (definition.getCodePosition (), "uncaught exception from code generator");
-          if (_rethrowExceptions) throw new CompilationException ("uncaught exception from code generator", e);
         }
       }
       // Phase 7 - optional cleanup for the code generator (e.g. closing stuff)

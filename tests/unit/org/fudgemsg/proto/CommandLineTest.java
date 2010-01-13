@@ -29,6 +29,7 @@ public class CommandLineTest {
     assertEquals (CommandLine.compile (new String[] { "-dtests" + File.separatorChar + "output" }), 0); // select a different output folder
     assertEquals (CommandLine.compile (new String[] { "-lC#" }), 0); // select a different language
     assertEquals (CommandLine.compile (new String[] { "-stests" + File.separatorChar + "proto" }), 0); // select a different language
+    assertEquals (CommandLine.compile (new String[] { "-ptests" + File.separatorChar + "out_proto" }), 0); // set a search path
     assertEquals (CommandLine.compile (new String[] { "-x" }), 1); // bad parameter
   }
   

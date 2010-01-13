@@ -33,6 +33,11 @@ public interface Source {
   public Reader openReader () throws IOException;
   
   /**
+   * Indicates whether the source is to be used to drive output, or is merely for reference.
+   */
+  public boolean isCompilationTarget ();
+  
+  /**
    * Returns a Source object that contains a given definition (e.g. based on filesystem conventions), or null
    * if there is none available.
    */

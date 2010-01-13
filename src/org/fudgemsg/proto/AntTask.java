@@ -32,6 +32,8 @@ public class AntTask extends Task {
   
   private String _destdir = "src";
   
+  private String _searchdir = null;
+  
   private boolean _verbose = false;
   
   public void setSrcdir (final String srcdir) {
@@ -40,6 +42,10 @@ public class AntTask extends Task {
   
   public void setDestdir (final String destdir) {
     _destdir = destdir;
+  }
+  
+  public void setSearchdir (final String searchdir) {
+    _searchdir = searchdir;
   }
   
   public void setVerbose (final String verbose) {
@@ -81,6 +87,14 @@ public class AntTask extends Task {
     args.add ("-d" + _destdir);
     args.add ("-s" + _srcdir);
     args.add ("-lJava");
+    if (_searchdir != null) {
+      for (String dir : _searchdir.split (File.pathSeparator)) {
+        if (_verbose) {
+          System.out.println ("Searching " + dir); 
+        }
+        args.add ("-p" + dir);
+      }
+    }
     findFiles (new File (_srcdir), new File (_destdir), ".proto", ".java", args);
     if (CommandLine.compile (args.toArray (new String[args.size ()])) > 0) throw new BuildException ("compilation failed"); 
   }
