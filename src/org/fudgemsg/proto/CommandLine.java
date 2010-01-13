@@ -79,7 +79,7 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
     compiler.setWarningListener (cmdLine);
     compiler.setErrorListener (cmdLine);
     for (int i = 0; i < args.length; i++) {
-      if ((args[i].charAt (0) == '-') || (args[i].charAt (0) == '/')) {
+      if (args[i].charAt (0) == '-') {
         switch (args[i].charAt (1)) {
         case 'd' : // -d<path>        Select an output folder for the generated files
           compiler.setTargetPath (new File (args[i].substring (2)));
@@ -95,7 +95,7 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
           return 1;
         }
       } else {
-        final File f = (cmdLine._sourceDir != null) ? new File (cmdLine._sourceDir, args[i]) : new File (args[i]);
+        final File f = ((args[i].charAt (0) != '/') && (cmdLine._sourceDir != null)) ? new File (cmdLine._sourceDir, args[i]) : new File (args[i]);
         if (f.exists ()) {
           compiler.addSource (new SourceFile (f, cmdLine));
         } else {
@@ -122,12 +122,16 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
       return false;
     }
   }
+  
+  public static boolean checkPackages () {
+    return checkPackage ("org.antlr.runtime.Parser", "antlr3") && checkPackage ("org.fudgemsg.FudgeMsg", "fudge-java");
+  }
     
   /**
    * Program entry point.
    */
   public static void main (final String[] args) {
-    if (!checkPackage ("org.antlr.runtime.Parser", "antlr3") || !checkPackage ("org.fudgemsg.FudgeMsg", "fudge-java")) System.exit (1);
+    if (!checkPackages ()) System.exit (1);
     System.exit (compile (args));
   }
   

@@ -141,6 +141,15 @@ public abstract class FieldType {
       return _length;
     }
     
+    /**
+     * Returns true if one of the base types is of fixed length. 
+     */
+    public boolean isDeepFixedLength () {
+      if (!(_baseType instanceof ArrayType)) return false;
+      final FieldType.ArrayType baseArray = (FieldType.ArrayType)_baseType;
+      return baseArray.isFixedLength () || baseArray.isDeepFixedLength ();
+    }
+    
     public FieldType getBaseType () {
       return _baseType;
     }
@@ -151,6 +160,20 @@ public abstract class FieldType {
       if (length != null) sb.append ((int)length);
       sb.append (']');
       return sb.toString ();
+    }
+    
+    @Override
+    public boolean equals (final Object o) {
+      if (o == null) return false;
+      if (!(o instanceof ArrayType)) return false;
+      final ArrayType a = (ArrayType)o;
+      if (_length == null) {
+        if (a._length != null) return false;
+      } else {
+        if (a._length == null) return false;
+        if (getFixedLength () != a.getFixedLength ()) return false;
+      }
+      return _baseType.equals (a._baseType);
     }
     
   }
@@ -176,6 +199,13 @@ public abstract class FieldType {
       return _messageDefinition.getName () + " message";
     }
     
+    @Override
+    public boolean equals (final Object o) {
+      if (o == null) return false;
+      if (!(o instanceof MessageType)) return false;
+      return _messageDefinition.equals (((MessageType)o)._messageDefinition);
+    }
+    
   }
   
   /**
@@ -192,6 +222,13 @@ public abstract class FieldType {
     
     public EnumDefinition getEnumDefinition () {
       return _enumDefinition;
+    }
+    
+    @Override
+    public boolean equals (final Object o) {
+      if (o == null) return false;
+      if (!(o instanceof EnumType)) return false;
+      return _enumDefinition.equals (((EnumType)o)._enumDefinition);
     }
     
   }

@@ -14,30 +14,36 @@
  * limitations under the License.
  */
 
-package org.fudgemsg.proto.c;
+package org.fudgemsg.proto.csharp;
 
 import org.fudgemsg.proto.LiteralValue;
 import org.fudgemsg.proto.FieldDefinition;
+import org.fudgemsg.proto.c.CStyleLiteralCode;
 import org.fudgemsg.proto.proto.LiteralCode;
 
 /**
- * Implementation of a code generator for C languages that can be reused for others with a similar syntax.
+ * Implementation of a code generator for Java language.
  * 
  * @author Andrew
  */
-public class CLiteralCode extends CStyleLiteralCode {
+public class CSharpLiteralCode extends CStyleLiteralCode {
   
-  public static final LiteralCode INSTANCE = new CLiteralCode ();
+  public static final LiteralCode INSTANCE = new CSharpLiteralCode ();
   
-  private CLiteralCode () {
-    escape ((char)007, "a");
-    escape ((char)013, "v");
+  private CSharpLiteralCode () {
+  }
+  
+  @Override
+  public String privateFieldName (final FieldDefinition field) {
+    return "m_" + camelCaseFieldName (field);
   }
   
   @Override
   protected String getLiteral (final LiteralValue.EnumValue value) {
-    // TODO 2009-12-29 Andrew -- generate a C ENUM value
-    return "TODO-CLiteralCode::getLiteral";
+    final StringBuilder sb = new StringBuilder (value.getEnumDefinition ().getIdentifier ());
+    sb.append ('.');
+    sb.append (value.get ());
+    return sb.toString ();
   }
   
 }

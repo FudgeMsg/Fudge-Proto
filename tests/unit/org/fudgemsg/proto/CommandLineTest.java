@@ -16,12 +16,10 @@
 package org.fudgemsg.proto;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
+
+import java.io.File;
 
 import org.junit.Test;
-import java.io.File;
 
 public class CommandLineTest {
   
@@ -63,6 +61,11 @@ public class CommandLineTest {
   @Test
   public void mutablesFileAllCodeGenerators () {
     fileAllCodeGenerators ("Mutables.proto");
+  }
+  
+  @Test
+  public void inheritanceFileAllCodeGenerators () {
+    fileAllCodeGenerators ("inheritance.proto");
   }
   
   @Test

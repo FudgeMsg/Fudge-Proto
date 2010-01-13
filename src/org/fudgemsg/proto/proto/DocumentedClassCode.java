@@ -23,7 +23,9 @@ import java.util.Date;
 import org.fudgemsg.proto.Compiler;
 import org.fudgemsg.proto.IndentWriter;
 import org.fudgemsg.proto.MessageDefinition;
+import org.fudgemsg.proto.Definition;
 import org.fudgemsg.proto.TaxonomyDefinition;
+import org.fudgemsg.proto.EnumDefinition;
 
 /**
  * Writes out brief documentation before various nodes. Subclassing this could be used to build a Javadoc / XMLdoc or
@@ -57,24 +59,38 @@ public class DocumentedClassCode extends ClassCodeAdapter {
     // default no-op
   }
   
+  private void createdFrom (final IndentWriter writer, final Definition definition) throws IOException {
+    comment (writer, "created from " + definition.getCodePosition ());
+  }
+  
   @Override
   public void beginClassImplementationDeclaration(final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
-    comment (writer, "created from " + message.getCodePosition ());
+    createdFrom (writer, message);
   }
   
   @Override
   public void writeTaxonomyImplementationDeclaration (final Compiler.Context context, final TaxonomyDefinition taxonomy, final IndentWriter writer) throws IOException {
-    comment (writer, "created from " + taxonomy.getCodePosition ());
+    createdFrom (writer, taxonomy);
   }
   
   @Override
   public void beginClassHeaderDeclaration(final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
-    comment (writer, "created from " + message.getCodePosition ());
+    createdFrom (writer, message);
   }
   
   @Override
   public void writeTaxonomyHeaderDeclaration (final Compiler.Context context, final TaxonomyDefinition taxonomy, final IndentWriter writer) throws IOException {
-    comment (writer, "created from " + taxonomy.getCodePosition ());
+    createdFrom (writer, taxonomy);
+  }
+  
+  @Override
+  public void writeEnumHeaderDeclaration (final Compiler.Context context, final EnumDefinition enumDefinition, final IndentWriter writer) throws IOException {
+    createdFrom (writer, enumDefinition);
+  }
+  
+  @Override
+  public void writeEnumImplementationDeclaration (final Compiler.Context context, final EnumDefinition enumDefinition, final IndentWriter writer) throws IOException {
+    createdFrom (writer, enumDefinition);
   }
   
 }

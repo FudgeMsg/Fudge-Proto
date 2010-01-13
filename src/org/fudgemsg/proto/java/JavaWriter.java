@@ -126,7 +126,6 @@ import org.fudgemsg.proto.EnumDefinition;
     }
     if (shortestWhitespace == Integer.MAX_VALUE)
       shortestWhitespace = 0;
-    System.out.println("sws=" + shortestWhitespace);
     for (String line : lines) {
       _writer.write(" * ");
       _writer.write(line.substring(shortestWhitespace));
@@ -174,6 +173,14 @@ import org.fudgemsg.proto.EnumDefinition;
     _writer.write(variable);
     _writer.write(" must not be an empty list\")");
   }
+  
+  /* package */ void throwWrongSizedArrayException (final String variable, final int size) throws IOException {
+    _writer.write ("throw new IllegalArgumentException (\"");
+    _writer.write (variable);
+    _writer.write (" is not the expected length (");
+    _writer.write (Integer.toString (size));
+    _writer.write (")\")");
+  }
 
   /* package */void defaultThrowInvalidFudgeEnumException(
       final EnumDefinition enumDefinition, final String encodedValueExpr)
@@ -215,6 +222,19 @@ import org.fudgemsg.proto.EnumDefinition;
     _writer.write("if (");
     _writer.write(test);
     _writer.write(".size () == 0) ");
+  }
+  
+  /* package */ void ifSizeNot (final String object, final String method, final int value) throws IOException {
+    _writer.write ("if (");
+    // object needs extra parens if it has a cast at the front
+    if (object.charAt (0) == '(') _writer.write ('(');
+    _writer.write (object);
+    if (object.charAt (0) == '(') _writer.write (')');
+    _writer.write ('.');
+    _writer.write (method);
+    _writer.write (" != ");
+    _writer.write (Integer.toString (value));
+    _writer.write (") ");
   }
 
   /* package */void ifGtZero(final String test) throws IOException {
@@ -344,9 +364,10 @@ import org.fudgemsg.proto.EnumDefinition;
     _writer.write(')');
   }
 
-  /* package */void constructor(final boolean isPublic, final String clazz,
+  /* package */void constructor(final String visibility, final String clazz,
       final String params) throws IOException {
-    _writer.write(isPublic ? "public " : "private ");
+    _writer.write(visibility);
+    _writer.write (' ');
     _writer.write(clazz);
     _writer.write(" (");
     if (params != null)
@@ -457,7 +478,7 @@ import org.fudgemsg.proto.EnumDefinition;
     _writer.write("public ");
     if (isStatic)
       _writer.write("static ");
-    _writer.write(" final class ");
+    _writer.write("class ");
     _writer.write(clazz);
     if (extendsClass != null) {
       _writer.write(" extends ");

@@ -18,6 +18,7 @@
         <dependency org="org.junit" name="junit" rev="4.7" conf="core->*"/>
         <dependency org="org.antlr" name="antlr" rev="3.1" conf="core->*"/>
         <dependency org="org.fudgemsg" name="fudge" rev="1.0-dev-b6" conf="*->core"/>
+        <dependency org="org.apache.ant" name="ant" rev="1.7.1" conf="core->*" />
     </dependencies>
 </ivy-module>
 

@@ -116,6 +116,8 @@ public abstract class MessageDefinition extends Definition {
     
   }
   
+  private MessageDefinition _baseMessage;
+  
   private MessageDefinition (final String identifier, final CodePosition codePosition, final MessageDefinition outerMessage) {
     super (identifier, codePosition, outerMessage);
   }
@@ -190,6 +192,20 @@ public abstract class MessageDefinition extends Definition {
     }
     sb.append ("}");
     return sb.toString ();
+  }
+  
+  public boolean extendsFrom (final MessageDefinition message) {
+    if (_baseMessage == null) return false;
+    if (message.equals (_baseMessage)) return true;
+    return _baseMessage.extendsFrom (message);
+  }
+  
+  public MessageDefinition getExtends () {
+    return _baseMessage;
+  }
+  
+  public void setExtends (final MessageDefinition message) {
+    _baseMessage = message;
   }
   
 }

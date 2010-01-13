@@ -76,6 +76,11 @@ namespace org.fudgemsg.tests {
 		SubMessage[][]	aaSubMessage;
 		CustomEnum[][]	aaCustomEnum;
 		
+		int[42]			fixedArray1;
+		int[42][]		fixedArray2;
+		int[][42]		fixedArray3;
+		int[42][42]		fixedArray4;
+		
 	}
 
 }

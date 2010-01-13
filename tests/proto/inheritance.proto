@@ -1,0 +1,39 @@
+// Test the inheritance / poly-morphism mechanism
+
+namespace org.fudgemsg.tests {
+
+	message BaseClassA {
+		optional int bcA_o;
+		repeated int bcA_r;
+		required int bcA_q;
+		repeated required int bcA_rq;
+	}
+	
+	message BaseClassB {
+		optional int bcB_o;
+		repeated int bcB_r;
+		required int bcB_q;
+		repeated required int bcB_rq;
+	}
+	
+	message SubClassA2 extends SubClassA {
+		optional int scA2_o;
+		repeated int scA2_r;
+		required int scA2_q;
+		repeated required int scA2_rq;
+	}
+	
+	message SubClassA extends BaseClassA {
+		optional int scA_o;
+		repeated int scA_r;
+		required int scA_q;
+		repeated required int scA_rq;
+	}
+	
+	/* // for if/when multi-inheritance is supported 
+	message SubClassAB extends BaseClassA, BaseClassB {
+		int scAB;
+	}
+	*/
+
+}

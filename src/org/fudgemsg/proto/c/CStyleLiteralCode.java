@@ -30,7 +30,7 @@ import org.fudgemsg.proto.proto.LiteralCode;
  */
 public abstract class CStyleLiteralCode implements LiteralCode {
   
-  private final HashMap<Character,String> _escapeChars = new HashMap<Character,String>(); 
+  private final HashMap<Character,String> _escapeChars = new HashMap<Character,String>();
   
   protected CStyleLiteralCode () {
     escape ('\0', "0");
@@ -54,18 +54,18 @@ public abstract class CStyleLiteralCode implements LiteralCode {
   }
   
   @Override
-  public String camelCaseFieldName (FieldDefinition field) {
+  public String camelCaseFieldName (final FieldDefinition field) {
     final String name = localFieldName (field);
     return Character.toUpperCase (name.charAt (0)) + name.substring (1);
   }
 
   @Override
-  public String localFieldName (FieldDefinition field) {
+  public String localFieldName (final FieldDefinition field) {
     return field.getName ();
   }
 
   @Override
-  public String privateFieldName (FieldDefinition field) {
+  public String privateFieldName (final FieldDefinition field) {
     return "_" + localFieldName (field);
   }
 

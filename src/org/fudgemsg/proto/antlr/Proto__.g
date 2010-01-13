@@ -29,6 +29,7 @@ lexer grammar Proto;
 BINDING : 'binding' ;
 DEFAULT : 'default' ;
 ENUM : 'enum' ;
+EXTENDS : 'extends' ;
 IMPORT : 'import' ;
 MESSAGE : 'message' ;
 MUTABLE : 'mutable' ;
@@ -72,10 +73,8 @@ T__61 : 'float32' ;
 T__62 : 'float64' ;
 T__63 : '.' ;
 
-// $ANTLR src "org/fudgemsg/proto/antlr/Proto.g" 104
-COMMENT : '//' ( options { greedy = false; } : . )* ('\n'|'\r') { skip (); } ;
 // $ANTLR src "org/fudgemsg/proto/antlr/Proto.g" 105
-DOC_COMMENT : '/**' (' '|'\t'|'\r'|'\n') ( options { greedy = false; } : . )* '*/' ;
+COMMENT : '//' ( options { greedy = false; } : . )* ('\n'|'\r') { skip (); } ;
 // $ANTLR src "org/fudgemsg/proto/antlr/Proto.g" 106
 IDENTIFIER : ('a'..'z'|'A'..'Z'|'_')('a'..'z'|'A'..'Z'|'0'..'9'|'_')* ;
 // $ANTLR src "org/fudgemsg/proto/antlr/Proto.g" 107

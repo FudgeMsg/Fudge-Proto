@@ -7,20 +7,6 @@ namespace org.fudgemsg.tests {
 		required string value;
 		binding Java {
 			implements	java.io.Serializable;
-			javadoc		<<<Java
-				A particular identifier, within a particular domain, which can be
-				used to identify an entity. Real-world examples of
-				{@code DomainSpecificIdentifier} would include:
-				<ul>
-				 <li>Cusip</li>
-				 <li>Isin</li>
-				 <li>RIC code</li>
-				 <li>Bloomberg ID</li>
-				 <li>Bloomberg Ticker</li>
-				 <li>Trading system OTC trade ID</li>
-				</ul>
-				@author kirk 
-Java;
 			body		<<<Java
 				public DomainSpecificIdentifier (String domain, String value) {
 					this (new IdentificationDomain (domain), value);

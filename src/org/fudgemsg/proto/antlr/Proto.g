@@ -27,6 +27,7 @@ tokens {
 	DIM_FIXED;
 	DIM_VARIANT;
 	ENUM			= 'enum';
+	EXTENDS			= 'extends';
 	FIELD;
 	IMPORT			= 'import';
 	MESSAGE			= 'message';
@@ -102,7 +103,6 @@ tokens {
 }
 
 COMMENT : '//' ( options { greedy = false; } : . )* ('\n'|'\r') { skip (); } ;
-DOC_COMMENT : '/**' (' '|'\t'|'\r'|'\n') ( options { greedy = false; } : . )* '*/' ;
 IDENTIFIER : ('a'..'z'|'A'..'Z'|'_')('a'..'z'|'A'..'Z'|'0'..'9'|'_')* ;
 INTEGER : ('+'|'-')? '0'..'9'+ ;
 FLOAT : ('+'|'-')? ('0'..'9')* '.' ('0'..'9')+ ( ('e'|'E') ('+'|'-')? ('0'..'9')+ )? ;
@@ -119,6 +119,7 @@ binding_anyword
 	| BINDING
 	| DEFAULT
 	| ENUM
+	| EXTENDS
 	| IMPORT
 	| MESSAGE
 	| MUTABLE
@@ -221,7 +222,7 @@ literal
 	| STRING
 	;
 
-message : MESSAGE^ IDENTIFIER message_uses? '{'! message_element* '}'! ;
+message : MESSAGE^ IDENTIFIER message_uses? message_extends? '{'! message_element* '}'! ;
 
 message_element
 	: message_enum
@@ -238,6 +239,9 @@ message_submsg : MESSAGE^ IDENTIFIER '{'! message_element* '}'! ;
 
 // This hasn't been tested and isn't supported within the compiler; it's for warning if a message uses fields that aren't in given taxonomies
 message_uses : USES^ fullidentifier (','! fullidentifier)* ;
+
+// Note that multi-inheritance isn't supported yet within the compiler.
+message_extends : EXTENDS^ fullidentifier (','! fullidentifier)* ;
 
 namespace : NAMESPACE^ fullidentifier '{'! root_object* '}'! ;
 

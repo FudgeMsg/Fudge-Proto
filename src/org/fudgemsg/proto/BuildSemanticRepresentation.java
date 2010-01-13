@@ -222,7 +222,7 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
       final AST dim = children.get (i);
       switch (dim.getNodeLabel ()) {
       case ProtoLexer.DIM_FIXED :
-        type = type.arrayOf (Integer.decode (dim.getChildNodes ().get (1).getNodeValue ()));
+        type = type.arrayOf (Integer.decode (dim.getChildNodes ().get (0).getNodeValue ()));
         break;
       case ProtoLexer.DIM_VARIANT :
         type = type.arrayOf ();
@@ -339,6 +339,53 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
     }
   }
   
+  private void walkExtendsNode (final Compiler.Context context, final MessageDefinition message, final AST node) {
+    final List<AST> children = node.getChildNodes ();
+    for (int i = 0; i < children.size (); i++) {
+      final AST child = children.get (i);
+      final Definition definition = context.getDefinition (child.getNodeValue ());
+      if (definition == null) {
+        context.error (child.getCodePosition (), "unknown message '" + child.getNodeValue () + "'");
+        continue;
+      }
+      if (!(definition instanceof MessageDefinition)) {
+        context.error (child.getCodePosition (), "cannot use '" + definition.getIdentifier () + "' as a base message type");
+        continue;
+      }
+      final MessageDefinition baseMessage = (MessageDefinition)definition;
+      if (baseMessage.equals (message)) {
+        context.error (child.getCodePosition (), "message cannot use itself as a base");
+        continue;
+      }
+      if (baseMessage.extendsFrom (message)) {
+        context.error (child.getCodePosition (), "message '" + baseMessage.getIdentifier () + "' extends from '" + message.getIdentifier () + "' so can't be used as a base"); 
+        continue;
+      }
+      if (message.extendsFrom (baseMessage)) {
+        context.warning (child.getCodePosition (), "message '" + baseMessage.getIdentifier () + "' is already a base of '" + message.getIdentifier () + "'");
+        continue;
+      }
+      if (message.getExtends () != null) {
+        context.error (child.getCodePosition (), "the extends clause doesn't support multiple inheritance at the moment so '" + baseMessage.getIdentifier () + "' has been ignored");
+        continue;
+      }
+      message.setExtends (baseMessage);
+    }
+  }
+  
+  private void walkUsesNode (final Compiler.Context context, final MessageDefinition message, final AST node) {
+    final Definition definition = context.getDefinition (node.getNodeValue ());
+    if (definition == null) {
+      context.error (node.getCodePosition (), "unknown taxonomy '" + node.getNodeValue () + "'");
+      return;
+    } else if (!(definition instanceof TaxonomyDefinition)) {
+      context.error (node.getCodePosition (), "cannot use '" + definition.getIdentifier () + "' as a taxonomy");
+      return;
+    }
+    context.warning (node.getCodePosition (), "the uses clause isn't supported at the moment and is being ignored");
+    // TODO 2010-01-12 Andrew -- implement the taxonomy verify warnings
+  }
+  
   private void walkMessageNode (final Compiler.Context context, final AST node) {
     final List<AST> children = node.getChildNodes ();
     final String identifier = children.get (0).getNodeValue ();
@@ -349,11 +396,17 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
       case ProtoLexer.ENUM:
         walkEnumNode (context, element);
         break;
+      case ProtoLexer.EXTENDS :
+        walkExtendsNode (context, definition, element);
+        break;
       case ProtoLexer.FIELD:
         walkFieldNode (context, definition, element);
         break;
       case ProtoLexer.MESSAGE:
         walkMessageNode (context, element);
+        break;
+      case ProtoLexer.USES :
+        walkUsesNode (context, definition, element);
         break;
       default:
         throw new IllegalStateException("invalid element type '" + element.getNodeLabel() + "'");

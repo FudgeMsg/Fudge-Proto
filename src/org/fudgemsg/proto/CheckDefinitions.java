@@ -17,6 +17,8 @@
 package org.fudgemsg.proto;
 
 import java.util.Iterator;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  * Abstract interface for definition checking phases of compilation. Refer to the Compiler class for a description of the available phases.
@@ -47,6 +49,7 @@ import java.util.Iterator;
   
   private void checkFieldDefinition (final Compiler.Context context, final FieldDefinition fieldDefinition) {
     if (!checkDefaultFieldValue (context, fieldDefinition)) return;
+    // TODO 2010-01-12 Andrew -- is there anything outstanding to check at this point ?
   }
   
   private boolean checkDefaultFieldValue (final Compiler.Context context, final FieldDefinition fieldDefinition) {
@@ -60,6 +63,28 @@ import java.util.Iterator;
     return true;
   }
   
+  private void checkMessageInheritance (final Compiler.Context context, Map<String,FieldDefinition> map, final MessageDefinition message) {
+    if (message.getExtends () != null) {
+      if (map == null) map = new HashMap<String,FieldDefinition> ();
+      checkMessageInheritance (context, map, message.getExtends ());
+    }
+    if (map == null) return;
+    final Iterator<FieldDefinition> fields = message.getFieldDefinitions ();
+    while (fields.hasNext ()) {
+      final FieldDefinition field = fields.next ();
+      final FieldDefinition defined = map.get (field.getName ());
+      if (defined != null) {
+        if (field.getType ().equals (defined.getType ())) {
+          context.warning (field.getCodePosition (), "'" + field.getName () + "' is already defined in base message '" + defined.getOuterMessage ());
+        } else {
+          context.error (field.getCodePosition (), "'" + field.getName () + "' is already defined in base message '" + defined.getOuterMessage () + "' with a different type");
+        }
+        context.warning (defined.getCodePosition (), "this is the location of the previous definition");
+        fields.remove ();
+      }
+    }
+  }
+  
   private void checkMessageDefinition (final Compiler.Context context, final MessageDefinition messageDefinition) {
     final Iterator<EnumDefinition> iE = messageDefinition.getEnumDefinitions ();
     while (iE.hasNext ()) {
@@ -69,6 +94,7 @@ import java.util.Iterator;
     while (iF.hasNext ()) {
       checkFieldDefinition (context, iF.next ());
     }
+    checkMessageInheritance (context, null, messageDefinition);
   }
-  
+
 }

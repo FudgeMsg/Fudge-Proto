@@ -33,10 +33,10 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
   private FixupExternalReferences () {
   }
   
-  private String resolveIdentifier (final Compiler.Context context, final String[] scope, final String id, final AST node) {
+  private String resolveIdentifier (final Compiler.Context context, final String[] scope, final int scopeIgnore, final String id, final AST node) {
     // Try from closest scope outwards. Note that this eventually covers the case of us being given a fully qualified identifier to start with
     // Check for something already in memory
-    for (int i = scope.length; i >= 0; i--) {
+    for (int i = scope.length - scopeIgnore; i >= 0; i--) {
       final StringBuilder sb = new StringBuilder ();
       for (int j = 0; j < i; j++) {
         sb.append (scope[j]);
@@ -46,8 +46,8 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
       final String fullID = sb.toString ();
       if (context.getDefinition (fullID) != null) return fullID;
     }
-    // Now check for stuff on disk
-    for (int i = scope.length; i >= 0; i--) {
+    // Now check for stuff on disk (always ignoring top scope - the original source code)
+    for (int i = scope.length - 1; i >= 0; i--) {
       final StringBuilder sb = new StringBuilder ();
       for (int j = 0; j < i; j++) {
         sb.append (scope[j]);
@@ -79,10 +79,11 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
       newType = walkFieldNode (context, type, scope);
       break;
     case ProtoLexer.IDENTIFIER :
-      newType = ExpandNamespaces.fixupFullIdentifier (type);
-      final String newIdentifier = resolveIdentifier (context, scope, newType.getNodeValue (), node);
-      if (!newIdentifier.equals (newType.getNodeValue ())) {
+      final String newIdentifier = resolveIdentifier (context, scope, 0, type.getNodeValue (), node);
+      if (!newIdentifier.equals (type.getNodeValue ())) {
         newType = new ASTNode (type, newIdentifier);
+      } else {
+        newType = type;
       }
       break;
     default :
@@ -99,13 +100,27 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
   private AST walkTaxonomyImportNode (final Compiler.Context context, final AST node, final String[] scope) {
     final List<AST> children = node.getChildNodes ();
     final AST identifier = children.get (0);
-    AST fullIdentifier = ExpandNamespaces.fixupFullIdentifier (identifier);
-    final String newIdentifier = resolveIdentifier (context, scope, fullIdentifier.getNodeValue (), node);
-    if (!newIdentifier.equals (fullIdentifier.getNodeValue ())) {
-      fullIdentifier = new ASTNode (identifier, newIdentifier);
+    final String newIdentifier = resolveIdentifier (context, scope, 1, identifier.getNodeValue (), node);
+    if (!newIdentifier.equals (identifier.getNodeValue ())) {
+      children.set (0, new ASTNode (identifier, newIdentifier));
+      return new ASTNode (node, children);
+    } else {
+      return node;
     }
-    if (fullIdentifier != identifier) {
-      children.set (0, fullIdentifier);
+  }
+  
+  private AST walkExtendsUsesNode (final Compiler.Context context, final AST node, final String[] scope) {
+    final List<AST> children = node.getChildNodes ();
+    boolean changed = false;
+    for (int i = 0; i < children.size (); i++) {
+      AST identifier = children.get (i);
+      final String newIdentifier = resolveIdentifier (context, scope, 1, identifier.getNodeValue (), identifier);
+      if (!newIdentifier.equals (identifier.getNodeValue ())) {
+        children.set (i, new ASTNode (identifier, newIdentifier));
+        changed = true;
+      }
+    }
+    if (changed) {
       return new ASTNode (node, children);
     } else {
       return node;
@@ -126,11 +141,17 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
       case ProtoLexer.ENUM :
         // ignore enums
         continue;
+      case ProtoLexer.EXTENDS :
+        newElement = walkExtendsUsesNode (context, element, scope);
+        break;
       case ProtoLexer.FIELD :
         newElement = walkFieldNode (context, element, scope);
         break;
       case ProtoLexer.MESSAGE :
         newElement = walkMessageNode (context, element);
+        break;
+      case ProtoLexer.USES :
+        newElement = walkExtendsUsesNode (context, element, scope);
         break;
       default :
         throw new IllegalStateException ("invalid message element '" + node.getNodeLabel () + "'");

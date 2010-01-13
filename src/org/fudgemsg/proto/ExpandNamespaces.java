@@ -103,12 +103,44 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
       case ProtoLexer.ENUM :
         children.set (i, walkEnumNode (context, element, localNamespace, messageDefinition));
         break;
+      case ProtoLexer.EXTENDS :
+        children.set (i, fixupFullIdentifierList (element));
+        break;
+      case ProtoLexer.FIELD :
+        children.set (i, walkFieldNode (element));
+        break;
       case ProtoLexer.MESSAGE :
         children.set (i, walkMessageNode (context, element, localNamespace, messageDefinition));
+        break;
+      case ProtoLexer.USES :
+        children.set (i, fixupFullIdentifierList (element));
         break;
       }
     }
     return new ASTNode (node, children);
+  }
+  
+  private AST walkFieldNode (final AST node) {
+    final List<AST> children = node.getChildNodes ();
+    AST type = children.get (0);
+    AST newType = walkFieldTypeNode (type);
+    if (type != newType) {
+      children.set (0, newType);
+      return new ASTNode (node, children);
+    } else {
+      return node;
+    }
+  }
+  
+  private AST walkFieldTypeNode (final AST node) {
+    switch (node.getNodeLabel ()) {
+    case ProtoLexer.ARRAY :
+      return walkFieldNode (node);
+    case ProtoLexer.IDENTIFIER :
+      return fixupFullIdentifier (node);
+    default :
+      return node;
+    }
   }
   
   private void walkNamespaceNode (final Compiler.Context context, final AST node, final String parentNamespace) {
@@ -132,6 +164,14 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
       identifier = new ASTNode (identifier, parentNamespace + "." + identifier.getNodeValue ());
     }
     children.set (0, identifier);
+    for (int i = 1; i < children.size (); i++) {
+      final AST element = children.get (i);
+      switch (element.getNodeLabel ()) {
+      case ProtoLexer.IMPORT :
+        children.set (i, fixupFullIdentifierList (element));
+        break;
+      }
+    }
     context.addDefinition (new TaxonomyDefinition (identifier.getNodeValue (), identifier.getCodePosition ()));
     return new ASTNode (node, children);
   }
@@ -160,7 +200,7 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
     walkRootNode (context, node, "");
   }
   
-  /* package */ static AST fixupFullIdentifier (final AST node) {
+  private AST fixupFullIdentifier (final AST node) {
     final List<AST> children = node.getChildNodes ();
     if ((children == null) || (children.size () == 0)) return node;
     final StringBuilder identifier = new StringBuilder (node.getNodeValue ());
@@ -168,6 +208,14 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
       identifier.append ('.').append (child.getNodeValue ());
     }
     return new ASTNode (ProtoLexer.IDENTIFIER, identifier.toString (), null, node.getCodePosition ()); 
+  }
+  
+  private AST fixupFullIdentifierList (final AST node) {
+    final List<AST> children = node.getChildNodes ();
+    for (int i = 0; i < children.size (); i++) {
+      children.set (i, fixupFullIdentifier (children.get (i)));
+    }
+    return new ASTNode (node, children);
   }
   
 }

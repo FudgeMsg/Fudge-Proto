@@ -275,9 +275,7 @@ public class TypesTest {
     compareTypes (object, object2);
   }
   
-  @Test
-  public void builderArrayValues () {
-    final FudgeContext context = new FudgeContext ();
+  private Types createTypesObject () {
     final Types.Builder builder = new Types.Builder ();
     final boolean[] aBool = new boolean[32];
     final byte[] aByte = new byte[32];
@@ -299,11 +297,35 @@ public class TypesTest {
       aSubMessage[i] = new SubMessage (i, Integer.toString (i));
       aCustomEnum[i] = CustomEnum.fromFudgeEncoding ((i & 3) + 1);
     }
-    final Types object = builder.aBool(aBool).aByte (aByte).aDouble (aDouble).aFloat (aFloat).aInt (aInt).aShort (aShort).aString (aString).aSubMessage (aSubMessage).aCustomEnum (aCustomEnum).build ();
+    return builder.aBool(aBool).aByte (aByte).aDouble (aDouble).aFloat (aFloat).aInt (aInt).aShort (aShort).aString (aString).aSubMessage (aSubMessage).aCustomEnum (aCustomEnum).build ();
+  }
+  
+  @Test
+  public void builderArrayValues () {
+    final FudgeContext context = new FudgeContext ();
+    final Types object = createTypesObject ();
     final FudgeMsg message = object.toFudgeMsg (context);
-    System.out.println (message);
     final Types object2 = Types.fromFudgeMsg (message);
     compareTypes (object, object2);
+  }
+  
+  @Test
+  public void speedTest100000ToFudgeMsg () {
+    final FudgeContext context = new FudgeContext ();
+    final Types object = createTypesObject ();
+    for (int i = 0; i < 100000; i++) {
+      object.toFudgeMsg (context);
+    }
+  }
+  
+  @Test
+  public void speedTest100000FromFudgeMsg () {
+    final FudgeContext context = new FudgeContext ();
+    final Types object = createTypesObject ();
+    final FudgeMsg message = object.toFudgeMsg (context);
+    for (int i = 0; i < 100000; i++) {
+      Types.fromFudgeMsg (message);
+    }
   }
   
 }

@@ -9,6 +9,9 @@ comment
 
 // This is lifted from the Google protocol buffer example!
 
+/**
+ * doc comment
+ */
 message Person {
 
   required string name = 1;

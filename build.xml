@@ -34,6 +34,13 @@
 
 	<target name="test-proto-java" depends="compile-proto-java"
 		description="--> test the output of the Java code generator">
+		<javac	srcdir="${tests.dir}/unit_Java"
+			destdir="${tests.dir}/out_Java"
+			classpathref="lib.path.id"
+			debug="${build.debug}"
+			optimize="${build.optimize}"
+			verbose="${build.verbose}"
+			listfiles="${build.listfiles}" />
                 <mkdir dir="${tests.dir}/out_Java/xml" />
                 <junit printSummary="true" fork="true" forkmode="once">
                         <classpath>
