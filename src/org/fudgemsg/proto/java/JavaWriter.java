@@ -504,6 +504,11 @@ import org.fudgemsg.proto.EnumDefinition;
     _writer.write("package ");
     _writer.write(namespace);
   }
+  
+  /* package */ void importLib (final String namespace) throws IOException {
+    _writer.write ("import ");
+    _writer.write (namespace);
+  }
 
   /* package */void enumDef(final String clazz) throws IOException {
     _writer.write("public enum ");
