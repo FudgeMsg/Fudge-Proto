@@ -1109,7 +1109,11 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       }
       endStmt (writer);
     }
-    writer.returnTrue ();
+    if (message.getExtends () != null) {
+      writer.returnInvoke ("super.equals", "msg", null);
+    } else {
+      writer.returnTrue ();
+    }
     endStmt (writer);
     writer = endBlock (writer);
   }
@@ -1120,7 +1124,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     final Iterator<FieldDefinition> fields = message.getFieldDefinitions ();
     writer.namedLocalVariable ("int", "hc", null);
     endStmt (writer);
-    writer.assignment ("hc", "1");
+    writer.assignment ("hc", (message.getExtends () != null) ? "super.hashCode ()" : "1");
     endStmt (writer);
     while (fields.hasNext ()) {
       final FieldDefinition field = fields.next ();
@@ -1189,12 +1193,13 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   }
 
   /**
-   * We must use a builder if there are immutable fields that:
-   *   a) are optional; or
-   *   b) have a default value
+   * We must use a builder if:
+   *   a) there are optional immutable fields; or
+   *   b) there are immutable fields which have a default value; or
+   *   c) the parent message(s) use a builder.
    * 
    * I.e. we omit the builder if it would just have a construct and no mutator methods
-   */  
+   */
   private boolean useBuilderPattern (final MessageDefinition message) {
     final Iterator<FieldDefinition> fields = message.getFieldDefinitions ();
     while (fields.hasNext ()) {
@@ -1204,7 +1209,13 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         if (field.getDefaultValue () != null) return true; // required field with default value - must use a Builder
       }
     }
-    return false; // don't need a Builder
+    if (message.getExtends () != null) {
+      // use a builder if the parent does
+      return useBuilderPattern (message.getExtends ());
+    } else {
+      // we don't need a builder 
+      return false;
+    }
   }
   
   @Override
