@@ -92,9 +92,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     beginBlock (writer);
     writer.write ("if (obj == null) return false");
     endStmt (writer);
-    final Iterator<FieldDefinition> fields = message.getFieldDefinitions ();
-    while (fields.hasNext ()) {
-      final FieldDefinition field = fields.next ();
+    for (FieldDefinition field : message.getFieldDefinitions ()) {
       FieldType type = field.getType ();
       String left = privateFieldName (field);
       String right = "obj." + privateFieldName (field);
@@ -207,9 +205,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     beginBlock (writer);
     writer.write ("int hc = 1");
     endStmt (writer);
-    final Iterator<FieldDefinition> fields = message.getFieldDefinitions ();
-    while (fields.hasNext ()) {
-      final FieldDefinition field = fields.next ();
+    for (FieldDefinition field : message.getFieldDefinitions ()) {
       FieldType type = field.getType ();
       String name = privateFieldName (field);
       int lvCount = 0;
@@ -387,9 +383,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
    * I.e. we omit the builder if it would just have a construct and no mutator methods
    */  
   private boolean useBuilderPattern (final MessageDefinition message) {
-    final Iterator<FieldDefinition> fields = message.getFieldDefinitions ();
-    while (fields.hasNext ()) {
-      final FieldDefinition field = fields.next ();
+    for (FieldDefinition field : message.getFieldDefinitions ()) {
       if (!field.isMutable ()) {
         if (!field.isRequired ()) return true; // optional fields - must use a Builder 
         if (field.getDefaultValue () != null) return true; // required field with default value - must use a Builder
@@ -404,11 +398,9 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   private void writePublicConstructor (final IndentWriter writer, final boolean builder, final MessageDefinition message) throws IOException {
     final List<FieldDefinition> defaultValues = new LinkedList<FieldDefinition> ();
     final List<FieldDefinition> required = new LinkedList<FieldDefinition> ();
-    final Iterator<FieldDefinition> fields = message.getFieldDefinitions ();
     writer.write ("public " + (builder ? "Builder" : message.getName ()) + " (");
     boolean first = true;
-    while (fields.hasNext ()) {
-      final FieldDefinition field = fields.next ();
+    for (FieldDefinition field : message.getFieldDefinitions ()) {
       if (field.getDefaultValue () != null) {
         defaultValues.add (field);
       } else if (field.isRequired ()) {

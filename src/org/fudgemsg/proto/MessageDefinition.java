@@ -15,8 +15,8 @@
 
 package org.fudgemsg.proto;
 
-import java.util.Iterator;
 import java.util.List;
+import java.util.Collection;
 import java.util.LinkedList;
 
 /**
@@ -50,17 +50,17 @@ public abstract class MessageDefinition extends Definition {
     }
     
     @Override
-    public Iterator<FieldDefinition> getFieldDefinitions () {
+    public Collection<FieldDefinition> getFieldDefinitions () {
       return null;
     }
     
     @Override
-    public Iterator<EnumDefinition> getEnumDefinitions () {
+    public Collection<EnumDefinition> getEnumDefinitions () {
       return null;
     }
     
     @Override
-    public Iterator<MessageDefinition> getMessageDefinitions () {
+    public Collection<MessageDefinition> getMessageDefinitions () {
       return null;
     }
     
@@ -100,18 +100,18 @@ public abstract class MessageDefinition extends Definition {
     }
     
     @Override
-    public Iterator<FieldDefinition> getFieldDefinitions () {
-      return _innerFields.iterator ();
+    public Collection<FieldDefinition> getFieldDefinitions () {
+      return _innerFields;
     }
     
     @Override
-    public Iterator<EnumDefinition> getEnumDefinitions () {
-      return _innerEnums.iterator ();
+    public Collection<EnumDefinition> getEnumDefinitions () {
+      return _innerEnums;
     }
     
     @Override
-    public Iterator<MessageDefinition> getMessageDefinitions () {
-      return _innerMessages.iterator ();
+    public Collection<MessageDefinition> getMessageDefinitions () {
+      return _innerMessages;
     }
     
   }
@@ -139,54 +139,47 @@ public abstract class MessageDefinition extends Definition {
   
   /* package */ abstract MessageDefinition createMessageDefinition (final String identifier, final CodePosition codePosition);
   
-  public abstract Iterator<FieldDefinition> getFieldDefinitions ();
+  public abstract Collection<FieldDefinition> getFieldDefinitions ();
   
   public FieldDefinition getFieldDefinition (final String identifier) {
-    final Iterator<FieldDefinition> i = getFieldDefinitions ();
-    while (i.hasNext ()) {
-      final FieldDefinition field = i.next ();
+    for (FieldDefinition field : getFieldDefinitions ()) {
       if (identifier.equals (field.getIdentifier ())) return field;
     }
     return null;
   }
   
   public FieldDefinition getFieldDefinition (final Integer ordinal) {
-    final Iterator<FieldDefinition> i = getFieldDefinitions ();
-    while (i.hasNext ()) {
-      final FieldDefinition field = i.next ();
+    for (FieldDefinition field : getFieldDefinitions ()) {
       if (ordinal.equals (field.getOrdinal ())) return field;
     }
     return null;
   }
   
-  public abstract Iterator<EnumDefinition> getEnumDefinitions ();
+  public abstract Collection<EnumDefinition> getEnumDefinitions ();
   
-  public abstract Iterator<MessageDefinition> getMessageDefinitions ();
+  public abstract Collection<MessageDefinition> getMessageDefinitions ();
   
   @Override
   public String toString () {
     final StringBuilder sb = new StringBuilder (getIdentifier ()).append (" = {");
-    final Iterator<MessageDefinition> messages = getMessageDefinitions ();
-    if (messages != null) {
+    if (getMessageDefinitions () != null) {
       sb.append (" messages = { ");
-      while (messages.hasNext ()) {
-        sb.append (messages.next ().toString ()).append (", ");
+      for (MessageDefinition message : getMessageDefinitions ()) {
+        sb.append (message.toString ()).append (", ");
       }
       sb.append ('}');
     }
-    final Iterator<FieldDefinition> fields = getFieldDefinitions ();
-    if (fields != null) {
+    if (getFieldDefinitions () != null) {
       sb.append (" fields = { ");
-      while (fields.hasNext ()) {
-        sb.append (fields.next ().toString()).append (", ");
+      for (FieldDefinition field : getFieldDefinitions ()) {
+        sb.append (field.toString()).append (", ");
       }
       sb.append ('}');
     }
-    final Iterator<EnumDefinition> enums = getEnumDefinitions ();
-    if (enums != null) {
+    if (getEnumDefinitions () != null) {
       sb.append (" enums = { ");
-      while (enums.hasNext ()) {
-        sb.append (enums.next ().toString ()).append (", ");
+      for (EnumDefinition enumdef : getEnumDefinitions ()) {
+        sb.append (enumdef.toString ()).append (", ");
       }
       sb.append ('}');
     }

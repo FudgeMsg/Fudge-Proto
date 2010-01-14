@@ -18,12 +18,11 @@ package org.fudgemsg.proto.proto;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
 
 import org.fudgemsg.proto.Compiler;
+import org.fudgemsg.proto.EnumDefinition;
 import org.fudgemsg.proto.IndentWriter;
 import org.fudgemsg.proto.MessageDefinition;
-import org.fudgemsg.proto.EnumDefinition;
 
 /**
  * Modification of the ClassCodeGenerator to process messages "inline" within their parents.
@@ -59,9 +58,8 @@ public class InnerClassCodeGenerator extends ClassCodeGenerator {
   public void beginClassHeaderDeclaration (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
     super.beginClassHeaderDeclaration (context, message, writer);
     super.writeEnumHeaderDeclarations (context, message, writer);
-    final Iterator<MessageDefinition> messages = message.getMessageDefinitions ();
-    while (messages.hasNext ()) {
-      writeClassHeader (context, messages.next (), writer);
+    for (MessageDefinition message2 : message.getMessageDefinitions ()) {
+      writeClassHeader (context, message2, writer);
     }
   }
   
@@ -72,9 +70,8 @@ public class InnerClassCodeGenerator extends ClassCodeGenerator {
   public void beginClassImplementationDeclaration (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
     super.beginClassImplementationDeclaration (context, message, writer);
     super.writeEnumImplementationDeclarations (context, message, writer);
-    final Iterator<MessageDefinition> messages = message.getMessageDefinitions ();
-    while (messages.hasNext ()) {
-      writeClassImplementation (context, messages.next (), writer);
+    for (MessageDefinition message2 : message.getMessageDefinitions ()) {
+      writeClassImplementation (context, message2, writer);
     }
   }  
   

@@ -17,7 +17,6 @@
 package org.fudgemsg.proto.c;
 
 import org.fudgemsg.proto.LiteralValue;
-import org.fudgemsg.proto.FieldDefinition;
 import org.fudgemsg.proto.proto.LiteralCode;
 
 /**

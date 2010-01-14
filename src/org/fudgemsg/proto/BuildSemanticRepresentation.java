@@ -16,7 +16,6 @@
 package org.fudgemsg.proto;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -425,17 +424,14 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
   }
   
   private void taxonomyImportMessageFields (final TaxonomyDefinitionBuilder builder, final MessageDefinition messageDefinition) {
-    final Iterator<FieldDefinition> fields = messageDefinition.getFieldDefinitions ();
-    while (fields.hasNext ()) {
-      final FieldDefinition field = fields.next ();
+    for (FieldDefinition field : messageDefinition.getFieldDefinitions ()) {
       builder.addField (field.getCodePosition (), field.getName (), field.getOrdinal ());
     }
   }
   
   private void taxonomyImportMessageSubmessages (final TaxonomyDefinitionBuilder builder, final MessageDefinition messageDefinition) {
-    final Iterator<MessageDefinition> messages = messageDefinition.getMessageDefinitions ();
-    while (messages.hasNext ()) {
-      taxonomyImportMessage (builder, messages.next ());
+    for (MessageDefinition message : messageDefinition.getMessageDefinitions ()) {
+      taxonomyImportMessage (builder, message);
     }
   }
   

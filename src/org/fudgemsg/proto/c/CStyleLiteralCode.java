@@ -16,7 +16,6 @@
 
 package org.fudgemsg.proto.c;
 
-import java.io.Writer;
 import java.util.HashMap;
 
 import org.fudgemsg.proto.FieldDefinition;

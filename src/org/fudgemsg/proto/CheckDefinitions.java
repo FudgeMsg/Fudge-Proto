@@ -16,9 +16,8 @@
 
 package org.fudgemsg.proto;
 
-import java.util.Iterator;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Abstract interface for definition checking phases of compilation. Refer to the Compiler class for a description of the available phases.
@@ -69,30 +68,26 @@ import java.util.HashMap;
       checkMessageInheritance (context, map, message.getExtends ());
     }
     if (map == null) return;
-    final Iterator<FieldDefinition> fields = message.getFieldDefinitions ();
-    while (fields.hasNext ()) {
-      final FieldDefinition field = fields.next ();
+    for (FieldDefinition field : message.getFieldDefinitions ()) {
       final FieldDefinition defined = map.get (field.getName ());
       if (defined != null) {
         if (field.getType ().equals (defined.getType ())) {
           context.warning (field.getCodePosition (), "'" + field.getName () + "' is already defined in base message '" + defined.getOuterMessage ());
+          message.getFieldDefinitions ().remove (field);
         } else {
           context.error (field.getCodePosition (), "'" + field.getName () + "' is already defined in base message '" + defined.getOuterMessage () + "' with a different type");
         }
         context.warning (defined.getCodePosition (), "this is the location of the previous definition");
-        fields.remove ();
       }
     }
   }
   
   private void checkMessageDefinition (final Compiler.Context context, final MessageDefinition messageDefinition) {
-    final Iterator<EnumDefinition> iE = messageDefinition.getEnumDefinitions ();
-    while (iE.hasNext ()) {
-      checkEnumDefinition (context, iE.next ());
+    for (EnumDefinition e : messageDefinition.getEnumDefinitions ()) {
+      checkEnumDefinition (context, e);
     }
-    final Iterator<FieldDefinition> iF = messageDefinition.getFieldDefinitions ();
-    while (iF.hasNext ()) {
-      checkFieldDefinition (context, iF.next ());
+    for (FieldDefinition f : messageDefinition.getFieldDefinitions ()) {
+      checkFieldDefinition (context, f);
     }
     checkMessageInheritance (context, null, messageDefinition);
   }

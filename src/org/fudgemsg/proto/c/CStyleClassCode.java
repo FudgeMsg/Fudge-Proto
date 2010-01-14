@@ -19,17 +19,16 @@ package org.fudgemsg.proto.c;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 import org.fudgemsg.proto.CodeGeneratorUtil;
 import org.fudgemsg.proto.Compiler;
+import org.fudgemsg.proto.Definition;
+import org.fudgemsg.proto.EnumDefinition;
 import org.fudgemsg.proto.FieldDefinition;
 import org.fudgemsg.proto.FieldType;
 import org.fudgemsg.proto.IndentWriter;
 import org.fudgemsg.proto.MessageDefinition;
-import org.fudgemsg.proto.EnumDefinition;
-import org.fudgemsg.proto.Definition;
 import org.fudgemsg.proto.proto.ClassCode;
 import org.fudgemsg.proto.proto.DocumentedClassCode;
 
@@ -104,9 +103,7 @@ public abstract class CStyleClassCode extends DocumentedClassCode {
   
   private void importMessageDefinitions (final MessageDefinition message, final IndentWriter writer) throws IOException {
     final Set<Definition> imports = new HashSet<Definition> ();
-    final Iterator<FieldDefinition> fields = message.getFieldDefinitions ();
-    while (fields.hasNext ()) {
-      final FieldDefinition field = fields.next ();
+    for (FieldDefinition field : message.getFieldDefinitions ()) {
       final FieldType type = field.getType ();
       if (type instanceof FieldType.MessageType) {
         importMessageDefinition (imports, ((FieldType.MessageType)type).getMessageDefinition (), writer);

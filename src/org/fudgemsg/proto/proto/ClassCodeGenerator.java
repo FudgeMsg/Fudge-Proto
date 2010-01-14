@@ -21,17 +21,16 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 import org.fudgemsg.proto.CodeGenerator;
 import org.fudgemsg.proto.Compiler;
+import org.fudgemsg.proto.Definition;
 import org.fudgemsg.proto.EnumDefinition;
 import org.fudgemsg.proto.FieldDefinition;
 import org.fudgemsg.proto.IndentWriter;
 import org.fudgemsg.proto.MessageDefinition;
 import org.fudgemsg.proto.TaxonomyDefinition;
-import org.fudgemsg.proto.Definition;
 
 /**
  * Implementation of a code generator for languages that have class, struct or message constructs. The main work
@@ -67,44 +66,38 @@ public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerato
   }
   
   private void writeClassHeaderAttributes (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
-    final Iterator<FieldDefinition> fields = message.getFieldDefinitions ();
-    while (fields.hasNext ()) {
-      writeClassHeaderAttribute (context, fields.next (), writer);
+    for (FieldDefinition field : message.getFieldDefinitions ()) {
+      writeClassHeaderAttribute (context, field, writer);
     }
   }
   
   private void writeClassHeaderAccessors (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
-    final Iterator<FieldDefinition> fields = message.getFieldDefinitions ();
-    while (fields.hasNext ()) {
-      writeClassHeaderAccessor (context, fields.next (), writer);
+    for (FieldDefinition field : message.getFieldDefinitions ()) {
+      writeClassHeaderAccessor (context, field, writer);
     }
   }
   
   protected void writeEnumHeaderDeclarations (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
-    final Iterator<EnumDefinition> enums = message.getEnumDefinitions ();
-    while (enums.hasNext ()) {
-      writeEnumHeaderDeclaration (context, enums.next (), writer);
+    for (EnumDefinition enumdef : message.getEnumDefinitions ()) {
+      writeEnumHeaderDeclaration (context, enumdef, writer);
     }
   }
   
   private void writeClassImplementationAttributes (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
-    final Iterator<FieldDefinition> fields = message.getFieldDefinitions ();
-    while (fields.hasNext ()) {
-      writeClassImplementationAttribute (context, fields.next (), writer);
+    for (FieldDefinition field : message.getFieldDefinitions ()) {
+      writeClassImplementationAttribute (context, field, writer);
     }
   }
   
   private void writeClassImplementationAccessors (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
-    final Iterator<FieldDefinition> fields = message.getFieldDefinitions ();
-    while (fields.hasNext ()) {
-      writeClassImplementationAccessor (context, fields.next (), writer);
+    for (FieldDefinition field : message.getFieldDefinitions ()) {
+      writeClassImplementationAccessor (context, field, writer);
     }
   }
   
   protected void writeEnumImplementationDeclarations (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
-    final Iterator<EnumDefinition> enums = message.getEnumDefinitions ();
-    while (enums.hasNext ()) {
-      writeEnumImplementationDeclaration (context, enums.next (), writer);
+    for (EnumDefinition enumdef : message.getEnumDefinitions ()) {
+      writeEnumImplementationDeclaration (context, enumdef, writer);
     }
   }
   

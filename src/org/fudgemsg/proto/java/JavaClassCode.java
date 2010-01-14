@@ -60,6 +60,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   private static final String CLASS_FUDGETAXONOMY = org.fudgemsg.taxon.FudgeTaxonomy.class.getName ();
   private static final String CLASS_LIST = java.util.List.class.getName ();
   private static final String CLASS_ARRAYS = java.util.Arrays.class.getName ();
+  private static final String CLASS_LISTITERATOR = java.util.ListIterator.class.getName ();
   private static final String CLASS_FUDGEFIELD = org.fudgemsg.FudgeField.class.getName ();
   private static final String CLASS_INDICATOR = org.fudgemsg.types.IndicatorType.class.getName ();
   
@@ -143,271 +144,305 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   }
   
   @Override
-  public void writeClassImplementationAccessor(final Compiler.Context context, final FieldDefinition field, final IndentWriter iWriter) throws IOException {
-    JavaWriter writer = new JavaWriter (iWriter);
+  public void writeClassImplementationAccessor(final Compiler.Context context, final FieldDefinition field, final IndentWriter writer) throws IOException {
+    JavaWriter jWriter = new JavaWriter (writer);
     final String attribute = privateFieldName (field);
-    writer.method (false, getJavaType (field.getType (), field.isRepeated ()), fieldMethodName (field, "get", null), null);
-    writer = beginBlock (writer); // accessor
+    jWriter.method (false, typeString (field.getType (), field.isRepeated ()), fieldMethodName (field, "get", null), null);
+    jWriter = beginBlock (jWriter); // accessor
     if (field.isRepeated ()) {
       // repeated fields, return the first
-      writer.returnInvoke (fieldMethodName (field, "get", null), "0", null);
+      jWriter.returnInvoke (fieldMethodName (field, "get", null), "0", null);
     } else {
       // non-repeated fields, return attribute directly
-      writer.returnVariable (attribute);
+      jWriter.returnVariable (attribute);
     }
-    endStmt (writer); // return
-    writer = endBlock (writer); // accessor
+    endStmt (jWriter); // return
+    jWriter = endBlock (jWriter); // accessor
     if (field.isRepeated ()) {
-      writer.method (false, "int", fieldMethodName (field, "get", "Count"), null);
-      writer = beginBlock (writer); // getXCount
-      writer.returnIfNull (attribute, attribute + ".size ()", "0");
-      endStmt (writer); // return
-      writer = endBlock (writer); // getXCount
-      writer.method (false, getJavaType (field.getType (), true), fieldMethodName (field, "get", null), "final int n");
-      writer = beginBlock (writer); // getX(n)
-      writer.ifNull (attribute);
-      writer = beginBlock (writer); // if
-      writer.returnNullIfZero ("n");
-      endStmt (writer);
-      writer.throwIndexOutOfBoundsException ("n");
-      endStmt (writer);
-      writer = endBlock (writer); // if
-      writer.returnInvoke (attribute + ".get", "n", null);
-      endStmt (writer);
-      writer = endBlock (writer); // getX(n)
-      writer.method (false,  getRealFieldType (field, false), fieldMethodName (field, "get", "List"), null);
-      writer = beginBlock (writer); // getXList
-      writer.returnInvoke (CLASS_COLLECTIONS + ".unmodifiableList", attribute, null);
-      endStmt (writer);
-      writer = endBlock (writer);
+      jWriter.method (false, "int", fieldMethodName (field, "get", "Count"), null);
+      jWriter = beginBlock (jWriter); // getXCount
+      jWriter.returnIfNull (attribute, attribute + ".size ()", "0");
+      endStmt (jWriter); // return
+      jWriter = endBlock (jWriter); // getXCount
+      jWriter.method (false, typeString (field.getType (), true), fieldMethodName (field, "get", null), "final int n");
+      jWriter = beginBlock (jWriter); // getX(n)
+      jWriter.ifNull (attribute);
+      jWriter = beginBlock (jWriter); // if
+      jWriter.returnNullIfZero ("n");
+      endStmt (jWriter);
+      jWriter.throwIndexOutOfBoundsException ("n");
+      endStmt (jWriter);
+      jWriter = endBlock (jWriter); // if
+      jWriter.returnInvoke (attribute + ".get", "n", null);
+      endStmt (jWriter);
+      jWriter = endBlock (jWriter); // getX(n)
+      jWriter.method (false,  realTypeString (field, false), fieldMethodName (field, "get", "List"), null);
+      jWriter = beginBlock (jWriter); // getXList
+      jWriter.returnInvoke (CLASS_COLLECTIONS + ".unmodifiableList", attribute, null);
+      endStmt (jWriter);
+      jWriter = endBlock (jWriter);
     }
     if (field.isMutable ()) {
       writeMutatorMethod (writer, false, field);
     }
   }
   
-  private String getGenericType (final String javaClass, final FieldType type, final boolean concrete) {
+  private String genericTypeString (final String javaClass, final FieldType type, final boolean concrete) {
     final StringBuilder sb = new StringBuilder (javaClass);
     sb.append ('<');
     if (!concrete) sb.append ("? extends ");
-    sb.append (getJavaType (type, true)).append ('>');
+    sb.append (typeString (type, true)).append ('>');
     return sb.toString ();
   }
   
-  private String getListType (final FieldType type, final boolean concrete) {
-    return getGenericType (concrete ? CLASS_ARRAYLIST : CLASS_LIST, type, true);
+  private String listTypeString (final FieldType type, final boolean concrete) {
+    return genericTypeString (concrete ? CLASS_ARRAYLIST : CLASS_LIST, type, true);
   }
   
-  private String getRealFieldType (final FieldDefinition field, final boolean generic) {
+  private String realTypeString (final FieldDefinition field, final boolean generic) {
     if (field.isRepeated ()) {
-      return generic ? getGenericType (CLASS_COLLECTION, field.getType (), false) : getListType (field.getType (), false);
+      return generic ? genericTypeString (CLASS_COLLECTION, field.getType (), false) : listTypeString (field.getType (), false);
     } else {
-      return getJavaType (field.getType (), false);
+      return typeString (field.getType (), false);
     }
   }
   
   @Override
   public void writeClassImplementationAttribute(final Compiler.Context context, final FieldDefinition field, final IndentWriter iWriter) throws IOException {
     final JavaWriter writer = new JavaWriter (iWriter);
-    writer.attribute (!field.isMutable (), getRealFieldType (field, false), privateFieldName (field));
+    writer.attribute (!field.isMutable (), realTypeString (field, false), privateFieldName (field));
     endStmt (writer); // attribute decl
   }
   
   private void writeBuilderClassFields (final JavaWriter writer, MessageDefinition message) throws IOException {
-    final Iterator<FieldDefinition> fields = message.getFieldDefinitions ();
-    while (fields.hasNext ()) {
-      final FieldDefinition field = fields.next ();
-      writer.attribute (field.isRequired () && (field.getDefaultValue () == null), getRealFieldType (field, false), privateFieldName (field));
+    for (FieldDefinition field : message.getFieldDefinitions ()) {
+      writer.attribute (field.isRequired () && (field.getDefaultValue () == null), realTypeString (field, false), privateFieldName (field));
       endStmt (writer); // builder field decl
     }
   }
   
   private void getSuperConstructorParams (final MessageDefinition message, final StringBuilder typeList, final StringBuilder invokeList) {
     if (message.getExtends () != null) getSuperConstructorParams (message.getExtends (), typeList, invokeList);
-    final Iterator<FieldDefinition> fields = message.getFieldDefinitions ();
-    while (fields.hasNext ()) {
-      final FieldDefinition field = fields.next ();
+    for (FieldDefinition field : message.getFieldDefinitions ()) {
       if (field.isRequired ()) {
         if (typeList.length () != 0) typeList.append (", ");
-        typeList.append (getRealFieldType (field, true)).append (' ').append (localFieldName (field));
+        typeList.append (realTypeString (field, true)).append (' ').append (localFieldName (field));
         if (invokeList.length () != 0) invokeList.append (", ");
         invokeList.append (localFieldName (field));
       }
     }
   }
   
-  /**
-   * Writes out the constructor for either Builder or the main message if the builder pattern is not being used.
-   */
-  private void writePublicConstructor (JavaWriter writer, final boolean builder, final MessageDefinition message) throws IOException {
-    final List<FieldDefinition> defaultValues = new LinkedList<FieldDefinition> ();
-    final List<FieldDefinition> required = new LinkedList<FieldDefinition> ();
-    final StringBuilder sbParams = new StringBuilder ();
-    final String superInvoke;
-    if (message.getExtends () != null) {
-      final StringBuilder sb = new StringBuilder ();
-      getSuperConstructorParams (message.getExtends (), sbParams, sb);
-      superInvoke = sb.toString ();
-    } else {
-      superInvoke = null;
-    }
-    final Iterator<FieldDefinition> fields = message.getFieldDefinitions ();
-    while (fields.hasNext ()) {
-      final FieldDefinition field = fields.next ();
-      if (field.getDefaultValue () != null) {
-        defaultValues.add (field);
-      } else if (field.isRequired ()) {
-        required.add (field);
-        if (sbParams.length () > 0) sbParams.append (", ");
-        sbParams.append (getRealFieldType (field, true)).append (' ').append (localFieldName (field));
-      }
-    }
-    writer.constructor ("public", builder ? "Builder" : message.getName (), sbParams.toString ());
-    writer = beginBlock (writer); // constructor
-    if (superInvoke != null) {
-      writer.invoke ("super", superInvoke);
-      endStmt (writer);
-    }
+  private void writePublicConstructorBody (final IndentWriter writer, final List<FieldDefinition> required, final List<FieldDefinition> defaultValues, final String methodPrefix) throws IOException {
     for (FieldDefinition field : required) {
       writeMutatorAssignment (writer, field);
     }
     for (FieldDefinition field : defaultValues) {
-      writer.invoke (builder ? localFieldName (field) : "set" + camelCaseFieldName (field), getLiteral (field.getDefaultValue ()));
+      writer.write (fieldMethodName (field, methodPrefix, null) + " (" + getLiteral (field.getDefaultValue ()) + ")");
       endStmt (writer);
     }
-    writer = endBlock (writer); // constructor
   }
   
-  private void writeCheckArrayLength (JavaWriter writer, final String variable, final String displayVariable, final FieldType.ArrayType array) throws IOException {
+  /**
+   * Writes out the constructor for either Builder or the main message if the builder pattern is not being used.
+   */
+  private void writePublicConstructor (final IndentWriter writer, final boolean builder, final MessageDefinition message) throws IOException {
+    final List<FieldDefinition> defaultValues = new LinkedList<FieldDefinition> ();
+    final List<FieldDefinition> required = new LinkedList<FieldDefinition> ();
+    final MessageDefinition superMessage = message.getExtends ();
+    final StringBuilder sbSuperParamTypeList = new StringBuilder ();
+    final StringBuilder sbSuperParamInvokeList = new StringBuilder ();
+    if (superMessage != null) {
+      getSuperConstructorParams (message.getExtends (), sbSuperParamTypeList, sbSuperParamInvokeList);
+    }
+    final StringBuilder sbParamTypeList = new StringBuilder ();
+    for (FieldDefinition field : message.getFieldDefinitions ()) {
+      if (field.getDefaultValue () != null) {
+        defaultValues.add (field);
+      } else if (field.isRequired ()) {
+        required.add (field);
+        if (sbParamTypeList.length () > 0) sbParamTypeList.append (", ");
+        sbParamTypeList.append (realTypeString (field, true)).append (' ').append (localFieldName (field));
+      }
+    }
+    writer.write ("public " + (builder ? "Builder" : message.getName ()) + " (");
+    if (superMessage != null) {
+      writer.write (sbSuperParamTypeList.toString ());
+      if (sbParamTypeList.length () > 0) writer.write (", ");
+    }
+    writer.write (sbParamTypeList.toString () + ")");
+    beginBlock (writer); // constructor
+    if (superMessage != null) {
+      writer.write ("super (" + sbSuperParamInvokeList.toString () + ")");
+      endStmt (writer);
+    }
+    writePublicConstructorBody (writer, required, defaultValues, builder ? null : "set");
+    endBlock (writer); // constructor
+    if (builder) {
+      if (superMessage != null) {
+        writer.write ("protected Builder (final " + superMessage.getIdentifier () + ".Builder fudgeParent");
+        if (sbParamTypeList.length () > 0) writer.write (", " + sbParamTypeList.toString ());
+        writer.write (')');
+        beginBlock (writer); // constructor
+        writer.write ("super (fudgeParent)");
+        endStmt (writer);
+        writePublicConstructorBody (writer, required, defaultValues, null);
+        endBlock (writer); // constructor
+      }
+      writer.write ("protected Builder (final Builder delegate)");
+      beginBlock (writer); // constructor
+      if (superMessage != null) {
+        writer.write ("super (delegate)");
+        endStmt (writer);
+      }
+      for (FieldDefinition field : message.getFieldDefinitions ()) {
+        final String pfn = privateFieldName (field);
+        writer.write (pfn + " = delegate." + pfn);
+        endStmt (writer);
+      }
+      endBlock (writer); // constructor
+    }
+  }
+  
+  private void writeCheckArrayLength (final IndentWriter writer, final String variable, final String displayVariable, final FieldType.ArrayType array, final int lvCount) throws IOException {
     if (array.isFixedLength ()) {
-      writer.ifSizeNot (variable, "length", array.getFixedLength ());
-      writer.throwWrongSizedArrayException (displayVariable, array.getFixedLength ());
+      writer.write ("if (" + variable + ".length != " + array.getFixedLength () + ") throw new IllegalArgumentException (\"'" + displayVariable + "' is not the expected length (" + array.getFixedLength () + ")\")");
       endStmt (writer);
     }
     if (array.isDeepFixedLength ()) {
-      final FieldType.ArrayType baseType = (FieldType.ArrayType)array.getBaseType ();
-      final String localVariable = writer.forEach (getJavaType (baseType, false), variable);
-      writer = beginBlock (writer);
-      writeCheckArrayLength (writer, localVariable, displayVariable + "[]", baseType);
-      writer = endBlock (writer);
+      final String lv = "fudge" + lvCount;
+      writer.write ("for (" + typeString (array.getBaseType (), false) + " " + lv + " : " + variable + ")");
+      beginBlock (writer);
+      writeCheckArrayLength (writer, lv, displayVariable + "[]", (FieldType.ArrayType)array.getBaseType (), lvCount + 1);
+      endBlock (writer);
     }
   }
   
-  private void writeDefensiveCopy (JavaWriter writer, final String variable, final FieldType type) throws IOException {
+  private String writeDefensiveCopy (final IndentWriter writer, final FieldType type, final String source, final String displayName, int lvCount) throws IOException {
     if (type instanceof FieldType.ArrayType) {
-      final FieldType.ArrayType arrayType = (FieldType.ArrayType)type;
-      // TODO 2010-01-07 Andrew -- should take defensive copy of array types
-      writeCheckArrayLength (writer, variable, variable, arrayType);
+      final FieldType.ArrayType array = (FieldType.ArrayType)type;
+      final FieldType baseType = array.getBaseType ();
+      writer.write (source + " = " + CLASS_ARRAYS + ".copyOf (" + source + ", " + source + ".length)");
+      endStmt (writer);
+      if (!(baseType instanceof FieldType.EnumType) && (baseType != FieldType.STRING_TYPE) && isObject (baseType)) {
+        final String lv = "fudge" + lvCount;
+        writer.write ("for (int " + lv + " = 0; " + lv + " < " + source + ".length; " + lv + "++)");
+        beginBlock (writer); // for
+        writer.write (source + "[" + lv + "] = " + writeDefensiveCopy (writer, baseType, source + "[" + lv + "]", displayName + "[]", lvCount + 1));
+        endStmt (writer);
+        endBlock (writer); // for
+      }
+      writeCheckArrayLength (writer, source, displayName, array, lvCount);
+      return source;
     } else if (type instanceof FieldType.MessageType) {
-      writer.assignment (variable, variable + ".clone ()");
-      endStmt (writer);
-    }
-  }
-  
-  private void writeMutatorAssignment (JavaWriter writer, final FieldDefinition field) throws IOException {
-    final String pfn = privateFieldName (field);
-    String lfn = localFieldName (field);
-    if (field.isRepeated ()) {
-      writer.ifNull (lfn);
-      if (field.isRequired ()) {
-        writer.throwNullParameterException (lfn);
-      } else {
-        writer.assignment (pfn, "null");
-      }
-      endStmt (writer); // null assignment or exception
-      writer.otherwise ();
-      writer = beginBlock (writer); // else
-      lfn = writer.localVariable (getListType (field.getType (), false), true, "new " + getListType (field.getType (), true) + " (" + lfn + ")"); // take defensive copy
-      endStmt (writer);
-      // TODO 2010-01-07 Andrew -- this should be a deeper copy for repeated submessages and arrays
-      if (field.isRequired ()) {
-        writer.ifEmptyList (lfn);
-        writer.throwEmptyListException (lfn);
-        endStmt (writer);
-      }
-      // TODO 2010-01-07 Andrew -- should check that none of the list elements are null
-      // TODO 2010-01-08 Andrew -- should check that arrays are the correct length if sizes are specified
-      
-      // TODO 2010-01-13 Andrew -- the C# codegen has a far better approach to this 
-      
-      writer.assignment (pfn, lfn);
-      endStmt (writer); // assignment
-      writer = endBlock (writer); // else
+      return source + ".clone ()";
     } else {
-      if (field.isRequired () && isObject (field.getType ())) {
-        writer.ifNull (lfn);
-        writer.throwNullParameterException (lfn);
-        endStmt (writer);
-      }
-      writeDefensiveCopy (writer, lfn, field.getType ());
-      writer.assignment (pfn, lfn);
-      endStmt (writer); // assignment
+      return source;
     }
   }
   
-  private void writeMutatorMethod (JavaWriter writer, final boolean builderReturn, final FieldDefinition field) throws IOException {
+  private void writeMutatorAssignment (final IndentWriter writer, final FieldDefinition field) throws IOException {
+    final String value = localFieldName (field);
+    if (field.isRepeated ()) {
+      writer.write ("if (" + value + " == null) ");
+      if (field.isRequired ()) {
+        writer.write ("throw new NullPointerException (\"'" + value + "' cannot be null\")");
+      } else {
+        writer.write (privateFieldName (field) + " = null");
+      }
+      endStmt (writer);
+      writer.write ("else");
+      beginBlock (writer); // elseif
+      writer.write ("final " + listTypeString (field.getType (), false) + " fudge0 = new " + listTypeString (field.getType (), true) + " (" + value + ")");
+      endStmt (writer);
+      if (field.isRequired ()) {
+        writer.write ("if (" + value + ".size () == 0) throw new IllegalArgumentException (\"'" + value + "' cannot be an empty list\")");
+        endStmt (writer);
+      }
+      final String type = typeString (field.getType (), true);
+      writer.write ("for (" + CLASS_LISTITERATOR + "<" + type + "> fudge1 = fudge0.listIterator (); fudge1.hasNext (); )");
+      beginBlock (writer); // for
+      writer.write (type + " fudge2 = fudge1.next ()");
+      endStmt (writer);
+      writer.write ("if (fudge2 == null) throw new NullPointerException (\"List element of '" + value + "' cannot be null\")");
+      endStmt (writer);
+      if (isObject (field.getType ())) {
+        writer.write ("fudge1.set (" + writeDefensiveCopy (writer, field.getType (), "fudge2", value + "[]", 3) + ")");
+        endStmt (writer);
+      }
+      endBlock (writer); // for
+      writer.write (privateFieldName (field) + " = fudge0");
+      endStmt (writer);
+      endBlock (writer); // elseif
+    } else {
+      if (isObject (field.getType ()) && field.isRequired ()) {
+        writer.write ("if (" + value + " == null) throw new NullPointerException (\"'" + value + "' cannot be null\")");
+        endStmt (writer);
+      }
+      writer.write (privateFieldName (field) + " = " + writeDefensiveCopy (writer, field.getType (), value, value, 0));
+      endStmt (writer);
+    }
+  }
+  
+  private void writeMutatorMethod (final IndentWriter writer, final boolean builderReturn, final FieldDefinition field) throws IOException {
     // standard method (or singleton list on repeated fields)
     final String lfn = localFieldName (field);
-    writer.method (false, builderReturn ? "Builder" : "void", fieldMethodName (field, builderReturn ? null : "set", null), getJavaType (field.getType (), field.isRepeated ()) + " " + lfn); 
-    writer = beginBlock (writer); // method
     final String pfn = privateFieldName (field);
+    final String returnType = "public " + (builderReturn ? "Builder" : "void") + " ";
+    writer.write (returnType + fieldMethodName (field, builderReturn ? null : "set", null) + " (" + typeString (field.getType (), field.isRepeated ()) + " " + lfn + ")");
+    beginBlock (writer); // method
     if (field.isRepeated ()) {
-      writer.ifNull (lfn);
+      writer.write ("if (" + lfn + " == null) ");
       if (field.isRequired ()) {
-        writer.throwNullParameterException (lfn);
+        writer.write ("throw new NullPointerException (\"'" + lfn + "' cannot be null\")"); 
       } else {
-        writer.assignment (pfn, "null");
+        writer.write (pfn + " = null");
       }
       endStmt (writer); // null assignment or exception
-      writer.otherwise ();
-      writer = beginBlock (writer); // else
-      writer.assignmentConstruct (pfn, getListType (field.getType (), true), "1");
+      writer.write ("else");
+      beginBlock (writer); // else
+      writer.write (pfn + " = new " + listTypeString (field.getType (), true) + " (1)");
       endStmt (writer); // reset list
-      writer.invoke (fieldMethodName (field, "add", null), lfn);
+      writer.write (fieldMethodName (field, "add", null) + " (" + lfn + ")");
       endStmt (writer); // invoke add
-      writer = endBlock (writer);
+      endBlock (writer);
     } else {
       writeMutatorAssignment (writer, field);
     }
     if (builderReturn) {
-      writer.returnThis ();
+      writer.write ("return this");
       endStmt (writer); // return this
     }
     endBlock (writer); // method
     if (field.isRepeated ()) {
       // standard method to assign a whole list on repeated fields
-      writer.method (false, builderReturn ? "Builder" : "void", fieldMethodName (field, builderReturn ? null : "set", null), getGenericType (CLASS_COLLECTION, field.getType (), false) + " " + lfn);
-      writer = beginBlock (writer); // method
+      writer.write (returnType + fieldMethodName (field, builderReturn ? null : "set", null) + " (" + genericTypeString (CLASS_COLLECTION, field.getType (), false) + " " + lfn + ")");
+      beginBlock (writer); // method
       writeMutatorAssignment (writer, field);
       if (builderReturn) {
-        writer.returnThis ();
+        writer.write ("return this");
         endStmt (writer); // return this
       }
-      writer = endBlock (writer); // method
+      endBlock (writer); // method
       // standard method to append an item to a repeated field list
-      writer.method (false, builderReturn ? "Builder" : "void", fieldMethodName (field, "add", null), getJavaType (field.getType (), true) + " " + lfn);
-      writer = beginBlock (writer); // method
-      writer.ifNull (lfn);
-      writer.throwNullParameterException (lfn);
+      writer.write (returnType + fieldMethodName (field, "add", null) + " (" + typeString (field.getType (), true) + " " + lfn + ")");
+      beginBlock (writer); // method
+      writer.write ("if (" + lfn + " == null) throw new NullPointerException (\"'" + lfn + "' cannot be null\")");
       endStmt (writer); // check for null
-      writer.ifNull (pfn);
-      writer.assignmentConstruct (pfn, getListType (field.getType (), true), null);
+      writer.write ("if (" + pfn + " == null) " + pfn + " = new " + listTypeString (field.getType (), true) + " ()");
       endStmt (writer); // assign empty list if none already
-      writeDefensiveCopy (writer, lfn, field.getType ());
-      writer.invoke (pfn, "add", lfn);
+      writer.write (pfn + ".add (" + writeDefensiveCopy (writer, field.getType (), lfn, lfn, 0) + ")");
       endStmt (writer); // append
       if (builderReturn) {
-        writer.returnThis ();
+        writer.write ("return this");
         endStmt (writer); // return this
       }
-      writer = endBlock (writer); // method
+      endBlock (writer); // method
     }
   }
   
-  private void writeBuilderClassMethods (JavaWriter writer, final MessageDefinition message) throws IOException {
-    final Iterator<FieldDefinition> fields = message.getFieldDefinitions ();
-    while (fields.hasNext ()) {
-      final FieldDefinition field = fields.next ();
+  private void writeBuilderClassMethods (final IndentWriter writer, final MessageDefinition message) throws IOException {
+    for (FieldDefinition field : message.getFieldDefinitions ()) {
       if (!field.isRequired () || (field.getDefaultValue () != null)) {
         writeMutatorMethod (writer, true, field);
       }
@@ -422,27 +457,26 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     writer = endBlock (writer);
   }
   
-  private void writeBuilderClass (JavaWriter writer, MessageDefinition message) throws IOException {
+  private void writeBuilderClass (final IndentWriter writer, MessageDefinition message) throws IOException {
     final MessageDefinition ext = message.getExtends ();
-    writer.classDef (true, "Builder", (ext != null) ? ext.getIdentifier () + ".Builder" : null, null);
-    writer = beginBlock (writer); // builder class
-    writeBuilderClassFields (writer, message);
+    JavaWriter jWriter = new JavaWriter (writer);
+    jWriter.classDef (true, "Builder", (ext != null) ? ext.getIdentifier () + ".Builder" : null, null);
+    jWriter = beginBlock (jWriter); // builder class
+    writeBuilderClassFields (jWriter, message);
     writePublicConstructor (writer, true, message);
     writeBuilderClassMethods (writer, message);
-    writeBuilderClassBuildMethod (writer, message);
-    writer = endBlock (writer); // builder class
+    writeBuilderClassBuildMethod (jWriter, message);
+    jWriter = endBlock (jWriter); // builder class
   }
   
-  private void writeProtectedConstructor (JavaWriter writer, final MessageDefinition message) throws IOException {
-    final Iterator<FieldDefinition> fields = message.getFieldDefinitions ();
+  private void writeProtectedBuilderConstructor (JavaWriter writer, final MessageDefinition message) throws IOException {
     writer.constructor ("protected", message.getName (), "final Builder builder");
     writer = beginBlock (writer); // constructor
     if (message.getExtends () != null) {
       writer.invoke ("super", "builder");
       endStmt (writer);
     }
-    while (fields.hasNext ()) {
-      final FieldDefinition field = fields.next ();
+    for (FieldDefinition field : message.getFieldDefinitions ()) {
       writer.assignment ("this." + privateFieldName (field), "builder." + privateFieldName (field));
       endStmt (writer); // assignment
     }
@@ -493,7 +527,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         final String temp1 = writer.localVariable (CLASS_FUDGEMSG, true, "new " + CLASS_FUDGEMSG + " (context)");
         endStmt (writer);
         final FieldType baseType = ((FieldType.ArrayType)type).getBaseType ();
-        final String temp2 = writer.forEach (getJavaType (baseType, false), value);
+        final String temp2 = writer.forEach (typeString (baseType, false), value);
         writer = beginBlock (writer);
         writeAddToFudgeMsg (writer, temp1, "null", "null", temp2, baseType);
         writer = endBlock (writer);
@@ -528,15 +562,13 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       writer.invoke ("super", "toFudgeMsg", "context, msg");
       endStmt (writer);
     }
-    final Iterator<FieldDefinition> fields = message.getFieldDefinitions ();
-    while (fields.hasNext ()) {
-      final FieldDefinition field = fields.next ();
+    for (FieldDefinition field : message.getFieldDefinitions ()) {
       final FieldType type = field.getType ();
       String value = privateFieldName (field);
       if (field.isRepeated ()) {
         writer.ifNotNull (value);
         writer = beginBlock (writer); // if not null
-        value = writer.forEach (getJavaType (type, true), value);
+        value = writer.forEach (typeString (type, true), value);
         writer = beginBlock (writer); // foreach
       } else {
         if (isObject (type)) {
@@ -602,18 +634,18 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       base = ((FieldType.ArrayType)base).getBaseType ();
       dims++;
     }
-    sbNewArray.append (getJavaType (base, false)).append ('[').append (source).append (".size ()]");
+    sbNewArray.append (typeString (base, false)).append ('[').append (source).append (".size ()]");
     for (int i = 0; i < dims; i++) {
       sbNewArray.append ("[]");
     }
     if (isObjectArray (type)) {
       return source + ".toArray (" + sbNewArray + ")";
     } else {
-      final String newArray = writer.localVariable (getJavaType (type, false), true, sbNewArray.toString ());
+      final String newArray = writer.localVariable (typeString (type, false), true, sbNewArray.toString ());
       endStmt (writer);
       final String index = writer.localVariable ("int", false, "0");
       endStmt (writer);
-      final String element = writer.forEach (getJavaType (type.getBaseType (), false), source);
+      final String element = writer.forEach (typeString (type.getBaseType (), false), source);
       writer = beginBlock (writer);
       writer.assignment (newArray + "[" + index + "++]", element);
       endStmt (writer);
@@ -678,7 +710,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
           writer.throwInvalidFudgeFieldException (message, fieldRef, type.toString (), null);
           endStmt (writer);
           if (appendTo != null) {
-            assignTo = writer.localVariable (getJavaType (type, false), true);
+            assignTo = writer.localVariable (typeString (type, false), true);
             endStmt (writer);
           }
           writer.guard ();
@@ -723,7 +755,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         endStmt (writer);
         if (appendTo != null) {
           // TODO 2010-01-06 Andrew -- we could call getNumFields on the subMessage and allocate a proper array once, but might that be slower if we have a FudgeMsg implementation that makes data available as soon as its received & decoded - i.e. a big array submessage would have to be decoded in its entirety to get the length
-          assignTo = writer.localVariable (getListType (baseType, false), true, "new " + getListType (baseType, true) + " ()");
+          assignTo = writer.localVariable (listTypeString (baseType, false), true, "new " + listTypeString (baseType, true) + " ()");
           endStmt (writer);
         }
         writer.getWriter ().write ("try");
@@ -931,7 +963,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   }
   
   private void writeDecodeFudgeFieldsToList (JavaWriter writer, final FieldDefinition field, final String localName) throws IOException {
-    writer.assignmentConstruct (localName, getListType (field.getType (), true), "fudgeFields.size ()");
+    writer.assignmentConstruct (localName, listTypeString (field.getType (), true), "fudgeFields.size ()");
     endStmt (writer); // list construction
     final String fieldData = writer.forEach (CLASS_FUDGEFIELD, "fudgeFields");
     beginBlock (writer.getWriter ()); // iteration
@@ -939,7 +971,8 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     endBlock (writer.getWriter ()); // iteration
   }
   
-  private void writeGetFudgeFields (JavaWriter writer, final List<FieldDefinition> fields, boolean localAssign, boolean builder) throws IOException {
+  private void writeGetFudgeFields (final IndentWriter writer, final List<FieldDefinition> fields, final boolean useAssignment, final boolean useBuilder) throws IOException {
+    JavaWriter jWriter = new JavaWriter (writer);
     for (FieldDefinition field : fields) {
       final StringBuilder sbGetField = new StringBuilder ("fudgeMsg.get");
       if (field.isRepeated ()) sbGetField.append ("All");
@@ -950,109 +983,137 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       } else {
         sbGetField.append ("Name (\"").append (field.getName ()).append ("\")");
       }
-      writer.assignment (field.isRepeated () ? "fudgeFields" : "fudgeField", sbGetField.toString ());
-      endStmt (writer); // field(s) assignment
-      if (localAssign) {
+      jWriter.assignment (field.isRepeated () ? "fudgeFields" : "fudgeField", sbGetField.toString ());
+      endStmt (jWriter); // field(s) assignment
+      if (useAssignment) {
         if (field.isRepeated ()) {
-          writer.ifZero ("fudgeFields.size ()");
+          jWriter.ifZero ("fudgeFields.size ()");
         } else {
-          writer.ifNull ("fudgeField");
+          jWriter.ifNull ("fudgeField");
         }
-        writer.throwInvalidFudgeFieldException (field.getOuterMessage (), field.getName (), "present", null);
-        endStmt (writer); // if & throw
-        writer.namedLocalVariable (getRealFieldType (field, false), localFieldName (field), null);
-        endStmt (writer); // local field declaration
-        if (field.isRepeated ()) {
-          writeDecodeFudgeFieldsToList (writer, field, localFieldName (field));
+        jWriter.throwInvalidFudgeFieldException (field.getOuterMessage (), field.getName (), "present", null);
+        endStmt (jWriter); // if & throw
+        final String dest;
+        if (useBuilder) {
+          writer.write ("final " + realTypeString (field, false) + " " + (dest = localFieldName (field)));
         } else {
-          writeDecodeFudgeField (writer, field.getType (), field.getOuterMessage (), "fudgeField", field.getName (), localFieldName (field), null);
+          dest = privateFieldName (field);
+        }
+        endStmt (writer);
+        if (field.isRepeated ()) {
+          writeDecodeFudgeFieldsToList (jWriter, field, dest);
+        } else {
+          writeDecodeFudgeField (jWriter, field.getType (), field.getOuterMessage (), "fudgeField", field.getName (), dest, null);
         }
       } else {
+        final String dest;
+        if (useBuilder) {
+          dest = "fudgeBuilder." + fieldMethodName (field, null, null);
+        } else {
+          dest = fieldMethodName (field, "set", null);
+        }
         if (field.isRepeated ()) {
-          writer.ifGtZero ("fudgeFields.size ()");
-          writer = beginBlock (writer); // if guard
-          final String tempList = writer.localVariable (getListType (field.getType (), false), true);
-          endStmt (writer); // temp variable
-          writeDecodeFudgeFieldsToList (writer, field, tempList);
-          if (builder) {
-            writer.invoke ("fudgeBuilder", localFieldName (field), tempList);
-          } else {
-            writer.invoke ("fudgeObject", "set" + camelCaseFieldName (field), tempList);
-          }
+          jWriter.ifGtZero ("fudgeFields.size ()");
+          jWriter = beginBlock (jWriter); // if guard
+          final String tempList = jWriter.localVariable (listTypeString (field.getType (), false), true);
+          endStmt (jWriter); // temp variable
+          writeDecodeFudgeFieldsToList (jWriter, field, tempList);
+          writer.write (dest + " (" + tempList + ")");
           endStmt (writer); // add to builder or object
         } else {
-          writer.ifNotNull ("fudgeField");
-          writer = beginBlock (writer); // if guard
-          writeDecodeFudgeField (writer, field.getType (), field.getOuterMessage (), "fudgeField", field.getName (), null, builder ? "fudgeBuilder." + localFieldName (field) : "fudgeObject.set" + camelCaseFieldName (field));
+          jWriter.ifNotNull ("fudgeField");
+          jWriter = beginBlock (jWriter); // if guard
+          writeDecodeFudgeField (jWriter, field.getType (), field.getOuterMessage (), "fudgeField", field.getName (), null, dest);
         }
-        writer = endBlock (writer); // if guard
+        jWriter = endBlock (jWriter); // if guard
       }
     }
   }
   
-  private static final int F_REPEATED = 1;
-  private static final int F_NONREPEATED = 2;
-  
-  private int getFudgeMsgFieldsAll (final MessageDefinition message, final List<FieldDefinition> required, final List<FieldDefinition> optional, final StringBuilder sbBuilderParams) {
-    int flags = 0;
+  private void writeProtectedFudgeMsgConstructor (final IndentWriter writer, final MessageDefinition message) throws IOException {
+    writer.write ("protected " + message.getName () + " (final " + CLASS_FUDGEFIELDCONTAINER + " fudgeMsg)");
+    beginBlock (writer); // constructor
     if (message.getExtends () != null) {
-      flags |= getFudgeMsgFieldsAll (message.getExtends (), required, optional, sbBuilderParams);
+      writer.write ("super (fudgeMsg)");
+      endStmt (writer);
     }
-    final Iterator<FieldDefinition> fields = message.getFieldDefinitions ();
-    while (fields.hasNext ()) {
-      final FieldDefinition field = fields.next ();
+    writeDecodeFudgeMsg (writer, message, false);
+    endBlock (writer); // constructor
+  }
+  
+  private void writeBuilderFromFudgeMsg (final IndentWriter writer, final MessageDefinition message) throws IOException {
+    writer.write ("protected static Builder builderFromFudgeMsg (final " + CLASS_FUDGEFIELDCONTAINER + " fudgeMsg)");
+    beginBlock (writer); // builderFromFudgeMsg
+    if (message.getExtends () != null) {
+      final String superClass = message.getExtends ().getIdentifier ();
+      writer.write ("final " + superClass + ".Builder fudgeSuperBuilder = " + superClass + ".builderFromFudgeMsg (fudgeMsg)");
+      endStmt (writer);
+    }
+    writeDecodeFudgeMsg (writer, message, true);
+    writer.write ("return fudgeBuilder");
+    endStmt (writer);
+    endBlock (writer); // builderFromFudgeMsg
+  }
+  
+  private void writeDecodeFudgeMsg (final IndentWriter writer, final MessageDefinition message, final boolean useBuilder) throws IOException {
+    final List<FieldDefinition> required = new LinkedList<FieldDefinition> ();
+    final List<FieldDefinition> optional = new LinkedList<FieldDefinition> ();
+    boolean fieldDeclared = false, fieldsDeclared = false;
+    for (FieldDefinition field : message.getFieldDefinitions ()) {
       if (field.isRequired () && (field.getDefaultValue () == null)) {
         required.add (field);
-        if (sbBuilderParams.length () > 0) sbBuilderParams.append (", ");
-        sbBuilderParams.append (localFieldName (field));
       } else {
         optional.add (field);
       }
       if (field.isRepeated ()) {
-        flags |= F_REPEATED;
+        if (!fieldsDeclared) {
+          writer.write (CLASS_LIST + "<" + CLASS_FUDGEFIELD + ">" + " fudgeFields");
+          endStmt (writer);
+          fieldsDeclared = true;
+        }
       } else {
-        flags |= F_NONREPEATED;
+        if (!fieldDeclared) {
+          writer.write (CLASS_FUDGEFIELD + " fudgeField");
+          endStmt (writer);
+          fieldDeclared = true;
+        }
       }
     }
-    return flags;
+    writeGetFudgeFields (writer, required, true, useBuilder);
+    if (useBuilder) {
+      writer.write ("final Builder fudgeBuilder = new Builder (");
+      boolean first = true;
+      if (message.getExtends () != null) {
+        writer.write ("fudgeSuperBuilder");
+        first = false;
+      }
+      for (FieldDefinition field : required) {
+        if (first) first = false; else writer.write (", ");
+        writer.write (localFieldName (field));
+      }
+      writer.write (")");
+      endStmt (writer);
+      writeGetFudgeFields (writer, optional, false, true);
+    } else {
+      writeGetFudgeFields (writer, optional, false, false);
+    }
   }
   
-  private void writeFromFudgeMsg (JavaWriter writer, final MessageDefinition message, final boolean useBuilder) throws IOException {
-    //final Set<ConversionFunction> conversionFunctions = EnumSet.noneOf (ConversionFunction.class);
-    final List<FieldDefinition> required = new LinkedList<FieldDefinition> ();
-    final List<FieldDefinition> optional = new LinkedList<FieldDefinition> ();
-    final StringBuilder sbBuilderParams = new StringBuilder ();
-    int flags = getFudgeMsgFieldsAll (message, required, optional, sbBuilderParams);
-    writer.method (true, message.getName (), "fromFudgeMsg", "final " + CLASS_FUDGEFIELDCONTAINER + " fudgeMsg");
-    writer = beginBlock (writer); // fromFudgeMsg
-    if ((flags & F_REPEATED) != 0) {
-      writer.namedLocalVariable (CLASS_LIST + "<" + CLASS_FUDGEFIELD + ">", "fudgeFields", null);
-      endStmt (writer); // fields declaration
-    }
-    if ((flags & F_NONREPEATED) != 0) {
-      writer.namedLocalVariable (CLASS_FUDGEFIELD, "fudgeField", null);
-      endStmt (writer); // field declaration
-    }
-    writeGetFudgeFields (writer, required, true, false);
+  private void writeFromFudgeMsg (final IndentWriter writer, final MessageDefinition message, final boolean useBuilder) throws IOException {
+    writer.write ("public static " + message.getName () + " fromFudgeMsg (final " + CLASS_FUDGEFIELDCONTAINER + " fudgeMsg)");
+    beginBlock (writer);
     if (useBuilder) {
-      writer.namedLocalVariable ("Builder", "fudgeBuilder", "new Builder (" + sbBuilderParams.toString () + ")");
-      endStmt (writer); // objBuilder creation
-      writeGetFudgeFields (writer, optional, false, true);
-      writer.returnInvoke ("fudgeBuilder.build", null, null);
+      writer.write ("return builderFromFudgeMsg (fudgeMsg).build ()");
     } else {
-      writer.namedLocalVariable (message.getName (), "fudgeObject", "new " + message.getName () + "(" + sbBuilderParams.toString () + ")");
-      endStmt (writer); // obj creation
-      writeGetFudgeFields (writer, optional, false, false);
-      writer.returnVariable ("fudgeObject");
+      writer.write ("return new " + message.getName () + " (fudgeMsg)");
     }
-    endStmt (writer); // create and return object
-    endBlock (writer); // fromFudgeMsg
+    endStmt (writer);
+    endBlock (writer);
   }
   
   private void writeEquals (JavaWriter writer, final MessageDefinition message) throws IOException {
     writer.method (false, "boolean", "equals", "final Object o");
     writer = beginBlock (writer);
-    final Iterator<FieldDefinition> fields = message.getFieldDefinitions ();
     writer.ifNull ("o");
     writer.returnFalse ();
     endStmt (writer);
@@ -1061,8 +1122,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     endStmt (writer);
     writer.namedLocalVariable (message.getName (), "msg", "(" + message.getName () + ")o");
     endStmt (writer);
-    while (fields.hasNext ()) {
-      final FieldDefinition field = fields.next ();
+    for (FieldDefinition field : message.getFieldDefinitions ()) {
       final String a = privateFieldName (field);
       final String b = "msg." + a;
       final FieldType type = field.getType ();
@@ -1121,13 +1181,11 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   private void writeHashCode (JavaWriter writer, final MessageDefinition message) throws IOException {
     writer.method (false, "int", "hashCode", null);
     writer = beginBlock (writer);
-    final Iterator<FieldDefinition> fields = message.getFieldDefinitions ();
     writer.namedLocalVariable ("int", "hc", null);
     endStmt (writer);
     writer.assignment ("hc", (message.getExtends () != null) ? "super.hashCode ()" : "1");
     endStmt (writer);
-    while (fields.hasNext ()) {
-      final FieldDefinition field = fields.next ();
+    for (FieldDefinition field : message.getFieldDefinitions ()) {
       final String name = privateFieldName (field);
       final FieldType type = field.getType ();
       if (type instanceof FieldType.ArrayType) {
@@ -1135,7 +1193,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         endStmt (writer);
         writer.ifNotNull (name);
         if (field.isRepeated ()) {
-          final String repeated = writer.forEach (getJavaType (type, true), name);
+          final String repeated = writer.forEach (typeString (type, true), name);
           writer = beginBlock (writer);
           writer.assignment ("hc", "hc * 31");
           endStmt (writer);
@@ -1201,9 +1259,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
    * I.e. we omit the builder if it would just have a construct and no mutator methods
    */
   private boolean useBuilderPattern (final MessageDefinition message) {
-    final Iterator<FieldDefinition> fields = message.getFieldDefinitions ();
-    while (fields.hasNext ()) {
-      final FieldDefinition field = fields.next ();
+    for (FieldDefinition field : message.getFieldDefinitions ()) {
       if (!field.isMutable ()) {
         if (!field.isRequired ()) return true; // optional fields - must use a Builder 
         if (field.getDefaultValue () != null) return true; // required field with default value - must use a Builder
@@ -1219,16 +1275,18 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   }
   
   @Override
-  public void writeClassImplementationConstructor(final Compiler.Context context, final MessageDefinition message, final IndentWriter iWriter) throws IOException {
-    final JavaWriter writer = new JavaWriter (iWriter);
+  public void writeClassImplementationConstructor(final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
+    final JavaWriter jWriter = new JavaWriter (writer);
     final boolean useBuilder = useBuilderPattern (message);
     if (useBuilder) {
       writeBuilderClass (writer, message);
-      writeProtectedConstructor (writer, message);
+      writeProtectedBuilderConstructor (jWriter, message);
+      writeBuilderFromFudgeMsg (writer, message);
     } else {
       writePublicConstructor (writer, false, message);
+      writeProtectedFudgeMsgConstructor (writer, message);
     }
-    writeToFudgeMsg (writer, message);
+    writeToFudgeMsg (jWriter, message);
     writeFromFudgeMsg (writer, message, useBuilder);
   }
 
@@ -1315,11 +1373,11 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     endBlock (writer); // class
   }
 
-  private String getJavaType (final FieldType type, final boolean asObject) {
+  private String typeString (final FieldType type, final boolean asObject) {
     if (type instanceof FieldType.ArrayType) {
       final FieldType.ArrayType array = (FieldType.ArrayType)type;
       final StringBuilder sb = new StringBuilder ();
-      sb.append (getJavaType (array.getBaseType (), false));
+      sb.append (typeString (array.getBaseType (), false));
       sb.append ("[]");
       return sb.toString ();
     } else if (type instanceof FieldType.EnumType) {
