@@ -49,6 +49,34 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   
   /* package */ static final JavaClassCode INSTANCE = new JavaClassCode ();
   
+  private static enum ProtoBinding {
+    /**
+     * Java fragment to be dropped into the class or enum generated
+     */
+    BODY ("body"),
+    /**
+     * Class to be instantiated in place of the generated one by Buider, clone, and fromFudgeMsg. It will need to be a subclass of the generated one.
+     */ 
+    DELEGATE ("delegate"),
+    /**
+     * Comma separated list of interfaces to be put on any class definitions.
+     */
+    IMPLEMENTS ("implements"),
+    /**
+     * Comma separated list of packages to be imported at the head of the file (for use in implements, delegate, or body)
+     */
+    IMPORTS ("imports");
+    private final String _key;
+    private ProtoBinding (final String key) {
+      _key = key;
+    }
+    private String getKey () {
+      return _key;
+    }
+  }
+
+  // The constants below are for safety and convenience in Java world, but the approach isn't portable to other codegens written in Java.
+  
   private static final String CLASS_COLLECTIONS = java.util.Collections.class.getName ();
   private static final String CLASS_COLLECTION = java.util.Collection.class.getName ();
   private static final String CLASS_FUDGEMSG = org.fudgemsg.FudgeMsg.class.getName ();
@@ -70,9 +98,14 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     super (new DocumentedClassCode (blockCodeDelegate (new CBlockCode (literalCodeDelegate (JavaLiteralCode.INSTANCE)))));
   }
   
-  private String getBinding (final Definition definition, final String key) {
-    final Binding.Data data = definition.getLanguageBinding ("Java").getData (key);
+  private String getBinding (final Definition definition, final ProtoBinding binding) {
+    final Binding.Data data = definition.getLanguageBinding ("Java").getData (binding.getKey ());
     return (data != null) ? data.getValue () : null;
+  }
+  
+  private String messageDelegateName (final MessageDefinition message) {
+    final String delegate = getBinding (message, ProtoBinding.DELEGATE);
+    return (delegate != null) ? delegate : message.getName ();
   }
   
   private JavaWriter beginClass (JavaWriter writer, final Definition definition, final String extendsClass, String interfaceClass) throws IOException {
@@ -83,7 +116,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         endStmt (writer);
       }
     }
-    final String imports = getBinding (definition, "imports");
+    final String imports = getBinding (definition, ProtoBinding.IMPORTS);
     if (imports != null) {
       for (String library : imports.split (",")) {
         writer.importLib (library.trim ());
@@ -91,7 +124,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       }
     }
     // TODO 2010-01-13 Andrew -- need to support the Javadoc-style annotations in the proto files and write out javadoc for Java classes 
-    final String extraImplements = getBinding (definition, "implements");
+    final String extraImplements = getBinding (definition, ProtoBinding.IMPLEMENTS);
     if (extraImplements != null) {
       if (interfaceClass == null) {
         interfaceClass = extraImplements;
@@ -101,7 +134,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     }
     writer.classDef (definition.getOuterDefinition () != null, definition.getName (), extendsClass, interfaceClass);
     writer = beginBlock (writer); // class definition
-    final String bodyCode = getBinding (definition, "body");
+    final String bodyCode = getBinding (definition, ProtoBinding.BODY);
     if (bodyCode != null) {
       writer.getWriter ().write (bodyCode);
       writer.getWriter ().newLine ();
@@ -263,7 +296,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         requiredFields.add (field);
       }
     }
-    writer.write ("public " + (builder ? "Builder" : message.getName ()) + " (");
+    writer.write (((builder || (getBinding (message, ProtoBinding.DELEGATE) == null)) ? "public " : "protected ") + (builder ? "Builder" : message.getName ()) + " (");
     if (superFields != null) {
       writer.write (fieldsToList (superFields, true));
       if (requiredFields.size () > 0) writer.write (", ");
@@ -477,12 +510,12 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     }
   }
   
-  private void writeBuilderClassBuildMethod (JavaWriter writer, MessageDefinition message) throws IOException {
-    writer.method (false, message.getName (), "build", null);
-    writer = beginBlock (writer);
-    writer.returnConstruct (message.getName (), "this");
+  private void writeBuilderClassBuildMethod (final IndentWriter writer, MessageDefinition message) throws IOException {
+    writer.write ("public " + message.getName () + " build ()");
+    beginBlock (writer);
+    writer.write ("return new " + messageDelegateName (message) + " (this)");
     endStmt (writer);
-    writer = endBlock (writer);
+    endBlock (writer);
   }
   
   private void writeBuilderClass (final IndentWriter writer, MessageDefinition message) throws IOException {
@@ -494,8 +527,8 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     writePublicConstructor (writer, true, message);
     writeFudgeMsgConstructor (writer, true, message);
     writeBuilderClassMethods (writer, message);
-    writeBuilderClassBuildMethod (jWriter, message);
-    jWriter = endBlock (jWriter); // builder class
+    writeBuilderClassBuildMethod (writer, message);
+    endBlock (writer); // builder class
   }
   
   private void writeProtectedBuilderConstructor (final IndentWriter writer, final MessageDefinition message) throws IOException {
@@ -1180,7 +1213,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     if (useBuilder) {
       writer.write ("return new Builder (fudgeMsg).build ()");
     } else {
-      writer.write ("return new " + message.getName () + " (fudgeMsg)");
+      writer.write ("return new " + messageDelegateName (message) + " (fudgeMsg)");
     }
     endStmt (writer);
     endBlock (writer);
@@ -1308,7 +1341,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   private void writeClone (final IndentWriter writer, final MessageDefinition message) throws IOException {
     writer.write ("public " + message.getName () + " clone ()");
     beginBlock (writer);
-    writer.write ("return new " + message.getName () + " (this)");
+    writer.write ("return new " + messageDelegateName (message) + " (this)");
     endStmt (writer);
     endBlock (writer);
   }
@@ -1404,7 +1437,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     endStmt (writer); // default
     endBlock (writer); // switch
     endBlock (writer); // fromFudgeEncoding
-    final String bodyCode = getBinding (enumDefinition, "body");
+    final String bodyCode = getBinding (enumDefinition, ProtoBinding.BODY);
     if (bodyCode != null) {
       writer.getWriter ().write (bodyCode);
       writer.getWriter ().newLine ();

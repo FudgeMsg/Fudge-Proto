@@ -29,7 +29,7 @@ public class ExternalMessage {
     
   }
   
-  protected ExternalMessage (final FudgeFieldContainer msg) {
+  public ExternalMessage (final FudgeFieldContainer msg) {
   }
   
   public void toFudgeMsg (final FudgeContext context, final MutableFudgeFieldContainer msg) {
