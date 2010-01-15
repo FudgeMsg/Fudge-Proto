@@ -40,7 +40,7 @@ public class CommandLineTest {
   }
   
   @Test
-  public void literalFileAllCodeGenerators () {
+  public void literalsFileAllCodeGenerators () {
     fileAllCodeGenerators ("Literals.proto");
   }
   
@@ -56,12 +56,12 @@ public class CommandLineTest {
   
   @Test
   public void typesFileAllCodeGenerators () {
-    fileAllCodeGenerators ("Types.proto");
+    fileAllCodeGenerators ("types.proto");
   }
   
   @Test
   public void mutablesFileAllCodeGenerators () {
-    fileAllCodeGenerators ("Mutables.proto");
+    fileAllCodeGenerators ("mutables.proto");
   }
   
   @Test
@@ -71,8 +71,12 @@ public class CommandLineTest {
   
   @Test
   public void bindingFileAllCodeGenerators () {
-    fileAllCodeGenerators ("BindingJava.proto");
-    // TODO 2010-01-07 Andrew -- binding test file for other code generators
+    fileAllCodeGenerators ("binding.proto");
+  }
+  
+  @Test
+  public void externFileAllCodeGenerators () {
+    fileAllCodeGenerators ("extern.proto");
   }
   
   private void fileAllCodeGenerators (final String filename) {

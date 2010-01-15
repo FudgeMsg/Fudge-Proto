@@ -1,6 +1,6 @@
 // test the custom code for a Java language binding
 
-namespace org.fudgemsg.tests {
+namespace org.fudgemsg.proto.tests.binding {
 
 	message DomainSpecificIdentifier {
 		required IdentificationDomain domain;
@@ -45,6 +45,28 @@ Java;
 				}
 Java;
 		}
+	}
+	
+	enum BindingEnum {
+	  APPLE;
+	  BANANA;
+	  binding Java {
+	    body   <<<JAVA
+	      public static void foo () {
+	      }
+JAVA;
+	  }
+	}
+	
+	taxonomy BindingTaxon {
+	  APPLE;
+	  BANANA;
+	  binding Java {
+	    body <<<JAVA
+	      public static void foo () {
+	      }
+JAVA;
+	  }
 	}
 
 }

@@ -1,6 +1,6 @@
 // All field types available
 
-namespace org.fudgemsg.tests {
+namespace org.fudgemsg.proto.tests.types {
 
 	message SubMessage {
 		required int	i;

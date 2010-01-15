@@ -23,6 +23,9 @@
 
 	<target name="compile-proto-java" depends="tests"
 		description="--> compile the output of the Java code generator">
+		<copy file="${tests.dir}/unit_Java/org/fudgemsg/proto/tests/ExternalEnum.java" todir="${tests.dir}/out_Java/org/fudgemsg/proto/tests" />
+		<copy file="${tests.dir}/unit_Java/org/fudgemsg/proto/tests/ExternalMessage.java" todir="${tests.dir}/out_Java/org/fudgemsg/proto/tests" />
+		<copy file="${tests.dir}/unit_Java/org/fudgemsg/proto/tests/ExternalTaxonomy.java" todir="${tests.dir}/out_Java/org/fudgemsg/proto/tests" />
                 <javac	srcdir="${tests.dir}/out_Java"
                 	destdir="${tests.dir}/out_Java"
                 	classpathref="lib.path.id"

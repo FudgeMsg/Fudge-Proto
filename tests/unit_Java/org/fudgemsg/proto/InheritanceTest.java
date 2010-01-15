@@ -15,18 +15,17 @@
 
 package org.fudgemsg.proto;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.fudgemsg.FudgeContext;
 import org.fudgemsg.FudgeMsg;
-import org.fudgemsg.tests.BaseClassA;
-import org.fudgemsg.tests.BaseClassB;
-import org.fudgemsg.tests.SubClassA;
-import org.fudgemsg.tests.SubClassA2;
+import org.fudgemsg.proto.tests.inheritance.BaseClassA;
+import org.fudgemsg.proto.tests.inheritance.BaseClassB;
+import org.fudgemsg.proto.tests.inheritance.SubClassA;
+import org.fudgemsg.proto.tests.inheritance.SubClassA2;
 import org.junit.Test;
 
 public class InheritanceTest {

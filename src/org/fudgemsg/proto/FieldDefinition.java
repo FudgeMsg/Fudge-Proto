@@ -35,7 +35,7 @@ public class FieldDefinition extends Definition {
   private boolean _flagMutable = false;
   
   /* package */ FieldDefinition (final String identifier, final CodePosition codePosition, final MessageDefinition outerMessage, final FieldType type) {
-    super (identifier, codePosition, outerMessage);
+    super (identifier, codePosition, outerMessage, outerMessage.isCompilationTarget ());
     _ordinal = null;
     _type = type;
   }

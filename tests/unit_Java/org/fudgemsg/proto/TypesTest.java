@@ -22,9 +22,9 @@ import java.util.Arrays;
 
 import org.fudgemsg.FudgeContext;
 import org.fudgemsg.FudgeMsg;
-import org.fudgemsg.tests.CustomEnum;
-import org.fudgemsg.tests.SubMessage;
-import org.fudgemsg.tests.Types;
+import org.fudgemsg.proto.tests.types.CustomEnum;
+import org.fudgemsg.proto.tests.types.SubMessage;
+import org.fudgemsg.proto.tests.types.Types;
 import org.junit.Test;
 
 public class TypesTest {

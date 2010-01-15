@@ -492,7 +492,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     jWriter = beginBlock (jWriter); // builder class
     writeBuilderClassFields (jWriter, message);
     writePublicConstructor (writer, true, message);
-    writeProtectedFudgeMsgConstructor (writer, true, message);
+    writeFudgeMsgConstructor (writer, true, message);
     writeBuilderClassMethods (writer, message);
     writeBuilderClassBuildMethod (jWriter, message);
     jWriter = endBlock (jWriter); // builder class
@@ -1084,8 +1084,8 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     }
   }
   
-  private void writeProtectedFudgeMsgConstructor (final IndentWriter writer, final boolean builder, final MessageDefinition message) throws IOException {
-    writer.write ("protected " + (builder ? "Builder" : message.getName ()) + " (final " + CLASS_FUDGEFIELDCONTAINER + " fudgeMsg)");
+  private void writeFudgeMsgConstructor (final IndentWriter writer, final boolean builder, final MessageDefinition message) throws IOException {
+    writer.write ("public " + (builder ? "Builder" : message.getName ()) + " (final " + CLASS_FUDGEFIELDCONTAINER + " fudgeMsg)");
     beginBlock (writer); // constructor
     final MessageDefinition superMessage = message.getExtends ();
     if (superMessage != null) {
@@ -1346,7 +1346,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       writeProtectedBuilderConstructor (writer, message);
     } else {
       writePublicConstructor (writer, false, message);
-      writeProtectedFudgeMsgConstructor (writer, false, message);
+      writeFudgeMsgConstructor (writer, false, message);
     }
     writeProtectedCloneConstructor (writer, message);
     writeToFudgeMsg (jWriter, message);
@@ -1404,6 +1404,11 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     endStmt (writer); // default
     endBlock (writer); // switch
     endBlock (writer); // fromFudgeEncoding
+    final String bodyCode = getBinding (enumDefinition, "body");
+    if (bodyCode != null) {
+      writer.getWriter ().write (bodyCode);
+      writer.getWriter ().newLine ();
+    }
     endBlock (writer); // enum
   }
   

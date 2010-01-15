@@ -1,6 +1,6 @@
 // Taxonomy test
 
-namespace org.fudgemsg.tests.taxon {
+namespace org.fudgemsg.proto.tests.taxon {
 
 	taxonomy Fruit {
 		APPLE = 1;

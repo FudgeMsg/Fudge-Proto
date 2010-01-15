@@ -13,17 +13,22 @@
  * limitations under the License.
  */
 
-package org.fudgemsg.proto;
+package org.fudgemsg.proto.tests;
 
-/**
- * Semantic representation of a taxonomy definition.
- * 
- * @author Andrew
- */
-public class TaxonomyDefinition extends StringIntPairDefinition {
+public enum ExternalEnum {
+  APPLE,
+  BANANA;
   
-  /* package */ TaxonomyDefinition (final String identifier, final CodePosition codePosition, final boolean compilationTarget) {
-    super (identifier, codePosition, null, compilationTarget);
+  public int getFudgeEncoding () {
+    return ordinal ();
   }
-
+  
+  public static ExternalEnum fromFudgeEncoding (final int fudgeEncoding) {
+    switch (fudgeEncoding) {
+    case 0 : return APPLE;
+    case 1 : return BANANA;
+    default : return null;
+    }
+  }
+  
 }

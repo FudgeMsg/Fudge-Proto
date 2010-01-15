@@ -1,6 +1,6 @@
 // Namespace and scoping test
 
-namespace org.fudgemsg.tests.nspace {
+namespace org.fudgemsg.proto.tests.namespace {
 
 	message Foo {
 	

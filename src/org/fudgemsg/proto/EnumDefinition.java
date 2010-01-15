@@ -24,8 +24,8 @@ public class EnumDefinition extends StringIntPairDefinition {
   
   private int _nextAutoValue = 0;
   
-  /* package */ EnumDefinition (final String identifier, final CodePosition codePosition, final MessageDefinition outerMessage) {
-    super (identifier, codePosition, outerMessage);
+  /* package */ EnumDefinition (final String identifier, final CodePosition codePosition, final MessageDefinition outerMessage, final boolean compilationTarget) {
+    super (identifier, codePosition, outerMessage, compilationTarget);
   }
   
   @Override

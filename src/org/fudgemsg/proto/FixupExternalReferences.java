@@ -135,9 +135,6 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
       final AST element = children.get (i);
       AST newElement;
       switch (element.getNodeLabel ()) {
-      case ProtoLexer.BINDING :
-        // ignore binding
-        continue;
       case ProtoLexer.ENUM :
         // ignore enums
         continue;

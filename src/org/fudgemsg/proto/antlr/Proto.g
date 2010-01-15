@@ -26,8 +26,9 @@ tokens {
 	DEFAULT			= 'default';
 	DIM_FIXED;
 	DIM_VARIANT;
-	ENUM			= 'enum';
+	ENUM			  = 'enum';
 	EXTENDS			= 'extends';
+	EXTERN      = 'extern';
 	FIELD;
 	IMPORT			= 'import';
 	MESSAGE			= 'message';
@@ -41,13 +42,13 @@ tokens {
 	T_BYTE			= 'byte';
 	T_DOUBLE		= 'double';
 	T_FLOAT			= 'float';
-	T_INDICATOR		= 'indicator';
-	T_INT			= 'int';
+	T_INDICATOR	= 'indicator';
+	T_INT			  = 'int';
 	T_LONG			= 'long';
 	T_SHORT			= 'short';
 	T_STRING		= 'string';
 	TAXONOMY		= 'taxonomy';
-	USES			= 'uses';
+	USES			  = 'uses';
 }
 
 @header {
@@ -112,31 +113,35 @@ ML_STRING : '<<<' ('a'..'z'|'A'..'Z')+ ('\r'|'\n') ( options { greedy = false; }
 STRING : '"' ( options { greedy = false; } : ('\\'.|.) )* '"' ;
 WHITESPACE : (' '|'\t'|'\r'|'\n')+ { skip (); } ;
 
+anyword
+  : BINDING
+  | DEFAULT
+  | ENUM
+  | EXTENDS
+  | EXTERN
+  | IMPORT
+  | MESSAGE
+  | MUTABLE
+  | NAMESPACE
+  | REPEATED
+  | REQUIRED
+  | T_BOOL
+  | T_BYTE
+  | T_DOUBLE
+  | T_FLOAT
+  | T_INDICATOR
+  | T_INT
+  | T_LONG
+  | T_SHORT
+  | T_STRING
+  | TAXONOMY
+  | USES
+  ;
+
 binding : BINDING^ binding_anyword '{'! binding_element * '}'! ;
 
 binding_anyword
 	: fullidentifier
-	| BINDING
-	| DEFAULT
-	| ENUM
-	| EXTENDS
-	| IMPORT
-	| MESSAGE
-	| MUTABLE
-	| NAMESPACE
-	| REPEATED
-	| REQUIRED
-	| T_BOOL
-	| T_BYTE
-	| T_DOUBLE
-	| T_FLOAT
-	| T_INDICATOR
-	| T_INT
-	| T_LONG
-	| T_SHORT
-	| T_STRING
-	| TAXONOMY
-	| USES
 	| STRING
 	;
 
@@ -155,7 +160,10 @@ dimension
 	| '[' ']' -> ^(DIM_VARIANT)
 	;
 
-enum_element : IDENTIFIER^ enum_value? ';'! ;
+enum_element
+  : binding
+  | IDENTIFIER^ enum_value? ';'!
+  ;
 
 enum_value : '='! INTEGER ;
 
@@ -213,7 +221,7 @@ field_type
 	| field_arraytype
 	;
 
-fullidentifier : IDENTIFIER^ ('.'! IDENTIFIER)* ;
+fullidentifier : IDENTIFIER^ ('.'! (IDENTIFIER | anyword))* ;
 
 literal
 	: IDENTIFIER
@@ -248,7 +256,8 @@ namespace : NAMESPACE^ fullidentifier '{'! root_object* '}'! ;
 root : root_object* -> ^(ROOT root_object*);
 
 root_object
-	: message
+  : EXTERN^ (MESSAGE | TAXONOMY | ENUM) fullidentifier ';'?
+	| message
 	| message_enum
 	| namespace
 	| taxonomy

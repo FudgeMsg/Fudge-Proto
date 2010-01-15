@@ -1,6 +1,6 @@
 // Test the inheritance / poly-morphism mechanism
 
-namespace org.fudgemsg.tests {
+namespace org.fudgemsg.proto.tests.inheritance {
 
 	message BaseClassA {
 		optional int bcA_o;

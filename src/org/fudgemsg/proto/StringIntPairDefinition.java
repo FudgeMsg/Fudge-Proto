@@ -30,8 +30,8 @@ public abstract class StringIntPairDefinition extends Definition {
   
   private final Map<Integer,String> _elementsByIndex = new HashMap<Integer,String>();
   
-  /* package */ StringIntPairDefinition (final String identifier, final CodePosition codePosition, final Definition outerDefinition) {
-    super (identifier, codePosition, outerDefinition);
+  /* package */ StringIntPairDefinition (final String identifier, final CodePosition codePosition, final Definition outerDefinition, final boolean compilationTarget) {
+    super (identifier, codePosition, outerDefinition, compilationTarget);
   }
   
   public Integer findElementByName (final String name) {

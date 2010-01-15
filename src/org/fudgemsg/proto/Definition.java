@@ -35,10 +35,13 @@ public abstract class Definition {
   
   private final Map<String,Binding> _languageBindings = new HashMap<String,Binding> ();
   
-  /* package */ Definition (final String identifier, final CodePosition codePosition, final Definition outerDefinition) {
+  private final boolean _compilationTarget;
+  
+  /* package */ Definition (final String identifier, final CodePosition codePosition, final Definition outerDefinition, final boolean compilationTarget) {
     _identifier = identifier;
     _codePosition = codePosition;
     _outerDefinition = outerDefinition;
+    _compilationTarget = compilationTarget;
   }
   
   /* package */ Binding createLanguageBinding (final String identifier) {
@@ -81,7 +84,7 @@ public abstract class Definition {
   }
   
   /* package */ boolean isCompilationTarget () {
-    return _codePosition.getSource ().isCompilationTarget ();
+    return _compilationTarget;
   }
   
   @Override

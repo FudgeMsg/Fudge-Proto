@@ -66,6 +66,7 @@ import org.fudgemsg.proto.antlr.ProtoParser;
       // Parse the root node
       final AST root = (AST)parser.root ().getTree ();
 
+      //System.out.println (source);
       //debug_print_tree (root, "");
 
       // Extract all top level entries (root_object) for the next compilation phase

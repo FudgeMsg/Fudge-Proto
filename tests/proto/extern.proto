@@ -1,0 +1,14 @@
+// test of the extern directive
+
+namespace org.fudgemsg.proto.tests.extern {
+
+  message ExtendsExtern extends org.fudgemsg.proto.tests.ExternalMessage {
+    int a; 
+  } 
+  
+  message UsesExtern {
+    org.fudgemsg.proto.tests.ExternalMessage foo;
+    org.fudgemsg.proto.tests.ExternalEnum bar;
+  }
+
+}

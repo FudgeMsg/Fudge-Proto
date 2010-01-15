@@ -35,8 +35,17 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
     final List<AST> children = node.getChildNodes ();
     final AST identifier = children.get (0);
     final String fullIdentifier = namespace + "." + identifier.getNodeValue ();
-    context.addDefinition (outerMessage.createEnumDefinition (fullIdentifier, identifier.getCodePosition ()));
+    final EnumDefinition enumDefinition = outerMessage.createEnumDefinition (fullIdentifier, identifier.getCodePosition (), identifier.getCodePosition ().getSource ().isCompilationTarget ());
+    context.addDefinition (enumDefinition);
     children.set (0, new ASTNode (identifier, fullIdentifier));
+    for (int i = 1; i < children.size (); i++) {
+      final AST element = children.get (i);
+      if (element.getNodeLabel () == ProtoLexer.BINDING) {
+        walkBindingNode (context, element, enumDefinition);
+        children.remove (i);
+        i--;
+      }
+    }
     return new ASTNode (node, children);
   }
   
@@ -65,7 +74,7 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
     }
   }
   
-  private void walkBindingNode (final Compiler.Context context, final AST node, final MessageDefinition message) {
+  private void walkBindingNode (final Compiler.Context context, final AST node, final Definition message) {
     List<AST> children = node.getChildNodes ();
     final String identifier = getString (children.get (0));
     final Binding binding = message.createLanguageBinding (identifier);
@@ -90,7 +99,7 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
     } else {
       localNamespace = identifier.getNodeValue ();
     }
-    final MessageDefinition messageDefinition = outerMessage.createMessageDefinition (localNamespace, identifier.getCodePosition ()); 
+    final MessageDefinition messageDefinition = outerMessage.createMessageDefinition (localNamespace, identifier.getCodePosition (), identifier.getCodePosition ().getSource ().isCompilationTarget ()); 
     context.addDefinition (messageDefinition);
     for (int i = 1; i < children.size (); i++) {
       final AST element = children.get (i);
@@ -118,6 +127,31 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
       }
     }
     return new ASTNode (node, children);
+  }
+  
+  private void walkExternNode (final Compiler.Context context, final AST node, final String namespace, final MessageDefinition outerMessage) {
+    final List<AST> children = node.getChildNodes ();
+    final AST what = children.get (0);
+    final String localNamespace;
+    final AST identifier = fixupFullIdentifier (children.get (1));
+    if (namespace.length () != 0) {
+      localNamespace = namespace + "." + identifier.getNodeValue ();
+    } else {
+      localNamespace = identifier.getNodeValue ();
+    }
+    switch (what.getNodeLabel ()) {
+    case ProtoLexer.ENUM :
+      context.addDefinition (outerMessage.createEnumDefinition (localNamespace, identifier.getCodePosition (), false));
+      break;
+    case ProtoLexer.MESSAGE :
+      context.addDefinition (outerMessage.createMessageDefinition (localNamespace, identifier.getCodePosition (), false));
+      break;
+    case ProtoLexer.TAXONOMY :
+      context.addDefinition (new TaxonomyDefinition (localNamespace, identifier.getCodePosition (), false));
+      break;
+    default :
+      throw new IllegalStateException ("unexpected extern type '" + node.getNodeLabel () + "'"); 
+    }
   }
   
   private AST walkFieldNode (final AST node) {
@@ -163,16 +197,22 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
     if (parentNamespace.length () != 0) {
       identifier = new ASTNode (identifier, parentNamespace + "." + identifier.getNodeValue ());
     }
+    final TaxonomyDefinition taxonomyDefinition = new TaxonomyDefinition (identifier.getNodeValue (), identifier.getCodePosition (), identifier.getCodePosition ().getSource ().isCompilationTarget ());
+    context.addDefinition (taxonomyDefinition);
     children.set (0, identifier);
     for (int i = 1; i < children.size (); i++) {
       final AST element = children.get (i);
       switch (element.getNodeLabel ()) {
+      case ProtoLexer.BINDING :
+        walkBindingNode (context, element, taxonomyDefinition);
+        children.remove (i);
+        i--;
+        break;
       case ProtoLexer.IMPORT :
         children.set (i, fixupFullIdentifierList (element));
         break;
       }
     }
-    context.addDefinition (new TaxonomyDefinition (identifier.getNodeValue (), identifier.getCodePosition ()));
     return new ASTNode (node, children);
   }
   
@@ -180,6 +220,9 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
     switch (node.getNodeLabel ()) {
     case ProtoLexer.ENUM :
       context.addExpandedRoot (walkEnumNode (context, node, namespace, MessageDefinition.NULL));
+      break;
+    case ProtoLexer.EXTERN :
+      walkExternNode (context, node, namespace, MessageDefinition.NULL);
       break;
     case ProtoLexer.MESSAGE :
       context.addExpandedRoot (walkMessageNode (context, node, namespace, MessageDefinition.NULL));

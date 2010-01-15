@@ -13,17 +13,10 @@
  * limitations under the License.
  */
 
-package org.fudgemsg.proto;
+package org.fudgemsg.proto.tests;
 
-/**
- * Semantic representation of a taxonomy definition.
- * 
- * @author Andrew
- */
-public class TaxonomyDefinition extends StringIntPairDefinition {
+public class ExternalTaxonomy {
   
-  /* package */ TaxonomyDefinition (final String identifier, final CodePosition codePosition, final boolean compilationTarget) {
-    super (identifier, codePosition, null, compilationTarget);
-  }
-
+  // TODO whatever methods we need to pretend to be a taxon
+  
 }

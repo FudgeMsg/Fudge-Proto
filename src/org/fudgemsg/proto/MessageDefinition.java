@@ -31,7 +31,7 @@ public abstract class MessageDefinition extends Definition {
   private static class NullMessageDefinition extends MessageDefinition {
     
     private NullMessageDefinition () {
-      super (null, null, null);
+      super (null, null, null, false);
     }
     
     @Override
@@ -40,13 +40,13 @@ public abstract class MessageDefinition extends Definition {
     }
     
     @Override
-    /* package */ EnumDefinition createEnumDefinition (final String identifier, final CodePosition codePosition) {
-      return new EnumDefinition (identifier, codePosition, null);
+    /* package */ EnumDefinition createEnumDefinition (final String identifier, final CodePosition codePosition, final boolean compilationTarget) {
+      return new EnumDefinition (identifier, codePosition, null, compilationTarget);
     }
     
     @Override
-    /* package */ MessageDefinition createMessageDefinition (final String identifier, final CodePosition codePosition) {
-      return new MessageDefinitionImpl (identifier, codePosition, null);
+    /* package */ MessageDefinition createMessageDefinition (final String identifier, final CodePosition codePosition, final boolean compilationTarget) {
+      return new MessageDefinitionImpl (identifier, codePosition, null, compilationTarget);
     }
     
     @Override
@@ -74,8 +74,8 @@ public abstract class MessageDefinition extends Definition {
     
     private final List<EnumDefinition> _innerEnums = new LinkedList<EnumDefinition>();
     
-    private MessageDefinitionImpl (final String identifier, final CodePosition codePosition, final MessageDefinition outerMessage) {
-      super (identifier, codePosition, outerMessage);
+    private MessageDefinitionImpl (final String identifier, final CodePosition codePosition, final MessageDefinition outerMessage, final boolean compilationTarget) {
+      super (identifier, codePosition, outerMessage, compilationTarget);
     }
 
     @Override
@@ -86,15 +86,15 @@ public abstract class MessageDefinition extends Definition {
     }
     
     @Override
-    /* package */ EnumDefinition createEnumDefinition (final String identifier, final CodePosition codePosition) {
-      final EnumDefinition enumDefinition = new EnumDefinition (identifier, codePosition, this);
+    /* package */ EnumDefinition createEnumDefinition (final String identifier, final CodePosition codePosition, final boolean compilationTarget) {
+      final EnumDefinition enumDefinition = new EnumDefinition (identifier, codePosition, this, compilationTarget);
       _innerEnums.add (enumDefinition);
       return enumDefinition;
     }
     
     @Override
-    /* package */ MessageDefinition createMessageDefinition (final String identifier, final CodePosition codePosition) {
-      final MessageDefinition messageDefinition = new MessageDefinitionImpl (identifier, codePosition, this);
+    /* package */ MessageDefinition createMessageDefinition (final String identifier, final CodePosition codePosition, final boolean compilationTarget) {
+      final MessageDefinition messageDefinition = new MessageDefinitionImpl (identifier, codePosition, this, compilationTarget);
       _innerMessages.add (messageDefinition);
       return messageDefinition;
     }
@@ -118,8 +118,8 @@ public abstract class MessageDefinition extends Definition {
   
   private MessageDefinition _baseMessage;
   
-  private MessageDefinition (final String identifier, final CodePosition codePosition, final MessageDefinition outerMessage) {
-    super (identifier, codePosition, outerMessage);
+  private MessageDefinition (final String identifier, final CodePosition codePosition, final MessageDefinition outerMessage, final boolean compilationTarget) {
+    super (identifier, codePosition, outerMessage, compilationTarget);
   }
   
   /**
@@ -135,9 +135,9 @@ public abstract class MessageDefinition extends Definition {
   
   /* package */ abstract FieldDefinition createFieldDefinition (final String identifier, final CodePosition codePosition, final FieldType type);
   
-  /* package */ abstract EnumDefinition createEnumDefinition (final String identifier, final CodePosition codePosition);
+  /* package */ abstract EnumDefinition createEnumDefinition (final String identifier, final CodePosition codePosition, final boolean compilationTarget);
   
-  /* package */ abstract MessageDefinition createMessageDefinition (final String identifier, final CodePosition codePosition);
+  /* package */ abstract MessageDefinition createMessageDefinition (final String identifier, final CodePosition codePosition, final boolean compilationTarget);
   
   public abstract Collection<FieldDefinition> getFieldDefinitions ();
   
