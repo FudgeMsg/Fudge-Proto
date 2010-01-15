@@ -41,7 +41,7 @@ import org.fudgemsg.proto.EnumDefinition;
     _writer = writer;
     _parent = null;
     _scope = 1;
-    _anonValue = false;
+    _anonValue = true;
   }
 
   /* package */JavaWriter(final JavaWriter parent) {

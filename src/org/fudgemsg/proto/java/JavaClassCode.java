@@ -1058,7 +1058,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   private void writeDecodeFudgeMsg (final IndentWriter writer, final MessageDefinition message, final boolean useBuilder) throws IOException {
     final List<FieldDefinition> required = new LinkedList<FieldDefinition> ();
     final List<FieldDefinition> optional = new LinkedList<FieldDefinition> ();
-    boolean fieldDeclared = false, fieldsDeclared = false;
+    boolean fieldDeclared = false, fieldsDeclared = false, fudge0Declared = false;
     for (FieldDefinition field : message.getFieldDefinitions ()) {
       if (field.isRequired () && (field.getDefaultValue () == null)) {
         required.add (field);
@@ -1076,6 +1076,14 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
           writer.write (CLASS_FUDGEFIELD + " fudgeField");
           endStmt (writer);
           fieldDeclared = true;
+        }
+      }
+      // all types other than string will need a temporary variable when decoding
+      if (!fudge0Declared) {
+        if (field.getType () != FieldType.STRING_TYPE) {
+          writer.write ("Object fudge0");
+          endStmt (writer);
+          fudge0Declared = true;
         }
       }
     }
