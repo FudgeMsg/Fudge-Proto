@@ -35,5 +35,29 @@ namespace org.fudgemsg.tests {
 		int scAB;
 	}
 	*/
+	
+	message NonBuilderBase {
+    required int a;
+	}
+	
+	message BuilderBase {
+    optional int b;
+	}
+	
+	message NonBuilderFromBuilder extends BuilderBase {
+	  required int c;
+	}
+	
+	message BuilderFromBuilder extends BuilderBase {
+	  optional int c;
+	}
+	
+  message NonBuilderFromNonBuilder extends NonBuilderBase {
+    required int c;
+  }
 
+	message BuilderFromNonBuilder extends NonBuilderBase {
+	  optional int c;
+	}
+	
 }
