@@ -241,7 +241,11 @@ message_element
 
 message_enum : ENUM^ IDENTIFIER '{'! enum_element* '}'! ;
 
-message_field : field_modifier* field_type IDENTIFIER field_ordinal? field_constraints? ';' -> ^(FIELD field_type IDENTIFIER field_modifier* field_ordinal? field_constraints?) ;
+message_field
+  : field_modifier* field_type IDENTIFIER field_ordinal? field_constraints? ';' -> ^(FIELD field_type IDENTIFIER field_modifier* field_ordinal? field_constraints?)
+  | field_modifier+ MESSAGE IDENTIFIER field_ordinal? field_constraints? ';' -> ^(FIELD MESSAGE IDENTIFIER field_modifier* field_ordinal? field_constraints?)
+  | field_modifier+ MESSAGE dimension+ IDENTIFIER field_ordinal? field_constraints? ';' -> ^(FIELD ^(ARRAY MESSAGE dimension+) IDENTIFIER field_modifier* field_ordinal? field_constraints?)
+  ;
 
 message_submsg : MESSAGE^ IDENTIFIER '{'! message_element* '}'! ;
 

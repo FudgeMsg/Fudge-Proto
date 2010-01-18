@@ -1,4 +1,4 @@
-// $ANTLR 3.1.1 org/fudgemsg/proto/antlr/Proto.g 2010-01-15 16:19:30
+// $ANTLR 3.1.1 org/fudgemsg/proto/antlr/Proto.g 2010-01-15 17:34:07
 
   package org.fudgemsg.proto.antlr;
   import org.fudgemsg.proto.Compiler;

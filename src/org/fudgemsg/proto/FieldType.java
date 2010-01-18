@@ -123,7 +123,7 @@ public abstract class FieldType {
     
     private final FieldType _baseType;
     
-    /* package */ ArrayType (final int fudgeFieldType, final FieldType baseType, final Integer length) {
+    private ArrayType (final int fudgeFieldType, final FieldType baseType, final Integer length) {
       super (fudgeFieldType, createDescription (baseType.toString (), length));
       if (length != null) {
         if (length < 0) throw new IllegalArgumentException ("length cannot be negative");
@@ -204,6 +204,29 @@ public abstract class FieldType {
       if (o == null) return false;
       if (!(o instanceof MessageType)) return false;
       return _messageDefinition.equals (((MessageType)o)._messageDefinition);
+    }
+    
+  }
+  
+  /**
+   * The anonymous sub-message type
+   */
+  public static class AnonMessageType extends MessageType {
+    
+    /* package */ static final AnonMessageType INSTANCE = new AnonMessageType ();
+    
+    private AnonMessageType () {
+      super (MessageDefinition.ANONYMOUS);
+    }
+    
+    @Override
+    public String toString () {
+      return "anonymous/unknown message";
+    }
+    
+    @Override
+    public boolean equals (final Object o) {
+      return false;
     }
     
   }

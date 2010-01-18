@@ -254,6 +254,8 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
       return walkArrayFieldType (context, node);
     case ProtoLexer.IDENTIFIER :
       return walkIdentifierFieldType (context, node);
+    case ProtoLexer.MESSAGE :
+      return FieldType.AnonMessageType.INSTANCE;
     case ProtoLexer.T_BOOL :
       return FieldType.BOOLEAN_TYPE;
     case ProtoLexer.T_BYTE :
