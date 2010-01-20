@@ -28,15 +28,12 @@ public abstract class MessageDefinition extends Definition {
   
   public static final MessageDefinition NULL = new NullMessageDefinition ();
   
+  public static final MessageDefinition ANONYMOUS = new AnonMessageDefinition ();
+  
   private static class NullMessageDefinition extends MessageDefinition {
     
     private NullMessageDefinition () {
       super (null, null, null, false);
-    }
-    
-    @Override
-    /* package */ FieldDefinition createFieldDefinition (final String identifier, final CodePosition codePosition, final FieldType type) {
-      throw new IllegalStateException ("cannot create a field outside of a message context");
     }
     
     @Override
@@ -47,21 +44,6 @@ public abstract class MessageDefinition extends Definition {
     @Override
     /* package */ MessageDefinition createMessageDefinition (final String identifier, final CodePosition codePosition, final boolean compilationTarget) {
       return new MessageDefinitionImpl (identifier, codePosition, null, compilationTarget);
-    }
-    
-    @Override
-    public Collection<FieldDefinition> getFieldDefinitions () {
-      return null;
-    }
-    
-    @Override
-    public Collection<EnumDefinition> getEnumDefinitions () {
-      return null;
-    }
-    
-    @Override
-    public Collection<MessageDefinition> getMessageDefinitions () {
-      return null;
     }
     
   }
@@ -115,6 +97,18 @@ public abstract class MessageDefinition extends Definition {
     }
     
   }
+
+  private static class AnonMessageDefinition extends MessageDefinition {
+    
+    private AnonMessageDefinition () {
+      super ("anomymous", null, null, false);
+    }
+    
+    public FieldType getFieldType () {
+      return FieldType.AnonMessageType.INSTANCE;
+    }
+    
+  }
   
   private MessageDefinition _baseMessage;
   
@@ -133,13 +127,21 @@ public abstract class MessageDefinition extends Definition {
     return (MessageDefinition) getOuterDefinition ();
   }
   
-  /* package */ abstract FieldDefinition createFieldDefinition (final String identifier, final CodePosition codePosition, final FieldType type);
+  /* package */ FieldDefinition createFieldDefinition (final String identifier, final CodePosition codePosition, final FieldType type) {
+    throw new UnsupportedOperationException ();
+  }
   
-  /* package */ abstract EnumDefinition createEnumDefinition (final String identifier, final CodePosition codePosition, final boolean compilationTarget);
+  /* package */ EnumDefinition createEnumDefinition (final String identifier, final CodePosition codePosition, final boolean compilationTarget) {
+    throw new UnsupportedOperationException ();
+  }
   
-  /* package */ abstract MessageDefinition createMessageDefinition (final String identifier, final CodePosition codePosition, final boolean compilationTarget);
+  /* package */ MessageDefinition createMessageDefinition (final String identifier, final CodePosition codePosition, final boolean compilationTarget) {
+    throw new UnsupportedOperationException ();
+  }
   
-  public abstract Collection<FieldDefinition> getFieldDefinitions ();
+  public Collection<FieldDefinition> getFieldDefinitions () {
+    throw new UnsupportedOperationException ();
+  }
   
   public FieldDefinition getFieldDefinition (final String identifier) {
     for (FieldDefinition field : getFieldDefinitions ()) {
@@ -155,9 +157,13 @@ public abstract class MessageDefinition extends Definition {
     return null;
   }
   
-  public abstract Collection<EnumDefinition> getEnumDefinitions ();
+  public Collection<EnumDefinition> getEnumDefinitions () {
+    throw new UnsupportedOperationException ();
+  }
   
-  public abstract Collection<MessageDefinition> getMessageDefinitions ();
+  public Collection<MessageDefinition> getMessageDefinitions () {
+    throw new UnsupportedOperationException ();
+  }
   
   @Override
   public String toString () {

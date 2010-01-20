@@ -2,85 +2,90 @@
 
 namespace org.fudgemsg.proto.tests.types {
 
-	message SubMessage {
-		required int	i;
-		required string s;
-	}
-	
-	enum CustomEnum {
-		FIRST	=	1;
-		SECOND;
-		THIRD;
-		FOURTH;
-	}
-	
-	message Types {
-	
-		bool		sBool;
-		byte		sByte;
-		double		sDouble;
-		float		sFloat;
-		indicator	sIndicator;
-		int			sInt;
-		long		sLong;
-		short		sShort;
-		string		sString;
-		SubMessage	sSubMessage;
-		CustomEnum	sCustomEnum;
+  message SubMessage {
+    required int  i;
+    required string s;
+  }
+  
+  enum CustomEnum {
+    FIRST  =  1;
+    SECOND;
+    THIRD;
+    FOURTH;
+  }
+  
+  message Types {
+  
+    bool        sBool;
+    byte        sByte;
+    double      sDouble;
+    float       sFloat;
+    indicator   sIndicator;
+    int         sInt;
+    long        sLong;
+    short       sShort;
+    string      sString;
+    SubMessage  sSubMessage;
+    CustomEnum  sCustomEnum;
+    optional message    sMessage;
 
-		bool[]			aBool;
-		byte[]			aByte;
-		double[]		aDouble;
-		float[]			aFloat;
-		indicator[]		aIndicator;
-		int[]			aInt;
-		long[]			aLong;
-		short[]			aShort;
-		string[]		aString;
-		SubMessage[]	aSubMessage;
-		CustomEnum[]	aCustomEnum;
-		
-		repeated bool		rsBool;
-		repeated byte		rsByte;
-		repeated double		rsDouble;
-		repeated float		rsFloat;
-		repeated indicator	rsIndicator;
-		repeated int		rsInt;
-		repeated long		rsLong;
-		repeated short		rsShort;
-		repeated string		rsString;
-		repeated SubMessage	rsSubMessage;
-		repeated CustomEnum	rsCustomEnum;
+    bool[]        aBool;
+    byte[]        aByte;
+    double[]      aDouble;
+    float[]       aFloat;
+    indicator[]   aIndicator;
+    int[]         aInt;
+    long[]        aLong;
+    short[]       aShort;
+    string[]      aString;
+    SubMessage[]  aSubMessage;
+    CustomEnum[]  aCustomEnum;
+    optional message[]  aMessage;   
+    
+    repeated bool       rsBool;
+    repeated byte       rsByte;
+    repeated double     rsDouble;
+    repeated float      rsFloat;
+    repeated indicator  rsIndicator;
+    repeated int        rsInt;
+    repeated long       rsLong;
+    repeated short      rsShort;
+    repeated string     rsString;
+    repeated SubMessage rsSubMessage;
+    repeated CustomEnum rsCustomEnum;
+    repeated message    rsMessage;
 
-		repeated bool[]			raBool;
-		repeated byte[]			raByte;
-		repeated double[]		raDouble;
-		repeated float[]		raFloat;
-		repeated indicator[]	raIndicator;
-		repeated int[]			raInt;
-		repeated long[]			raLong;
-		repeated short[]		raShort;
-		repeated string[]		raString;
-		repeated SubMessage[]	raSubMessage;
-		repeated CustomEnum[]	raCustomEnum;
-	
-		bool[][]		aaBool;
-		byte[][]		aaByte;
-		double[][]		aaDouble;
-		float[][]		aaFloat;
-		indicator[][]	aaIndicator;
-		int[][]			aaInt;
-		long[][]		aaLong;
-		short[][]		aaShort;
-		string[][]		aaString;
-		SubMessage[][]	aaSubMessage;
-		CustomEnum[][]	aaCustomEnum;
-		
-		int[42]			fixedArray1;
-		int[42][]		fixedArray2;
-		int[][42]		fixedArray3;
-		int[42][42]		fixedArray4;
-		
-	}
+    repeated bool[]       raBool;
+    repeated byte[]       raByte;
+    repeated double[]     raDouble;
+    repeated float[]      raFloat;
+    repeated indicator[]  raIndicator;
+    repeated int[]        raInt;
+    repeated long[]       raLong;
+    repeated short[]      raShort;
+    repeated string[]     raString;
+    repeated SubMessage[] raSubMessage;
+    repeated CustomEnum[] raCustomEnum;
+    repeated message[]    raMessage;
+  
+    bool[][]        aaBool;
+    byte[][]        aaByte;
+    double[][]      aaDouble;
+    float[][]       aaFloat;
+    indicator[][]   aaIndicator;
+    int[][]         aaInt;
+    long[][]        aaLong;
+    short[][]       aaShort;
+    string[][]      aaString;
+    SubMessage[][]  aaSubMessage;
+    CustomEnum[][]  aaCustomEnum;
+    optional message[][]  aaMessage;
+    
+    int[42]         fixedArray1;
+    int[42][]       fixedArray2;
+    int[][42]       fixedArray3;
+    int[42][42]     fixedArray4;
+    
+  }
 
 }
