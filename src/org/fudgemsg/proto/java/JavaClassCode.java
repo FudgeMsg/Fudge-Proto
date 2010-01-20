@@ -602,6 +602,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     writer.returnVariable ("msg");
     endStmt (writer);
     writer = endBlock (writer); // toFudgeMsg
+    // TODO 2010-01-18 Andrew -- this should probably be protected; it's just here for our subclasses to use
     writer.method (false, "void", "toFudgeMsg", "final " + CLASS_FUDGECONTEXT + " fudgeContext, final " + CLASS_MUTABLEFUDGEFIELDCONTAINER + " msg");
     writer = beginBlock (writer); // toFudgeMsg
     if (message.getExtends () != null) {
