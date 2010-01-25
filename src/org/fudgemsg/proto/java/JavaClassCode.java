@@ -241,10 +241,13 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   }
   
   @Override
-  public void writeClassImplementationAttribute(final Compiler.Context context, final FieldDefinition field, final IndentWriter iWriter) throws IOException {
-    final JavaWriter writer = new JavaWriter (iWriter);
-    writer.attribute (!field.isMutable (), realTypeString (field, false), privateFieldName (field));
+  public void writeClassImplementationAttribute(final Compiler.Context context, final FieldDefinition field, final IndentWriter writer) throws IOException {
+    writer.write ("private ");
+    if (!field.isMutable ()) writer.write ("final ");
+    writer.write (realTypeString (field, false) + " " + privateFieldName (field));
     endStmt (writer); // attribute decl
+    writer.write ("public static final String " + field.getName ().toUpperCase () + "_KEY = \"" + field.getName () + "\"");
+    endStmt (writer); // public field name
   }
   
   private void writeBuilderClassFields (final JavaWriter writer, MessageDefinition message) throws IOException {
