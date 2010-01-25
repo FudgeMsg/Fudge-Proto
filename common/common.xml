@@ -16,9 +16,8 @@
 	-->
 <project name="common" xmlns:ivy="antlib:org.apache.ivy.ant">
 
-	<property environment="env" />
-
-	<property file="${common.dir}/build.properties" />
+        <!-- project detaults -->
+        <property file="${common.dir}/build.properties" />
 
 	<property name="ivy.jar.dir" value="${user.home}/.ivy2/jars" />
 	<property name="ivy.jar.file" value="${ivy.jar.dir}/ivy.jar" />
@@ -54,7 +53,7 @@
 		</path>
 		<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant"
 			classpathref="ivy.lib.path" />
-		<ivy:settings file="${basedir}/ivysettings.xml" />
+		<ivy:settings file="${common.dir}/ivysettings.xml" />
 	</target>
 
 	<path id="lib.path.id">
@@ -64,6 +63,7 @@
 		<path refid="lib.path.id" />
 		<path location="${classes.dir}" />
 	</path>
+
 
 	<!-- setup ivy default configuration with some custom info -->
 	<property name="ivy.local.default.root" value="${repository.dir}/local" />
@@ -94,7 +94,21 @@
 	<target name="compile" depends="compile-src,compile-tests"
 		description="--> compile all source code" />
 
-	<target name="compile-src" depends="resolve"
+	<available classname="org.fudgemsg.proto.AntTask" classpathref="lib.path.id" property="fudge.proto.present" />
+
+	<target name="fudge-proto" depends="resolve"
+		if="fudge.proto.present"
+		description="--> compile any Fudge .proto files">
+		<path id="fudge.proto.project.path">
+			<dirset dir="${projects.dir}">
+				<include name="**/src" />
+			</dirset>
+		</path>
+		<taskdef name="fudgeproto" classname="org.fudgemsg.proto.AntTask" classpathref="lib.path.id" />
+		<fudgeproto srcdir="${src.dir}" destdir="${src.dir}" searchdir="${toString:fudge.proto.project.path}" verbose="${build.verbose}" />
+	</target>
+
+	<target name="compile-src" depends="fudge-proto"
 		description="--> compile the main project files">
 		<mkdir dir="${classes.dir}" />
 		<javac srcdir="${src.dir}" destdir="${classes.dir}"
@@ -115,7 +129,7 @@
 			doctitle="${javadocs.doctitle}" bottom="${javadocs.footer}" />
 	</target>
 
-	<target name="compile-tests" depends="compile-src" description="--> compile the tests">
+	<target name="compile-tests" depends="resolve" description="--> compile the tests">
 		<mkdir dir="${tests.classes.dir}" />
 		<path id="tests.build.classpath.id">
 			<path refid="lib.path.id" />
@@ -131,7 +145,7 @@
 		</copy>
 	</target>
 	
-	<target name="tests" depends="junit-report" description="--> run unit tests and generate report"/>
+	<target name="tests" depends="junit-batch,junit-report" description="--> run unit tests and generate report"/>
 
 	<target name="junit-batch" depends="compile-tests">
 		<mkdir dir="${tests.junit.dir}/xml" />
@@ -155,6 +169,7 @@
 
 	<target name="junit-report" depends="junit-batch">
 		<mkdir dir="${tests.junit.dir}/html" />
+		<mkdir dir="${tests.junit.dir}/xml" />
 		<junitreport todir="${tests.junit.dir}/xml">
 			<fileset dir="${tests.junit.dir}/xml" includes="TEST-*.xml" />
 			<report todir="${tests.junit.dir}/html" />
@@ -201,7 +216,6 @@
 			<manifest>
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Build-Version" value="${version}" />
-				<attribute name="Main-Class" value="${jar.entrypoint}" />
 			</manifest>
 		</jar>
 	</target>
@@ -242,25 +256,25 @@
 	<target name="dist" depends="jar,src-jar,javadoc-jar">
 		<mkdir dir="${dist.dir}" />
 		<copy todir="${dist.dir}/${dist.name}-${version}" file="${basedir}/LICENSE.txt" failonerror="false"/>
-		<copy todir="${dist.dir}/${dist.name}-${version}" file="${basedir}/README.txt" failonerror="false"/>
-		<copy todir="${dist.dir}/${dist.name}-${version}" file="${jar.file}" />
-		<copy todir="${dist.dir}/${dist.name}-${version}" file="${src.jar.file}" />
-		<copy todir="${dist.dir}/${dist.name}-${version}" file="${javadocs.jar.file}" />
-		<mkdir dir="${dist.dir}/${dist.name}-${version}/lib" />
+		<copy todir="${dist.dir}/${dist.name}" file="${basedir}/README.txt" failonerror="false"/>
+		<copy todir="${dist.dir}/${dist.name}" file="${jar.file}" />
+		<copy todir="${dist.dir}/${dist.name}" file="${src.jar.file}" />
+		<copy todir="${dist.dir}/${dist.name}" file="${javadocs.jar.file}" />
+		<mkdir dir="${dist.dir}/${dist.name}/lib" />
 		<ivy:retrieve
-			pattern="${dist.dir}/${dist.name}-${version}/lib/[artifact]-[revision].[ext]" />
+			pattern="${dist.dir}/${dist.name}/lib/[artifact]-[revision].[ext]" />
 	</target>
 
 	<target name="tarball" depends="dist" description="--> generate a tarball for distribution">
 		<tar destfile="${dist.dir}/${dist.name}-${version}.tar" basedir="${dist.dir}">
-			<include name="${dist.name}-${version}/**/*" />
+			<include name="${dist.name}/**/*" />
 		</tar>
 		<bzip2 src="${dist.dir}/${dist.name}-${version}.tar" destfile="${dist.dir}/${dist.name}-${version}.tar.bz2" />
 	</target>
 
 	<target name="zipfile" depends="dist" description="--> generate a zip file for distribution">
 		<zip destfile="${dist.dir}/${dist.name}-${version}.zip" basedir="${dist.dir}">
-			<include name="${dist.name}-${version}/**/*" />
+			<include name="${dist.name}/**/*" />
 		</zip>
 	</target>
 
@@ -281,10 +295,21 @@
 	</target>
 	
 	<target name="clean-dist" description="--> clean the project distribution files">
-    <delete includeemptydirs="true" dir="${dist.dir}" />
+		<delete includeemptydirs="true" dir="${dist.dir}" />
 	</target>
 	
 	<target name="clean" depends="clean-build, clean-lib, clean-dist"
 		description="--> clean the project" />
+
+        <target name="rpm" depends="jar,javadoc-jar" description="--> build the RPM distribution">
+                <copy file="rpm/${dist.name}.spec" todir="${rpmbuild.dir}/SPECS" />
+                <copy file="classes/${dist.name}.jar" todir="${rpmbuild.dir}/SOURCES" />
+                <copy file="classes/${dist.name}-javadocs.jar" todir="${rpmbuild.dir}/SOURCES" />
+                <copy file="LICENSE.txt" todir="${rpmbuild.dir}/SOURCES" />
+                <exec executable="rpmbuild" dir="${rpmbuild.dir}/SPECS">
+                        <arg value="-bb" />
+                        <arg value="${dist.name}.spec" />
+                </exec>
+        </target>
 
 </project>

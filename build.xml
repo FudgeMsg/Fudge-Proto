@@ -1,4 +1,7 @@
 <project name="fudge-proto" default="compile">
+	
+	<available file="${basedir}/../../common/common.xml" property="common.dir" value="${basedir}/../../common" />
+
 	<property file="build.properties"/>
 
 	<target name="parser"
@@ -76,16 +79,6 @@
 		<fudgeproto srcdir="${tests.dir}/proto" destdir="${tests.dir}/out_ant" verbose="${build.verbose}" />
 	</target>
 
-	<target name="rpm" depends="jar,javadoc-jar" description="--> build the RPM distribution">
-		<copy file="rpm/fudge-proto.spec" todir="${rpmbuild.dir}/SPECS" />
-		<copy file="classes/fudge-proto.jar" todir="${rpmbuild.dir}/SOURCES" />
-		<copy file="classes/fudge-proto-javadocs.jar" todir="${rpmbuild.dir}/SOURCES" />
-		<copy file="LICENSE.txt" todir="${rpmbuild.dir}/SOURCES" />
-		<exec executable="rpmbuild" dir="${rpmbuild.dir}/SPECS">
-			<arg value="-bb" />
-			<arg value="fudge-proto.spec" />
-		</exec>
-	</target>
-
 	<import file="${common.dir}/common.xml"/>
+
 </project>
