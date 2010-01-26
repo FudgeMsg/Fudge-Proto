@@ -240,14 +240,19 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     }
   }
   
+  private String fieldKey (final FieldDefinition field) {
+    return field.getName ().toUpperCase () + "_KEY";
+  }
+  
   @Override
   public void writeClassImplementationAttribute(final Compiler.Context context, final FieldDefinition field, final IndentWriter writer) throws IOException {
     writer.write ("private ");
     if (!field.isMutable ()) writer.write ("final ");
     writer.write (realTypeString (field, false) + " " + privateFieldName (field));
     endStmt (writer); // attribute decl
-    writer.write ("public static final String " + field.getName ().toUpperCase () + "_KEY = \"" + field.getName () + "\"");
+    writer.write ("public static final String " + fieldKey (field) + " = \"" + field.getName () + "\"");
     endStmt (writer); // public field name
+    // TODO 2010-01-26 Andrew -- if the message references a specific taxonomy, we should use references to the string place holders there instead of local ones
   }
   
   private void writeBuilderClassFields (final JavaWriter writer, MessageDefinition message) throws IOException {
@@ -659,7 +664,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
           writer = beginBlock (writer); // if not null
         }
       }
-      writeAddToFudgeMsg (writer, "msg", (field.getName () != null) ? "\"" + field.getName () + "\"" : "null", (field.getOrdinal () != null) ? field.getOrdinal ().toString () : "null", value, type);
+      writeAddToFudgeMsg (writer, "msg", fieldKey (field), (field.getOrdinal () != null) ? field.getOrdinal ().toString () : "null", value, type);
       if (field.isRepeated ()) {
         writer = endBlock (writer); // foreach
         writer = endBlock (writer); // if not null
@@ -1098,7 +1103,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       if (ordinal != null) {
         sbGetField.append ("Ordinal (").append (ordinal.toString ()).append (')');
       } else {
-        sbGetField.append ("Name (\"").append (field.getName ()).append ("\")");
+        sbGetField.append ("Name (").append (fieldKey (field)).append (")");
       }
       jWriter.assignment (field.isRepeated () ? "fudgeFields" : "fudgeField", sbGetField.toString ());
       endStmt (jWriter); // field(s) assignment
