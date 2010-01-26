@@ -301,14 +301,20 @@
 	<target name="clean" depends="clean-build, clean-lib, clean-dist"
 		description="--> clean the project" />
 
+	<property name="rpm.spec.file" value="${dist.name}.spec" />
         <target name="rpm" depends="jar,javadoc-jar" description="--> build the RPM distribution">
-                <copy file="rpm/${dist.name}.spec" todir="${rpmbuild.dir}/SPECS" />
-                <copy file="classes/${dist.name}.jar" todir="${rpmbuild.dir}/SOURCES" />
-                <copy file="classes/${dist.name}-javadocs.jar" todir="${rpmbuild.dir}/SOURCES" />
-                <copy file="LICENSE.txt" todir="${rpmbuild.dir}/SOURCES" />
-                <exec executable="rpmbuild" dir="${rpmbuild.dir}/SPECS">
+                <copy file="${rpm.source.dir}/${rpm.spec.file}" todir="${rpm.build.dir}/SPECS" />
+                <copy file="build/${dist.name}.jar" todir="${rpm.build.dir}/SOURCES" />
+                <copy file="build/${dist.name}-javadocs.jar" todir="${rpm.build.dir}/SOURCES" />
+                <copy file="LICENSE.txt" todir="${rpm.build.dir}/SOURCES" />
+                <copy todir="${rpm.build.dir}/SOURCES">
+                	<fileset dir="${rpm.source.dir}">
+                		<exclude name="**/*.spec" />
+                	</fileset>
+                </copy>
+                <exec executable="rpmbuild" dir="${rpm.build.dir}/SPECS">
                         <arg value="-bb" />
-                        <arg value="${dist.name}.spec" />
+                        <arg value="${rpm.spec.file}" />
                 </exec>
         </target>
 
