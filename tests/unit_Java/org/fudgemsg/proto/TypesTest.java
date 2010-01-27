@@ -21,7 +21,7 @@ import static org.junit.Assert.assertNotNull;
 import java.util.Arrays;
 
 import org.fudgemsg.FudgeContext;
-import org.fudgemsg.FudgeMsg;
+import org.fudgemsg.FudgeFieldContainer;
 import org.fudgemsg.proto.tests.types.CustomEnum;
 import org.fudgemsg.proto.tests.types.SubMessage;
 import org.fudgemsg.proto.tests.types.Types;
@@ -261,7 +261,7 @@ public class TypesTest {
   public void builderDefaultValues () {
     final FudgeContext context = new FudgeContext ();
     final Types object = new Types.Builder ().build ();
-    final FudgeMsg message = object.toFudgeMsg (context);
+    final FudgeFieldContainer message = object.toFudgeMsg (context);
     final Types object2 = Types.fromFudgeMsg (message);
     compareTypes (object, object2);
   }
@@ -270,7 +270,7 @@ public class TypesTest {
   public void builderSingleValues () {
     final FudgeContext context = new FudgeContext ();
     final Types object = new Types.Builder ().sBool (true).sByte ((byte)1).sDouble (2).sFloat (3).sIndicator (true).sInt (4).sLong (5).sShort ((short)6).sString ("7").sSubMessage (new SubMessage (8, "9")).sCustomEnum (CustomEnum.SECOND).build ();
-    final FudgeMsg message = object.toFudgeMsg (context);
+    final FudgeFieldContainer message = object.toFudgeMsg (context);
     final Types object2 = Types.fromFudgeMsg (message);
     compareTypes (object, object2);
   }
@@ -304,7 +304,7 @@ public class TypesTest {
   public void builderArrayValues () {
     final FudgeContext context = new FudgeContext ();
     final Types object = createTypesObject ();
-    final FudgeMsg message = object.toFudgeMsg (context);
+    final FudgeFieldContainer message = object.toFudgeMsg (context);
     final Types object2 = Types.fromFudgeMsg (message);
     compareTypes (object, object2);
   }
@@ -322,7 +322,7 @@ public class TypesTest {
   public void speedTest100000FromFudgeMsg () {
     final FudgeContext context = new FudgeContext ();
     final Types object = createTypesObject ();
-    final FudgeMsg message = object.toFudgeMsg (context);
+    final FudgeFieldContainer message = object.toFudgeMsg (context);
     for (int i = 0; i < 100000; i++) {
       Types.fromFudgeMsg (message);
     }

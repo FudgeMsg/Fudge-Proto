@@ -35,7 +35,7 @@ public class ExternalMessage {
   public void toFudgeMsg (final FudgeContext context, final MutableFudgeFieldContainer msg) {
   }
   
-  public FudgeMsg toFudgeMsg (final FudgeContext context) {
+  public FudgeFieldContainer toFudgeMsg (final FudgeContext context) {
     return null;
   }
   

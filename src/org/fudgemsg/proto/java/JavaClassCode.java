@@ -631,12 +631,12 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   }
   
   private void writeToFudgeMsg (JavaWriter writer, final MessageDefinition message) throws IOException {
-    writer.method (false, CLASS_FUDGEMSG, "toFudgeMsg", "final " + CLASS_FUDGECONTEXT + " fudgeContext");
+    writer.method (false, CLASS_FUDGEFIELDCONTAINER, "toFudgeMsg", "final " + CLASS_FUDGECONTEXT + " fudgeContext");
     writer = beginBlock (writer); // toFudgeMsg
     writer.ifNull ("fudgeContext");
     writer.throwNullParameterException ("fudgeContext");
     endStmt (writer);
-    writer.namedLocalVariable (CLASS_FUDGEMSG, "msg", "fudgeContext.newMessage ()");
+    writer.namedLocalVariable (CLASS_MUTABLEFUDGEFIELDCONTAINER, "msg", "fudgeContext.newMessage ()");
     endStmt (writer);
     writer.invoke ("toFudgeMsg", "fudgeContext, msg");
     endStmt (writer);
