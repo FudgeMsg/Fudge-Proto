@@ -144,7 +144,9 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
       context.addDefinition (outerMessage.createEnumDefinition (localNamespace, identifier.getCodePosition (), false));
       break;
     case ProtoLexer.MESSAGE :
-      context.addDefinition (outerMessage.createMessageDefinition (localNamespace, identifier.getCodePosition (), false));
+      final MessageDefinition messageDefinition = outerMessage.createMessageDefinition (localNamespace, identifier.getCodePosition (), false);
+      messageDefinition.setExternal ();
+      context.addDefinition (messageDefinition);
       break;
     case ProtoLexer.TAXONOMY :
       context.addDefinition (new TaxonomyDefinition (localNamespace, identifier.getCodePosition (), false));

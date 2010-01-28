@@ -22,6 +22,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.HashSet;
 
 import org.fudgemsg.FudgeTypeDictionary;
 import org.fudgemsg.proto.CodeGeneratorUtil;
@@ -84,6 +86,8 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   private static final String CLASS_MAPFUDGETAXONOMY = org.fudgemsg.taxon.MapFudgeTaxonomy.class.getName ();
   private static final String CLASS_ARRAYLIST = java.util.ArrayList.class.getName ();
   private static final String CLASS_FUDGEMESSAGEFACTORY = org.fudgemsg.FudgeMessageFactory.class.getName ();
+  private static final String CLASS_FUDGEDESERIALISATIONCONTEXT = org.fudgemsg.mapping.FudgeDeserialisationContext.class.getName ();
+  private static final String CLASS_FUDGESERIALISATIONCONTEXT = org.fudgemsg.mapping.FudgeSerialisationContext.class.getName ();
   private static final String CLASS_FUDGETAXONOMY = org.fudgemsg.taxon.FudgeTaxonomy.class.getName ();
   private static final String CLASS_LIST = java.util.List.class.getName ();
   private static final String CLASS_ARRAYS = java.util.Arrays.class.getName ();
@@ -606,7 +610,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       break;
     case FudgeTypeDictionary.FUDGE_MSG_TYPE_ID :
       if (type instanceof FieldType.ArrayType) {
-        final String temp1 = writer.localVariable (CLASS_MUTABLEFUDGEFIELDCONTAINER, true, "fudgeMessageFactory.newMessage ()");
+        final String temp1 = writer.localVariable (CLASS_MUTABLEFUDGEFIELDCONTAINER, true, "fudgeContext.newMessage ()");
         endStmt (writer);
         final FieldType baseType = ((FieldType.ArrayType)type).getBaseType ();
         final String temp2 = writer.forEach (typeString (baseType, false), value);
@@ -616,9 +620,13 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         value = temp1;
       } else if (type instanceof FieldType.MessageType) {
         if (type instanceof FieldType.AnonMessageType) {
-          value = "fudgeMessageFactory.newMessage (" + value + ")";
+          value = "fudgeContext.newMessage (" + value + ")";
         } else {
-          value = value + ".toFudgeMsg (fudgeMessageFactory)";
+          if (messageReferencesExternal (((FieldType.MessageType)type).getMessageDefinition (), null)) {
+            value = "fudgeContext.objectToFudgeMsg (" + value + ")";
+          } else {
+            value = value + ".toFudgeMsg (fudgeContext)";
+          }
         }
       } else {
         throw new IllegalStateException ("type '" + type + "' is not an expected submessage type");
@@ -629,24 +637,42 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     endStmt (writer);
   }
   
+  private boolean messageReferencesExternal (final MessageDefinition message, Set<MessageDefinition> considered) {
+    if (message.isExternal ()) return true;
+    if (message == MessageDefinition.ANONYMOUS) return false;
+    if (considered == null) considered = new HashSet<MessageDefinition> ();
+    if (considered.contains (message)) return false;
+    considered.add (message);
+    if (message.getExtends () != null) {
+      if (messageReferencesExternal (message.getExtends (), considered)) return true;
+    }
+    for (final FieldDefinition field : message.getFieldDefinitions ()) {
+      if (field.getType () instanceof FieldType.MessageType) {
+        if (messageReferencesExternal (((FieldType.MessageType)field.getType ()).getMessageDefinition (), considered)) return true;
+      }
+    }
+    return false;
+  }
+  
   private void writeToFudgeMsg (JavaWriter writer, final MessageDefinition message) throws IOException {
-    writer.method (false, CLASS_FUDGEFIELDCONTAINER, "toFudgeMsg", "final " + CLASS_FUDGEMESSAGEFACTORY + " fudgeMessageFactory");
+    final String contextClass = messageReferencesExternal (message, null) ? CLASS_FUDGESERIALISATIONCONTEXT : CLASS_FUDGEMESSAGEFACTORY;
+    writer.method (false, CLASS_FUDGEFIELDCONTAINER, "toFudgeMsg", "final " + contextClass + " fudgeContext");
     writer = beginBlock (writer); // toFudgeMsg
-    writer.ifNull ("fudgeMessageFactory");
-    writer.throwNullParameterException ("fudgeMessageFactory");
+    writer.ifNull ("fudgeContext");
+    writer.throwNullParameterException ("fudgeContext");
     endStmt (writer);
-    writer.namedLocalVariable (CLASS_MUTABLEFUDGEFIELDCONTAINER, "msg", "fudgeMessageFactory.newMessage ()");
+    writer.namedLocalVariable (CLASS_MUTABLEFUDGEFIELDCONTAINER, "msg", "fudgeContext.newMessage ()");
     endStmt (writer);
-    writer.invoke ("toFudgeMsg", "fudgeMessageFactory, msg");
+    writer.invoke ("toFudgeMsg", "fudgeContext, msg");
     endStmt (writer);
     writer.returnVariable ("msg");
     endStmt (writer);
     writer = endBlock (writer); // toFudgeMsg
     // TODO 2010-01-18 Andrew -- this should probably be protected; it's just here for our subclasses to use
-    writer.method (false, "void", "toFudgeMsg", "final " + CLASS_FUDGEMESSAGEFACTORY + " fudgeMessageFactory, final " + CLASS_MUTABLEFUDGEFIELDCONTAINER + " msg");
+    writer.method (false, "void", "toFudgeMsg", "final " + contextClass + " fudgeContext, final " + CLASS_MUTABLEFUDGEFIELDCONTAINER + " msg");
     writer = beginBlock (writer); // toFudgeMsg
     if (message.getExtends () != null) {
-      writer.invoke ("super", "toFudgeMsg", "fudgeMessageFactory, msg");
+      writer.invoke ("super", "toFudgeMsg", "fudgeContext, msg");
       endStmt (writer);
     }
     for (FieldDefinition field : message.getFieldDefinitions ()) {
@@ -922,7 +948,13 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       } else {
         writer.guard ();
         writer = beginBlock (writer); // try
-        writer.assignment (assignTo, messageType (msg) + ".fromFudgeMsg ((" + CLASS_FUDGEFIELDCONTAINER + ")fudge0)");
+        if (msg.isExternal ()) {
+          writer.assignment (assignTo, "fudgeContext.fudgeMsgToObject (" + messageType (msg) + ".class, (" + CLASS_FUDGEFIELDCONTAINER + ")fudge0)");
+        } else if (messageReferencesExternal (msg, null)) {
+          writer.assignment (assignTo, messageType (msg) + ".fromFudgeMsg (fudgeContext, (" + CLASS_FUDGEFIELDCONTAINER + ")fudge0)");
+        } else {
+          writer.assignment (assignTo, messageType (msg) + ".fromFudgeMsg ((" + CLASS_FUDGEFIELDCONTAINER + ")fudge0)");
+        }
         endStmt (writer);
         writer = endBlock (writer); // try
         writer.catchIllegalArgumentException ();
@@ -1141,12 +1173,22 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   
   private void writeProtectedFudgeMsgConstructor (final IndentWriter writer, final boolean builder, final MessageDefinition message) throws IOException {
     final MessageDefinition superMessage = message.getExtends ();
-    writer.write ("protected " + (builder ? "Builder" : message.getName ()) + " (final " + CLASS_FUDGEFIELDCONTAINER + " fudgeMsg)");
+    writer.write ("protected " + (builder ? "Builder" : message.getName ()) + " (");
+    if (messageReferencesExternal (message, null)) {
+      writer.write ("final " + CLASS_FUDGEDESERIALISATIONCONTEXT + " fudgeContext, ");
+    }
+    writer.write ("final " + CLASS_FUDGEFIELDCONTAINER + " fudgeMsg)");
     beginBlock (writer); // constructor
     if (superMessage != null) {
       if (builder && !useBuilderPattern (superMessage)) {
         // we don't have a super constructor, so store a template of the root message
-        writer.write ("_fudgeRoot = " + superMessage.getIdentifier () + ".fromFudgeMsg (fudgeMsg)");
+        if (superMessage.isExternal ()) {
+          writer.write ("_fudgeRoot = fudgeContext.fudgeMsgToObject (" + superMessage.getIdentifier () + ".class, fudgeMsg)");
+        } else if (messageReferencesExternal (superMessage, null)) {
+          writer.write ("_fudgeRoot = " + superMessage.getIdentifier () + ".fromFudgeMsg (fudgeContext, fudgeMsg)");
+        } else {
+          writer.write ("_fudgeRoot = " + superMessage.getIdentifier () + ".fromFudgeMsg (fudgeMsg)");
+        }
       } else {
         writer.write ("super (fudgeMsg)");
       }
@@ -1230,12 +1272,19 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   }
   
   private void writeFromFudgeMsg (final IndentWriter writer, final MessageDefinition message, final boolean useBuilder) throws IOException {
-    writer.write ("public static " + message.getName () + " fromFudgeMsg (final " + CLASS_FUDGEFIELDCONTAINER + " fudgeMsg)");
+    final String params;
+    if (messageReferencesExternal (message, null)) {
+      writer.write ("public static " + message.getName () + " fromFudgeMsg (final " + CLASS_FUDGEDESERIALISATIONCONTEXT + " fudgeContext, final " + CLASS_FUDGEFIELDCONTAINER + " fudgeMsg)");
+      params = "fudgeContext, fudgeMsg";
+    } else {
+      writer.write ("public static " + message.getName () + " fromFudgeMsg (final " + CLASS_FUDGEFIELDCONTAINER + " fudgeMsg)");
+      params = "fudgeMsg";
+    }
     beginBlock (writer);
     if (useBuilder) {
-      writer.write ("return new Builder (fudgeMsg).build ()");
+      writer.write ("return new Builder (" + params + ").build ()");
     } else {
-      writer.write ("return new " + messageDelegateName (message) + " (fudgeMsg)");
+      writer.write ("return new " + messageDelegateName (message) + " (" + params + ")");
     }
     endStmt (writer);
     endBlock (writer);

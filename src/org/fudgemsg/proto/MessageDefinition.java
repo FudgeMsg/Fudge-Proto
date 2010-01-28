@@ -112,6 +112,8 @@ public abstract class MessageDefinition extends Definition {
   
   private MessageDefinition _baseMessage;
   
+  private boolean _external;
+  
   private MessageDefinition (final String identifier, final CodePosition codePosition, final MessageDefinition outerMessage, final boolean compilationTarget) {
     super (identifier, codePosition, outerMessage, compilationTarget);
   }
@@ -205,6 +207,14 @@ public abstract class MessageDefinition extends Definition {
   
   public void setExtends (final MessageDefinition message) {
     _baseMessage = message;
+  }
+  
+  public boolean isExternal () {
+    return _external;
+  }
+  
+  /* package */ void setExternal () {
+    _external = true;
   }
   
 }
