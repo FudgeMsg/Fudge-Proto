@@ -13,15 +13,16 @@
 		</exec>
 	</target>
 
-	<target name="clean-tests" depends="clean-tests-c,clean-tests-cs,clean-tests-cpp,clean-tests-default,clean-tests-java,clean-tests-proto"
+	<target name="clean-tests" depends="clean-tests-ant,clean-tests-c,clean-tests-cs,clean-tests-cpp,clean-tests-default,clean-tests-java,clean-tests-proto"
 		description="--> delete the output from the test scripts">
 	</target>
 
+	<target name="clean-tests-ant" description="--> delete the output from the Ant test scripts"><delete dir="${tests.dir}/out_ant" /></target>
 	<target name="clean-tests-c" description="--> delete the output from C test scripts"><delete dir="${tests.dir}/out_C" /></target>
 	<target name="clean-tests-cs" description="--> delete the output from C# test scripts"><delete dir="${tests.dir}/out_C#" /></target>
 	<target name="clean-tests-cpp" description="--> delete the output from C++ test scripts"><delete dir="${tests.dir}/out_C++" /></target>
 	<target name="clean-tests-default" description="--> delete the output from default test scripts"><delete dir="${tests.dir}/out_default" /></target>
-	<target name="clean-tests-java" description="--> delete the output from Java test scripts"><delete dir="${tests.dir}/out_Java" /></target>
+	<target name="clean-tests-java" description="--> delete the output from Java test scripts"><delete dir="${tests.dir}/out_Java/*" /></target>
 	<target name="clean-tests-proto" description="--> delete the output from .proto test scripts"><delete dir="${tests.dir}/out_proto" /></target>
 
 	<target name="compile-proto-java" depends="tests"
