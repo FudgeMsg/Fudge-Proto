@@ -76,6 +76,21 @@ public abstract class ClassCodeAdapter extends BlockCodeAdapter implements Class
   }
   
   @Override
+  public void writeClassHeaderEquality (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
+    _delegate.writeClassHeaderEquality (context, message, writer);
+  }
+  
+  @Override
+  public void writeClassHeaderHash (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
+    _delegate.writeClassHeaderHash (context, message, writer);
+  }
+  
+  @Override
+  public void writeClassHeaderString (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
+    _delegate.writeClassHeaderString (context, message, writer);
+  }
+  
+  @Override
   public void writeEnumHeaderDeclaration (final Compiler.Context context, final EnumDefinition enumDefinition, final IndentWriter writer) throws IOException {
     _delegate.writeEnumHeaderDeclaration (context, enumDefinition, writer);
   }
@@ -108,6 +123,21 @@ public abstract class ClassCodeAdapter extends BlockCodeAdapter implements Class
   @Override
   public void writeClassImplementationConstructor (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
     _delegate.writeClassImplementationConstructor (context, message, writer);
+  }
+  
+  @Override
+  public void writeClassImplementationEquality (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
+    _delegate.writeClassImplementationEquality (context, message, writer);
+  }
+  
+  @Override
+  public void writeClassImplementationHash (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
+    _delegate.writeClassImplementationHash (context, message, writer);
+  }
+  
+  @Override
+  public void writeClassImplementationString (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
+    _delegate.writeClassImplementationString (context, message, writer);
   }
   
   @Override

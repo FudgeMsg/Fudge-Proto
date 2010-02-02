@@ -18,7 +18,7 @@ package org.fudgemsg.proto.tests;
 import org.fudgemsg.FudgeFieldContainer;
 import org.fudgemsg.MutableFudgeFieldContainer;
 import org.fudgemsg.FudgeContext;
-import org.fudgemsg.mapping.FudgeSerialisationContext;
+import org.fudgemsg.mapping.FudgeSerializationContext;
 
 public class ExternalMessage {
   
@@ -32,7 +32,7 @@ public class ExternalMessage {
   public ExternalMessage (final FudgeFieldContainer msg) {
   }
   
-  public void toFudgeMsg (final FudgeSerialisationContext context, final MutableFudgeFieldContainer msg) {
+  public void toFudgeMsg (final FudgeSerializationContext context, final MutableFudgeFieldContainer msg) {
   }
   
   public FudgeFieldContainer toFudgeMsg (final FudgeContext context) {

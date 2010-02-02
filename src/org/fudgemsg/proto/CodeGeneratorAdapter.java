@@ -51,4 +51,14 @@ public class CodeGeneratorAdapter implements CodeGenerator {
     _codeGenerator.generationComplete (context, targetPath);
   }
   
+  @Override
+  public void setOption (final String option) {
+    _codeGenerator.setOption (option);
+  }
+  
+  @Override
+  public void setOption (final String option, final String value) {
+    _codeGenerator.setOption (option, value);
+  }
+  
 }

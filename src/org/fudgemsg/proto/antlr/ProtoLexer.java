@@ -1,4 +1,4 @@
-// $ANTLR 3.1.1 org/fudgemsg/proto/antlr/Proto.g 2010-01-15 17:34:07
+// $ANTLR 3.1.1 org/fudgemsg/proto/antlr/Proto.g 2010-01-29 09:14:45
 
   package org.fudgemsg.proto.antlr;
   import org.fudgemsg.proto.Compiler;
@@ -11,6 +11,7 @@ import java.util.Stack;
 import java.util.List;
 import java.util.ArrayList;
 
+@SuppressWarnings("unused")
 public class ProtoLexer extends Lexer {
     public static final int BINDING=5;
     public static final int T__64=64;

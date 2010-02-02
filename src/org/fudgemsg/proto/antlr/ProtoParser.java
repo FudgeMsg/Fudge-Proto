@@ -1,4 +1,4 @@
-// $ANTLR 3.1.1 org/fudgemsg/proto/antlr/Proto.g 2010-01-15 17:34:06
+// $ANTLR 3.1.1 org/fudgemsg/proto/antlr/Proto.g 2010-01-29 09:14:45
 
   package org.fudgemsg.proto.antlr;
   import org.fudgemsg.proto.Compiler;
@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import org.antlr.runtime.tree.*;
 
+@SuppressWarnings("unused")
 public class ProtoParser extends Parser {
     public static final String[] tokenNames = new String[] {
         "<invalid>", "<EOR>", "<DOWN>", "<UP>", "ARRAY", "BINDING", "DEFAULT", "DIM_FIXED", "DIM_VARIANT", "ENUM", "EXTENDS", "EXTERN", "FIELD", "IMPORT", "MESSAGE", "MUTABLE", "NAMESPACE", "ORDINAL", "REPEATED", "REQUIRED", "ROOT", "T_BOOL", "T_BYTE", "T_DOUBLE", "T_FLOAT", "T_INDICATOR", "T_INT", "T_LONG", "T_SHORT", "T_STRING", "TAXONOMY", "USES", "COMMENT", "IDENTIFIER", "INTEGER", "FLOAT", "ML_COMMENT", "ML_STRING", "STRING", "WHITESPACE", "'{'", "'}'", "';'", "'='", "'['", "']'", "','", "'optional'", "'boolean'", "'int8'", "'int16'", "'int32'", "'uint32'", "'sint32'", "'fixed32'", "'sfixed32'", "'integer'", "'int64'", "'uint64'", "'sint64'", "'fixed64'", "'sfixed64'", "'float32'", "'float64'", "'.'"
@@ -1309,7 +1310,7 @@ public class ProtoParser extends Parser {
 
 
             // AST REWRITE
-            // elements: field_basetype, dimension
+            // elements: dimension, field_basetype
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -3121,7 +3122,7 @@ public class ProtoParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: field_type, IDENTIFIER, field_constraints, field_modifier, field_ordinal
+                    // elements: field_constraints, field_ordinal, field_modifier, field_type, IDENTIFIER
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -3262,7 +3263,7 @@ public class ProtoParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: MESSAGE, field_ordinal, field_modifier, field_constraints, IDENTIFIER
+                    // elements: IDENTIFIER, MESSAGE, field_constraints, field_modifier, field_ordinal
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -3438,7 +3439,7 @@ public class ProtoParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: IDENTIFIER, MESSAGE, dimension, field_constraints, field_modifier, field_ordinal
+                    // elements: field_constraints, MESSAGE, field_ordinal, field_modifier, dimension, IDENTIFIER
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 

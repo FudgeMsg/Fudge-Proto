@@ -64,6 +64,21 @@ public abstract class ImplementationlessClassCode extends ClassCodeAdapter {
   }
   
   @Override
+  public final void writeClassImplementationEquality (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
+    // deliberate no-op
+  }
+  
+  @Override
+  public final void writeClassImplementationHash (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
+    // deliberate no-op
+  }
+  
+  @Override
+  public final void writeClassImplementationString (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
+    // deliberate no-op
+  }
+  
+  @Override
   public final void writeEnumImplementationDeclaration (final Compiler.Context context, final EnumDefinition enumDefinition, final IndentWriter writer) throws IOException {
     // deliberate no-op
   }

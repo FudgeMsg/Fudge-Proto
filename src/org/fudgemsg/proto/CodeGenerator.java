@@ -33,4 +33,8 @@ public interface CodeGenerator {
   
   public void generationComplete (final Compiler.Context context, final File targetPath);
   
+  public void setOption (final String optionKey) throws IllegalArgumentException;
+  
+  public void setOption (final String optionKey, final String optionValue) throws IllegalArgumentException;
+  
 }

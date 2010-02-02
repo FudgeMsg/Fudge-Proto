@@ -15,10 +15,7 @@
 
 package org.fudgemsg.proto;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
 
 import java.io.File;
 import java.util.Set;
@@ -54,6 +51,14 @@ public class CodeGeneratorFactoryTest {
     
     @Override
     public void generationComplete (Context context, File targetPath) {
+    }
+    
+    @Override
+    public void setOption (final String option) {
+    }
+    
+    @Override
+    public void setOption (final String option, final String value) {
     }
     
   }

@@ -36,6 +36,12 @@ public class AntTask extends Task {
   
   private boolean _verbose = false;
   
+  private boolean _equals = true;
+  
+  private boolean _hashCode = true;
+  
+  private boolean _toString = false;
+  
   public void setSrcdir (final String srcdir) {
     _srcdir = srcdir;
   }
@@ -50,6 +56,18 @@ public class AntTask extends Task {
   
   public void setVerbose (final String verbose) {
     _verbose = verbose.equalsIgnoreCase ("true");
+  }
+  
+  public void setToString (final String toString) {
+    _toString = toString.equalsIgnoreCase ("true");
+  }
+  
+  public void setHashCode (final String hashCode) {
+    _hashCode = hashCode.equalsIgnoreCase ("true");
+  }
+  
+  public void setEquals (final String equals) {
+    _equals = equals.equalsIgnoreCase ("true");
   }
   
   private void findFiles (final File src, File dest, final String srcExt, final String destExt, final List<String> names) {
@@ -96,6 +114,9 @@ public class AntTask extends Task {
       }
     }
     findFiles (new File (_srcdir), new File (_destdir), ".proto", ".java", args);
+    if (_equals) args.add ("-Xequals");
+    if (_toString) args.add ("-XtoString");
+    if (_hashCode) args.add ("-XhashCode");
     if (CommandLine.compile (args.toArray (new String[args.size ()])) > 0) throw new BuildException ("compilation failed"); 
   }
   

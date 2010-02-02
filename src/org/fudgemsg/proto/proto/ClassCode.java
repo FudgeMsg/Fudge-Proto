@@ -39,6 +39,12 @@ public interface ClassCode {
   
   public void writeClassHeaderConstructor (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException;
   
+  public void writeClassHeaderEquality (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException;
+  
+  public void writeClassHeaderHash (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException;
+  
+  public void writeClassHeaderString (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException;
+  
   public void writeEnumHeaderDeclaration (final Compiler.Context context, final EnumDefinition enumDefinition, final IndentWriter writer) throws IOException;
   
   public void writeTaxonomyHeaderDeclaration (final Compiler.Context context, final TaxonomyDefinition taxonomyDefinition, final IndentWriter writer) throws IOException;
@@ -52,6 +58,12 @@ public interface ClassCode {
   public void writeClassImplementationAccessor (final Compiler.Context context, final FieldDefinition field, final IndentWriter writer) throws IOException;
   
   public void writeClassImplementationConstructor (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException;
+  
+  public void writeClassImplementationEquality (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException;
+  
+  public void writeClassImplementationHash (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException;
+  
+  public void writeClassImplementationString (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException;
   
   public void writeEnumImplementationDeclaration (final Compiler.Context context, final EnumDefinition enumDefinition, final IndentWriter writer) throws IOException;
 

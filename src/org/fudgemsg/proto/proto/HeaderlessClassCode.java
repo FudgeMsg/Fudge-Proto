@@ -64,6 +64,21 @@ public abstract class HeaderlessClassCode extends ClassCodeAdapter {
   }
   
   @Override
+  public final void writeClassHeaderEquality (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
+    // deliberate no-op
+  }
+  
+  @Override
+  public final void writeClassHeaderHash (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
+    // deliberate no-op
+  }
+  
+  @Override
+  public final void writeClassHeaderString (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
+    // deliberate no-op
+  }
+  
+  @Override
   public final void writeEnumHeaderDeclaration (final Compiler.Context context, final EnumDefinition enumDefinition, final IndentWriter writer) throws IOException {
     // deliberate no-op
   }

@@ -18,6 +18,7 @@ package org.fudgemsg.proto;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import org.junit.Test;
 
@@ -30,6 +31,9 @@ public class CommandLineTest {
     assertEquals (CommandLine.compile (new String[] { "-lC#" }), 0); // select a different language
     assertEquals (CommandLine.compile (new String[] { "-stests" + File.separatorChar + "proto" }), 0); // select a different language
     assertEquals (CommandLine.compile (new String[] { "-ptests" + File.separatorChar + "out_proto" }), 0); // set a search path
+    assertEquals (CommandLine.compile (new String[] { "-Xequals", "-lJava" }), 1); // code gen option before language
+    assertEquals (CommandLine.compile (new String[] { "-lJava", "-Xequals", "-XhashCode", "-XtoString" }), 0); // valid code gen options for Java
+    assertEquals (CommandLine.compile (new String[] { "-lJava", "-Xfoo" }), 1); // invalid code gen option for Java
     assertEquals (CommandLine.compile (new String[] { "-x" }), 1); // bad parameter
   }
   
@@ -84,7 +88,17 @@ public class CommandLineTest {
     // Don't assert on each call so that we get a plethora of error behaviours from all generators, not just the first one to fall over!
     int errorCount = 0;
     for (String language : factory.getLanguages ()) {
-      if (CommandLine.compile (new String[] { "-dtests" + File.separatorChar + "out_" + language, "-l" + language, "-stests" + File.separatorChar + "proto", filename }) != 0) errorCount++;
+      final ArrayList<String> args = new ArrayList<String> ();
+      args.add ("-dtests" + File.separatorChar + "out_" + language);
+      args.add ("-l" + language);
+      args.add ("-stests" + File.separatorChar + "proto");
+      args.add (filename);
+      if (language.equals ("Java")) {
+        args.add ("-Xequals");
+        args.add ("-XhashCode");
+        args.add ("-XtoString");
+      }
+      if (CommandLine.compile (args.toArray (new String[0])) != 0) errorCount++;
     }
     assertEquals (errorCount, 0);
   }

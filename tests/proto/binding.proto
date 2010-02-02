@@ -6,45 +6,16 @@ namespace org.fudgemsg.proto.tests.binding {
 		required IdentificationDomain domain;
 		required string value;
 		binding Java {
-			implements	java.io.Serializable;
 			body		<<<Java
 				public DomainSpecificIdentifier (String domain, String value) {
 					this (new IdentificationDomain (domain), value);
 				}
-				@Override
-				public String toString () {
-				    return org.apache.commons.lang.builder.ToStringBuilder.reflectionToString(this, org.apache.commons.lang.builder.ToStringStyle.SHORT_PREFIX_STYLE);
-				}
 Java;
 		}
 	}
-	
+
 	message IdentificationDomain {
 		required string domainName;
-		binding Java {
-			implements	java.io.Serializable;
-			javadoc		<<<Java
-				An Identification Domain defines a particular domain in which values
-			 	can be limited. By doing this, it provides a particular universe
-			 	of keys for an underlying object.
-			 	Fundamentally, this is nothing other than a typesafe wrapper on top of
-			 	a name describing the identification domain.
-			 	<p/>
-			 	Real-world examples of an Identification Domain might include:
-			 	<ul>
-			 	 <li>ISIN, CUSIP for globally unique identifiers on traded securities.</li>
-			 	 <li>A trading system instance name for trades and positions.</li>
-			 	 <li>RIC for a reuters-provided market data object.</li>
-			 	</ul>
-			 	@author kirk
-Java;
-			body		<<<Java
-			 	@Override
-				public String toString () {
-				    return org.apache.commons.lang.builder.ToStringBuilder.reflectionToString(this, org.apache.commons.lang.builder.ToStringStyle.SHORT_PREFIX_STYLE);
-				}
-Java;
-		}
 	}
 	
 	enum BindingEnum {

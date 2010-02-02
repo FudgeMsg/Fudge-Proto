@@ -92,6 +92,25 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
     return null;
   }
   
+  private boolean codeGenOption (final CodeGenerator codeGen, final String option) {
+    if (codeGen == null) {
+      compilerError (null, "-X option invalid before -l");
+      return false;
+    }
+    int i = option.indexOf ('=');
+    try {
+      if (i < 0) {
+        codeGen.setOption (option);
+      } else {
+        codeGen.setOption (option.substring (0, i), option.substring (i + 1));
+      }
+    } catch (IllegalArgumentException e) {
+      compilerError (null, e.getMessage ());
+      return false;
+    }
+    return true;
+  }
+  
   /**
    * Actual implementation of the program entry point, but returns the exit code. This is to facilitate testing, or crudely embedding the
    * compiler into an IDE or something.
@@ -116,6 +135,11 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
           break;
         case 'p' : // -p<path>        Add a source folder for loading additional .proto files from (no code will be generated)
           cmdLine.addSearchDir (new File (args[i].substring (2)));
+          break;
+        case 'X' : // -X<option>[=<value>]  Pass flags to the code generator
+          if (!cmdLine.codeGenOption (compiler.getCodeGenerator (), args[i].substring (2))) {
+            return 1;
+          }
           break;
         default:
           cmdLine.compilerError (null, "invalid command line option " + args[i]);

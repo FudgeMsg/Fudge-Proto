@@ -22,6 +22,8 @@ import java.util.Arrays;
 
 import org.fudgemsg.FudgeContext;
 import org.fudgemsg.FudgeFieldContainer;
+import org.fudgemsg.mapping.FudgeSerializationContext;
+import org.fudgemsg.mapping.FudgeDeserializationContext;
 import org.fudgemsg.proto.tests.types.CustomEnum;
 import org.fudgemsg.proto.tests.types.SubMessage;
 import org.fudgemsg.proto.tests.types.Types;

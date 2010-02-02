@@ -185,6 +185,10 @@ public class Compiler {
     _codeGenerator = codeGenerator;
   }
   
+  public CodeGenerator getCodeGenerator () {
+    return _codeGenerator;
+  }
+  
   public void setTargetPath (final File targetPath) {
     if (targetPath == null) throw new IllegalArgumentException ("targetPath cannot be null");
     _targetPath = targetPath;
@@ -193,7 +197,7 @@ public class Compiler {
   private void setCompilerDefaults () {
     if (_warningListener == null) setWarningListener (DefaultCompilerListener.INSTANCE);
     if (_errorListener == null) setErrorListener (DefaultCompilerListener.INSTANCE);
-    if (_codeGenerator == null) setCodeGenerator (CodeGeneratorFactory.createDefaultCodeGenerator ());
+    if (getCodeGenerator () == null) setCodeGenerator (CodeGeneratorFactory.createDefaultCodeGenerator ());
     if (_targetPath == null) setTargetPath (new File ("."));
   }
   
@@ -336,11 +340,11 @@ public class Compiler {
         if (definition.isCompilationTarget ()) {
           try {
             if (definition instanceof EnumDefinition) {
-              _codeGenerator.generateCode (_context, (EnumDefinition)definition, _targetPath);
+              getCodeGenerator ().generateCode (_context, (EnumDefinition)definition, _targetPath);
             } else if (definition instanceof MessageDefinition) {
-              _codeGenerator.generateCode (_context, (MessageDefinition)definition, _targetPath);
+              getCodeGenerator ().generateCode (_context, (MessageDefinition)definition, _targetPath);
             } else if (definition instanceof TaxonomyDefinition) {
-              _codeGenerator.generateCode (_context, (TaxonomyDefinition)definition, _targetPath);
+              getCodeGenerator ().generateCode (_context, (TaxonomyDefinition)definition, _targetPath);
             }
           } catch (CompilationException e) {
             throw e; // default error handler
@@ -351,7 +355,7 @@ public class Compiler {
         }
       }
       // Phase 7 - optional cleanup for the code generator (e.g. closing stuff)
-      _codeGenerator.generationComplete (_context, _targetPath);
+      getCodeGenerator ().generationComplete (_context, _targetPath);
       return true;
     }
     return false;

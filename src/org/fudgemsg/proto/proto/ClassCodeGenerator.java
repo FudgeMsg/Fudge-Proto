@@ -45,6 +45,10 @@ public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerato
   
   private static final String _implementationFilesOpen = ClassCodeGenerator.class.getName () + ":implementationFilesOpen"; // Set<File>
   
+  private boolean _generateEquality = false;
+  private boolean _generateHash = false;
+  private boolean _generateString = false;
+  
   protected ClassCodeGenerator (final ClassCode delegate) {
     super (delegate);
   }
@@ -52,7 +56,7 @@ public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerato
   private Set<File> getHeaderFilesOpen (final Compiler.Context context) {
     Set<File> state = context.getUserState (_headerFilesOpen);
     if (state == null) {
-      context.setUserState (_headerFilesOpen, state = new HashSet<File> ()); 
+      context.setUserState (_headerFilesOpen, state = new HashSet<File> ());
     }
     return state;
   }
@@ -165,12 +169,27 @@ public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerato
     }
   }
   
+  protected boolean flagGenerateEquality (final Definition message) {
+    return _generateEquality;
+  }
+  
+  protected boolean flagGenerateHash (final Definition message) {
+    return _generateHash;
+  }
+  
+  protected boolean flagGenerateString (final Definition message) {
+    return _generateString;
+  }
+  
   protected void writeClassHeader (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
     writeEnumHeaderDeclarations (context, message, writer);
     beginClassHeaderDeclaration (context, message, writer);
     writeClassHeaderAttributes (context, message, writer);
     writeClassHeaderConstructor (context, message, writer);
     writeClassHeaderAccessors (context, message, writer);
+    if (flagGenerateEquality (message)) writeClassHeaderEquality (context, message, writer);
+    if (flagGenerateHash (message)) writeClassHeaderHash (context, message, writer);
+    if (flagGenerateString (message)) writeClassHeaderString (context, message, writer);
     endClassHeaderDeclaration (context, message, writer);
   }
   
@@ -180,6 +199,9 @@ public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerato
     writeClassImplementationAttributes (context, message, writer);
     writeClassImplementationConstructor (context, message, writer);
     writeClassImplementationAccessors (context, message, writer);
+    if (flagGenerateEquality (message)) writeClassImplementationEquality (context, message, writer);
+    if (flagGenerateHash (message)) writeClassImplementationHash (context, message, writer);
+    if (flagGenerateString (message)) writeClassImplementationString (context, message, writer);
     endClassImplementationDeclaration (context, message, writer);
   }
   
@@ -281,6 +303,28 @@ public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerato
     } catch (IOException e) {
       context.error (null, e.getMessage ());
     }
+  }
+  
+  @Override
+  public void setOption (final String option) {
+    if (option.equals ("equality")) {
+      _generateEquality = true;
+      return;
+    }
+    if (option.equals ("hash")) {
+      _generateHash = true;
+      return;
+    }
+    if (option.equals ("string")) {
+      _generateString = true;
+      return;
+    }
+    throw new IllegalArgumentException ("unknown option '" + option + "'");
+  }
+  
+  @Override
+  public void setOption (final String option, final String value) {
+    throw new IllegalArgumentException ("unknown option '" + option + "'");
   }
   
 }
