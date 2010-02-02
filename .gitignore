@@ -9,6 +9,5 @@ tests/out_C/
 tests/out_C#/
 tests/out_C++/
 tests/out_default/
-tests/out_Java/
 tests/out_proto/
 tests/output/
