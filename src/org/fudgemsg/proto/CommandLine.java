@@ -146,7 +146,12 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
           return 1;
         }
       } else {
-        final File f = ((args[i].charAt (0) != '/') && (cmdLine._sourceDir != null)) ? new File (cmdLine._sourceDir, args[i]) : new File (args[i]);
+        File f = new File (args[i]);
+        if (!f.isAbsolute ()) {
+          if (cmdLine._sourceDir != null) {
+            f = new File (cmdLine._sourceDir, args[i]);
+          }
+        }
         if (f.exists ()) {
           compiler.addSource (new SourceFile (f, cmdLine));
         } else {
