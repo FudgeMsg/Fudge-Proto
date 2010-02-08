@@ -260,6 +260,10 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
       return FieldType.BOOLEAN_TYPE;
     case ProtoLexer.T_BYTE :
       return FieldType.BYTE_TYPE;
+    case ProtoLexer.T_DATE :
+      return FieldType.DATE_TYPE;
+    case ProtoLexer.T_DATETIME :
+      return FieldType.DATETIME_TYPE;
     case ProtoLexer.T_SHORT :
       return FieldType.SHORT_TYPE;
     case ProtoLexer.T_INT :
@@ -274,6 +278,8 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
       return FieldType.INDICATOR_TYPE;
     case ProtoLexer.T_STRING :
       return FieldType.STRING_TYPE;
+    case ProtoLexer.T_TIME :
+      return FieldType.TIME_TYPE;
     default :
       throw new IllegalStateException ("invalid type node '" + node.getNodeLabel () + "'"); 
     }

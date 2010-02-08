@@ -41,12 +41,15 @@ tokens {
 	T_BOOL			= 'bool';
 	T_BYTE			= 'byte';
 	T_DOUBLE		= 'double';
+	T_DATE      = 'date';
+	T_DATETIME  = 'datetime';
 	T_FLOAT			= 'float';
 	T_INDICATOR	= 'indicator';
 	T_INT			  = 'int';
 	T_LONG			= 'long';
 	T_SHORT			= 'short';
 	T_STRING		= 'string';
+	T_TIME      = 'time';
 	TAXONOMY		= 'taxonomy';
 	USES			  = 'uses';
 }
@@ -127,6 +130,8 @@ anyword
   | REQUIRED
   | T_BOOL
   | T_BYTE
+  | T_DATE
+  | T_DATETIME
   | T_DOUBLE
   | T_FLOAT
   | T_INDICATOR
@@ -134,7 +139,9 @@ anyword
   | T_LONG
   | T_SHORT
   | T_STRING
+  | T_TIME
   | TAXONOMY
+  | TIME
   | USES
   ;
 
@@ -188,6 +195,8 @@ field_primtype
 	| 'boolean' -> ^(T_BOOL)
 	| T_BYTE
 	| 'int8' -> ^(T_BYTE)
+	| T_DATE
+	| T_DATETIME
 	| T_SHORT
 	| 'int16' -> ^(T_SHORT)
 	| T_INT
@@ -209,6 +218,7 @@ field_primtype
 	| 'float64' -> ^(T_DOUBLE)
 	| T_INDICATOR
 	| T_STRING
+	| T_TIME
 	;
 
 field_basetype

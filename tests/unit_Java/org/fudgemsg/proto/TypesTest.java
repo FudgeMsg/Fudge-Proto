@@ -15,21 +15,52 @@
 
 package org.fudgemsg.proto;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.Arrays;
+import java.util.Date;
+import java.util.Random;
 
 import org.fudgemsg.FudgeContext;
 import org.fudgemsg.FudgeFieldContainer;
-import org.fudgemsg.mapping.FudgeSerializationContext;
-import org.fudgemsg.mapping.FudgeDeserializationContext;
+import org.fudgemsg.MutableFudgeFieldContainer;
+import org.fudgemsg.proto.tests.types.AATypesBase;
+import org.fudgemsg.proto.tests.types.AATypes_Optional;
+import org.fudgemsg.proto.tests.types.AATypes_Required;
+import org.fudgemsg.proto.tests.types.ATypesBase;
+import org.fudgemsg.proto.tests.types.ATypes_Optional;
+import org.fudgemsg.proto.tests.types.ATypes_Required;
 import org.fudgemsg.proto.tests.types.CustomEnum;
+import org.fudgemsg.proto.tests.types.MutableAATypes_Optional;
+import org.fudgemsg.proto.tests.types.MutableAATypes_Required;
+import org.fudgemsg.proto.tests.types.MutableATypes_Optional;
+import org.fudgemsg.proto.tests.types.MutableATypes_Required;
+import org.fudgemsg.proto.tests.types.MutableRATypes_Optional;
+import org.fudgemsg.proto.tests.types.MutableRATypes_Required;
+import org.fudgemsg.proto.tests.types.MutableRSTypes_Optional;
+import org.fudgemsg.proto.tests.types.MutableRSTypes_Required;
+import org.fudgemsg.proto.tests.types.MutableSTypes_Optional;
+import org.fudgemsg.proto.tests.types.MutableSTypes_Required;
+import org.fudgemsg.proto.tests.types.RATypes_Optional;
+import org.fudgemsg.proto.tests.types.RATypes_Required;
+import org.fudgemsg.proto.tests.types.RSTypesBase;
+import org.fudgemsg.proto.tests.types.RSTypes_Optional;
+import org.fudgemsg.proto.tests.types.RSTypes_Required;
+import org.fudgemsg.proto.tests.types.STypes_Optional;
+import org.fudgemsg.proto.tests.types.STypes_Required;
 import org.fudgemsg.proto.tests.types.SubMessage;
-import org.fudgemsg.proto.tests.types.Types;
+import org.fudgemsg.proto.tests.types.TypesBase;
+import org.fudgemsg.types.DateTimeAccuracy;
+import org.fudgemsg.types.FudgeDate;
+import org.fudgemsg.types.FudgeTime;
 import org.junit.Test;
 
 public class TypesTest {
+  
+  private final FudgeContext _fudgeContext = new FudgeContext ();
+  private final Random _random = new Random ();
   
   private void compareSubMessage (final SubMessage object1, final SubMessage object2) {
     if ((object1 == null) && (object2 == null)) return;
@@ -37,128 +68,70 @@ public class TypesTest {
     assertNotNull (object2);
     assertEquals (object1.getI (), object2.getI ());
     assertEquals (object1.getS (), object2.getS ());
+    assertEquals (object1, object2);
   }
   
-  private void compareTypes (final Types object1, final Types object2) {
+  private void compareTypes (final TypesBase object1, final TypesBase object2) {
     if ((object1 == null) && (object2 == null)) return;
     assertNotNull (object1);
     assertNotNull (object2);
-    // single variables
-    assertEquals (object1.getSBool (), object2.getSBool ());
-    assertEquals (object1.getSByte (), object2.getSByte ());
-    assertEquals (object1.getSDouble (), object2.getSDouble (), 0);
-    assertEquals (object1.getSFloat (), object2.getSFloat (), 0);
-    assertEquals (object1.getSIndicator (), object2.getSIndicator ());
-    assertEquals (object1.getSInt (), object2.getSInt ());
-    assertEquals (object1.getSLong (), object2.getSLong ());
-    assertEquals (object1.getSShort (), object2.getSShort ());
-    assertEquals (object1.getSString (), object2.getSString ());
-    compareSubMessage (object1.getSSubMessage (), object2.getSSubMessage ());
-    assertEquals (object1.getSCustomEnum (), object2.getSCustomEnum ());
-    // arrays
-    assertEquals (Arrays.equals (object1.getABool (), object2.getABool ()), true);
-    assertEquals (Arrays.equals (object1.getAByte (), object2.getAByte ()), true);
-    assertEquals (Arrays.equals (object1.getADouble (), object2.getADouble ()), true);
-    assertEquals (Arrays.equals (object1.getAFloat (), object2.getAFloat ()), true);
-    assertEquals (Arrays.equals (object1.getAIndicator (), object2.getAIndicator ()), true);
-    assertEquals (Arrays.equals (object1.getAInt (), object2.getAInt ()), true);
-    assertEquals (Arrays.equals (object1.getALong (), object2.getALong ()), true);
-    assertEquals (Arrays.equals (object1.getAString (), object2.getAString ()), true);
-    assertEquals (Arrays.equals (object1.getASubMessage (), object2.getASubMessage ()), true);
-    assertEquals (Arrays.equals (object1.getACustomEnum (), object2.getACustomEnum ()), true);
+    assertEquals (object1.get_Bool (), object2.get_Bool ());
+    assertEquals (object1.get_Byte (), object2.get_Byte ());
+    assertEquals (object1.get_Double (), object2.get_Double (), 0);
+    assertEquals (object1.get_Float (), object2.get_Float (), 0);
+    assertEquals (object1.get_Indicator (), object2.get_Indicator ());
+    assertEquals (object1.get_Int (), object2.get_Int ());
+    assertEquals (object1.get_Long (), object2.get_Long ());
+    assertEquals (object1.get_Short (), object2.get_Short ());
+    assertEquals (object1.get_String (), object2.get_String ());
+    compareSubMessage (object1.get_SubMessage (), object2.get_SubMessage ());
+    assertEquals (object1.get_CustomEnum (), object2.get_CustomEnum ());
+    assertEquals (object1.get_Message (), object2.get_Message ());
+    assertEquals (object1.get_Date (), object2.get_Date ());
+    assertEquals (object1.get_DateTime (), object2.get_DateTime ());
+    assertEquals (object1.get_Time (), object2.get_Time ());
+    assertEquals (object1, object2);
+  }
+  
+  private void compareTypes (final ATypesBase object1, final ATypesBase object2) {
+    if ((object1 == null) && (object2 == null)) return;
+    assertNotNull (object1);
+    assertNotNull (object2);
+    assertEquals (Arrays.equals (object1.get_Bool (), object2.get_Bool ()), true);
+    assertArrayEquals (object1.get_Byte (), object2.get_Byte ());
+    assertEquals (Arrays.equals (object1.get_Double (), object2.get_Double ()), true);
+    assertEquals (Arrays.equals (object1.get_Float (), object2.get_Float ()), true);
+    assertEquals (Arrays.equals (object1.get_Indicator (), object2.get_Indicator ()), true);
+    assertArrayEquals (object1.get_Int (), object2.get_Int ());
+    assertArrayEquals (object1.get_Long (), object2.get_Long ());
+    assertArrayEquals (object1.get_Short (), object2.get_Short ());
+    assertArrayEquals (object1.get_String (), object2.get_String ());
+    assertArrayEquals (object1.get_SubMessage (), object2.get_SubMessage ());
+    assertArrayEquals (object1.get_CustomEnum (), object2.get_CustomEnum ());
+    assertArrayEquals (object1.get_Date (), object2.get_Date ());
+    assertArrayEquals (object1.get_DateTime (), object2.get_DateTime ());
+    assertArrayEquals (object1.get_Time (), object2.get_Time ());
+    assertEquals (object1, object2);
+  }
+
+  private <T> void compareAAObject (T[][] a, T[][] b) {
     int n, i;
-    // repeated single variables
-    assertEquals (n = object1.getRsBoolCount (), object2.getRsBoolCount ());
-    for (i = 0; i < n; i++) {
-      assertEquals (object1.getRsBool (i), object2.getRsBool (i));
+    if ((a != null) || (b != null)) {
+      assertNotNull (a);
+      assertNotNull (b);
+      assertEquals (n = a.length, a.length);
+      for (i = 0; i < n; i++) {
+        assertArrayEquals (a[i], b[i]);
+      }
     }
-    assertEquals (n = object1.getRsByteCount (), object2.getRsByteCount ());
-    for (i = 0; i < n; i++) {
-      assertEquals (object1.getRsByte (i), object2.getRsByte (i));
-    }
-    assertEquals (n = object1.getRsDoubleCount (), object2.getRsDoubleCount ());
-    for (i = 0; i < n; i++) {
-      assertEquals (object1.getRsDouble (i), object2.getRsDouble (i));
-    }
-    assertEquals (n = object1.getRsFloatCount (), object2.getRsFloatCount ());
-    for (i = 0; i < n; i++) {
-      assertEquals (object1.getRsFloat (i), object2.getRsFloat (i));
-    }
-    assertEquals (n = object1.getRsIndicatorCount (), object2.getRsIndicatorCount ());
-    for (i = 0; i < n; i++) {
-      assertEquals (object1.getRsIndicator (i), object2.getRsIndicator (i));
-    }
-    assertEquals (n = object1.getRsIntCount (), object2.getRsIntCount ());
-    for (i = 0; i < n; i++) {
-      assertEquals (object1.getRsInt (i), object2.getRsInt (i));
-    }
-    assertEquals (n = object1.getRsLongCount (), object2.getRsLongCount ());
-    for (i = 0; i < n; i++) {
-      assertEquals (object1.getRsLong (i), object2.getRsLong (i));
-    }
-    assertEquals (n = object1.getRsShortCount (), object2.getRsShortCount ());
-    for (i = 0; i < n; i++) {
-      assertEquals (object1.getRsShort (i), object2.getRsShort (i));
-    }
-    assertEquals (n = object1.getRsStringCount (), object2.getRsStringCount ());
-    for (i = 0; i < n; i++) {
-      assertEquals (object1.getRsString (i), object2.getRsString (i));
-    }
-    assertEquals (n = object1.getRsSubMessageCount (), object2.getRsSubMessageCount ());
-    for (i = 0; i < n; i++) {
-      assertEquals (object1.getRsSubMessage (i), object2.getRsSubMessage (i));
-    }
-    assertEquals (n = object1.getRsCustomEnumCount (), object2.getRsCustomEnumCount ());
-    for (i = 0; i < n; i++) {
-      assertEquals (object1.getRsCustomEnum (i), object2.getRsCustomEnum (i));
-    }
-    // repeated arrays
-    assertEquals (n = object1.getRaBoolCount (), object2.getRaBoolCount ());
-    for (i = 0; i < n; i++) {
-      assertEquals (Arrays.equals (object1.getRaBool (i), object2.getRaBool (i)), true);
-    }
-    assertEquals (n = object1.getRaByteCount (), object2.getRaByteCount ());
-    for (i = 0; i < n; i++) {
-      assertEquals (Arrays.equals (object1.getRaByte (i), object2.getRaByte (i)), true);
-    }
-    assertEquals (n = object1.getRaDoubleCount (), object2.getRaDoubleCount ());
-    for (i = 0; i < n; i++) {
-      assertEquals (Arrays.equals (object1.getRaDouble (i), object2.getRaDouble (i)), true);
-    }
-    assertEquals (n = object1.getRaFloatCount (), object2.getRaFloatCount ());
-    for (i = 0; i < n; i++) {
-      assertEquals (Arrays.equals (object1.getRaFloat (i), object2.getRaFloat (i)), true);
-    }
-    assertEquals (n = object1.getRaIndicatorCount (), object2.getRaIndicatorCount ());
-    for (i = 0; i < n; i++) {
-      assertEquals (Arrays.equals (object1.getRaIndicator (i), object2.getRaIndicator (i)), true);
-    }
-    assertEquals (n = object1.getRaIntCount (), object2.getRaIntCount ());
-    for (i = 0; i < n; i++) {
-      assertEquals (Arrays.equals (object1.getRaInt (i), object2.getRaInt (i)), true);
-    }
-    assertEquals (n = object1.getRaLongCount (), object2.getRaLongCount ());
-    for (i = 0; i < n; i++) {
-      assertEquals (Arrays.equals (object1.getRaLong (i), object2.getRaLong (i)), true);
-    }
-    assertEquals (n = object1.getRaShortCount (), object2.getRaShortCount ());
-    for (i = 0; i < n; i++) {
-      assertEquals (Arrays.equals (object1.getRaShort (i), object2.getRaShort (i)), true);
-    }
-    assertEquals (n = object1.getRaStringCount (), object2.getRaStringCount ());
-    for (i = 0; i < n; i++) {
-      assertEquals (Arrays.equals (object1.getRaString (i), object2.getRaString (i)), true);
-    }
-    assertEquals (n = object1.getRaSubMessageCount (), object2.getRaSubMessageCount ());
-    for (i = 0; i < n; i++) {
-      assertEquals (Arrays.equals (object1.getRaSubMessage (i), object2.getRaSubMessage (i)), true);
-    }
-    assertEquals (n = object1.getRaCustomEnumCount (), object2.getRaCustomEnumCount ());
-    for (i = 0; i < n; i++) {
-      assertEquals (Arrays.equals (object1.getRaCustomEnum (i), object2.getRaCustomEnum (i)), true);
-    }
-    // arrays of arrays
-    boolean[][] aaBool1 = object1.getAaBool (), aaBool2 = object2.getAaBool ();
+  }
+
+  private void compareTypes (final AATypesBase object1, final AATypesBase object2) {
+    if ((object1 == null) && (object2 == null)) return;
+    assertNotNull (object1);
+    assertNotNull (object2);
+    int n, i;
+    boolean[][] aaBool1 = object1.get_Bool (), aaBool2 = object2.get_Bool ();
     if ((aaBool1 != null) || (aaBool2 != null)) {
       assertNotNull (aaBool1);
       assertNotNull (aaBool2);
@@ -167,16 +140,16 @@ public class TypesTest {
         assertEquals (Arrays.equals (aaBool1[i], aaBool2[i]), true);
       }
     }
-    byte[][] aaByte1 = object1.getAaByte (), aaByte2 = object2.getAaByte ();
+    byte[][] aaByte1 = object1.get_Byte (), aaByte2 = object2.get_Byte ();
     if ((aaByte1 != null) || (aaByte2 != null)) {
       assertNotNull (aaByte1);
       assertNotNull (aaByte2);
       assertEquals (n = aaByte1.length, aaByte2.length);
       for (i = 0; i < n; i++) {
-        assertEquals (Arrays.equals (aaByte1[i], aaByte2[i]), true);
+        assertArrayEquals (aaByte1[i], aaByte2[i]);
       }
     }
-    double[][] aaDouble1 = object1.getAaDouble (), aaDouble2 = object2.getAaDouble ();
+    double[][] aaDouble1 = object1.get_Double (), aaDouble2 = object2.get_Double ();
     if ((aaDouble1 != null) || (aaDouble2 != null)) {
       assertNotNull (aaDouble1);
       assertNotNull (aaDouble2);
@@ -185,7 +158,7 @@ public class TypesTest {
         assertEquals (Arrays.equals (aaDouble1[i], aaDouble2[i]), true);
       }
     }
-    float[][] aaFloat1 = object1.getAaFloat (), aaFloat2 = object2.getAaFloat ();
+    float[][] aaFloat1 = object1.get_Float (), aaFloat2 = object2.get_Float ();
     if ((aaFloat1 != null) || (aaFloat2 != null)) {
       assertNotNull (aaFloat1);
       assertNotNull (aaFloat2);
@@ -194,7 +167,7 @@ public class TypesTest {
         assertEquals (Arrays.equals (aaFloat1[i], aaFloat2[i]), true);
       }
     }
-    boolean[][] aaIndicator1 = object1.getAaIndicator (), aaIndicator2 = object2.getAaIndicator ();
+    boolean[][] aaIndicator1 = object1.get_Indicator (), aaIndicator2 = object2.get_Indicator ();
     if ((aaIndicator1 != null) || (aaIndicator2 != null)) {
       assertNotNull (aaIndicator1);
       assertNotNull (aaIndicator2);
@@ -203,62 +176,734 @@ public class TypesTest {
         assertEquals (Arrays.equals (aaIndicator1[i], aaIndicator2[i]), true);
       }
     }
-    int[][] aaInt1 = object1.getAaInt (), aaInt2 = object2.getAaInt ();
+    int[][] aaInt1 = object1.get_Int (), aaInt2 = object2.get_Int ();
     if ((aaInt1 != null) || (aaInt2 != null)) {
       assertNotNull (aaInt1);
       assertNotNull (aaInt2);
       assertEquals (n = aaInt1.length, aaInt2.length);
       for (i = 0; i < n; i++) {
-        assertEquals (Arrays.equals (aaInt1[i], aaInt2[i]), true);
+        assertArrayEquals (aaInt1[i], aaInt2[i]);
       }
     }
-    long[][] aaLong1 = object1.getAaLong (), aaLong2 = object2.getAaLong ();
+    long[][] aaLong1 = object1.get_Long (), aaLong2 = object2.get_Long ();
     if ((aaLong1 != null) || (aaLong2 != null)) {
       assertNotNull (aaLong1);
       assertNotNull (aaLong2);
       assertEquals (n = aaLong1.length, aaLong2.length);
       for (i = 0; i < n; i++) {
-        assertEquals (Arrays.equals (aaLong1[i], aaLong2[i]), true);
+        assertArrayEquals (aaLong1[i], aaLong2[i]);
       }
     }
-    short[][] aaShort1 = object1.getAaShort (), aaShort2 = object2.getAaShort ();
+    short[][] aaShort1 = object1.get_Short (), aaShort2 = object2.get_Short ();
     if ((aaShort1 != null) || (aaShort2 != null)) {
       assertNotNull (aaShort1);
       assertNotNull (aaShort2);
       assertEquals (n = aaShort1.length, aaShort2.length);
       for (i = 0; i < n; i++) {
-        assertEquals (Arrays.equals (aaShort1[i], aaShort2[i]), true);
+        assertArrayEquals (aaShort1[i], aaShort2[i]);
       }
     }
-    String[][] aaString1 = object1.getAaString (), aaString2 = object2.getAaString ();
-    if ((aaString1 != null) || (aaString2 != null)) {
-      assertNotNull (aaString1);
-      assertNotNull (aaString2);
-      assertEquals (n = aaString1.length, aaString2.length);
-      for (i = 0; i < n; i++) {
-        assertEquals (Arrays.equals (aaString1[i], aaString2[i]), true);
-      }
-    }
-    SubMessage[][] aaSubMessage1 = object1.getAaSubMessage (), aaSubMessage2 = object2.getAaSubMessage ();
-    if ((aaSubMessage1 != null) || (aaSubMessage2 != null)) {
-      assertNotNull (aaSubMessage1);
-      assertNotNull (aaSubMessage2);
-      assertEquals (n = aaSubMessage1.length, aaSubMessage2.length);
-      for (i = 0; i < n; i++) {
-        assertEquals (Arrays.equals (aaSubMessage1[i], aaSubMessage2[i]), true);
-      }
-    }
-    CustomEnum[][] aaCustomEnum1 = object1.getAaCustomEnum (), aaCustomEnum2 = object2.getAaCustomEnum ();
-    if ((aaCustomEnum1 != null) || (aaCustomEnum2 != null)) {
-      assertNotNull (aaCustomEnum1);
-      assertNotNull (aaCustomEnum2);
-      assertEquals (n = aaCustomEnum1.length, aaCustomEnum2.length);
-      for (i = 0; i < n; i++) {
-        assertEquals (Arrays.equals (aaCustomEnum1[i], aaCustomEnum2[i]), true);
-      }
-    }
+    compareAAObject (object1.get_String (), object2.get_String ());
+    compareAAObject (object1.get_SubMessage (), object2.get_SubMessage ());
+    compareAAObject (object1.get_CustomEnum (), object2.get_CustomEnum ());
+    compareAAObject (object1.get_Date (), object2.get_Date ());
+    compareAAObject (object1.get_DateTime (), object2.get_DateTime ());
+    compareAAObject (object1.get_Time (), object2.get_Time ());
+    assertEquals (object1.equals (object2), true);
+    assertEquals (object1, object2);
   }
   
+  private void compareTypes (final RSTypesBase object1, final RSTypesBase object2) {
+    if ((object1 == null) && (object2 == null)) return;
+    assertNotNull (object1);
+    assertNotNull (object2);
+    int n, i;
+    assertEquals (n = object1.get_BoolCount (), object2.get_BoolCount ());
+    for (i = 0; i < n; i++) {
+      assertEquals (object1.get_Bool (i), object2.get_Bool (i));
+    }
+    assertEquals (n = object1.get_ByteCount (), object2.get_ByteCount ());
+    for (i = 0; i < n; i++) {
+      assertEquals (object1.get_Byte (i), object2.get_Byte (i));
+    }
+    assertEquals (n = object1.get_DoubleCount (), object2.get_DoubleCount ());
+    for (i = 0; i < n; i++) {
+      assertEquals (object1.get_Double (i), object2.get_Double (i));
+    }
+    assertEquals (n = object1.get_FloatCount (), object2.get_FloatCount ());
+    for (i = 0; i < n; i++) {
+      assertEquals (object1.get_Float (i), object2.get_Float (i));
+    }
+    assertEquals (n = object1.get_IndicatorCount (), object2.get_IndicatorCount ());
+    for (i = 0; i < n; i++) {
+      assertEquals (object1.get_Indicator (i), object2.get_Indicator (i));
+    }
+    assertEquals (n = object1.get_IntCount (), object2.get_IntCount ());
+    for (i = 0; i < n; i++) {
+      assertEquals (object1.get_Int (i), object2.get_Int (i));
+    }
+    assertEquals (n = object1.get_LongCount (), object2.get_LongCount ());
+    for (i = 0; i < n; i++) {
+      assertEquals (object1.get_Long (i), object2.get_Long (i));
+    }
+    assertEquals (n = object1.get_ShortCount (), object2.get_ShortCount ());
+    for (i = 0; i < n; i++) {
+      assertEquals (object1.get_Short (i), object2.get_Short (i));
+    }
+    assertEquals (n = object1.get_StringCount (), object2.get_StringCount ());
+    for (i = 0; i < n; i++) {
+      assertEquals (object1.get_String (i), object2.get_String (i));
+    }
+    assertEquals (n = object1.get_SubMessageCount (), object2.get_SubMessageCount ());
+    for (i = 0; i < n; i++) {
+      assertEquals (object1.get_SubMessage (i), object2.get_SubMessage (i));
+    }
+    assertEquals (n = object1.get_CustomEnumCount (), object2.get_CustomEnumCount ());
+    for (i = 0; i < n; i++) {
+      assertEquals (object1.get_CustomEnum (i), object2.get_CustomEnum (i));
+    }
+    assertEquals (object1, object2);
+  }
+  
+  private int arraySize () {
+    return _random.nextInt (16) + 1;
+  }
+  
+  private boolean sbool () {
+    return _random.nextBoolean ();
+  }
+  
+  private boolean[] abool () {
+    final int n = arraySize ();
+    final boolean[] r = new boolean[n];
+    for (int i = 0; i < n; i++) {
+      r[i] = sbool ();
+    }
+    return r;
+  }
+  
+  private boolean[][] aabool () {
+    final int n = arraySize ();
+    final boolean[][] r = new boolean[n][];
+    for (int i = 0; i < n; i++) {
+      r[i] = abool ();
+    }
+    return r;
+  }
+  
+  private boolean sindicator () {
+    return true;
+  }
+  
+  private boolean[] aindicator () {
+    final int n = arraySize ();
+    final boolean[] r = new boolean[n];
+    for (int i = 0; i < n; i++) {
+      r[i] = sindicator ();
+    }
+    return r;
+  }
+  
+  private boolean[][] aaindicator () {
+    final int n = arraySize ();
+    final boolean[][] r = new boolean[n][];
+    for (int i = 0; i < n; i++) {
+      r[i] = aindicator ();
+    }
+    return r;
+  }
+  
+  private byte sbyte () {
+    return (byte)_random.nextInt ();
+  }
+  
+  private byte[] abyte () {
+    final int n = arraySize ();
+    final byte[] r = new byte[n];
+    for (int i = 0; i < n; i++) {
+      r[i] = sbyte ();
+    }
+    return r;
+  }
+  
+  private byte[][] aabyte () {
+    final int n = arraySize ();
+    final byte[][] r = new byte[n][];
+    for (int i = 0; i < n; i++) {
+      r[i] = abyte ();
+    }
+    return r;
+  }
+  
+  private short sshort () {
+    return (short)_random.nextInt ();
+  }
+  
+  private short[] ashort () {
+    final int n = arraySize ();
+    final short[] r = new short[n];
+    for (int i = 0; i < n; i++) {
+      r[i] = sshort ();
+    }
+    return r;
+  }
+  
+  private short[][] aashort () {
+    final int n = arraySize ();
+    final short[][] r = new short[n][];
+    for (int i = 0; i < n; i++) {
+      r[i] = ashort ();
+    }
+    return r;
+  }
+  
+  private int sint () {
+    return _random.nextInt ();
+  }
+  
+  private int[] aint () {
+    final int n = arraySize ();
+    final int[] r = new int[n];
+    for (int i = 0; i < n; i++) {
+      r[i] = sint ();
+    }
+    return r;
+  }
+  
+  private int[][] aaint () {
+    final int n = arraySize ();
+    final int[][] r = new int[n][];
+    for (int i = 0; i < n; i++) {
+      r[i] = aint ();
+    }
+    return r;
+  }
+  
+  private long slong () {
+    return (long)_random.nextInt ();
+  }
+  
+  private long[] along () {
+    final int n = arraySize ();
+    final long[] r = new long[n];
+    for (int i = 0; i < n; i++) {
+      r[i] = slong ();
+    }
+    return r;
+  }
+  
+  private long[][] aalong () {
+    final int n = arraySize ();
+    final long[][] r = new long[n][];
+    for (int i = 0; i < n; i++) {
+      r[i] = along ();
+    }
+    return r;
+  }
+  
+  private double sdouble () {
+    return _random.nextDouble ();
+  }
+  
+  private double[] adouble () {
+    final int n = arraySize ();
+    final double[] r = new double[n];
+    for (int i = 0; i < n; i++) {
+      r[i] = sdouble ();
+    }
+    return r;
+  }
+  
+  private double[][] aadouble () {
+    final int n = arraySize ();
+    final double[][] r = new double[n][];
+    for (int i = 0; i < n; i++) {
+      r[i] = adouble ();
+    }
+    return r;
+  }
+  
+  private float sfloat () {
+    return _random.nextFloat ();
+  }
+  
+  private float[] afloat () {
+    final int n = arraySize ();
+    final float[] r = new float[n];
+    for (int i = 0; i < n; i++) {
+      r[i] = sfloat ();
+    }
+    return r;
+  }
+  
+  private float[][] aafloat () {
+    final int n = arraySize ();
+    final float[][] r = new float[n][];
+    for (int i = 0; i < n; i++) {
+      r[i] = afloat ();
+    }
+    return r;
+  }
+  
+  private String sstring () {
+    final StringBuilder sb = new StringBuilder ();
+    for (int i = 0; i < 8; i++) {
+      sb.append ('A' + _random.nextInt (26));
+    }
+    return sb.toString ();
+  }
+  
+  private String[] astring () {
+    final int n = arraySize ();
+    final String[] r = new String[n];
+    for (int i = 0; i < n; i++) {
+      r[i] = sstring ();
+    }
+    return r;
+  }
+  
+  private String[][] aastring () {
+    final int n = arraySize ();
+    final String[][] r = new String[n][];
+    for (int i = 0; i < n; i++) {
+      r[i] = astring ();
+    }
+    return r;
+  }
+  
+  private SubMessage ssubmessage () {
+    return new SubMessage (sint (), sstring ());
+  }
+  
+  private SubMessage[] asubmessage () {
+    final int n = arraySize ();
+    final SubMessage[] r = new SubMessage[n];
+    for (int i = 0; i < n; i++) {
+      r[i] = ssubmessage ();
+    }
+    return r;
+  }
+  
+  private SubMessage[][] aasubmessage () {
+    final int n = arraySize ();
+    final SubMessage[][] r = new SubMessage[n][];
+    for (int i = 0; i < n; i++) {
+      r[i] = asubmessage ();
+    }
+    return r;
+  }
+  
+  private CustomEnum scustomenum () {
+    return CustomEnum.fromFudgeEncoding (_random.nextInt (3) + 1);
+  }
+  
+  private CustomEnum[] acustomenum () {
+    final int n = arraySize ();
+    final CustomEnum[] r = new CustomEnum[n];
+    for (int i = 0; i < n; i++) {
+      r[i] = scustomenum ();
+    }
+    return r;
+  }
+  
+  private CustomEnum[][] aacustomenum () {
+    final int n = arraySize ();
+    final CustomEnum[][] r = new CustomEnum[n][];
+    for (int i = 0; i < n; i++) {
+      r[i] = acustomenum();
+    }
+    return r;
+  }
+  
+  private FudgeFieldContainer smessage () {
+    MutableFudgeFieldContainer ffc = _fudgeContext.newMessage ();
+    ffc.add (sstring (), _random.nextInt (256), sstring ());
+    return ffc;
+  }
+  
+  private FudgeFieldContainer[] amessage () {
+    final int n = arraySize ();
+    final FudgeFieldContainer[] r = new FudgeFieldContainer[n];
+    for (int i = 0; i < n; i++) {
+      r[i] = smessage ();
+    }
+    return r;
+  }
+  
+  private FudgeFieldContainer[][] aamessage () {
+    final int n = arraySize ();
+    final FudgeFieldContainer[][] r = new FudgeFieldContainer[n][];
+    for (int i = 0; i < n; i++) {
+      r[i] = amessage ();
+    }
+    return r;
+  }
+  
+  private FudgeDate sdate () {
+    return new FudgeDate (sint ());
+  }
+  
+  private FudgeDate[] adate () {
+    final int n = arraySize ();
+    final FudgeDate[] r = new FudgeDate[n];
+    for (int i = 0; i < n; i++) {
+      r[i] = sdate ();
+    }
+    return r;
+  }
+  
+  private FudgeDate[][] aadate () {
+    final int n = arraySize ();
+    final FudgeDate[][] r = new FudgeDate[n][];
+    for (int i = 0; i < n; i++) {
+      r[i] = adate ();
+    }
+    return r;
+  }
+  
+  private Date sdatetime () {
+    return new Date (slong ());
+  }
+  
+  private Date[] adatetime () {
+    final int n = arraySize ();
+    final Date[] r = new Date[n];
+    for (int i = 0; i < n; i++) {
+      r[i] = sdatetime ();
+    }
+    return r;
+  }
+  
+  private Date[][] aadatetime () {
+    final int n = arraySize ();
+    final Date[][] r = new Date[n][];
+    for (int i = 0; i < n; i++) {
+      r[i] = adatetime ();
+    }
+    return r;
+  }
+  
+  private FudgeTime stime () {
+    return new FudgeTime (DateTimeAccuracy.MILLISECOND, slong ());
+  }
+  
+  private FudgeTime[] atime () {
+    final int n = arraySize ();
+    final FudgeTime[] r = new FudgeTime[n];
+    for (int i = 0; i < n; i++) {
+      r[i] = stime ();
+    }
+    return r;
+  }
+  
+  private FudgeTime[][] aatime () {
+    final int n = arraySize ();
+    final FudgeTime[][] r = new FudgeTime[n][];
+    for (int i = 0; i < n; i++) {
+      r[i] = atime ();
+    }
+    return r;
+  }
+  
+  @Test
+  public void aa_optional () {
+    AATypes_Optional.Builder builder = new AATypes_Optional.Builder ();
+    builder._Bool (aabool ());
+    builder._Byte (aabyte ());
+    builder._Double (aadouble ());
+    builder._Float (aafloat ());
+    builder._Indicator (aaindicator ());
+    builder._Int (aaint ());
+    builder._Long (aalong ());
+    builder._Short (aashort ());
+    builder._String (aastring ());
+    builder._SubMessage (aasubmessage ());
+    builder._CustomEnum (aacustomenum ());
+    builder._Message (aamessage ());
+    builder._Date (aadate ());
+    builder._DateTime (aadatetime ());
+    builder._Time (aatime ());
+    AATypes_Optional in = builder.build ();
+    AATypes_Optional out = AATypes_Optional.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    compareTypes (in, out);
+  }
+  
+  @Test
+  public void aa_required () {
+    AATypes_Required in = new AATypes_Required (aabool (), aabyte (), aadouble (), aafloat (), aaindicator (), aaint (), aalong (), aashort (), aastring (), aasubmessage (), aacustomenum (), aamessage (), aadate (), aadatetime (), aatime ());
+    AATypes_Required out = AATypes_Required.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    compareTypes (in, out);
+  }
+  
+  @Test
+  public void a_optional () {
+    ATypes_Optional.Builder builder = new ATypes_Optional.Builder ();
+    builder._Bool (abool ());
+    builder._Byte (abyte ());
+    builder._Double (adouble ());
+    builder._Float (afloat ());
+    builder._Indicator (aindicator ());
+    builder._Int (aint ());
+    builder._Long (along ());
+    builder._Short (ashort ());
+    builder._String (astring ());
+    builder._SubMessage (asubmessage ());
+    builder._CustomEnum (acustomenum ());
+    builder._Message (amessage ());
+    builder._Date (adate ());
+    builder._DateTime (adatetime ());
+    builder._Time (atime ());
+    ATypes_Optional in = builder.build ();
+    ATypes_Optional out = ATypes_Optional.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    compareTypes (in, out);
+  }
+  
+  @Test
+  public void a_required () {
+    ATypes_Required in = new ATypes_Required (abool (), abyte (), adouble (), afloat (), aindicator (), aint (), along (), ashort (), astring (), asubmessage (), acustomenum (), amessage (), adate (), adatetime (), atime ());
+    ATypes_Required out = ATypes_Required.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    compareTypes (in, out);
+  }
+  
+  @Test
+  public void ra_optional () {
+    RATypes_Optional.Builder builder = new RATypes_Optional.Builder ();
+    builder._Bool (Arrays.asList (aabool ()));
+    builder._Byte (Arrays.asList (aabyte ()));
+    builder._Double (Arrays.asList (aadouble ()));
+    builder._Float (Arrays.asList (aafloat ()));
+    builder._Indicator (Arrays.asList (aaindicator ()));
+    builder._Int (Arrays.asList (aaint ()));
+    builder._Long (Arrays.asList (aalong ()));
+    builder._Short (Arrays.asList (aashort ()));
+    builder._String (Arrays.asList (aastring ()));
+    builder._SubMessage (Arrays.asList (aasubmessage ()));
+    builder._CustomEnum (Arrays.asList (aacustomenum ()));
+    builder._Message (Arrays.asList (aamessage ()));
+    builder._Date (Arrays.asList (aadate ()));
+    builder._DateTime (Arrays.asList (aadatetime ()));
+    builder._Time (Arrays.asList (aatime ()));
+    RATypes_Optional in = builder.build ();
+    RATypes_Optional out = RATypes_Optional.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    compareTypes (in, out);
+  }
+  
+  @Test
+  public void ra_required () {
+    RATypes_Required in = new RATypes_Required (Arrays.asList (aabool ()), Arrays.asList (aabyte ()), Arrays.asList (aadouble ()), Arrays.asList (aafloat ()), Arrays.asList (aaindicator ()), Arrays.asList (aaint ()), Arrays.asList (aalong ()), Arrays.asList (aashort ()), Arrays.asList (aastring ()), Arrays.asList (aasubmessage ()), Arrays.asList (aacustomenum ()), Arrays.asList (aamessage ()), Arrays.asList (aadate ()), Arrays.asList (aadatetime ()), Arrays.asList (aatime ()));
+    RATypes_Required out = RATypes_Required.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    compareTypes (in, out);
+  }
+  
+  @Test
+  public void rs_optional () {
+    RSTypes_Optional.Builder builder = new RSTypes_Optional.Builder ();
+    builder._Bool (Arrays.asList (sbool ()));
+    builder._Byte (Arrays.asList (sbyte ()));
+    builder._Double (Arrays.asList (sdouble ()));
+    builder._Float (Arrays.asList (sfloat ()));
+    builder._Indicator (Arrays.asList (sindicator ()));
+    builder._Int (Arrays.asList (sint ()));
+    builder._Long (Arrays.asList (slong ()));
+    builder._Short (Arrays.asList (sshort ()));
+    builder._String (Arrays.asList (astring ()));
+    builder._SubMessage (Arrays.asList (asubmessage ()));
+    builder._CustomEnum (Arrays.asList (acustomenum ()));
+    builder._Message (Arrays.asList (amessage ()));
+    builder._Date (Arrays.asList (adate ()));
+    builder._DateTime (Arrays.asList (adatetime ()));
+    builder._Time (Arrays.asList (atime ()));
+    RSTypes_Optional in = builder.build ();
+    RSTypes_Optional out = RSTypes_Optional.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    compareTypes (in, out);
+  }
+  
+  @Test
+  public void rs_required () {
+    RSTypes_Required in = new RSTypes_Required (Arrays.asList (sbool ()), Arrays.asList (sbyte ()), Arrays.asList (sdouble ()), Arrays.asList (sfloat ()), Arrays.asList (sindicator ()), Arrays.asList (sint ()), Arrays.asList (slong ()), Arrays.asList (sshort ()), Arrays.asList (astring ()), Arrays.asList (asubmessage ()), Arrays.asList (acustomenum ()), Arrays.asList (amessage ()), Arrays.asList (adate ()), Arrays.asList (adatetime ()), Arrays.asList (atime ()));
+    RSTypes_Required out = RSTypes_Required.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    compareTypes (in, out);
+  }
+  
+  @Test
+  public void s_optional () {
+    STypes_Optional.Builder builder = new STypes_Optional.Builder ();
+    builder._Bool (sbool ());
+    builder._Byte (sbyte ());
+    builder._Double (sdouble ());
+    builder._Float (sfloat ());
+    builder._Indicator (sindicator ());
+    builder._Int (sint ());
+    builder._Long (slong ());
+    builder._Short (sshort ());
+    builder._String (sstring ());
+    builder._SubMessage (ssubmessage ());
+    builder._CustomEnum (scustomenum ());
+    builder._Message (smessage ());
+    builder._Date (sdate ());
+    builder._DateTime (sdatetime ());
+    builder._Time (stime ());
+    STypes_Optional in = builder.build ();
+    STypes_Optional out = STypes_Optional.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    compareTypes (in, out);
+  }
+  
+  @Test
+  public void s_required () {
+    STypes_Required in = new STypes_Required (sbool (), sbyte (), sdouble (), sfloat (), sindicator (), sint (), slong (), sshort (), sstring (), ssubmessage (), scustomenum (), smessage (), sdate (), sdatetime (), stime ());
+    STypes_Required out = STypes_Required.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    compareTypes (in, out);
+  }
+  
+  @Test
+  public void maa_optional () {
+    MutableAATypes_Optional in = new MutableAATypes_Optional ();
+    in.set_Bool (aabool ());
+    in.set_Byte (aabyte ());
+    in.set_Double (aadouble ());
+    in.set_Float (aafloat ());
+    in.set_Indicator (aaindicator ());
+    in.set_Int (aaint ());
+    in.set_Long (aalong ());
+    in.set_Short (aashort ());
+    in.set_String (aastring ());
+    in.set_SubMessage (aasubmessage ());
+    in.set_CustomEnum (aacustomenum ());
+    in.set_Message (aamessage ());
+    in.set_Date (aadate ());
+    in.set_DateTime (aadatetime ());
+    in.set_Time (aatime ());
+    MutableAATypes_Optional out = MutableAATypes_Optional.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    compareTypes (in, out);
+  }
+  
+  @Test
+  public void maa_required () {
+    MutableAATypes_Required in = new MutableAATypes_Required (aabool (), aabyte (), aadouble (), aafloat (), aaindicator (), aaint (), aalong (), aashort (), aastring (), aasubmessage (), aacustomenum (), aamessage (), aadate (), aadatetime (), aatime ());
+    MutableAATypes_Required out = MutableAATypes_Required.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    compareTypes (in, out);
+  }
+  
+  @Test
+  public void ma_optional () {
+    MutableATypes_Optional in = new MutableATypes_Optional ();
+    in.set_Bool (abool ());
+    in.set_Byte (abyte ());
+    in.set_Double (adouble ());
+    in.set_Float (afloat ());
+    in.set_Indicator (aindicator ());
+    in.set_Int (aint ());
+    in.set_Long (along ());
+    in.set_Short (ashort ());
+    in.set_String (astring ());
+    in.set_SubMessage (asubmessage ());
+    in.set_CustomEnum (acustomenum ());
+    in.set_Message (amessage ());
+    in.set_Date (adate ());
+    in.set_DateTime (adatetime ());
+    in.set_Time (atime ());
+    MutableATypes_Optional out = MutableATypes_Optional.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    compareTypes (in, out);
+  }
+  
+  @Test
+  public void ma_required () {
+    MutableATypes_Required in = new MutableATypes_Required (abool (), abyte (), adouble (), afloat (), aindicator (), aint (), along (), ashort (), astring (), asubmessage (), acustomenum (), amessage (), adate (), adatetime (), atime ());
+    MutableATypes_Required out = MutableATypes_Required.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    compareTypes (in, out);
+  }
+  
+  @Test
+  public void mra_optional () {
+    MutableRATypes_Optional in = new MutableRATypes_Optional ();
+    in.set_Bool (Arrays.asList (aabool ()));
+    in.set_Byte (Arrays.asList (aabyte ()));
+    in.set_Double (Arrays.asList (aadouble ()));
+    in.set_Float (Arrays.asList (aafloat ()));
+    in.set_Indicator (Arrays.asList (aaindicator ()));
+    in.set_Int (Arrays.asList (aaint ()));
+    in.set_Long (Arrays.asList (aalong ()));
+    in.set_Short (Arrays.asList (aashort ()));
+    in.set_String (Arrays.asList (aastring ()));
+    in.set_SubMessage (Arrays.asList (aasubmessage ()));
+    in.set_CustomEnum (Arrays.asList (aacustomenum ()));
+    in.set_Message (Arrays.asList (aamessage ()));
+    in.set_Date (Arrays.asList (aadate ()));
+    in.set_DateTime (Arrays.asList (aadatetime ()));
+    in.set_Time (Arrays.asList (aatime ()));
+    MutableRATypes_Optional out = MutableRATypes_Optional.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    compareTypes (in, out);
+  }
+  
+  @Test
+  public void mra_required () {
+    MutableRATypes_Required in = new MutableRATypes_Required (Arrays.asList (aabool ()), Arrays.asList (aabyte ()), Arrays.asList (aadouble ()), Arrays.asList (aafloat ()), Arrays.asList (aaindicator ()), Arrays.asList (aaint ()), Arrays.asList (aalong ()), Arrays.asList (aashort ()), Arrays.asList (aastring ()), Arrays.asList (aasubmessage ()), Arrays.asList (aacustomenum ()), Arrays.asList (aamessage ()), Arrays.asList (aadate ()), Arrays.asList (aadatetime ()), Arrays.asList (aatime ()));
+    MutableRATypes_Required out = MutableRATypes_Required.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    compareTypes (in, out);
+  }
+  
+  @Test
+  public void mrs_optional () {
+    MutableRSTypes_Optional in = new MutableRSTypes_Optional ();
+    in.set_Bool (Arrays.asList (sbool ()));
+    in.set_Byte (Arrays.asList (sbyte ()));
+    in.set_Double (Arrays.asList (sdouble ()));
+    in.set_Float (Arrays.asList (sfloat ()));
+    in.set_Indicator (Arrays.asList (sindicator ()));
+    in.set_Int (Arrays.asList (sint ()));
+    in.set_Long (Arrays.asList (slong ()));
+    in.set_Short (Arrays.asList (sshort ()));
+    in.set_String (Arrays.asList (astring ()));
+    in.set_SubMessage (Arrays.asList (asubmessage ()));
+    in.set_CustomEnum (Arrays.asList (acustomenum ()));
+    in.set_Message (Arrays.asList (amessage ()));
+    in.set_Date (Arrays.asList (adate ()));
+    in.set_DateTime (Arrays.asList (adatetime ()));
+    in.set_Time (Arrays.asList (atime ()));
+    MutableRSTypes_Optional out = MutableRSTypes_Optional.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    compareTypes (in, out);
+  }
+  
+  @Test
+  public void mrs_required () {
+    MutableRSTypes_Required in = new MutableRSTypes_Required (Arrays.asList (sbool ()), Arrays.asList (sbyte ()), Arrays.asList (sdouble ()), Arrays.asList (sfloat ()), Arrays.asList (sindicator ()), Arrays.asList (sint ()), Arrays.asList (slong ()), Arrays.asList (sshort ()), Arrays.asList (astring ()), Arrays.asList (asubmessage ()), Arrays.asList (acustomenum ()), Arrays.asList (amessage ()), Arrays.asList (adate ()), Arrays.asList (adatetime ()), Arrays.asList (atime ()));
+    MutableRSTypes_Required out = MutableRSTypes_Required.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    compareTypes (in, out);
+  }
+  
+  @Test
+  public void ms_optional () {
+    MutableSTypes_Optional in = new MutableSTypes_Optional ();
+    in.set_Bool (sbool ());
+    in.set_Byte (sbyte ());
+    in.set_Double (sdouble ());
+    in.set_Float (sfloat ());
+    in.set_Indicator (sindicator ());
+    in.set_Int (sint ());
+    in.set_Long (slong ());
+    in.set_Short (sshort ());
+    in.set_String (sstring ());
+    in.set_SubMessage (ssubmessage ());
+    in.set_CustomEnum (scustomenum ());
+    in.set_Message (smessage ());
+    in.set_Date (sdate ());
+    in.set_DateTime (sdatetime ());
+    in.set_Time (stime ());
+    MutableSTypes_Optional out = MutableSTypes_Optional.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    compareTypes (in, out);
+  }
+  
+  @Test
+  public void ms_required () {
+    MutableSTypes_Required in = new MutableSTypes_Required (sbool (), sbyte (), sdouble (), sfloat (), sindicator (), sint (), slong (), sshort (), sstring (), ssubmessage (), scustomenum (), smessage (), sdate (), sdatetime (), stime ());
+    MutableSTypes_Required out = MutableSTypes_Required.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    compareTypes (in, out);
+  }
+  
+  // TODO 2010-02-08 Andrew -- speed test ?
+  // TODO 2010-02-08 Andrew -- FixedArray 
+  
+  /*
   @Test
   public void builderDefaultValues () {
     final FudgeContext context = new FudgeContext ();
@@ -329,5 +974,5 @@ public class TypesTest {
       Types.fromFudgeMsg (message);
     }
   }
-  
+  */
 }

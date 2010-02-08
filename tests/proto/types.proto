@@ -14,78 +14,416 @@ namespace org.fudgemsg.proto.tests.types {
     FOURTH;
   }
   
-  message Types {
+  extern message TypesBase;
+  extern message ATypesBase;
+  extern message AATypesBase;
   
-    bool        sBool;
-    byte        sByte;
-    double      sDouble;
-    float       sFloat;
-    indicator   sIndicator;
-    int         sInt;
-    long        sLong;
-    short       sShort;
-    string      sString;
-    SubMessage  sSubMessage;
-    CustomEnum  sCustomEnum;
-    optional message    sMessage;
-
-    bool[]        aBool;
-    byte[]        aByte;
-    double[]      aDouble;
-    float[]       aFloat;
-    indicator[]   aIndicator;
-    int[]         aInt;
-    long[]        aLong;
-    short[]       aShort;
-    string[]      aString;
-    SubMessage[]  aSubMessage;
-    CustomEnum[]  aCustomEnum;
-    optional message[]  aMessage;   
-    
-    repeated bool       rsBool;
-    repeated byte       rsByte;
-    repeated double     rsDouble;
-    repeated float      rsFloat;
-    repeated indicator  rsIndicator;
-    repeated int        rsInt;
-    repeated long       rsLong;
-    repeated short      rsShort;
-    repeated string     rsString;
-    repeated SubMessage rsSubMessage;
-    repeated CustomEnum rsCustomEnum;
-    repeated message    rsMessage;
-
-    repeated bool[]       raBool;
-    repeated byte[]       raByte;
-    repeated double[]     raDouble;
-    repeated float[]      raFloat;
-    repeated indicator[]  raIndicator;
-    repeated int[]        raInt;
-    repeated long[]       raLong;
-    repeated short[]      raShort;
-    repeated string[]     raString;
-    repeated SubMessage[] raSubMessage;
-    repeated CustomEnum[] raCustomEnum;
-    repeated message[]    raMessage;
+  message STypes_Optional {
+    bool        _Bool;
+    byte        _Byte;
+    double      _Double;
+    float       _Float;
+    indicator   _Indicator;
+    int         _Int;
+    long        _Long;
+    short       _Short;
+    string      _String;
+    SubMessage  _SubMessage;
+    CustomEnum  _CustomEnum;
+    optional message _Message;
+    date        _Date;
+    datetime    _DateTime;
+    time        _Time;
+    binding Java { implements "TypesBase"; }
+  }
   
-    bool[][]        aaBool;
-    byte[][]        aaByte;
-    double[][]      aaDouble;
-    float[][]       aaFloat;
-    indicator[][]   aaIndicator;
-    int[][]         aaInt;
-    long[][]        aaLong;
-    short[][]       aaShort;
-    string[][]      aaString;
-    SubMessage[][]  aaSubMessage;
-    CustomEnum[][]  aaCustomEnum;
-    optional message[][]  aaMessage;
-    
+  message ATypes_Optional {
+    bool[]        _Bool;
+    byte[]        _Byte;
+    double[]      _Double;
+    float[]       _Float;
+    indicator[]   _Indicator;
+    int[]         _Int;
+    long[]        _Long;
+    short[]       _Short;
+    string[]      _String;
+    SubMessage[]  _SubMessage;
+    CustomEnum[]  _CustomEnum;
+    optional message[] _Message;
+    date[]        _Date;
+    datetime[]    _DateTime;
+    time[]        _Time;
+    binding Java { implements "ATypesBase"; }
+  }
+  
+  message RSTypes_Optional {   
+    repeated bool       _Bool;
+    repeated byte       _Byte;
+    repeated double     _Double;
+    repeated float      _Float;
+    repeated indicator  _Indicator;
+    repeated int        _Int;
+    repeated long       _Long;
+    repeated short      _Short;
+    repeated string     _String;
+    repeated SubMessage _SubMessage;
+    repeated CustomEnum _CustomEnum;
+    repeated message    _Message;
+    repeated date       _Date;
+    repeated datetime   _DateTime;
+    repeated time       _Time;
+    binding Java { implements "RSTypesBase"; }
+  }
+  
+  message RATypes_Optional {
+    repeated bool[]       _Bool;
+    repeated byte[]       _Byte;
+    repeated double[]     _Double;
+    repeated float[]      _Float;
+    repeated indicator[]  _Indicator;
+    repeated int[]        _Int;
+    repeated long[]       _Long;
+    repeated short[]      _Short;
+    repeated string[]     _String;
+    repeated SubMessage[] _SubMessage;
+    repeated CustomEnum[] _CustomEnum;
+    repeated message[]    _Message;
+    repeated date[]       _Date;
+    repeated datetime[]   _DateTime;
+    repeated time[]       _Time;
+    binding Java { implements "ATypesBase"; }
+  }
+  
+  message AATypes_Optional {
+    bool[][]        _Bool;
+    byte[][]        _Byte;
+    double[][]      _Double;
+    float[][]       _Float;
+    indicator[][]   _Indicator;
+    int[][]         _Int;
+    long[][]        _Long;
+    short[][]       _Short;
+    string[][]      _String;
+    SubMessage[][]  _SubMessage;
+    CustomEnum[][]  _CustomEnum;
+    optional message[][] _Message;
+    date[][]        _Date;
+    datetime[][]    _DateTime;
+    time[][]        _Time;
+    binding Java { implements "AATypesBase"; }
+  }
+  
+  message STypes_Required {
+    required bool        _Bool;
+    required byte        _Byte;
+    required double      _Double;
+    required float       _Float;
+    required indicator   _Indicator;
+    required int         _Int;
+    required long        _Long;
+    required short       _Short;
+    required string      _String;
+    required SubMessage  _SubMessage;
+    required CustomEnum  _CustomEnum;
+    required message     _Message;
+    required date        _Date;
+    required datetime    _DateTime;
+    required time        _Time;
+    binding Java { implements "TypesBase"; }
+  }
+  
+  message ATypes_Required {
+    required bool[]        _Bool;
+    required byte[]        _Byte;
+    required double[]      _Double;
+    required float[]       _Float;
+    required indicator[]   _Indicator;
+    required int[]         _Int;
+    required long[]        _Long;
+    required short[]       _Short;
+    required string[]      _String;
+    required SubMessage[]  _SubMessage;
+    required CustomEnum[]  _CustomEnum;
+    required message[]     _Message;
+    required date[]        _Date;
+    required datetime[]    _DateTime;
+    required time[]        _Time;   
+    binding Java { implements "ATypesBase"; }
+  }
+  
+  message RSTypes_Required {
+    required repeated bool       _Bool;
+    required repeated byte       _Byte;
+    required repeated double     _Double;
+    required repeated float      _Float;
+    required repeated indicator  _Indicator;
+    required repeated int        _Int;
+    required repeated long       _Long;
+    required repeated short      _Short;
+    required repeated string     _String;
+    required repeated SubMessage _SubMessage;
+    required repeated CustomEnum _CustomEnum;
+    required repeated message    _Message;
+    required repeated date       _Date;
+    required repeated datetime   _DateTime;
+    required repeated time       _Time;
+    binding Java { implements "RSTypesBase"; }
+  }
+  
+  message RATypes_Required {
+    required repeated bool[]       _Bool;
+    required repeated byte[]       _Byte;
+    required repeated double[]     _Double;
+    required repeated float[]      _Float;
+    required repeated indicator[]  _Indicator;
+    required repeated int[]        _Int;
+    required repeated long[]       _Long;
+    required repeated short[]      _Short;
+    required repeated string[]     _String;
+    required repeated SubMessage[] _SubMessage;
+    required repeated CustomEnum[] _CustomEnum;
+    required repeated message[]    _Message;
+    required repeated date[]       _Date;
+    required repeated datetime[]   _DateTime;
+    required repeated time[]       _Time;
+    binding Java { implements "ATypesBase"; }
+  }
+  
+  message AATypes_Required {
+    required bool[][]        _Bool;
+    required byte[][]        _Byte;
+    required double[][]      _Double;
+    required float[][]       _Float;
+    required indicator[][]   _Indicator;
+    required int[][]         _Int;
+    required long[][]        _Long;
+    required short[][]       _Short;
+    required string[][]      _String;
+    required SubMessage[][]  _SubMessage;
+    required CustomEnum[][]  _CustomEnum;
+    required message[][]     _Message;
+    required date[][]        _Date;
+    required datetime[][]    _DateTime;
+    required time[][]        _Time;
+    binding Java { implements "AATypesBase"; }
+  }
+  
+  message MutableSTypes_Optional {
+    mutable bool        _Bool;
+    mutable byte        _Byte;
+    mutable double      _Double;
+    mutable float       _Float;
+    mutable indicator   _Indicator;
+    mutable int         _Int;
+    mutable long        _Long;
+    mutable short       _Short;
+    mutable string      _String;
+    mutable SubMessage  _SubMessage;
+    mutable CustomEnum  _CustomEnum;
+    mutable message     _Message;
+    mutable date        _Date;
+    mutable datetime    _DateTime;
+    mutable time        _Time;
+    binding Java { implements "TypesBase"; }
+  }
+  
+  message MutableATypes_Optional {
+    mutable bool[]        _Bool;
+    mutable byte[]        _Byte;
+    mutable double[]      _Double;
+    mutable float[]       _Float;
+    mutable indicator[]   _Indicator;
+    mutable int[]         _Int;
+    mutable long[]        _Long;
+    mutable short[]       _Short;
+    mutable string[]      _String;
+    mutable SubMessage[]  _SubMessage;
+    mutable CustomEnum[]  _CustomEnum;
+    mutable message[]     _Message;
+    mutable date[]        _Date;
+    mutable datetime[]    _DateTime;
+    mutable time[]        _Time;
+    binding Java { implements "ATypesBase"; }
+  }
+  
+  message MutableRSTypes_Optional {   
+    mutable repeated bool       _Bool;
+    mutable repeated byte       _Byte;
+    mutable repeated double     _Double;
+    mutable repeated float      _Float;
+    mutable repeated indicator  _Indicator;
+    mutable repeated int        _Int;
+    mutable repeated long       _Long;
+    mutable repeated short      _Short;
+    mutable repeated string     _String;
+    mutable repeated SubMessage _SubMessage;
+    mutable repeated CustomEnum _CustomEnum;
+    mutable repeated message    _Message;
+    mutable repeated date       _Date;
+    mutable repeated datetime   _DateTime;
+    mutable repeated time       _Time;
+    binding Java { implements "RSTypesBase"; }
+  }
+  
+  message MutableRATypes_Optional {
+    mutable repeated bool[]       _Bool;
+    mutable repeated byte[]       _Byte;
+    mutable repeated double[]     _Double;
+    mutable repeated float[]      _Float;
+    mutable repeated indicator[]  _Indicator;
+    mutable repeated int[]        _Int;
+    mutable repeated long[]       _Long;
+    mutable repeated short[]      _Short;
+    mutable repeated string[]     _String;
+    mutable repeated SubMessage[] _SubMessage;
+    mutable repeated CustomEnum[] _CustomEnum;
+    mutable repeated message[]    _Message;
+    mutable repeated date[]       _Date;
+    mutable repeated datetime[]   _DateTime;
+    mutable repeated time[]       _Time;
+    binding Java { implements "ATypesBase"; }
+  }
+  
+  message MutableAATypes_Optional {
+    mutable bool[][]        _Bool;
+    mutable byte[][]        _Byte;
+    mutable double[][]      _Double;
+    mutable float[][]       _Float;
+    mutable indicator[][]   _Indicator;
+    mutable int[][]         _Int;
+    mutable long[][]        _Long;
+    mutable short[][]       _Short;
+    mutable string[][]      _String;
+    mutable SubMessage[][]  _SubMessage;
+    mutable CustomEnum[][]  _CustomEnum;
+    mutable message[][]     _Message;
+    mutable date[][]        _Date;
+    mutable datetime[][]    _DateTime;
+    mutable time[][]        _Time;
+    binding Java { implements "AATypesBase"; }
+  }
+  
+  message MutableSTypes_Required {
+    mutable required bool        _Bool;
+    mutable required byte        _Byte;
+    mutable required double      _Double;
+    mutable required float       _Float;
+    mutable required indicator   _Indicator;
+    mutable required int         _Int;
+    mutable required long        _Long;
+    mutable required short       _Short;
+    mutable required string      _String;
+    mutable required SubMessage  _SubMessage;
+    mutable required CustomEnum  _CustomEnum;
+    mutable required message     _Message;
+    mutable required date        _Date;
+    mutable required datetime    _DateTime;
+    mutable required time        _Time;
+    binding Java { implements "TypesBase"; }
+  }
+  
+  message MutableATypes_Required {
+    mutable required bool[]        _Bool;
+    mutable required byte[]        _Byte;
+    mutable required double[]      _Double;
+    mutable required float[]       _Float;
+    mutable required indicator[]   _Indicator;
+    mutable required int[]         _Int;
+    mutable required long[]        _Long;
+    mutable required short[]       _Short;
+    mutable required string[]      _String;
+    mutable required SubMessage[]  _SubMessage;
+    mutable required CustomEnum[]  _CustomEnum;
+    mutable required message[]     _Message;
+    mutable required date[]        _Date;
+    mutable required datetime[]    _DateTime;
+    mutable required time[]        _Time;   
+    binding Java { implements "ATypesBase"; }
+  }
+  
+  message MutableRSTypes_Required {
+    mutable required repeated bool       _Bool;
+    mutable required repeated byte       _Byte;
+    mutable required repeated double     _Double;
+    mutable required repeated float      _Float;
+    mutable required repeated indicator  _Indicator;
+    mutable required repeated int        _Int;
+    mutable required repeated long       _Long;
+    mutable required repeated short      _Short;
+    mutable required repeated string     _String;
+    mutable required repeated SubMessage _SubMessage;
+    mutable required repeated CustomEnum _CustomEnum;
+    mutable required repeated message    _Message;
+    mutable required repeated date       _Date;
+    mutable required repeated datetime   _DateTime;
+    mutable required repeated time       _Time;
+    binding Java { implements "RSTypesBase"; }
+  }
+  
+  message MutableRATypes_Required {
+    mutable required repeated bool[]       _Bool;
+    mutable required repeated byte[]       _Byte;
+    mutable required repeated double[]     _Double;
+    mutable required repeated float[]      _Float;
+    mutable required repeated indicator[]  _Indicator;
+    mutable required repeated int[]        _Int;
+    mutable required repeated long[]       _Long;
+    mutable required repeated short[]      _Short;
+    mutable required repeated string[]     _String;
+    mutable required repeated SubMessage[] _SubMessage;
+    mutable required repeated CustomEnum[] _CustomEnum;
+    mutable required repeated message[]    _Message;
+    mutable required repeated date[]       _Date;
+    mutable required repeated datetime[]   _DateTime;
+    mutable required repeated time[]       _Time;
+    binding Java { implements "ATypesBase"; }
+  }
+  
+  message MutableAATypes_Required {
+    mutable required bool[][]        _Bool;
+    mutable required byte[][]        _Byte;
+    mutable required double[][]      _Double;
+    mutable required float[][]       _Float;
+    mutable required indicator[][]   _Indicator;
+    mutable required int[][]         _Int;
+    mutable required long[][]        _Long;
+    mutable required short[][]       _Short;
+    mutable required string[][]      _String;
+    mutable required SubMessage[][]  _SubMessage;
+    mutable required CustomEnum[][]  _CustomEnum;
+    mutable required message[][]     _Message;
+    mutable required date[][]        _Date;
+    mutable required datetime[][]    _DateTime;
+    mutable required time[][]        _Time;
+    binding Java { implements "AATypesBase"; }
+  }
+  
+  message FixedArrays_Optional {
     int[42]         fixedArray1;
     int[42][]       fixedArray2;
     int[][42]       fixedArray3;
     int[42][42]     fixedArray4;
-    
+  }
+
+  message FixedArrays_Required {
+    required int[42]         fixedArray1;
+    required int[42][]       fixedArray2;
+    required int[][42]       fixedArray3;
+    required int[42][42]     fixedArray4;
+  }
+
+  message MutableFixedArrays_Optional {
+    mutable int[42]         fixedArray1;
+    mutable int[42][]       fixedArray2;
+    mutable int[][42]       fixedArray3;
+    mutable int[42][42]     fixedArray4;
+  }
+
+  message MutableFixedArrays_Required {
+    mutable required int[42]         fixedArray1;
+    mutable required int[42][]       fixedArray2;
+    mutable required int[][42]       fixedArray3;
+    mutable required int[42][42]     fixedArray4;
   }
 
 }

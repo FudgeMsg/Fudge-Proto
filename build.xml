@@ -25,11 +25,9 @@
 	<target name="clean-tests-java" description="--> delete the output from Java test scripts"><delete dir="${tests.dir}/out_Java/*" /></target>
 	<target name="clean-tests-proto" description="--> delete the output from .proto test scripts"><delete dir="${tests.dir}/out_proto" /></target>
 
-	<target name="compile-proto-java" depends="tests"
+	<target name="compile-proto-java"
+		depends="tests"
 		description="--> compile the output of the Java code generator">
-		<copy file="${tests.dir}/unit_Java/org/fudgemsg/proto/tests/ExternalEnum.java" todir="${tests.dir}/out_Java/org/fudgemsg/proto/tests" />
-		<copy file="${tests.dir}/unit_Java/org/fudgemsg/proto/tests/ExternalMessage.java" todir="${tests.dir}/out_Java/org/fudgemsg/proto/tests" />
-		<copy file="${tests.dir}/unit_Java/org/fudgemsg/proto/tests/ExternalTaxonomy.java" todir="${tests.dir}/out_Java/org/fudgemsg/proto/tests" />
                 <javac	srcdir="${tests.dir}/out_Java"
                 	destdir="${tests.dir}/out_Java"
                 	classpathref="lib.path.id"

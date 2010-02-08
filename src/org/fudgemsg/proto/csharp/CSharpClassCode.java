@@ -38,7 +38,7 @@ import org.fudgemsg.proto.proto.DocumentedClassCode;
 import org.fudgemsg.proto.proto.HeaderlessClassCode;
 
 /**
- * Code generator for the C# Fudge implementation
+ * Code generator for the C# Fudge implementation. NOT FINISHED.
  * 
  * @author Andrew
  */
@@ -183,7 +183,13 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       case FudgeTypeDictionary.DOUBLE_TYPE_ID :
         return "double";
       case FudgeTypeDictionary.STRING_TYPE_ID :
-        return "string";
+        return "String";
+      case FudgeTypeDictionary.DATE_TYPE_ID :
+        return "FudgeDate";
+      case FudgeTypeDictionary.DATETIME_TYPE_ID :
+        return "DateTime";
+      case FudgeTypeDictionary.TIME_TYPE_ID :
+        return "FudgeTime";
       default :
         throw new IllegalStateException ("type '" + type + "' is not an expected type (fudge field type " + type.getFudgeFieldType () + ")");
       }

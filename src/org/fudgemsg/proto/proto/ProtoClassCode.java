@@ -168,6 +168,12 @@ class ProtoClassCode extends ImplementationlessClassCode {
         return "double";
       case FudgeTypeDictionary.STRING_TYPE_ID:
         return "string";
+      case FudgeTypeDictionary.DATE_TYPE_ID :
+        return "date";
+      case FudgeTypeDictionary.DATETIME_TYPE_ID :
+        return "datetime";
+      case FudgeTypeDictionary.TIME_TYPE_ID :
+        return "time";
       default:
         throw new IllegalStateException("type '" + type
             + "' is not an expected type (fudge field type "

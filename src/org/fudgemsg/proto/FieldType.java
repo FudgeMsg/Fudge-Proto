@@ -297,5 +297,8 @@ public abstract class FieldType {
   public static final FieldType FLOAT_TYPE = new FudgeArrayable (FudgeTypeDictionary.FLOAT_TYPE_ID, "float", FudgeTypeDictionary.FLOAT_ARRAY_TYPE_ID);
   public static final FieldType DOUBLE_TYPE = new FudgeArrayable (FudgeTypeDictionary.DOUBLE_TYPE_ID, "double", FudgeTypeDictionary.DOUBLE_ARRAY_TYPE_ID);
   public static final FieldType STRING_TYPE = new NonFudgeArrayable (FudgeTypeDictionary.STRING_TYPE_ID, "string");
+  public static final FieldType DATE_TYPE = new NonFudgeArrayable (FudgeTypeDictionary.DATE_TYPE_ID, "date");
+  public static final FieldType DATETIME_TYPE = new NonFudgeArrayable (FudgeTypeDictionary.DATETIME_TYPE_ID, "datetime");
+  public static final FieldType TIME_TYPE = new NonFudgeArrayable (FudgeTypeDictionary.TIME_TYPE_ID, "time");
   
 }
