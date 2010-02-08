@@ -15,8 +15,8 @@
 
 package org.fudgemsg.proto.tests;
 
-public class ExternalTaxonomy {
-  
-  // TODO whatever methods we need to pretend to be a taxon
+import org.fudgemsg.taxon.FudgeTaxonomy;
+
+public abstract class ExternalTaxonomy implements FudgeTaxonomy {
   
 }
