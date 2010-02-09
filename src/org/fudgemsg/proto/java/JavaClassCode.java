@@ -18,12 +18,10 @@ package org.fudgemsg.proto.java;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.fudgemsg.FudgeTypeDictionary;
 import org.fudgemsg.proto.CodeGeneratorUtil;
@@ -241,11 +239,11 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     }
   }
   
-  private List<FieldDefinition> getAllMandatoryFields (final MessageDefinition message, List<FieldDefinition> params) {
+  private List<FieldDefinition> getAllFields (final boolean includeOptional, final MessageDefinition message, List<FieldDefinition> params) {
     if (message == null) return params;
-    params = getAllMandatoryFields (message.getExtends (), params);
+    params = getAllFields (includeOptional, message.getExtends (), params);
     for (FieldDefinition field : message.getFieldDefinitions ()) {
-      if (field.isRequired () && (field.getDefaultValue () == null)) {
+      if (includeOptional || (field.isRequired () && (field.getDefaultValue () == null))) {
         if (params == null) params = new LinkedList<FieldDefinition> ();
         params.add (field);
       }
@@ -268,7 +266,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
    */
   private void writePublicConstructor (final IndentWriter writer, final boolean builder, final MessageDefinition message) throws IOException {
     final MessageDefinition superMessage = message.getExtends ();
-    final List<FieldDefinition> superFields = getAllMandatoryFields (superMessage, null);
+    final List<FieldDefinition> superFields = getAllFields (false, superMessage, null);
     final List<FieldDefinition> requiredFields = new LinkedList<FieldDefinition> ();
     final List<FieldDefinition> defaultFields = new LinkedList<FieldDefinition> ();
     for (FieldDefinition field : message.getFieldDefinitions ()) {
@@ -310,6 +308,38 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     for (FieldDefinition field : defaultFields) {
       writer.write (fieldMethodName (field, builder ? null : "set", null) + " (" + getLiteral (field.getDefaultValue ()) + ")");
       endStmt (writer);
+    }
+    endBlock (writer); // constructor
+  }
+  
+  /**
+   * Writes out a constructor which accepts all fields (if not already catered for in the non-builder approach).
+   */
+  private void writeFullPublicConstructor (final IndentWriter writer, final boolean builder, final MessageDefinition message) throws IOException {
+    final List<FieldDefinition> thisFields = message.getFieldDefinitions ();
+    final List<FieldDefinition> superFields = getAllFields (true, message.getExtends (), null);
+    if (!builder) {
+      int totalParamCount = thisFields.size ();
+      if (superFields != null) totalParamCount += superFields.size ();
+      final List<FieldDefinition> requiredFields = getAllFields (false, message, null);
+      int requiredParamCount = 0;
+      if (requiredFields != null) requiredParamCount += requiredFields.size ();
+      if (requiredParamCount == totalParamCount) return;
+    }
+    writer.write ("public " + message.getName () + " (");
+    if (superFields != null) {
+      writer.write (fieldsToList (superFields, true));
+      if (thisFields.size () > 0) writer.write (", ");
+    }
+    writer.write (fieldsToList (thisFields, true));
+    writer.write (')');
+    beginBlock (writer); // constructor
+    if (superFields != null) {
+      writer.write ("super (" + fieldsToList (superFields, false) + ")");
+      endStmt (writer);
+    }
+    for (FieldDefinition field : thisFields) {
+      writeMutatorAssignment (writer, field, localFieldName (field), false, true);
     }
     endBlock (writer); // constructor
   }
@@ -548,7 +578,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         writer.write ("super (builder)");
         endStmt (writer);
       } else {
-        final List<FieldDefinition> fields = getAllMandatoryFields (message, null);
+        final List<FieldDefinition> fields = getAllFields (false, message, null);
         if (fields != null) {
           writer.write ("super (builder._fudgeRoot)");
           endStmt (writer);
@@ -1304,6 +1334,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       writePublicConstructor (writer, false, message);
       writeProtectedFudgeMsgConstructor (writer, false, message);
     }
+    writeFullPublicConstructor (writer, useBuilder, message);
     writeProtectedCloneConstructor (writer, message);
     writeToFudgeMsg (jWriter, message);
     writeFromFudgeMsg (writer, message, useBuilder);

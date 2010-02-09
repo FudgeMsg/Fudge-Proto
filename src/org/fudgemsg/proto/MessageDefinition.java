@@ -16,9 +16,8 @@
 package org.fudgemsg.proto;
 
 import java.util.HashSet;
-import java.util.List;
-import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -84,17 +83,17 @@ public abstract class MessageDefinition extends Definition {
     }
     
     @Override
-    public Collection<FieldDefinition> getFieldDefinitions () {
+    public List<FieldDefinition> getFieldDefinitions () {
       return _innerFields;
     }
     
     @Override
-    public Collection<EnumDefinition> getEnumDefinitions () {
+    public List<EnumDefinition> getEnumDefinitions () {
       return _innerEnums;
     }
     
     @Override
-    public Collection<MessageDefinition> getMessageDefinitions () {
+    public List<MessageDefinition> getMessageDefinitions () {
       return _innerMessages;
     }
     
@@ -143,7 +142,7 @@ public abstract class MessageDefinition extends Definition {
     throw new UnsupportedOperationException ();
   }
   
-  public Collection<FieldDefinition> getFieldDefinitions () {
+  public List<FieldDefinition> getFieldDefinitions () {
     throw new UnsupportedOperationException ();
   }
   
@@ -161,11 +160,11 @@ public abstract class MessageDefinition extends Definition {
     return null;
   }
   
-  public Collection<EnumDefinition> getEnumDefinitions () {
+  public List<EnumDefinition> getEnumDefinitions () {
     throw new UnsupportedOperationException ();
   }
   
-  public Collection<MessageDefinition> getMessageDefinitions () {
+  public List<MessageDefinition> getMessageDefinitions () {
     throw new UnsupportedOperationException ();
   }
   
