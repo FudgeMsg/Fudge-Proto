@@ -80,7 +80,11 @@ public class AntTask extends Task {
   }
   
   public void setFudgeContext (final String fudgeContext) {
-    _fudgeContext = fudgeContext;
+    if ((fudgeContext == null) || fudgeContext.equals ("")) {
+      _fudgeContext = null;
+    } else {
+      _fudgeContext = fudgeContext;
+    }
   }
   
   private void findFiles (final File src, File dest, final String srcExt, final String destExt, final List<String> names) {
