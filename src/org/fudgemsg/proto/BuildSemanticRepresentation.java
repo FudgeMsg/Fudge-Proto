@@ -60,7 +60,7 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
     
     private final Map<Integer,String> _fieldsByOrdinal = new HashMap<Integer,String> ();
     
-    private int _nextAutoOrdinal = 0;
+    private int _nextAutoOrdinal = 1;
     
     private TaxonomyDefinitionBuilder (final Compiler.Context context) {
       _context = context;

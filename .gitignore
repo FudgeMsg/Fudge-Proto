@@ -5,6 +5,7 @@ ivy/
 lib/
 tests/build/
 tests/classes/
+tests/out_ant/
 tests/out_C/
 tests/out_C#/
 tests/out_C++/

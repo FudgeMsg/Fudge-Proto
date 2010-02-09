@@ -15,9 +15,11 @@
 
 package org.fudgemsg.proto;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.Set;
 
 /**
  * Semantic representation of a message.
@@ -215,6 +217,31 @@ public abstract class MessageDefinition extends Definition {
   
   /* package */ void setExternal () {
     _external = true;
+  }
+  
+  private boolean referencesExternal (Set<MessageDefinition> considered) {
+    if (isExternal ()) return true;
+    if (this == MessageDefinition.ANONYMOUS) return false;
+    if (considered == null) considered = new HashSet<MessageDefinition> ();
+    if (considered.contains (this)) return false;
+    considered.add (this);
+    if (getExtends () != null) {
+      if (getExtends ().referencesExternal (considered)) return true;
+    }
+    for (final FieldDefinition field : getFieldDefinitions ()) {
+      if (field.getType () instanceof FieldType.MessageType) {
+        if (((FieldType.MessageType)field.getType ()).getMessageDefinition ().referencesExternal (considered)) return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Returns true if this message is itself external, extends an external message, or has a field
+   * which is an external message.
+   */
+  public boolean referencesExternal () {
+    return referencesExternal (null);
   }
   
 }

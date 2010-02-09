@@ -22,7 +22,14 @@ import org.apache.tools.ant.Task;
 import org.apache.tools.ant.BuildException;
 
 /**
- * An Ant task for generating Java files. Functional rather than elegant. 
+ * An Ant task for generating Java files. The following attributes are supported:
+ * 
+ *   srcdir - source directory (defaults to src), cannot take a path id
+ *   destdir - destination directory (defaults to src), cannot take a path id
+ *   verbose - true for verbose/debugging output, defaults to false
+ *   equals - true to generate equals methods in output, defaults to true
+ *   hashCode - true to generate hashCode methods in output, defaults to true
+ *   toString - true to generate toString methods in output, defaults to false 
  * 
  * @author Andrew
  */
@@ -41,6 +48,8 @@ public class AntTask extends Task {
   private boolean _hashCode = true;
   
   private boolean _toString = false;
+  
+  private String _fudgeContext = null;
   
   public void setSrcdir (final String srcdir) {
     _srcdir = srcdir;
@@ -68,6 +77,10 @@ public class AntTask extends Task {
   
   public void setEquals (final String equals) {
     _equals = equals.equalsIgnoreCase ("true");
+  }
+  
+  public void setFudgeContext (final String fudgeContext) {
+    _fudgeContext = fudgeContext;
   }
   
   private void findFiles (final File src, File dest, final String srcExt, final String destExt, final List<String> names) {
@@ -117,6 +130,7 @@ public class AntTask extends Task {
     if (_equals) args.add ("-Xequals");
     if (_toString) args.add ("-XtoString");
     if (_hashCode) args.add ("-XhashCode");
+    if (_fudgeContext != null) args.add ("-XfudgeContext=" + _fudgeContext);
     if (CommandLine.compile (args.toArray (new String[args.size ()])) > 0) throw new BuildException ("compilation failed"); 
   }
   

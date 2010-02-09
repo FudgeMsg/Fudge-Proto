@@ -16,11 +16,15 @@
 
 package org.fudgemsg.proto.java;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
 import org.fudgemsg.proto.Binding;
+import org.fudgemsg.proto.Compiler;
 import org.fudgemsg.proto.Definition;
+import org.fudgemsg.proto.IndentWriter;
+import org.fudgemsg.proto.MessageDefinition;
 import org.fudgemsg.proto.proto.InnerClassCodeGenerator;
 
 /**
@@ -42,6 +46,10 @@ public class JavaCodeGenerator extends InnerClassCodeGenerator {
      */ 
     DELEGATE ("delegate"),
     /**
+     * Global {@link FudgeContext} to be used in {@code fromFudgeMsg} methods.
+     */
+    FUDGECONTEXT ("fudgeContext"),
+    /**
      * Comma separated list of interfaces to be put on any class definitions.
      */
     IMPLEMENTS ("implements"),
@@ -62,9 +70,38 @@ public class JavaCodeGenerator extends InnerClassCodeGenerator {
       return (data != null) ? data.getValue () : null;
     }
   }
-
+  
+  private String _globalFudgeContext = null;
+  
   public JavaCodeGenerator () {
     super (JavaClassCode.INSTANCE);
+  }
+  
+  protected void setGlobalFudgeContext (final String path) {
+    _globalFudgeContext = path;
+  }
+  
+  protected String getGlobalFudgeContext () {
+    return _globalFudgeContext;
+  }
+  
+  @Override
+  public void writeClassImplementationConstructor (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
+    super.writeClassImplementationConstructor (context, message, writer);
+    // The hack below is something I'm not too keen on
+    if (message.referencesExternal ()) {
+      String globalFudgeContext = ProtoBinding.FUDGECONTEXT.get (message);
+      if (globalFudgeContext == null) {
+        globalFudgeContext = getGlobalFudgeContext ();
+      }
+      if (globalFudgeContext != null) {
+        writer.write ("public static " + message.getName () + " fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg)");
+        beginBlock (writer);
+        writer.write ("return fromFudgeMsg (new org.fudgemsg.mapping.FudgeDeserializationContext (" + globalFudgeContext + ")");
+        endStmt (writer);
+        endBlock (writer);
+      }
+    }
   }
   
   private List<String> methodList (final Definition definition) {
@@ -104,11 +141,21 @@ public class JavaCodeGenerator extends InnerClassCodeGenerator {
     return super.flagGenerateString (definition);
   }
   
+  @Override
   public void setOption (String option) {
     if (option.equals ("equals")) option = "equality";
     if (option.equals ("hashCode")) option = "hash";
     if (option.equals ("toString")) option = "string";
     super.setOption (option);
+  }
+  
+  @Override
+  public void setOption (String option, String value) {
+    if (option.equals ("fudgeContext")) {
+      setGlobalFudgeContext (value);
+      return;
+    }
+    super.setOption (option, value);
   }
    
 }
