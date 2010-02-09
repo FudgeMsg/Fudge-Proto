@@ -443,6 +443,10 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         endStmt (writer);
         endBlock (writer);
       } else {
+        if (includeChecks && isObject (field.getType ())) {
+          writer.write ("if (" + value + " == null) throw new NullPointerException (\"" + value + "' cannot be null\")");
+          endStmt (writer);
+        }
         writer.write (privateFieldName (field) + " = " + value);
         endStmt (writer);
       }
@@ -1090,7 +1094,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   }
   
   private void writeProtectedCloneConstructor (final IndentWriter writer, final MessageDefinition message) throws IOException {
-    writer.write ("protected " + message.getName () + " (final " + message.getName () + " source)");
+    writer.write ((useCopyConstructor (message) ? "public " : "protected ") + message.getName () + " (final " + message.getName () + " source)");
     beginBlock (writer); // constructor
     if (message.getExtends () != null) {
       writer.write ("super (source)");
