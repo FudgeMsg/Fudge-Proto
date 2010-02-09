@@ -97,7 +97,7 @@ public class JavaCodeGenerator extends InnerClassCodeGenerator {
       if (globalFudgeContext != null) {
         writer.write ("public static " + message.getName () + " fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg)");
         beginBlock (writer);
-        writer.write ("return fromFudgeMsg (new org.fudgemsg.mapping.FudgeDeserializationContext (" + globalFudgeContext + ")");
+        writer.write ("return fromFudgeMsg (new org.fudgemsg.mapping.FudgeDeserializationContext (" + globalFudgeContext + "), fudgeMsg)");
         endStmt (writer);
         endBlock (writer);
       }
