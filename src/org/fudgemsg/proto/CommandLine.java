@@ -25,7 +25,7 @@ import java.util.ArrayList;
  * 
  * @author Andrew
  */
-public class CommandLine implements Compiler.WarningListener, Compiler.ErrorListener, SourceFile.Resolver {
+public class CommandLine implements Compiler.WarningListener, Compiler.ErrorListener, SourceResolver {
   
   private static final String MSG_WARN = "Warning";
   private static final String MSG_ERROR = "Error";
@@ -60,7 +60,7 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
     compilerMessage (MSG_ERROR, position, message);
   }
   
-  private File findSource (final File dir, final String[] identifier) throws IOException {
+  private Source findSource (final File dir, final String[] identifier, final boolean compilationTarget) throws IOException {
     final StringBuilder stem = new StringBuilder ();
     for (int i = 0; i < identifier.length; i++) {
       if (i > 0) stem.append (File.separatorChar);
@@ -69,25 +69,18 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
       stem.append (".proto");
       final File f = new File (dir, stem.toString ());
       stem.delete (ext, ext + 6);
-      if (f.exists ()) return f;
+      if (f.exists ()) return new SourceFile (stem.toString (), f, this, compilationTarget);
     }
     return null;
   }
   
   @Override
-  public File findCompilationTargetSource (final String identifier) throws IOException {
+  public Source findSource (final String identifier) throws IOException {
     final String[] identifierAsArray = identifier.split ("\\.");
-    final File f;
-    if ((f = findSource (_sourceDir, identifierAsArray)) != null) return f;
-    return null;
-  }
-  
-  @Override
-  public File findNonCompilationTargetSource (final String identifier) throws IOException {
-    final String[] identifierAsArray = identifier.split ("\\.");
+    Source source;
+    if ((source = findSource (_sourceDir, identifierAsArray, true)) != null) return source;
     for (File dir : _searchDirs) {
-      final File f;
-      if ((f = findSource (dir, identifierAsArray)) != null) return f;
+      if ((source = findSource (dir, identifierAsArray, false)) != null) return source;
     }
     return null;
   }
@@ -153,7 +146,14 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
           }
         }
         if (f.exists ()) {
-          compiler.addSource (new SourceFile (f, cmdLine));
+          String displayName = args[i];
+          if (cmdLine._sourceDir != null) {
+            final String pfx = cmdLine._sourceDir.toString () + File.separatorChar;
+            if (displayName.startsWith (pfx)) {
+              displayName = displayName.substring (pfx.length ());
+            }
+          }
+          compiler.addSource (new SourceFile (displayName, f, cmdLine));
         } else {
           cmdLine.compilerError (null, "source file '" + args[i] + "' doesn't exist");
           return 1;

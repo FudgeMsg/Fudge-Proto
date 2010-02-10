@@ -29,41 +29,28 @@ import java.io.Reader;
  */
 public class SourceFile implements Source {
   
-  public static interface Resolver {
-    
-    /**
-     * Returns a candidate target file to contain the identifier, or null if no logics are available.
-     * The files doesn't have to exist - we will check for that before continuing. 
-     */
-    public File findCompilationTargetSource (final String identifier) throws IOException;
-    
-    /**
-     * Returns a candidate non-target file to contain the identifier, or null if no logics are available.
-     * The files doesn't have to exist - we will check for that before continuing. 
-     */
-    public File findNonCompilationTargetSource (final String identifier) throws IOException;
-    
-  }
+  private final String _displayName;
   
   private final File _file;
   
-  private final Resolver _resolver;
+  private final SourceResolver _resolver;
   
   private final boolean _isCompilationTarget;
   
-  public SourceFile (final File file) {
-    this (file, null, true);
+  public SourceFile (final String displayName, final File file) {
+    this (displayName, file, null, true);
   }
   
-  public SourceFile (final File file, final boolean isCompilationTarget) {
-    this (file, null, isCompilationTarget);
+  public SourceFile (final String displayName, final File file, final boolean isCompilationTarget) {
+    this (displayName, file, null, isCompilationTarget);
   }
   
-  public SourceFile (final File file, final Resolver resolver) {
-    this (file, resolver, true);
+  public SourceFile (final String displayName, final File file, final SourceResolver resolver) {
+    this (displayName, file, resolver, true);
   }
   
-  public SourceFile (final File file, final Resolver resolver, final boolean isCompilationTarget) {
+  public SourceFile (final String displayName, final File file, final SourceResolver resolver, final boolean isCompilationTarget) {
+    _displayName = displayName;
     _file = file;
     _resolver = resolver;
     _isCompilationTarget = isCompilationTarget;
@@ -76,12 +63,16 @@ public class SourceFile implements Source {
   
   @Override
   public Source findSource (final String identifier) throws IOException {
-    if (_resolver == null) return null;
-    File f = _resolver.findCompilationTargetSource (identifier);
-    if ((f != null) && (f.exists ())) return new SourceFile (f, _resolver, true);
-    f = _resolver.findNonCompilationTargetSource (identifier);
-    if ((f != null) && (f.exists ())) return new SourceFile (f, _resolver, false);
-    return null;
+    if (getResolver () == null) return null;
+    return getResolver ().findSource (identifier);
+  }
+  
+  protected File getFile () {
+    return _file;
+  }
+  
+  protected SourceResolver getResolver () {
+    return _resolver;
   }
   
   @Override
@@ -91,7 +82,7 @@ public class SourceFile implements Source {
   
   @Override
   public String toString () {
-    return _file.getPath ();
+    return _displayName;
   }
   
   @Override

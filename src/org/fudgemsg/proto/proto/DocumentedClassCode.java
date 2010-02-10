@@ -41,7 +41,7 @@ public class DocumentedClassCode extends ClassCodeAdapter {
   
   @Override
   public void writeHeaderFileHeader (final Compiler.Context context, final File targetFile, final IndentWriter writer) throws IOException {
-    comment (writer, "automatically created - " + new Date ());
+    comment (writer, "Automatically created - do not modify");
   }
   
   @Override
@@ -51,7 +51,7 @@ public class DocumentedClassCode extends ClassCodeAdapter {
   
   @Override
   public void writeImplementationFileHeader(final Compiler.Context context, final File targetFile, final IndentWriter writer) throws IOException {
-    comment (writer, "automatically created - " + new Date ());
+    comment (writer, "Automatically created - do not modify");
   }
 
   @Override
@@ -60,7 +60,7 @@ public class DocumentedClassCode extends ClassCodeAdapter {
   }
   
   private void createdFrom (final IndentWriter writer, final Definition definition) throws IOException {
-    comment (writer, "created from " + definition.getCodePosition ());
+    comment (writer, "Created from " + definition.getCodePosition ());
   }
   
   @Override

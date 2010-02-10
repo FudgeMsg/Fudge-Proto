@@ -19,22 +19,16 @@ import java.io.IOException;
 import java.io.Reader;
 
 /**
- * Abstract interface of a source file, sufficient to feed the lexing phase and resolve related files. Any
- * subclass must implement an equals method to work properly. 
+ * Abstract interface for locating program source for a given identifier. 
  * 
  * @author Andrew
  */
-public interface Source extends SourceResolver {
+public interface SourceResolver {
   
   /**
-   * Returns a Reader that can deliver the source code to the lexer. The lexer will call close on the reader
-   * when it is done to release any system resources.
+   * Returns a Source object that contains a given definition (e.g. based on filesystem conventions), or null
+   * if there is none available.
    */
-  public Reader openReader () throws IOException;
-  
-  /**
-   * Indicates whether the source is to be used to drive output, or is merely for reference.
-   */
-  public boolean isCompilationTarget ();
-  
+  public Source findSource (final String identifier) throws IOException;
+
 }

@@ -26,7 +26,7 @@ public class CompilerTest {
   @Test
   public void defaultSuccessfulCompilation () {
     final Compiler compiler = new Compiler ();
-    compiler.addSource (new SourceFile (new File ("tests" + File.separatorChar + "proto" + File.separatorChar + "simple.proto")));
+    compiler.addSource (new SourceFile ("simple.proto", new File ("tests" + File.separatorChar + "proto" + File.separatorChar + "simple.proto")));
     compiler.setTargetPath (new File ("tests" + File.separatorChar + "out_default"));
     compiler.compileAll ();
     assertEquals (compiler.getWarningCount (), 0);
@@ -36,7 +36,7 @@ public class CompilerTest {
   @Test(expected=CompilationException.class)
   public void defaultErrorCompilation () {
     final Compiler compiler = new Compiler ();
-    compiler.addSource (new SourceFile (new File ("doesn't exist")));
+    compiler.addSource (new SourceFile ("non-existent", new File ("doesn't exist")));
     compiler.compileAll ();
   }
   
