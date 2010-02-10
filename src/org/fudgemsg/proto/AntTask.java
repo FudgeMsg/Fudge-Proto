@@ -51,6 +51,8 @@ public class AntTask extends Task {
   
   private String _fudgeContext = null;
   
+  private boolean _rebuildAll = false;
+  
   public void setSrcdir (final String srcdir) {
     _srcdir = srcdir;
   }
@@ -79,6 +81,10 @@ public class AntTask extends Task {
     _equals = equals.equalsIgnoreCase ("true");
   }
   
+  public void setRebuildAll (final String rebuildAll) {
+    _rebuildAll = rebuildAll.equalsIgnoreCase ("true");
+  }
+  
   public void setFudgeContext (final String fudgeContext) {
     if ((fudgeContext == null) || fudgeContext.equals ("")) {
       _fudgeContext = null;
@@ -97,11 +103,13 @@ public class AntTask extends Task {
         final int i = name.lastIndexOf ('.');
         if (i >= 0) {
           if (srcExt.equals (name.substring (i))) {
-            if (dest != null) {
-              final File target = new File (dest, name.substring (0, i) + destExt);
-              if (target.exists ()) {
-                if (target.lastModified () > file.lastModified ()) {
-                  continue;
+            if (!_rebuildAll) {
+              if (dest != null) {
+                final File target = new File (dest, name.substring (0, i) + destExt);
+                if (target.exists ()) {
+                  if (target.lastModified () > file.lastModified ()) {
+                    continue;
+                  }
                 }
               }
             }

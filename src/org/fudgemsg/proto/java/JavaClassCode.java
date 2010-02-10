@@ -473,7 +473,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         endStmt (writer);
         endBlock (writer);
       } else {
-        if (includeChecks && isObject (field.getType ())) {
+        if (includeChecks && field.isRequired () && isObject (field.getType ())) {
           writer.write ("if (" + value + " == null) throw new NullPointerException (\"" + value + "' cannot be null\")");
           endStmt (writer);
         }
