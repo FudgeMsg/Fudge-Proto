@@ -18,14 +18,13 @@ package org.fudgemsg.proto.proto;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 
 import org.fudgemsg.proto.Compiler;
+import org.fudgemsg.proto.Definition;
+import org.fudgemsg.proto.EnumDefinition;
 import org.fudgemsg.proto.IndentWriter;
 import org.fudgemsg.proto.MessageDefinition;
-import org.fudgemsg.proto.Definition;
 import org.fudgemsg.proto.TaxonomyDefinition;
-import org.fudgemsg.proto.EnumDefinition;
 
 /**
  * Writes out brief documentation before various nodes. Subclassing this could be used to build a Javadoc / XMLdoc or

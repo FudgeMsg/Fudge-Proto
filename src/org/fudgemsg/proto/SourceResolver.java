@@ -16,7 +16,6 @@
 package org.fudgemsg.proto;
 
 import java.io.IOException;
-import java.io.Reader;
 
 /**
  * Abstract interface for locating program source for a given identifier. 

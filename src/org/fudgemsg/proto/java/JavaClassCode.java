@@ -117,12 +117,21 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     }
     return writer;
   }
-
+  
   @Override
-  public void beginClassImplementationDeclaration(final Compiler.Context context, MessageDefinition message, IndentWriter iWriter) throws IOException {
-    super.beginClassImplementationDeclaration (context, message, iWriter);
+  public void beginClassImplementationDeclaration(final Compiler.Context context, MessageDefinition message, IndentWriter writer) throws IOException {
+    super.beginClassImplementationDeclaration (context, message, writer);
     final MessageDefinition ext = message.getExtends ();
-    beginClass (new JavaWriter (iWriter), message, (ext != null) ? ext.getIdentifier () : null, CLASS_SERIALIZABLE);
+    beginClass (new JavaWriter (writer), message, (ext != null) ? ext.getIdentifier () : null, CLASS_SERIALIZABLE);
+    long serialVersionUID = 1;
+    for (FieldDefinition field : message.getFieldDefinitions ()) {
+      serialVersionUID *= 31;
+      serialVersionUID += field.getName ().hashCode ();
+      serialVersionUID *= 31;
+      serialVersionUID += realTypeString (field, true).hashCode ();
+    }
+    writer.write ("private static final long serialVersionUID = " + serialVersionUID + "l");
+    endStmt (writer);
   }
 
   @Override
@@ -574,12 +583,17 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     beginBlock (writer); // constructor
     final MessageDefinition superMessage = message.getExtends ();
     if (superMessage != null) {
-      if (useBuilderPattern (superMessage)) {
+      if (superMessage.isExternal ()) {
+        // use the copy constructor
+        writer.write ("super (builder._fudgeRoot)");
+        endStmt (writer);
+      } else if (useBuilderPattern (superMessage)) {
         writer.write ("super (builder)");
         endStmt (writer);
       } else {
         final List<FieldDefinition> fields = getAllFields (false, message, null);
         if (fields != null) {
+          // use the copy constructor
           writer.write ("super (builder._fudgeRoot)");
           endStmt (writer);
         }
@@ -944,10 +958,11 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       switch (type.getFudgeFieldType ()) {
       case FudgeTypeDictionary.INDICATOR_TYPE_ID :
         // using a boolean internally, so just set to true to indicate this is in the message
+        String v = fieldData + ".getValue () != null";
         if (appendTo != null) {
-          assignTo = "true";
+          assignTo = v;
         } else {
-          writer.assignment (assignTo, "true");
+          writer.assignment (assignTo, v);
           endStmt (writer);
         }
         break;

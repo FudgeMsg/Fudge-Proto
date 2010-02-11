@@ -22,7 +22,6 @@ import java.util.List;
 
 import org.fudgemsg.FudgeContext;
 import org.fudgemsg.FudgeFieldContainer;
-import org.fudgemsg.FudgeMsg;
 import org.fudgemsg.proto.tests.inheritance.BaseClassA;
 import org.fudgemsg.proto.tests.inheritance.BaseClassB;
 import org.fudgemsg.proto.tests.inheritance.SubClassA;

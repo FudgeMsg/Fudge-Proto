@@ -11,6 +11,7 @@ import java.util.Stack;
 import java.util.List;
 import java.util.ArrayList;
 
+@SuppressWarnings("unused")
 public class ProtoLexer extends Lexer {
     public static final int T__68=68;
     public static final int T__66=66;
