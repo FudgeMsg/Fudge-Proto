@@ -84,7 +84,7 @@ IDENTIFIER : ('a'..'z'|'A'..'Z'|'_')('a'..'z'|'A'..'Z'|'0'..'9'|'_')* ;
 // $ANTLR src "org/fudgemsg/proto/antlr/Proto.g" 111
 INTEGER : ('+'|'-')? '0'..'9'+ ;
 // $ANTLR src "org/fudgemsg/proto/antlr/Proto.g" 112
-FLOAT : ('+'|'-')? ('0'..'9')* '.' ('0'..'9')+ ( ('e'|'E') ('+'|'-')? ('0'..'9')+ )? ;
+FLOAT : ('+'|'-')? ('0'..'9')* '.' ('0'..'9')+ ( ('e'|'E') ('+'|'-')? ('0'..'9')+ )? 'f'? ;
 // $ANTLR src "org/fudgemsg/proto/antlr/Proto.g" 113
 ML_COMMENT : '/*' ( options { greedy = false; } : . )* '*/' { skip (); } ;
 // Note: the lex rule below is NOT correct

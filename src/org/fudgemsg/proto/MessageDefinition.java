@@ -109,6 +109,11 @@ public abstract class MessageDefinition extends Definition {
       return FieldType.AnonMessageType.INSTANCE;
     }
     
+    @Override
+    protected boolean hasExternalMessageReferences (Set<MessageDefinition> considered) {
+      return false;
+    }
+    
   }
   
   private MessageDefinition _baseMessage;
@@ -218,18 +223,17 @@ public abstract class MessageDefinition extends Definition {
     _external = true;
   }
   
-  private boolean referencesExternal (Set<MessageDefinition> considered) {
+  protected boolean hasExternalMessageReferences (Set<MessageDefinition> considered) {
     if (isExternal ()) return true;
-    if (this == MessageDefinition.ANONYMOUS) return false;
     if (considered == null) considered = new HashSet<MessageDefinition> ();
     if (considered.contains (this)) return false;
     considered.add (this);
     if (getExtends () != null) {
-      if (getExtends ().referencesExternal (considered)) return true;
+      if (getExtends ().hasExternalMessageReferences (considered)) return true;
     }
     for (final FieldDefinition field : getFieldDefinitions ()) {
       if (field.getType () instanceof FieldType.MessageType) {
-        if (((FieldType.MessageType)field.getType ()).getMessageDefinition ().referencesExternal (considered)) return true;
+        if (((FieldType.MessageType)field.getType ()).getMessageDefinition ().hasExternalMessageReferences (considered)) return true;
       }
     }
     return false;
@@ -239,8 +243,8 @@ public abstract class MessageDefinition extends Definition {
    * Returns true if this message is itself external, extends an external message, or has a field
    * which is an external message.
    */
-  public boolean referencesExternal () {
-    return referencesExternal (null);
+  public boolean hasExternalMessageReferences () {
+    return hasExternalMessageReferences (null);
   }
   
 }

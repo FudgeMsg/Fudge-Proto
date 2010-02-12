@@ -256,11 +256,34 @@ public class Compiler {
   
   private void addDefinition (final Definition definition) {
     if (definition == null) throw new IllegalArgumentException ("definition cannot be null");
-    final Definition prev = _definitions.put (definition.getIdentifier (), definition);
-    if (prev != null) {
-      error (definition.getCodePosition (), "duplicate definition of identifier '" + definition.getIdentifier () + "'");
-      warning (prev.getCodePosition (), "this was the previously encountered definition of '" + prev.getIdentifier () + "'");
-    }
+    final Definition prev = _definitions.get (definition.getIdentifier ());
+    do {
+      if (prev != null) {
+        if ((prev instanceof MessageDefinition) && (definition instanceof MessageDefinition)) {
+          final MessageDefinition mdOld = (MessageDefinition)prev;
+          final MessageDefinition mdNew = (MessageDefinition)definition;
+          if (mdOld.isExternal ()) {
+            if (mdNew.isExternal ()) {
+              // duplicate external declaration; ignore
+              return;
+            } else {
+              // now have a non-external definition - replace the previous one
+              break;
+            }
+          } else {
+            if (mdNew.isExternal ()) {
+              // already have a non-external declaration; ignore
+              return;
+            } else {
+              // error condition - drop through to alerts below
+            }
+          }
+        }
+        error (definition.getCodePosition (), "duplicate definition of identifier '" + definition.getIdentifier () + "'");
+        warning (prev.getCodePosition (), "this was the previously encountered definition of '" + prev.getIdentifier () + "'");
+      }
+    } while (false);
+    _definitions.put (definition.getIdentifier (), definition);
   }
   
   private Definition getDefinition (final String identifier) {

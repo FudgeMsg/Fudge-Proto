@@ -89,7 +89,7 @@ public class JavaCodeGenerator extends InnerClassCodeGenerator {
   public void writeClassImplementationConstructor (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
     super.writeClassImplementationConstructor (context, message, writer);
     // The hack below is something I'm not too keen on
-    if (message.referencesExternal ()) {
+    if (message.hasExternalMessageReferences ()) {
       String globalFudgeContext = ProtoBinding.FUDGECONTEXT.get (message);
       if (globalFudgeContext == null) {
         globalFudgeContext = getGlobalFudgeContext ();

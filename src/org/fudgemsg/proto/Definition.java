@@ -15,8 +15,9 @@
 
 package org.fudgemsg.proto;
 
-import java.util.Map;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Base class for any 'definition' objects. There are some common behaviours for all such as
@@ -57,6 +58,10 @@ public abstract class Definition {
     return (b != null) ? b : Binding.EMPTY_BINDING;
   }
   
+  public Map<String,Binding> getAllLanguageBindings () {
+    return Collections.unmodifiableMap (_languageBindings);
+  }
+  
   public String getIdentifier () {
     return _identifier;
   }
@@ -83,7 +88,7 @@ public abstract class Definition {
     return _outerDefinition;
   }
   
-  /* package */ boolean isCompilationTarget () {
+  public boolean isCompilationTarget () {
     return _compilationTarget;
   }
   

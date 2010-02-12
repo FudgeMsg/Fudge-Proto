@@ -14,31 +14,28 @@
  * limitations under the License.
  */
 
-package org.fudgemsg.proto.c;
+package org.fudgemsg.proto.proto;
 
 import org.fudgemsg.proto.LiteralValue;
-import org.fudgemsg.proto.proto.LiteralCode;
+import org.fudgemsg.proto.c.CStyleLiteralCode;
 
 /**
  * Implementation of a code generator for C languages that can be reused for others with a similar syntax.
  * 
  * @author Andrew
  */
-public class CLiteralCode extends CStyleLiteralCode {
+public class ProtoLiteralCode extends CStyleLiteralCode {
   
-  public static final LiteralCode INSTANCE = new CLiteralCode ();
+  public static final LiteralCode INSTANCE = new ProtoLiteralCode ();
   
-  private CLiteralCode () {
+  private ProtoLiteralCode () {
     escape ((char)007, "a");
     escape ((char)013, "v");
   }
   
   @Override
   protected String getLiteral (final LiteralValue.EnumValue value) {
-    final StringBuilder sb = new StringBuilder (value.getEnumDefinition ().getIdentifier ().replace ('.', '_'));
-    sb.append ('_');
-    sb.append (value.get ());
-    return sb.toString ();
+    return value.get ();
   }
   
 }

@@ -1,4 +1,4 @@
-// $ANTLR 3.1.1 org/fudgemsg/proto/antlr/Proto.g 2010-02-05 13:51:52
+// $ANTLR 3.1.1 org/fudgemsg/proto/antlr/Proto.g 2010-02-12 15:49:34
 
   package org.fudgemsg.proto.antlr;
   import org.fudgemsg.proto.Compiler;
@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 import org.antlr.runtime.tree.*;
 
-@SuppressWarnings("unused")
 public class ProtoParser extends Parser {
     public static final String[] tokenNames = new String[] {
         "<invalid>", "<EOR>", "<DOWN>", "<UP>", "ARRAY", "BINDING", "DEFAULT", "DIM_FIXED", "DIM_VARIANT", "ENUM", "EXTENDS", "EXTERN", "FIELD", "IMPORT", "MESSAGE", "MUTABLE", "NAMESPACE", "ORDINAL", "REPEATED", "REQUIRED", "ROOT", "T_BOOL", "T_BYTE", "T_DOUBLE", "T_DATE", "T_DATETIME", "T_FLOAT", "T_INDICATOR", "T_INT", "T_LONG", "T_SHORT", "T_STRING", "T_TIME", "TAXONOMY", "USES", "COMMENT", "IDENTIFIER", "INTEGER", "FLOAT", "ML_COMMENT", "ML_STRING", "STRING", "WHITESPACE", "TIME", "'{'", "'}'", "';'", "'='", "'['", "']'", "','", "'optional'", "'boolean'", "'int8'", "'int16'", "'int32'", "'uint32'", "'sint32'", "'fixed32'", "'sfixed32'", "'integer'", "'int64'", "'uint64'", "'sint64'", "'fixed64'", "'sfixed64'", "'float32'", "'float64'", "'.'"
@@ -217,17 +216,17 @@ public class ProtoParser extends Parser {
             {
             root_0 = (ProtoTree)adaptor.nil();
 
-            BINDING2=(Token)match(input,BINDING,FOLLOW_BINDING_in_binding811); 
+            BINDING2=(Token)match(input,BINDING,FOLLOW_BINDING_in_binding814); 
             BINDING2_tree = (ProtoTree)adaptor.create(BINDING2);
             root_0 = (ProtoTree)adaptor.becomeRoot(BINDING2_tree, root_0);
 
-            pushFollow(FOLLOW_binding_anyword_in_binding814);
+            pushFollow(FOLLOW_binding_anyword_in_binding817);
             binding_anyword3=binding_anyword();
 
             state._fsp--;
 
             adaptor.addChild(root_0, binding_anyword3.getTree());
-            char_literal4=(Token)match(input,44,FOLLOW_44_in_binding816); 
+            char_literal4=(Token)match(input,44,FOLLOW_44_in_binding819); 
             // org/fudgemsg/proto/antlr/Proto.g:148:41: ( binding_element )*
             loop1:
             do {
@@ -243,7 +242,7 @@ public class ProtoParser extends Parser {
             	case 1 :
             	    // org/fudgemsg/proto/antlr/Proto.g:148:41: binding_element
             	    {
-            	    pushFollow(FOLLOW_binding_element_in_binding819);
+            	    pushFollow(FOLLOW_binding_element_in_binding822);
             	    binding_element5=binding_element();
 
             	    state._fsp--;
@@ -258,7 +257,7 @@ public class ProtoParser extends Parser {
                 }
             } while (true);
 
-            char_literal6=(Token)match(input,45,FOLLOW_45_in_binding823); 
+            char_literal6=(Token)match(input,45,FOLLOW_45_in_binding826); 
 
             }
 
@@ -322,7 +321,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    pushFollow(FOLLOW_fullidentifier_in_binding_anyword834);
+                    pushFollow(FOLLOW_fullidentifier_in_binding_anyword837);
                     fullidentifier7=fullidentifier();
 
                     state._fsp--;
@@ -336,7 +335,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    STRING8=(Token)match(input,STRING,FOLLOW_STRING_in_binding_anyword839); 
+                    STRING8=(Token)match(input,STRING,FOLLOW_STRING_in_binding_anyword842); 
                     STRING8_tree = (ProtoTree)adaptor.create(STRING8);
                     adaptor.addChild(root_0, STRING8_tree);
 
@@ -388,13 +387,13 @@ public class ProtoParser extends Parser {
             {
             root_0 = (ProtoTree)adaptor.nil();
 
-            pushFollow(FOLLOW_binding_anyword_in_binding_element849);
+            pushFollow(FOLLOW_binding_anyword_in_binding_element852);
             binding_anyword9=binding_anyword();
 
             state._fsp--;
 
             adaptor.addChild(root_0, binding_anyword9.getTree());
-            pushFollow(FOLLOW_binding_text_in_binding_element851);
+            pushFollow(FOLLOW_binding_text_in_binding_element854);
             binding_text10=binding_text();
 
             state._fsp--;
@@ -478,11 +477,11 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    STRING11=(Token)match(input,STRING,FOLLOW_STRING_in_binding_text861); 
+                    STRING11=(Token)match(input,STRING,FOLLOW_STRING_in_binding_text864); 
                     STRING11_tree = (ProtoTree)adaptor.create(STRING11);
                     adaptor.addChild(root_0, STRING11_tree);
 
-                    char_literal12=(Token)match(input,46,FOLLOW_46_in_binding_text863); 
+                    char_literal12=(Token)match(input,46,FOLLOW_46_in_binding_text866); 
 
                     }
                     break;
@@ -491,7 +490,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    ML_STRING13=(Token)match(input,ML_STRING,FOLLOW_ML_STRING_in_binding_text869); 
+                    ML_STRING13=(Token)match(input,ML_STRING,FOLLOW_ML_STRING_in_binding_text872); 
                     ML_STRING13_tree = (ProtoTree)adaptor.create(ML_STRING13);
                     adaptor.addChild(root_0, ML_STRING13_tree);
 
@@ -503,13 +502,13 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    pushFollow(FOLLOW_fullidentifier_in_binding_text874);
+                    pushFollow(FOLLOW_fullidentifier_in_binding_text877);
                     fullidentifier14=fullidentifier();
 
                     state._fsp--;
 
                     adaptor.addChild(root_0, fullidentifier14.getTree());
-                    char_literal15=(Token)match(input,46,FOLLOW_46_in_binding_text876); 
+                    char_literal15=(Token)match(input,46,FOLLOW_46_in_binding_text879); 
 
                     }
                     break;
@@ -560,12 +559,12 @@ public class ProtoParser extends Parser {
             {
             root_0 = (ProtoTree)adaptor.nil();
 
-            DEFAULT16=(Token)match(input,DEFAULT,FOLLOW_DEFAULT_in_constraint_default887); 
+            DEFAULT16=(Token)match(input,DEFAULT,FOLLOW_DEFAULT_in_constraint_default890); 
             DEFAULT16_tree = (ProtoTree)adaptor.create(DEFAULT16);
             root_0 = (ProtoTree)adaptor.becomeRoot(DEFAULT16_tree, root_0);
 
-            char_literal17=(Token)match(input,47,FOLLOW_47_in_constraint_default890); 
-            pushFollow(FOLLOW_literal_in_constraint_default893);
+            char_literal17=(Token)match(input,47,FOLLOW_47_in_constraint_default893); 
+            pushFollow(FOLLOW_literal_in_constraint_default896);
             literal18=literal();
 
             state._fsp--;
@@ -651,13 +650,13 @@ public class ProtoParser extends Parser {
                 case 1 :
                     // org/fudgemsg/proto/antlr/Proto.g:166:4: '[' INTEGER ']'
                     {
-                    char_literal19=(Token)match(input,48,FOLLOW_48_in_dimension903);  
+                    char_literal19=(Token)match(input,48,FOLLOW_48_in_dimension906);  
                     stream_48.add(char_literal19);
 
-                    INTEGER20=(Token)match(input,INTEGER,FOLLOW_INTEGER_in_dimension905);  
+                    INTEGER20=(Token)match(input,INTEGER,FOLLOW_INTEGER_in_dimension908);  
                     stream_INTEGER.add(INTEGER20);
 
-                    char_literal21=(Token)match(input,49,FOLLOW_49_in_dimension907);  
+                    char_literal21=(Token)match(input,49,FOLLOW_49_in_dimension910);  
                     stream_49.add(char_literal21);
 
 
@@ -692,10 +691,10 @@ public class ProtoParser extends Parser {
                 case 2 :
                     // org/fudgemsg/proto/antlr/Proto.g:167:4: '[' ']'
                     {
-                    char_literal22=(Token)match(input,48,FOLLOW_48_in_dimension920);  
+                    char_literal22=(Token)match(input,48,FOLLOW_48_in_dimension923);  
                     stream_48.add(char_literal22);
 
-                    char_literal23=(Token)match(input,49,FOLLOW_49_in_dimension922);  
+                    char_literal23=(Token)match(input,49,FOLLOW_49_in_dimension925);  
                     stream_49.add(char_literal23);
 
 
@@ -791,7 +790,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    pushFollow(FOLLOW_binding_in_enum_element940);
+                    pushFollow(FOLLOW_binding_in_enum_element943);
                     binding24=binding();
 
                     state._fsp--;
@@ -805,7 +804,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    IDENTIFIER25=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_enum_element946); 
+                    IDENTIFIER25=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_enum_element949); 
                     IDENTIFIER25_tree = (ProtoTree)adaptor.create(IDENTIFIER25);
                     root_0 = (ProtoTree)adaptor.becomeRoot(IDENTIFIER25_tree, root_0);
 
@@ -820,7 +819,7 @@ public class ProtoParser extends Parser {
                         case 1 :
                             // org/fudgemsg/proto/antlr/Proto.g:172:17: enum_value
                             {
-                            pushFollow(FOLLOW_enum_value_in_enum_element949);
+                            pushFollow(FOLLOW_enum_value_in_enum_element952);
                             enum_value26=enum_value();
 
                             state._fsp--;
@@ -832,7 +831,7 @@ public class ProtoParser extends Parser {
 
                     }
 
-                    char_literal27=(Token)match(input,46,FOLLOW_46_in_enum_element952); 
+                    char_literal27=(Token)match(input,46,FOLLOW_46_in_enum_element955); 
 
                     }
                     break;
@@ -881,8 +880,8 @@ public class ProtoParser extends Parser {
             {
             root_0 = (ProtoTree)adaptor.nil();
 
-            char_literal28=(Token)match(input,47,FOLLOW_47_in_enum_value964); 
-            INTEGER29=(Token)match(input,INTEGER,FOLLOW_INTEGER_in_enum_value967); 
+            char_literal28=(Token)match(input,47,FOLLOW_47_in_enum_value967); 
+            INTEGER29=(Token)match(input,INTEGER,FOLLOW_INTEGER_in_enum_value970); 
             INTEGER29_tree = (ProtoTree)adaptor.create(INTEGER29);
             adaptor.addChild(root_0, INTEGER29_tree);
 
@@ -930,7 +929,7 @@ public class ProtoParser extends Parser {
             {
             root_0 = (ProtoTree)adaptor.nil();
 
-            pushFollow(FOLLOW_constraint_default_in_field_constraint976);
+            pushFollow(FOLLOW_constraint_default_in_field_constraint979);
             constraint_default30=constraint_default();
 
             state._fsp--;
@@ -988,8 +987,8 @@ public class ProtoParser extends Parser {
             {
             root_0 = (ProtoTree)adaptor.nil();
 
-            char_literal31=(Token)match(input,48,FOLLOW_48_in_field_constraints985); 
-            pushFollow(FOLLOW_field_constraint_in_field_constraints988);
+            char_literal31=(Token)match(input,48,FOLLOW_48_in_field_constraints988); 
+            pushFollow(FOLLOW_field_constraint_in_field_constraints991);
             field_constraint32=field_constraint();
 
             state._fsp--;
@@ -1010,8 +1009,8 @@ public class ProtoParser extends Parser {
             	case 1 :
             	    // org/fudgemsg/proto/antlr/Proto.g:179:44: ',' field_constraint
             	    {
-            	    char_literal33=(Token)match(input,50,FOLLOW_50_in_field_constraints991); 
-            	    pushFollow(FOLLOW_field_constraint_in_field_constraints994);
+            	    char_literal33=(Token)match(input,50,FOLLOW_50_in_field_constraints994); 
+            	    pushFollow(FOLLOW_field_constraint_in_field_constraints997);
             	    field_constraint34=field_constraint();
 
             	    state._fsp--;
@@ -1026,7 +1025,7 @@ public class ProtoParser extends Parser {
                 }
             } while (true);
 
-            char_literal35=(Token)match(input,49,FOLLOW_49_in_field_constraints998); 
+            char_literal35=(Token)match(input,49,FOLLOW_49_in_field_constraints1001); 
 
             }
 
@@ -1073,10 +1072,10 @@ public class ProtoParser extends Parser {
             // org/fudgemsg/proto/antlr/Proto.g:181:15: ( '=' INTEGER -> ^( ORDINAL INTEGER ) )
             // org/fudgemsg/proto/antlr/Proto.g:181:17: '=' INTEGER
             {
-            char_literal36=(Token)match(input,47,FOLLOW_47_in_field_ordinal1008);  
+            char_literal36=(Token)match(input,47,FOLLOW_47_in_field_ordinal1011);  
             stream_47.add(char_literal36);
 
-            INTEGER37=(Token)match(input,INTEGER,FOLLOW_INTEGER_in_field_ordinal1010);  
+            INTEGER37=(Token)match(input,INTEGER,FOLLOW_INTEGER_in_field_ordinal1013);  
             stream_INTEGER.add(INTEGER37);
 
 
@@ -1186,7 +1185,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    MUTABLE38=(Token)match(input,MUTABLE,FOLLOW_MUTABLE_in_field_modifier1029); 
+                    MUTABLE38=(Token)match(input,MUTABLE,FOLLOW_MUTABLE_in_field_modifier1032); 
                     MUTABLE38_tree = (ProtoTree)adaptor.create(MUTABLE38);
                     adaptor.addChild(root_0, MUTABLE38_tree);
 
@@ -1198,7 +1197,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    REQUIRED39=(Token)match(input,REQUIRED,FOLLOW_REQUIRED_in_field_modifier1034); 
+                    REQUIRED39=(Token)match(input,REQUIRED,FOLLOW_REQUIRED_in_field_modifier1037); 
                     REQUIRED39_tree = (ProtoTree)adaptor.create(REQUIRED39);
                     adaptor.addChild(root_0, REQUIRED39_tree);
 
@@ -1210,7 +1209,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    string_literal40=(Token)match(input,51,FOLLOW_51_in_field_modifier1039); 
+                    string_literal40=(Token)match(input,51,FOLLOW_51_in_field_modifier1042); 
 
                     }
                     break;
@@ -1219,7 +1218,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    REPEATED41=(Token)match(input,REPEATED,FOLLOW_REPEATED_in_field_modifier1045); 
+                    REPEATED41=(Token)match(input,REPEATED,FOLLOW_REPEATED_in_field_modifier1048); 
                     REPEATED41_tree = (ProtoTree)adaptor.create(REPEATED41);
                     adaptor.addChild(root_0, REPEATED41_tree);
 
@@ -1270,7 +1269,7 @@ public class ProtoParser extends Parser {
             // org/fudgemsg/proto/antlr/Proto.g:191:17: ( field_basetype ( dimension )+ -> ^( ARRAY field_basetype ( dimension )+ ) )
             // org/fudgemsg/proto/antlr/Proto.g:191:19: field_basetype ( dimension )+
             {
-            pushFollow(FOLLOW_field_basetype_in_field_arraytype1055);
+            pushFollow(FOLLOW_field_basetype_in_field_arraytype1058);
             field_basetype42=field_basetype();
 
             state._fsp--;
@@ -1292,7 +1291,7 @@ public class ProtoParser extends Parser {
             	case 1 :
             	    // org/fudgemsg/proto/antlr/Proto.g:191:34: dimension
             	    {
-            	    pushFollow(FOLLOW_dimension_in_field_arraytype1057);
+            	    pushFollow(FOLLOW_dimension_in_field_arraytype1060);
             	    dimension43=dimension();
 
             	    state._fsp--;
@@ -1314,7 +1313,7 @@ public class ProtoParser extends Parser {
 
 
             // AST REWRITE
-            // elements: field_basetype, dimension
+            // elements: dimension, field_basetype
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -1610,7 +1609,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    T_BOOL44=(Token)match(input,T_BOOL,FOLLOW_T_BOOL_in_field_primtype1079); 
+                    T_BOOL44=(Token)match(input,T_BOOL,FOLLOW_T_BOOL_in_field_primtype1082); 
                     T_BOOL44_tree = (ProtoTree)adaptor.create(T_BOOL44);
                     adaptor.addChild(root_0, T_BOOL44_tree);
 
@@ -1620,7 +1619,7 @@ public class ProtoParser extends Parser {
                 case 2 :
                     // org/fudgemsg/proto/antlr/Proto.g:195:4: 'boolean'
                     {
-                    string_literal45=(Token)match(input,52,FOLLOW_52_in_field_primtype1084);  
+                    string_literal45=(Token)match(input,52,FOLLOW_52_in_field_primtype1087);  
                     stream_52.add(string_literal45);
 
 
@@ -1655,7 +1654,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    T_BYTE46=(Token)match(input,T_BYTE,FOLLOW_T_BYTE_in_field_primtype1095); 
+                    T_BYTE46=(Token)match(input,T_BYTE,FOLLOW_T_BYTE_in_field_primtype1098); 
                     T_BYTE46_tree = (ProtoTree)adaptor.create(T_BYTE46);
                     adaptor.addChild(root_0, T_BYTE46_tree);
 
@@ -1665,7 +1664,7 @@ public class ProtoParser extends Parser {
                 case 4 :
                     // org/fudgemsg/proto/antlr/Proto.g:197:4: 'int8'
                     {
-                    string_literal47=(Token)match(input,53,FOLLOW_53_in_field_primtype1100);  
+                    string_literal47=(Token)match(input,53,FOLLOW_53_in_field_primtype1103);  
                     stream_53.add(string_literal47);
 
 
@@ -1700,7 +1699,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    T_DATE48=(Token)match(input,T_DATE,FOLLOW_T_DATE_in_field_primtype1111); 
+                    T_DATE48=(Token)match(input,T_DATE,FOLLOW_T_DATE_in_field_primtype1114); 
                     T_DATE48_tree = (ProtoTree)adaptor.create(T_DATE48);
                     adaptor.addChild(root_0, T_DATE48_tree);
 
@@ -1712,7 +1711,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    T_DATETIME49=(Token)match(input,T_DATETIME,FOLLOW_T_DATETIME_in_field_primtype1116); 
+                    T_DATETIME49=(Token)match(input,T_DATETIME,FOLLOW_T_DATETIME_in_field_primtype1119); 
                     T_DATETIME49_tree = (ProtoTree)adaptor.create(T_DATETIME49);
                     adaptor.addChild(root_0, T_DATETIME49_tree);
 
@@ -1724,7 +1723,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    T_SHORT50=(Token)match(input,T_SHORT,FOLLOW_T_SHORT_in_field_primtype1121); 
+                    T_SHORT50=(Token)match(input,T_SHORT,FOLLOW_T_SHORT_in_field_primtype1124); 
                     T_SHORT50_tree = (ProtoTree)adaptor.create(T_SHORT50);
                     adaptor.addChild(root_0, T_SHORT50_tree);
 
@@ -1734,7 +1733,7 @@ public class ProtoParser extends Parser {
                 case 8 :
                     // org/fudgemsg/proto/antlr/Proto.g:201:4: 'int16'
                     {
-                    string_literal51=(Token)match(input,54,FOLLOW_54_in_field_primtype1126);  
+                    string_literal51=(Token)match(input,54,FOLLOW_54_in_field_primtype1129);  
                     stream_54.add(string_literal51);
 
 
@@ -1769,7 +1768,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    T_INT52=(Token)match(input,T_INT,FOLLOW_T_INT_in_field_primtype1137); 
+                    T_INT52=(Token)match(input,T_INT,FOLLOW_T_INT_in_field_primtype1140); 
                     T_INT52_tree = (ProtoTree)adaptor.create(T_INT52);
                     adaptor.addChild(root_0, T_INT52_tree);
 
@@ -1779,7 +1778,7 @@ public class ProtoParser extends Parser {
                 case 10 :
                     // org/fudgemsg/proto/antlr/Proto.g:203:4: 'int32'
                     {
-                    string_literal53=(Token)match(input,55,FOLLOW_55_in_field_primtype1142);  
+                    string_literal53=(Token)match(input,55,FOLLOW_55_in_field_primtype1145);  
                     stream_55.add(string_literal53);
 
 
@@ -1812,7 +1811,7 @@ public class ProtoParser extends Parser {
                 case 11 :
                     // org/fudgemsg/proto/antlr/Proto.g:204:4: 'uint32'
                     {
-                    string_literal54=(Token)match(input,56,FOLLOW_56_in_field_primtype1153);  
+                    string_literal54=(Token)match(input,56,FOLLOW_56_in_field_primtype1156);  
                     stream_56.add(string_literal54);
 
 
@@ -1845,7 +1844,7 @@ public class ProtoParser extends Parser {
                 case 12 :
                     // org/fudgemsg/proto/antlr/Proto.g:205:4: 'sint32'
                     {
-                    string_literal55=(Token)match(input,57,FOLLOW_57_in_field_primtype1164);  
+                    string_literal55=(Token)match(input,57,FOLLOW_57_in_field_primtype1167);  
                     stream_57.add(string_literal55);
 
 
@@ -1878,7 +1877,7 @@ public class ProtoParser extends Parser {
                 case 13 :
                     // org/fudgemsg/proto/antlr/Proto.g:206:4: 'fixed32'
                     {
-                    string_literal56=(Token)match(input,58,FOLLOW_58_in_field_primtype1175);  
+                    string_literal56=(Token)match(input,58,FOLLOW_58_in_field_primtype1178);  
                     stream_58.add(string_literal56);
 
 
@@ -1911,7 +1910,7 @@ public class ProtoParser extends Parser {
                 case 14 :
                     // org/fudgemsg/proto/antlr/Proto.g:207:4: 'sfixed32'
                     {
-                    string_literal57=(Token)match(input,59,FOLLOW_59_in_field_primtype1186);  
+                    string_literal57=(Token)match(input,59,FOLLOW_59_in_field_primtype1189);  
                     stream_59.add(string_literal57);
 
 
@@ -1944,7 +1943,7 @@ public class ProtoParser extends Parser {
                 case 15 :
                     // org/fudgemsg/proto/antlr/Proto.g:208:4: 'integer'
                     {
-                    string_literal58=(Token)match(input,60,FOLLOW_60_in_field_primtype1197);  
+                    string_literal58=(Token)match(input,60,FOLLOW_60_in_field_primtype1200);  
                     stream_60.add(string_literal58);
 
 
@@ -1979,7 +1978,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    T_LONG59=(Token)match(input,T_LONG,FOLLOW_T_LONG_in_field_primtype1208); 
+                    T_LONG59=(Token)match(input,T_LONG,FOLLOW_T_LONG_in_field_primtype1211); 
                     T_LONG59_tree = (ProtoTree)adaptor.create(T_LONG59);
                     adaptor.addChild(root_0, T_LONG59_tree);
 
@@ -1989,7 +1988,7 @@ public class ProtoParser extends Parser {
                 case 17 :
                     // org/fudgemsg/proto/antlr/Proto.g:210:4: 'int64'
                     {
-                    string_literal60=(Token)match(input,61,FOLLOW_61_in_field_primtype1213);  
+                    string_literal60=(Token)match(input,61,FOLLOW_61_in_field_primtype1216);  
                     stream_61.add(string_literal60);
 
 
@@ -2022,7 +2021,7 @@ public class ProtoParser extends Parser {
                 case 18 :
                     // org/fudgemsg/proto/antlr/Proto.g:211:4: 'uint64'
                     {
-                    string_literal61=(Token)match(input,62,FOLLOW_62_in_field_primtype1224);  
+                    string_literal61=(Token)match(input,62,FOLLOW_62_in_field_primtype1227);  
                     stream_62.add(string_literal61);
 
 
@@ -2055,7 +2054,7 @@ public class ProtoParser extends Parser {
                 case 19 :
                     // org/fudgemsg/proto/antlr/Proto.g:212:4: 'sint64'
                     {
-                    string_literal62=(Token)match(input,63,FOLLOW_63_in_field_primtype1235);  
+                    string_literal62=(Token)match(input,63,FOLLOW_63_in_field_primtype1238);  
                     stream_63.add(string_literal62);
 
 
@@ -2088,7 +2087,7 @@ public class ProtoParser extends Parser {
                 case 20 :
                     // org/fudgemsg/proto/antlr/Proto.g:213:4: 'fixed64'
                     {
-                    string_literal63=(Token)match(input,64,FOLLOW_64_in_field_primtype1246);  
+                    string_literal63=(Token)match(input,64,FOLLOW_64_in_field_primtype1249);  
                     stream_64.add(string_literal63);
 
 
@@ -2121,7 +2120,7 @@ public class ProtoParser extends Parser {
                 case 21 :
                     // org/fudgemsg/proto/antlr/Proto.g:214:4: 'sfixed64'
                     {
-                    string_literal64=(Token)match(input,65,FOLLOW_65_in_field_primtype1257);  
+                    string_literal64=(Token)match(input,65,FOLLOW_65_in_field_primtype1260);  
                     stream_65.add(string_literal64);
 
 
@@ -2156,7 +2155,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    T_FLOAT65=(Token)match(input,T_FLOAT,FOLLOW_T_FLOAT_in_field_primtype1268); 
+                    T_FLOAT65=(Token)match(input,T_FLOAT,FOLLOW_T_FLOAT_in_field_primtype1271); 
                     T_FLOAT65_tree = (ProtoTree)adaptor.create(T_FLOAT65);
                     adaptor.addChild(root_0, T_FLOAT65_tree);
 
@@ -2166,7 +2165,7 @@ public class ProtoParser extends Parser {
                 case 23 :
                     // org/fudgemsg/proto/antlr/Proto.g:216:4: 'float32'
                     {
-                    string_literal66=(Token)match(input,66,FOLLOW_66_in_field_primtype1273);  
+                    string_literal66=(Token)match(input,66,FOLLOW_66_in_field_primtype1276);  
                     stream_66.add(string_literal66);
 
 
@@ -2201,7 +2200,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    T_DOUBLE67=(Token)match(input,T_DOUBLE,FOLLOW_T_DOUBLE_in_field_primtype1284); 
+                    T_DOUBLE67=(Token)match(input,T_DOUBLE,FOLLOW_T_DOUBLE_in_field_primtype1287); 
                     T_DOUBLE67_tree = (ProtoTree)adaptor.create(T_DOUBLE67);
                     adaptor.addChild(root_0, T_DOUBLE67_tree);
 
@@ -2211,7 +2210,7 @@ public class ProtoParser extends Parser {
                 case 25 :
                     // org/fudgemsg/proto/antlr/Proto.g:218:4: 'float64'
                     {
-                    string_literal68=(Token)match(input,67,FOLLOW_67_in_field_primtype1289);  
+                    string_literal68=(Token)match(input,67,FOLLOW_67_in_field_primtype1292);  
                     stream_67.add(string_literal68);
 
 
@@ -2246,7 +2245,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    T_INDICATOR69=(Token)match(input,T_INDICATOR,FOLLOW_T_INDICATOR_in_field_primtype1300); 
+                    T_INDICATOR69=(Token)match(input,T_INDICATOR,FOLLOW_T_INDICATOR_in_field_primtype1303); 
                     T_INDICATOR69_tree = (ProtoTree)adaptor.create(T_INDICATOR69);
                     adaptor.addChild(root_0, T_INDICATOR69_tree);
 
@@ -2258,7 +2257,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    T_STRING70=(Token)match(input,T_STRING,FOLLOW_T_STRING_in_field_primtype1305); 
+                    T_STRING70=(Token)match(input,T_STRING,FOLLOW_T_STRING_in_field_primtype1308); 
                     T_STRING70_tree = (ProtoTree)adaptor.create(T_STRING70);
                     adaptor.addChild(root_0, T_STRING70_tree);
 
@@ -2270,7 +2269,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    T_TIME71=(Token)match(input,T_TIME,FOLLOW_T_TIME_in_field_primtype1310); 
+                    T_TIME71=(Token)match(input,T_TIME,FOLLOW_T_TIME_in_field_primtype1313); 
                     T_TIME71_tree = (ProtoTree)adaptor.create(T_TIME71);
                     adaptor.addChild(root_0, T_TIME71_tree);
 
@@ -2339,7 +2338,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    pushFollow(FOLLOW_field_primtype_in_field_basetype1321);
+                    pushFollow(FOLLOW_field_primtype_in_field_basetype1324);
                     field_primtype72=field_primtype();
 
                     state._fsp--;
@@ -2353,7 +2352,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    pushFollow(FOLLOW_fullidentifier_in_field_basetype1326);
+                    pushFollow(FOLLOW_fullidentifier_in_field_basetype1329);
                     fullidentifier73=fullidentifier();
 
                     state._fsp--;
@@ -2411,7 +2410,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    pushFollow(FOLLOW_field_basetype_in_field_type1337);
+                    pushFollow(FOLLOW_field_basetype_in_field_type1340);
                     field_basetype74=field_basetype();
 
                     state._fsp--;
@@ -2425,7 +2424,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    pushFollow(FOLLOW_field_arraytype_in_field_type1342);
+                    pushFollow(FOLLOW_field_arraytype_in_field_type1345);
                     field_arraytype75=field_arraytype();
 
                     state._fsp--;
@@ -2483,7 +2482,7 @@ public class ProtoParser extends Parser {
             {
             root_0 = (ProtoTree)adaptor.nil();
 
-            IDENTIFIER76=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_fullidentifier1352); 
+            IDENTIFIER76=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_fullidentifier1355); 
             IDENTIFIER76_tree = (ProtoTree)adaptor.create(IDENTIFIER76);
             root_0 = (ProtoTree)adaptor.becomeRoot(IDENTIFIER76_tree, root_0);
 
@@ -2502,7 +2501,7 @@ public class ProtoParser extends Parser {
             	case 1 :
             	    // org/fudgemsg/proto/antlr/Proto.g:234:31: '.' ( IDENTIFIER | anyword )
             	    {
-            	    char_literal77=(Token)match(input,68,FOLLOW_68_in_fullidentifier1356); 
+            	    char_literal77=(Token)match(input,68,FOLLOW_68_in_fullidentifier1359); 
             	    // org/fudgemsg/proto/antlr/Proto.g:234:36: ( IDENTIFIER | anyword )
             	    int alt13=2;
             	    int LA13_0 = input.LA(1);
@@ -2523,7 +2522,7 @@ public class ProtoParser extends Parser {
             	        case 1 :
             	            // org/fudgemsg/proto/antlr/Proto.g:234:37: IDENTIFIER
             	            {
-            	            IDENTIFIER78=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_fullidentifier1360); 
+            	            IDENTIFIER78=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_fullidentifier1363); 
             	            IDENTIFIER78_tree = (ProtoTree)adaptor.create(IDENTIFIER78);
             	            adaptor.addChild(root_0, IDENTIFIER78_tree);
 
@@ -2533,7 +2532,7 @@ public class ProtoParser extends Parser {
             	        case 2 :
             	            // org/fudgemsg/proto/antlr/Proto.g:234:50: anyword
             	            {
-            	            pushFollow(FOLLOW_anyword_in_fullidentifier1364);
+            	            pushFollow(FOLLOW_anyword_in_fullidentifier1367);
             	            anyword79=anyword();
 
             	            state._fsp--;
@@ -2665,11 +2664,11 @@ public class ProtoParser extends Parser {
             {
             root_0 = (ProtoTree)adaptor.nil();
 
-            MESSAGE81=(Token)match(input,MESSAGE,FOLLOW_MESSAGE_in_message1402); 
+            MESSAGE81=(Token)match(input,MESSAGE,FOLLOW_MESSAGE_in_message1405); 
             MESSAGE81_tree = (ProtoTree)adaptor.create(MESSAGE81);
             root_0 = (ProtoTree)adaptor.becomeRoot(MESSAGE81_tree, root_0);
 
-            IDENTIFIER82=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_message1405); 
+            IDENTIFIER82=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_message1408); 
             IDENTIFIER82_tree = (ProtoTree)adaptor.create(IDENTIFIER82);
             adaptor.addChild(root_0, IDENTIFIER82_tree);
 
@@ -2684,7 +2683,7 @@ public class ProtoParser extends Parser {
                 case 1 :
                     // org/fudgemsg/proto/antlr/Proto.g:243:31: message_uses
                     {
-                    pushFollow(FOLLOW_message_uses_in_message1407);
+                    pushFollow(FOLLOW_message_uses_in_message1410);
                     message_uses83=message_uses();
 
                     state._fsp--;
@@ -2707,7 +2706,7 @@ public class ProtoParser extends Parser {
                 case 1 :
                     // org/fudgemsg/proto/antlr/Proto.g:243:45: message_extends
                     {
-                    pushFollow(FOLLOW_message_extends_in_message1410);
+                    pushFollow(FOLLOW_message_extends_in_message1413);
                     message_extends84=message_extends();
 
                     state._fsp--;
@@ -2719,7 +2718,7 @@ public class ProtoParser extends Parser {
 
             }
 
-            char_literal85=(Token)match(input,44,FOLLOW_44_in_message1413); 
+            char_literal85=(Token)match(input,44,FOLLOW_44_in_message1416); 
             // org/fudgemsg/proto/antlr/Proto.g:243:67: ( message_element )*
             loop17:
             do {
@@ -2735,7 +2734,7 @@ public class ProtoParser extends Parser {
             	case 1 :
             	    // org/fudgemsg/proto/antlr/Proto.g:243:67: message_element
             	    {
-            	    pushFollow(FOLLOW_message_element_in_message1416);
+            	    pushFollow(FOLLOW_message_element_in_message1419);
             	    message_element86=message_element();
 
             	    state._fsp--;
@@ -2750,7 +2749,7 @@ public class ProtoParser extends Parser {
                 }
             } while (true);
 
-            char_literal87=(Token)match(input,45,FOLLOW_45_in_message1419); 
+            char_literal87=(Token)match(input,45,FOLLOW_45_in_message1422); 
 
             }
 
@@ -2864,7 +2863,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    pushFollow(FOLLOW_message_enum_in_message_element1430);
+                    pushFollow(FOLLOW_message_enum_in_message_element1433);
                     message_enum88=message_enum();
 
                     state._fsp--;
@@ -2878,7 +2877,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    pushFollow(FOLLOW_message_field_in_message_element1435);
+                    pushFollow(FOLLOW_message_field_in_message_element1438);
                     message_field89=message_field();
 
                     state._fsp--;
@@ -2892,7 +2891,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    pushFollow(FOLLOW_message_submsg_in_message_element1440);
+                    pushFollow(FOLLOW_message_submsg_in_message_element1443);
                     message_submsg90=message_submsg();
 
                     state._fsp--;
@@ -2906,7 +2905,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    pushFollow(FOLLOW_binding_in_message_element1445);
+                    pushFollow(FOLLOW_binding_in_message_element1448);
                     binding91=binding();
 
                     state._fsp--;
@@ -2966,15 +2965,15 @@ public class ProtoParser extends Parser {
             {
             root_0 = (ProtoTree)adaptor.nil();
 
-            ENUM92=(Token)match(input,ENUM,FOLLOW_ENUM_in_message_enum1455); 
+            ENUM92=(Token)match(input,ENUM,FOLLOW_ENUM_in_message_enum1458); 
             ENUM92_tree = (ProtoTree)adaptor.create(ENUM92);
             root_0 = (ProtoTree)adaptor.becomeRoot(ENUM92_tree, root_0);
 
-            IDENTIFIER93=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_message_enum1458); 
+            IDENTIFIER93=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_message_enum1461); 
             IDENTIFIER93_tree = (ProtoTree)adaptor.create(IDENTIFIER93);
             adaptor.addChild(root_0, IDENTIFIER93_tree);
 
-            char_literal94=(Token)match(input,44,FOLLOW_44_in_message_enum1460); 
+            char_literal94=(Token)match(input,44,FOLLOW_44_in_message_enum1463); 
             // org/fudgemsg/proto/antlr/Proto.g:252:38: ( enum_element )*
             loop19:
             do {
@@ -2990,7 +2989,7 @@ public class ProtoParser extends Parser {
             	case 1 :
             	    // org/fudgemsg/proto/antlr/Proto.g:252:38: enum_element
             	    {
-            	    pushFollow(FOLLOW_enum_element_in_message_enum1463);
+            	    pushFollow(FOLLOW_enum_element_in_message_enum1466);
             	    enum_element95=enum_element();
 
             	    state._fsp--;
@@ -3005,7 +3004,7 @@ public class ProtoParser extends Parser {
                 }
             } while (true);
 
-            char_literal96=(Token)match(input,45,FOLLOW_45_in_message_enum1466); 
+            char_literal96=(Token)match(input,45,FOLLOW_45_in_message_enum1469); 
 
             }
 
@@ -3110,7 +3109,7 @@ public class ProtoParser extends Parser {
                     	case 1 :
                     	    // org/fudgemsg/proto/antlr/Proto.g:255:5: field_modifier
                     	    {
-                    	    pushFollow(FOLLOW_field_modifier_in_message_field1478);
+                    	    pushFollow(FOLLOW_field_modifier_in_message_field1481);
                     	    field_modifier97=field_modifier();
 
                     	    state._fsp--;
@@ -3125,13 +3124,13 @@ public class ProtoParser extends Parser {
                         }
                     } while (true);
 
-                    pushFollow(FOLLOW_field_type_in_message_field1481);
+                    pushFollow(FOLLOW_field_type_in_message_field1484);
                     field_type98=field_type();
 
                     state._fsp--;
 
                     stream_field_type.add(field_type98.getTree());
-                    IDENTIFIER99=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_message_field1483);  
+                    IDENTIFIER99=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_message_field1486);  
                     stream_IDENTIFIER.add(IDENTIFIER99);
 
                     // org/fudgemsg/proto/antlr/Proto.g:255:43: ( field_ordinal )?
@@ -3145,7 +3144,7 @@ public class ProtoParser extends Parser {
                         case 1 :
                             // org/fudgemsg/proto/antlr/Proto.g:255:43: field_ordinal
                             {
-                            pushFollow(FOLLOW_field_ordinal_in_message_field1485);
+                            pushFollow(FOLLOW_field_ordinal_in_message_field1488);
                             field_ordinal100=field_ordinal();
 
                             state._fsp--;
@@ -3168,7 +3167,7 @@ public class ProtoParser extends Parser {
                         case 1 :
                             // org/fudgemsg/proto/antlr/Proto.g:255:58: field_constraints
                             {
-                            pushFollow(FOLLOW_field_constraints_in_message_field1488);
+                            pushFollow(FOLLOW_field_constraints_in_message_field1491);
                             field_constraints101=field_constraints();
 
                             state._fsp--;
@@ -3180,13 +3179,13 @@ public class ProtoParser extends Parser {
 
                     }
 
-                    char_literal102=(Token)match(input,46,FOLLOW_46_in_message_field1491);  
+                    char_literal102=(Token)match(input,46,FOLLOW_46_in_message_field1494);  
                     stream_46.add(char_literal102);
 
 
 
                     // AST REWRITE
-                    // elements: field_ordinal, field_modifier, IDENTIFIER, field_constraints, field_type
+                    // elements: field_modifier, IDENTIFIER, field_constraints, field_type, field_ordinal
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -3250,7 +3249,7 @@ public class ProtoParser extends Parser {
                     	case 1 :
                     	    // org/fudgemsg/proto/antlr/Proto.g:256:5: field_modifier
                     	    {
-                    	    pushFollow(FOLLOW_field_modifier_in_message_field1516);
+                    	    pushFollow(FOLLOW_field_modifier_in_message_field1519);
                     	    field_modifier103=field_modifier();
 
                     	    state._fsp--;
@@ -3269,10 +3268,10 @@ public class ProtoParser extends Parser {
                         cnt23++;
                     } while (true);
 
-                    MESSAGE104=(Token)match(input,MESSAGE,FOLLOW_MESSAGE_in_message_field1519);  
+                    MESSAGE104=(Token)match(input,MESSAGE,FOLLOW_MESSAGE_in_message_field1522);  
                     stream_MESSAGE.add(MESSAGE104);
 
-                    IDENTIFIER105=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_message_field1521);  
+                    IDENTIFIER105=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_message_field1524);  
                     stream_IDENTIFIER.add(IDENTIFIER105);
 
                     // org/fudgemsg/proto/antlr/Proto.g:256:40: ( field_ordinal )?
@@ -3286,7 +3285,7 @@ public class ProtoParser extends Parser {
                         case 1 :
                             // org/fudgemsg/proto/antlr/Proto.g:256:40: field_ordinal
                             {
-                            pushFollow(FOLLOW_field_ordinal_in_message_field1523);
+                            pushFollow(FOLLOW_field_ordinal_in_message_field1526);
                             field_ordinal106=field_ordinal();
 
                             state._fsp--;
@@ -3309,7 +3308,7 @@ public class ProtoParser extends Parser {
                         case 1 :
                             // org/fudgemsg/proto/antlr/Proto.g:256:55: field_constraints
                             {
-                            pushFollow(FOLLOW_field_constraints_in_message_field1526);
+                            pushFollow(FOLLOW_field_constraints_in_message_field1529);
                             field_constraints107=field_constraints();
 
                             state._fsp--;
@@ -3321,13 +3320,13 @@ public class ProtoParser extends Parser {
 
                     }
 
-                    char_literal108=(Token)match(input,46,FOLLOW_46_in_message_field1529);  
+                    char_literal108=(Token)match(input,46,FOLLOW_46_in_message_field1532);  
                     stream_46.add(char_literal108);
 
 
 
                     // AST REWRITE
-                    // elements: MESSAGE, field_constraints, IDENTIFIER, field_ordinal, field_modifier
+                    // elements: field_ordinal, field_constraints, MESSAGE, field_modifier, IDENTIFIER
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -3391,7 +3390,7 @@ public class ProtoParser extends Parser {
                     	case 1 :
                     	    // org/fudgemsg/proto/antlr/Proto.g:257:5: field_modifier
                     	    {
-                    	    pushFollow(FOLLOW_field_modifier_in_message_field1554);
+                    	    pushFollow(FOLLOW_field_modifier_in_message_field1557);
                     	    field_modifier109=field_modifier();
 
                     	    state._fsp--;
@@ -3410,7 +3409,7 @@ public class ProtoParser extends Parser {
                         cnt26++;
                     } while (true);
 
-                    MESSAGE110=(Token)match(input,MESSAGE,FOLLOW_MESSAGE_in_message_field1557);  
+                    MESSAGE110=(Token)match(input,MESSAGE,FOLLOW_MESSAGE_in_message_field1560);  
                     stream_MESSAGE.add(MESSAGE110);
 
                     // org/fudgemsg/proto/antlr/Proto.g:257:29: ( dimension )+
@@ -3429,7 +3428,7 @@ public class ProtoParser extends Parser {
                     	case 1 :
                     	    // org/fudgemsg/proto/antlr/Proto.g:257:29: dimension
                     	    {
-                    	    pushFollow(FOLLOW_dimension_in_message_field1559);
+                    	    pushFollow(FOLLOW_dimension_in_message_field1562);
                     	    dimension111=dimension();
 
                     	    state._fsp--;
@@ -3448,7 +3447,7 @@ public class ProtoParser extends Parser {
                         cnt27++;
                     } while (true);
 
-                    IDENTIFIER112=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_message_field1562);  
+                    IDENTIFIER112=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_message_field1565);  
                     stream_IDENTIFIER.add(IDENTIFIER112);
 
                     // org/fudgemsg/proto/antlr/Proto.g:257:51: ( field_ordinal )?
@@ -3462,7 +3461,7 @@ public class ProtoParser extends Parser {
                         case 1 :
                             // org/fudgemsg/proto/antlr/Proto.g:257:51: field_ordinal
                             {
-                            pushFollow(FOLLOW_field_ordinal_in_message_field1564);
+                            pushFollow(FOLLOW_field_ordinal_in_message_field1567);
                             field_ordinal113=field_ordinal();
 
                             state._fsp--;
@@ -3485,7 +3484,7 @@ public class ProtoParser extends Parser {
                         case 1 :
                             // org/fudgemsg/proto/antlr/Proto.g:257:66: field_constraints
                             {
-                            pushFollow(FOLLOW_field_constraints_in_message_field1567);
+                            pushFollow(FOLLOW_field_constraints_in_message_field1570);
                             field_constraints114=field_constraints();
 
                             state._fsp--;
@@ -3497,13 +3496,13 @@ public class ProtoParser extends Parser {
 
                     }
 
-                    char_literal115=(Token)match(input,46,FOLLOW_46_in_message_field1570);  
+                    char_literal115=(Token)match(input,46,FOLLOW_46_in_message_field1573);  
                     stream_46.add(char_literal115);
 
 
 
                     // AST REWRITE
-                    // elements: field_ordinal, MESSAGE, field_constraints, dimension, field_modifier, IDENTIFIER
+                    // elements: field_modifier, field_ordinal, field_constraints, MESSAGE, IDENTIFIER, dimension
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -3615,15 +3614,15 @@ public class ProtoParser extends Parser {
             {
             root_0 = (ProtoTree)adaptor.nil();
 
-            MESSAGE116=(Token)match(input,MESSAGE,FOLLOW_MESSAGE_in_message_submsg1607); 
+            MESSAGE116=(Token)match(input,MESSAGE,FOLLOW_MESSAGE_in_message_submsg1610); 
             MESSAGE116_tree = (ProtoTree)adaptor.create(MESSAGE116);
             root_0 = (ProtoTree)adaptor.becomeRoot(MESSAGE116_tree, root_0);
 
-            IDENTIFIER117=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_message_submsg1610); 
+            IDENTIFIER117=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_message_submsg1613); 
             IDENTIFIER117_tree = (ProtoTree)adaptor.create(IDENTIFIER117);
             adaptor.addChild(root_0, IDENTIFIER117_tree);
 
-            char_literal118=(Token)match(input,44,FOLLOW_44_in_message_submsg1612); 
+            char_literal118=(Token)match(input,44,FOLLOW_44_in_message_submsg1615); 
             // org/fudgemsg/proto/antlr/Proto.g:260:43: ( message_element )*
             loop31:
             do {
@@ -3639,7 +3638,7 @@ public class ProtoParser extends Parser {
             	case 1 :
             	    // org/fudgemsg/proto/antlr/Proto.g:260:43: message_element
             	    {
-            	    pushFollow(FOLLOW_message_element_in_message_submsg1615);
+            	    pushFollow(FOLLOW_message_element_in_message_submsg1618);
             	    message_element119=message_element();
 
             	    state._fsp--;
@@ -3654,7 +3653,7 @@ public class ProtoParser extends Parser {
                 }
             } while (true);
 
-            char_literal120=(Token)match(input,45,FOLLOW_45_in_message_submsg1618); 
+            char_literal120=(Token)match(input,45,FOLLOW_45_in_message_submsg1621); 
 
             }
 
@@ -3705,11 +3704,11 @@ public class ProtoParser extends Parser {
             {
             root_0 = (ProtoTree)adaptor.nil();
 
-            USES121=(Token)match(input,USES,FOLLOW_USES_in_message_uses1629); 
+            USES121=(Token)match(input,USES,FOLLOW_USES_in_message_uses1632); 
             USES121_tree = (ProtoTree)adaptor.create(USES121);
             root_0 = (ProtoTree)adaptor.becomeRoot(USES121_tree, root_0);
 
-            pushFollow(FOLLOW_fullidentifier_in_message_uses1632);
+            pushFollow(FOLLOW_fullidentifier_in_message_uses1635);
             fullidentifier122=fullidentifier();
 
             state._fsp--;
@@ -3730,8 +3729,8 @@ public class ProtoParser extends Parser {
             	case 1 :
             	    // org/fudgemsg/proto/antlr/Proto.g:263:38: ',' fullidentifier
             	    {
-            	    char_literal123=(Token)match(input,50,FOLLOW_50_in_message_uses1635); 
-            	    pushFollow(FOLLOW_fullidentifier_in_message_uses1638);
+            	    char_literal123=(Token)match(input,50,FOLLOW_50_in_message_uses1638); 
+            	    pushFollow(FOLLOW_fullidentifier_in_message_uses1641);
             	    fullidentifier124=fullidentifier();
 
             	    state._fsp--;
@@ -3796,11 +3795,11 @@ public class ProtoParser extends Parser {
             {
             root_0 = (ProtoTree)adaptor.nil();
 
-            EXTENDS125=(Token)match(input,EXTENDS,FOLLOW_EXTENDS_in_message_extends1650); 
+            EXTENDS125=(Token)match(input,EXTENDS,FOLLOW_EXTENDS_in_message_extends1653); 
             EXTENDS125_tree = (ProtoTree)adaptor.create(EXTENDS125);
             root_0 = (ProtoTree)adaptor.becomeRoot(EXTENDS125_tree, root_0);
 
-            pushFollow(FOLLOW_fullidentifier_in_message_extends1653);
+            pushFollow(FOLLOW_fullidentifier_in_message_extends1656);
             fullidentifier126=fullidentifier();
 
             state._fsp--;
@@ -3821,8 +3820,8 @@ public class ProtoParser extends Parser {
             	case 1 :
             	    // org/fudgemsg/proto/antlr/Proto.g:266:44: ',' fullidentifier
             	    {
-            	    char_literal127=(Token)match(input,50,FOLLOW_50_in_message_extends1656); 
-            	    pushFollow(FOLLOW_fullidentifier_in_message_extends1659);
+            	    char_literal127=(Token)match(input,50,FOLLOW_50_in_message_extends1659); 
+            	    pushFollow(FOLLOW_fullidentifier_in_message_extends1662);
             	    fullidentifier128=fullidentifier();
 
             	    state._fsp--;
@@ -3889,17 +3888,17 @@ public class ProtoParser extends Parser {
             {
             root_0 = (ProtoTree)adaptor.nil();
 
-            NAMESPACE129=(Token)match(input,NAMESPACE,FOLLOW_NAMESPACE_in_namespace1670); 
+            NAMESPACE129=(Token)match(input,NAMESPACE,FOLLOW_NAMESPACE_in_namespace1673); 
             NAMESPACE129_tree = (ProtoTree)adaptor.create(NAMESPACE129);
             root_0 = (ProtoTree)adaptor.becomeRoot(NAMESPACE129_tree, root_0);
 
-            pushFollow(FOLLOW_fullidentifier_in_namespace1673);
+            pushFollow(FOLLOW_fullidentifier_in_namespace1676);
             fullidentifier130=fullidentifier();
 
             state._fsp--;
 
             adaptor.addChild(root_0, fullidentifier130.getTree());
-            char_literal131=(Token)match(input,44,FOLLOW_44_in_namespace1675); 
+            char_literal131=(Token)match(input,44,FOLLOW_44_in_namespace1678); 
             // org/fudgemsg/proto/antlr/Proto.g:268:44: ( root_object )*
             loop34:
             do {
@@ -3915,7 +3914,7 @@ public class ProtoParser extends Parser {
             	case 1 :
             	    // org/fudgemsg/proto/antlr/Proto.g:268:44: root_object
             	    {
-            	    pushFollow(FOLLOW_root_object_in_namespace1678);
+            	    pushFollow(FOLLOW_root_object_in_namespace1681);
             	    root_object132=root_object();
 
             	    state._fsp--;
@@ -3930,7 +3929,7 @@ public class ProtoParser extends Parser {
                 }
             } while (true);
 
-            char_literal133=(Token)match(input,45,FOLLOW_45_in_namespace1681); 
+            char_literal133=(Token)match(input,45,FOLLOW_45_in_namespace1684); 
 
             }
 
@@ -3988,7 +3987,7 @@ public class ProtoParser extends Parser {
             	case 1 :
             	    // org/fudgemsg/proto/antlr/Proto.g:270:8: root_object
             	    {
-            	    pushFollow(FOLLOW_root_object_in_root1691);
+            	    pushFollow(FOLLOW_root_object_in_root1694);
             	    root_object134=root_object();
 
             	    state._fsp--;
@@ -4128,7 +4127,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    EXTERN135=(Token)match(input,EXTERN,FOLLOW_EXTERN_in_root_object1711); 
+                    EXTERN135=(Token)match(input,EXTERN,FOLLOW_EXTERN_in_root_object1714); 
                     EXTERN135_tree = (ProtoTree)adaptor.create(EXTERN135);
                     root_0 = (ProtoTree)adaptor.becomeRoot(EXTERN135_tree, root_0);
 
@@ -4143,7 +4142,7 @@ public class ProtoParser extends Parser {
                         throw mse;
                     }
 
-                    pushFollow(FOLLOW_fullidentifier_in_root_object1726);
+                    pushFollow(FOLLOW_fullidentifier_in_root_object1729);
                     fullidentifier137=fullidentifier();
 
                     state._fsp--;
@@ -4160,7 +4159,7 @@ public class ProtoParser extends Parser {
                         case 1 :
                             // org/fudgemsg/proto/antlr/Proto.g:273:56: ';'
                             {
-                            char_literal138=(Token)match(input,46,FOLLOW_46_in_root_object1728); 
+                            char_literal138=(Token)match(input,46,FOLLOW_46_in_root_object1731); 
                             char_literal138_tree = (ProtoTree)adaptor.create(char_literal138);
                             adaptor.addChild(root_0, char_literal138_tree);
 
@@ -4178,7 +4177,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    pushFollow(FOLLOW_message_in_root_object1734);
+                    pushFollow(FOLLOW_message_in_root_object1737);
                     message139=message();
 
                     state._fsp--;
@@ -4192,7 +4191,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    pushFollow(FOLLOW_message_enum_in_root_object1739);
+                    pushFollow(FOLLOW_message_enum_in_root_object1742);
                     message_enum140=message_enum();
 
                     state._fsp--;
@@ -4206,7 +4205,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    pushFollow(FOLLOW_namespace_in_root_object1744);
+                    pushFollow(FOLLOW_namespace_in_root_object1747);
                     namespace141=namespace();
 
                     state._fsp--;
@@ -4220,7 +4219,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    pushFollow(FOLLOW_taxonomy_in_root_object1749);
+                    pushFollow(FOLLOW_taxonomy_in_root_object1752);
                     taxonomy142=taxonomy();
 
                     state._fsp--;
@@ -4280,15 +4279,15 @@ public class ProtoParser extends Parser {
             {
             root_0 = (ProtoTree)adaptor.nil();
 
-            TAXONOMY143=(Token)match(input,TAXONOMY,FOLLOW_TAXONOMY_in_taxonomy1759); 
+            TAXONOMY143=(Token)match(input,TAXONOMY,FOLLOW_TAXONOMY_in_taxonomy1762); 
             TAXONOMY143_tree = (ProtoTree)adaptor.create(TAXONOMY143);
             root_0 = (ProtoTree)adaptor.becomeRoot(TAXONOMY143_tree, root_0);
 
-            IDENTIFIER144=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_taxonomy1762); 
+            IDENTIFIER144=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_taxonomy1765); 
             IDENTIFIER144_tree = (ProtoTree)adaptor.create(IDENTIFIER144);
             adaptor.addChild(root_0, IDENTIFIER144_tree);
 
-            char_literal145=(Token)match(input,44,FOLLOW_44_in_taxonomy1764); 
+            char_literal145=(Token)match(input,44,FOLLOW_44_in_taxonomy1767); 
             // org/fudgemsg/proto/antlr/Proto.g:280:38: ( taxonomy_element )*
             loop38:
             do {
@@ -4304,7 +4303,7 @@ public class ProtoParser extends Parser {
             	case 1 :
             	    // org/fudgemsg/proto/antlr/Proto.g:280:38: taxonomy_element
             	    {
-            	    pushFollow(FOLLOW_taxonomy_element_in_taxonomy1767);
+            	    pushFollow(FOLLOW_taxonomy_element_in_taxonomy1770);
             	    taxonomy_element146=taxonomy_element();
 
             	    state._fsp--;
@@ -4319,7 +4318,7 @@ public class ProtoParser extends Parser {
                 }
             } while (true);
 
-            char_literal147=(Token)match(input,45,FOLLOW_45_in_taxonomy1770); 
+            char_literal147=(Token)match(input,45,FOLLOW_45_in_taxonomy1773); 
 
             }
 
@@ -4387,7 +4386,7 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    pushFollow(FOLLOW_enum_element_in_taxonomy_element1781);
+                    pushFollow(FOLLOW_enum_element_in_taxonomy_element1784);
                     enum_element148=enum_element();
 
                     state._fsp--;
@@ -4401,17 +4400,17 @@ public class ProtoParser extends Parser {
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    IMPORT149=(Token)match(input,IMPORT,FOLLOW_IMPORT_in_taxonomy_element1786); 
+                    IMPORT149=(Token)match(input,IMPORT,FOLLOW_IMPORT_in_taxonomy_element1789); 
                     IMPORT149_tree = (ProtoTree)adaptor.create(IMPORT149);
                     root_0 = (ProtoTree)adaptor.becomeRoot(IMPORT149_tree, root_0);
 
-                    pushFollow(FOLLOW_fullidentifier_in_taxonomy_element1789);
+                    pushFollow(FOLLOW_fullidentifier_in_taxonomy_element1792);
                     fullidentifier150=fullidentifier();
 
                     state._fsp--;
 
                     adaptor.addChild(root_0, fullidentifier150.getTree());
-                    char_literal151=(Token)match(input,46,FOLLOW_46_in_taxonomy_element1791); 
+                    char_literal151=(Token)match(input,46,FOLLOW_46_in_taxonomy_element1794); 
 
                     }
                     break;
@@ -4591,155 +4590,155 @@ public class ProtoParser extends Parser {
  
 
     public static final BitSet FOLLOW_set_in_anyword0 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_BINDING_in_binding811 = new BitSet(new long[]{0x0000021000000000L});
-    public static final BitSet FOLLOW_binding_anyword_in_binding814 = new BitSet(new long[]{0x0000100000000000L});
-    public static final BitSet FOLLOW_44_in_binding816 = new BitSet(new long[]{0x0000221000000000L});
-    public static final BitSet FOLLOW_binding_element_in_binding819 = new BitSet(new long[]{0x0000221000000000L});
-    public static final BitSet FOLLOW_45_in_binding823 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_fullidentifier_in_binding_anyword834 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_STRING_in_binding_anyword839 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_binding_anyword_in_binding_element849 = new BitSet(new long[]{0x0000031000000000L});
-    public static final BitSet FOLLOW_binding_text_in_binding_element851 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_STRING_in_binding_text861 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_binding_text863 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ML_STRING_in_binding_text869 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_fullidentifier_in_binding_text874 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_binding_text876 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_DEFAULT_in_constraint_default887 = new BitSet(new long[]{0x0000800000000000L});
-    public static final BitSet FOLLOW_47_in_constraint_default890 = new BitSet(new long[]{0x0000027000000000L});
-    public static final BitSet FOLLOW_literal_in_constraint_default893 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_48_in_dimension903 = new BitSet(new long[]{0x0000002000000000L});
-    public static final BitSet FOLLOW_INTEGER_in_dimension905 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_49_in_dimension907 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_48_in_dimension920 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_49_in_dimension922 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_binding_in_enum_element940 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_IDENTIFIER_in_enum_element946 = new BitSet(new long[]{0x0000C00000000000L});
-    public static final BitSet FOLLOW_enum_value_in_enum_element949 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_enum_element952 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_47_in_enum_value964 = new BitSet(new long[]{0x0000002000000000L});
-    public static final BitSet FOLLOW_INTEGER_in_enum_value967 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_constraint_default_in_field_constraint976 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_48_in_field_constraints985 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_field_constraint_in_field_constraints988 = new BitSet(new long[]{0x0006000000000000L});
-    public static final BitSet FOLLOW_50_in_field_constraints991 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_field_constraint_in_field_constraints994 = new BitSet(new long[]{0x0006000000000000L});
-    public static final BitSet FOLLOW_49_in_field_constraints998 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_47_in_field_ordinal1008 = new BitSet(new long[]{0x0000002000000000L});
-    public static final BitSet FOLLOW_INTEGER_in_field_ordinal1010 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_MUTABLE_in_field_modifier1029 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_REQUIRED_in_field_modifier1034 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_51_in_field_modifier1039 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_REPEATED_in_field_modifier1045 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_field_basetype_in_field_arraytype1055 = new BitSet(new long[]{0x0001000000000000L});
-    public static final BitSet FOLLOW_dimension_in_field_arraytype1057 = new BitSet(new long[]{0x0001000000000002L});
-    public static final BitSet FOLLOW_T_BOOL_in_field_primtype1079 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_52_in_field_primtype1084 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_T_BYTE_in_field_primtype1095 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_53_in_field_primtype1100 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_T_DATE_in_field_primtype1111 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_T_DATETIME_in_field_primtype1116 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_T_SHORT_in_field_primtype1121 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_54_in_field_primtype1126 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_T_INT_in_field_primtype1137 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_55_in_field_primtype1142 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_56_in_field_primtype1153 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_57_in_field_primtype1164 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_58_in_field_primtype1175 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_59_in_field_primtype1186 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_60_in_field_primtype1197 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_T_LONG_in_field_primtype1208 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_61_in_field_primtype1213 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_62_in_field_primtype1224 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_63_in_field_primtype1235 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_64_in_field_primtype1246 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_65_in_field_primtype1257 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_T_FLOAT_in_field_primtype1268 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_66_in_field_primtype1273 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_T_DOUBLE_in_field_primtype1284 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_67_in_field_primtype1289 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_T_INDICATOR_in_field_primtype1300 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_T_STRING_in_field_primtype1305 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_T_TIME_in_field_primtype1310 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_field_primtype_in_field_basetype1321 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_fullidentifier_in_field_basetype1326 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_field_basetype_in_field_type1337 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_field_arraytype_in_field_type1342 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_IDENTIFIER_in_fullidentifier1352 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000010L});
-    public static final BitSet FOLLOW_68_in_fullidentifier1356 = new BitSet(new long[]{0x00000817FFEDEE60L});
-    public static final BitSet FOLLOW_IDENTIFIER_in_fullidentifier1360 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000010L});
-    public static final BitSet FOLLOW_anyword_in_fullidentifier1364 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000010L});
+    public static final BitSet FOLLOW_BINDING_in_binding814 = new BitSet(new long[]{0x0000021000000000L});
+    public static final BitSet FOLLOW_binding_anyword_in_binding817 = new BitSet(new long[]{0x0000100000000000L});
+    public static final BitSet FOLLOW_44_in_binding819 = new BitSet(new long[]{0x0000221000000000L});
+    public static final BitSet FOLLOW_binding_element_in_binding822 = new BitSet(new long[]{0x0000221000000000L});
+    public static final BitSet FOLLOW_45_in_binding826 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_fullidentifier_in_binding_anyword837 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_STRING_in_binding_anyword842 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_binding_anyword_in_binding_element852 = new BitSet(new long[]{0x0000031000000000L});
+    public static final BitSet FOLLOW_binding_text_in_binding_element854 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_STRING_in_binding_text864 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_46_in_binding_text866 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ML_STRING_in_binding_text872 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_fullidentifier_in_binding_text877 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_46_in_binding_text879 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_DEFAULT_in_constraint_default890 = new BitSet(new long[]{0x0000800000000000L});
+    public static final BitSet FOLLOW_47_in_constraint_default893 = new BitSet(new long[]{0x0000027000000000L});
+    public static final BitSet FOLLOW_literal_in_constraint_default896 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_48_in_dimension906 = new BitSet(new long[]{0x0000002000000000L});
+    public static final BitSet FOLLOW_INTEGER_in_dimension908 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_49_in_dimension910 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_48_in_dimension923 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_49_in_dimension925 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_binding_in_enum_element943 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_IDENTIFIER_in_enum_element949 = new BitSet(new long[]{0x0000C00000000000L});
+    public static final BitSet FOLLOW_enum_value_in_enum_element952 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_46_in_enum_element955 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_enum_value967 = new BitSet(new long[]{0x0000002000000000L});
+    public static final BitSet FOLLOW_INTEGER_in_enum_value970 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_constraint_default_in_field_constraint979 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_48_in_field_constraints988 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_field_constraint_in_field_constraints991 = new BitSet(new long[]{0x0006000000000000L});
+    public static final BitSet FOLLOW_50_in_field_constraints994 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_field_constraint_in_field_constraints997 = new BitSet(new long[]{0x0006000000000000L});
+    public static final BitSet FOLLOW_49_in_field_constraints1001 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_field_ordinal1011 = new BitSet(new long[]{0x0000002000000000L});
+    public static final BitSet FOLLOW_INTEGER_in_field_ordinal1013 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_MUTABLE_in_field_modifier1032 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_REQUIRED_in_field_modifier1037 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_51_in_field_modifier1042 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_REPEATED_in_field_modifier1048 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_field_basetype_in_field_arraytype1058 = new BitSet(new long[]{0x0001000000000000L});
+    public static final BitSet FOLLOW_dimension_in_field_arraytype1060 = new BitSet(new long[]{0x0001000000000002L});
+    public static final BitSet FOLLOW_T_BOOL_in_field_primtype1082 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_52_in_field_primtype1087 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_T_BYTE_in_field_primtype1098 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_53_in_field_primtype1103 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_T_DATE_in_field_primtype1114 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_T_DATETIME_in_field_primtype1119 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_T_SHORT_in_field_primtype1124 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_54_in_field_primtype1129 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_T_INT_in_field_primtype1140 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_55_in_field_primtype1145 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_56_in_field_primtype1156 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_57_in_field_primtype1167 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_58_in_field_primtype1178 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_59_in_field_primtype1189 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_60_in_field_primtype1200 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_T_LONG_in_field_primtype1211 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_61_in_field_primtype1216 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_62_in_field_primtype1227 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_63_in_field_primtype1238 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_64_in_field_primtype1249 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_65_in_field_primtype1260 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_T_FLOAT_in_field_primtype1271 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_66_in_field_primtype1276 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_T_DOUBLE_in_field_primtype1287 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_67_in_field_primtype1292 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_T_INDICATOR_in_field_primtype1303 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_T_STRING_in_field_primtype1308 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_T_TIME_in_field_primtype1313 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_field_primtype_in_field_basetype1324 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_fullidentifier_in_field_basetype1329 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_field_basetype_in_field_type1340 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_field_arraytype_in_field_type1345 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_IDENTIFIER_in_fullidentifier1355 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000010L});
+    public static final BitSet FOLLOW_68_in_fullidentifier1359 = new BitSet(new long[]{0x00000817FFEDEE60L});
+    public static final BitSet FOLLOW_IDENTIFIER_in_fullidentifier1363 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000010L});
+    public static final BitSet FOLLOW_anyword_in_fullidentifier1367 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000010L});
     public static final BitSet FOLLOW_set_in_literal0 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_MESSAGE_in_message1402 = new BitSet(new long[]{0x0000001000000000L});
-    public static final BitSet FOLLOW_IDENTIFIER_in_message1405 = new BitSet(new long[]{0x0000100400000400L});
-    public static final BitSet FOLLOW_message_uses_in_message1407 = new BitSet(new long[]{0x0000100000000400L});
-    public static final BitSet FOLLOW_message_extends_in_message1410 = new BitSet(new long[]{0x0000100000000000L});
-    public static final BitSet FOLLOW_44_in_message1413 = new BitSet(new long[]{0xFFF82011FFECC220L,0x000000000000000FL});
-    public static final BitSet FOLLOW_message_element_in_message1416 = new BitSet(new long[]{0xFFF82011FFECC220L,0x000000000000000FL});
-    public static final BitSet FOLLOW_45_in_message1419 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_message_enum_in_message_element1430 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_message_field_in_message_element1435 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_message_submsg_in_message_element1440 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_binding_in_message_element1445 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ENUM_in_message_enum1455 = new BitSet(new long[]{0x0000001000000000L});
-    public static final BitSet FOLLOW_IDENTIFIER_in_message_enum1458 = new BitSet(new long[]{0x0000100000000000L});
-    public static final BitSet FOLLOW_44_in_message_enum1460 = new BitSet(new long[]{0xFFF82011FFECC220L,0x000000000000000FL});
-    public static final BitSet FOLLOW_enum_element_in_message_enum1463 = new BitSet(new long[]{0xFFF82011FFECC220L,0x000000000000000FL});
-    public static final BitSet FOLLOW_45_in_message_enum1466 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_field_modifier_in_message_field1478 = new BitSet(new long[]{0xFFF80011FFEC8000L,0x000000000000000FL});
-    public static final BitSet FOLLOW_field_type_in_message_field1481 = new BitSet(new long[]{0x0000001000000000L});
-    public static final BitSet FOLLOW_IDENTIFIER_in_message_field1483 = new BitSet(new long[]{0x0001C00000000000L});
-    public static final BitSet FOLLOW_field_ordinal_in_message_field1485 = new BitSet(new long[]{0x0001400000000000L});
-    public static final BitSet FOLLOW_field_constraints_in_message_field1488 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_message_field1491 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_field_modifier_in_message_field1516 = new BitSet(new long[]{0x00080000000CC000L});
-    public static final BitSet FOLLOW_MESSAGE_in_message_field1519 = new BitSet(new long[]{0x0000001000000000L});
-    public static final BitSet FOLLOW_IDENTIFIER_in_message_field1521 = new BitSet(new long[]{0x0001C00000000000L});
-    public static final BitSet FOLLOW_field_ordinal_in_message_field1523 = new BitSet(new long[]{0x0001400000000000L});
-    public static final BitSet FOLLOW_field_constraints_in_message_field1526 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_message_field1529 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_field_modifier_in_message_field1554 = new BitSet(new long[]{0x00080000000CC000L});
-    public static final BitSet FOLLOW_MESSAGE_in_message_field1557 = new BitSet(new long[]{0x0001000000000000L});
-    public static final BitSet FOLLOW_dimension_in_message_field1559 = new BitSet(new long[]{0x0001001000000000L});
-    public static final BitSet FOLLOW_IDENTIFIER_in_message_field1562 = new BitSet(new long[]{0x0001C00000000000L});
-    public static final BitSet FOLLOW_field_ordinal_in_message_field1564 = new BitSet(new long[]{0x0001400000000000L});
-    public static final BitSet FOLLOW_field_constraints_in_message_field1567 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_message_field1570 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_MESSAGE_in_message_submsg1607 = new BitSet(new long[]{0x0000001000000000L});
-    public static final BitSet FOLLOW_IDENTIFIER_in_message_submsg1610 = new BitSet(new long[]{0x0000100000000000L});
-    public static final BitSet FOLLOW_44_in_message_submsg1612 = new BitSet(new long[]{0xFFF82011FFECC220L,0x000000000000000FL});
-    public static final BitSet FOLLOW_message_element_in_message_submsg1615 = new BitSet(new long[]{0xFFF82011FFECC220L,0x000000000000000FL});
-    public static final BitSet FOLLOW_45_in_message_submsg1618 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_USES_in_message_uses1629 = new BitSet(new long[]{0x0000001000000000L});
-    public static final BitSet FOLLOW_fullidentifier_in_message_uses1632 = new BitSet(new long[]{0x0004000000000002L});
-    public static final BitSet FOLLOW_50_in_message_uses1635 = new BitSet(new long[]{0x0000001000000000L});
-    public static final BitSet FOLLOW_fullidentifier_in_message_uses1638 = new BitSet(new long[]{0x0004000000000002L});
-    public static final BitSet FOLLOW_EXTENDS_in_message_extends1650 = new BitSet(new long[]{0x0000001000000000L});
-    public static final BitSet FOLLOW_fullidentifier_in_message_extends1653 = new BitSet(new long[]{0x0004000000000002L});
-    public static final BitSet FOLLOW_50_in_message_extends1656 = new BitSet(new long[]{0x0000001000000000L});
-    public static final BitSet FOLLOW_fullidentifier_in_message_extends1659 = new BitSet(new long[]{0x0004000000000002L});
-    public static final BitSet FOLLOW_NAMESPACE_in_namespace1670 = new BitSet(new long[]{0x0000001000000000L});
-    public static final BitSet FOLLOW_fullidentifier_in_namespace1673 = new BitSet(new long[]{0x0000100000000000L});
-    public static final BitSet FOLLOW_44_in_namespace1675 = new BitSet(new long[]{0x0000200200014A00L});
-    public static final BitSet FOLLOW_root_object_in_namespace1678 = new BitSet(new long[]{0x0000200200014A00L});
-    public static final BitSet FOLLOW_45_in_namespace1681 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_root_object_in_root1691 = new BitSet(new long[]{0x0000000200014A02L});
-    public static final BitSet FOLLOW_EXTERN_in_root_object1711 = new BitSet(new long[]{0x0000000200004200L});
-    public static final BitSet FOLLOW_set_in_root_object1714 = new BitSet(new long[]{0x0000001000000000L});
-    public static final BitSet FOLLOW_fullidentifier_in_root_object1726 = new BitSet(new long[]{0x0000400000000002L});
-    public static final BitSet FOLLOW_46_in_root_object1728 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_message_in_root_object1734 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_message_enum_in_root_object1739 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_namespace_in_root_object1744 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_taxonomy_in_root_object1749 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_TAXONOMY_in_taxonomy1759 = new BitSet(new long[]{0x0000001000000000L});
-    public static final BitSet FOLLOW_IDENTIFIER_in_taxonomy1762 = new BitSet(new long[]{0x0000100000000000L});
-    public static final BitSet FOLLOW_44_in_taxonomy1764 = new BitSet(new long[]{0xFFF82011FFECE220L,0x000000000000000FL});
-    public static final BitSet FOLLOW_taxonomy_element_in_taxonomy1767 = new BitSet(new long[]{0xFFF82011FFECE220L,0x000000000000000FL});
-    public static final BitSet FOLLOW_45_in_taxonomy1770 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_enum_element_in_taxonomy_element1781 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_IMPORT_in_taxonomy_element1786 = new BitSet(new long[]{0x0000001000000000L});
-    public static final BitSet FOLLOW_fullidentifier_in_taxonomy_element1789 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_taxonomy_element1791 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_MESSAGE_in_message1405 = new BitSet(new long[]{0x0000001000000000L});
+    public static final BitSet FOLLOW_IDENTIFIER_in_message1408 = new BitSet(new long[]{0x0000100400000400L});
+    public static final BitSet FOLLOW_message_uses_in_message1410 = new BitSet(new long[]{0x0000100000000400L});
+    public static final BitSet FOLLOW_message_extends_in_message1413 = new BitSet(new long[]{0x0000100000000000L});
+    public static final BitSet FOLLOW_44_in_message1416 = new BitSet(new long[]{0xFFF82011FFECC220L,0x000000000000000FL});
+    public static final BitSet FOLLOW_message_element_in_message1419 = new BitSet(new long[]{0xFFF82011FFECC220L,0x000000000000000FL});
+    public static final BitSet FOLLOW_45_in_message1422 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_message_enum_in_message_element1433 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_message_field_in_message_element1438 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_message_submsg_in_message_element1443 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_binding_in_message_element1448 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ENUM_in_message_enum1458 = new BitSet(new long[]{0x0000001000000000L});
+    public static final BitSet FOLLOW_IDENTIFIER_in_message_enum1461 = new BitSet(new long[]{0x0000100000000000L});
+    public static final BitSet FOLLOW_44_in_message_enum1463 = new BitSet(new long[]{0xFFF82011FFECC220L,0x000000000000000FL});
+    public static final BitSet FOLLOW_enum_element_in_message_enum1466 = new BitSet(new long[]{0xFFF82011FFECC220L,0x000000000000000FL});
+    public static final BitSet FOLLOW_45_in_message_enum1469 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_field_modifier_in_message_field1481 = new BitSet(new long[]{0xFFF80011FFEC8000L,0x000000000000000FL});
+    public static final BitSet FOLLOW_field_type_in_message_field1484 = new BitSet(new long[]{0x0000001000000000L});
+    public static final BitSet FOLLOW_IDENTIFIER_in_message_field1486 = new BitSet(new long[]{0x0001C00000000000L});
+    public static final BitSet FOLLOW_field_ordinal_in_message_field1488 = new BitSet(new long[]{0x0001400000000000L});
+    public static final BitSet FOLLOW_field_constraints_in_message_field1491 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_46_in_message_field1494 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_field_modifier_in_message_field1519 = new BitSet(new long[]{0x00080000000CC000L});
+    public static final BitSet FOLLOW_MESSAGE_in_message_field1522 = new BitSet(new long[]{0x0000001000000000L});
+    public static final BitSet FOLLOW_IDENTIFIER_in_message_field1524 = new BitSet(new long[]{0x0001C00000000000L});
+    public static final BitSet FOLLOW_field_ordinal_in_message_field1526 = new BitSet(new long[]{0x0001400000000000L});
+    public static final BitSet FOLLOW_field_constraints_in_message_field1529 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_46_in_message_field1532 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_field_modifier_in_message_field1557 = new BitSet(new long[]{0x00080000000CC000L});
+    public static final BitSet FOLLOW_MESSAGE_in_message_field1560 = new BitSet(new long[]{0x0001000000000000L});
+    public static final BitSet FOLLOW_dimension_in_message_field1562 = new BitSet(new long[]{0x0001001000000000L});
+    public static final BitSet FOLLOW_IDENTIFIER_in_message_field1565 = new BitSet(new long[]{0x0001C00000000000L});
+    public static final BitSet FOLLOW_field_ordinal_in_message_field1567 = new BitSet(new long[]{0x0001400000000000L});
+    public static final BitSet FOLLOW_field_constraints_in_message_field1570 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_46_in_message_field1573 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_MESSAGE_in_message_submsg1610 = new BitSet(new long[]{0x0000001000000000L});
+    public static final BitSet FOLLOW_IDENTIFIER_in_message_submsg1613 = new BitSet(new long[]{0x0000100000000000L});
+    public static final BitSet FOLLOW_44_in_message_submsg1615 = new BitSet(new long[]{0xFFF82011FFECC220L,0x000000000000000FL});
+    public static final BitSet FOLLOW_message_element_in_message_submsg1618 = new BitSet(new long[]{0xFFF82011FFECC220L,0x000000000000000FL});
+    public static final BitSet FOLLOW_45_in_message_submsg1621 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_USES_in_message_uses1632 = new BitSet(new long[]{0x0000001000000000L});
+    public static final BitSet FOLLOW_fullidentifier_in_message_uses1635 = new BitSet(new long[]{0x0004000000000002L});
+    public static final BitSet FOLLOW_50_in_message_uses1638 = new BitSet(new long[]{0x0000001000000000L});
+    public static final BitSet FOLLOW_fullidentifier_in_message_uses1641 = new BitSet(new long[]{0x0004000000000002L});
+    public static final BitSet FOLLOW_EXTENDS_in_message_extends1653 = new BitSet(new long[]{0x0000001000000000L});
+    public static final BitSet FOLLOW_fullidentifier_in_message_extends1656 = new BitSet(new long[]{0x0004000000000002L});
+    public static final BitSet FOLLOW_50_in_message_extends1659 = new BitSet(new long[]{0x0000001000000000L});
+    public static final BitSet FOLLOW_fullidentifier_in_message_extends1662 = new BitSet(new long[]{0x0004000000000002L});
+    public static final BitSet FOLLOW_NAMESPACE_in_namespace1673 = new BitSet(new long[]{0x0000001000000000L});
+    public static final BitSet FOLLOW_fullidentifier_in_namespace1676 = new BitSet(new long[]{0x0000100000000000L});
+    public static final BitSet FOLLOW_44_in_namespace1678 = new BitSet(new long[]{0x0000200200014A00L});
+    public static final BitSet FOLLOW_root_object_in_namespace1681 = new BitSet(new long[]{0x0000200200014A00L});
+    public static final BitSet FOLLOW_45_in_namespace1684 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_root_object_in_root1694 = new BitSet(new long[]{0x0000000200014A02L});
+    public static final BitSet FOLLOW_EXTERN_in_root_object1714 = new BitSet(new long[]{0x0000000200004200L});
+    public static final BitSet FOLLOW_set_in_root_object1717 = new BitSet(new long[]{0x0000001000000000L});
+    public static final BitSet FOLLOW_fullidentifier_in_root_object1729 = new BitSet(new long[]{0x0000400000000002L});
+    public static final BitSet FOLLOW_46_in_root_object1731 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_message_in_root_object1737 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_message_enum_in_root_object1742 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_namespace_in_root_object1747 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_taxonomy_in_root_object1752 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_TAXONOMY_in_taxonomy1762 = new BitSet(new long[]{0x0000001000000000L});
+    public static final BitSet FOLLOW_IDENTIFIER_in_taxonomy1765 = new BitSet(new long[]{0x0000100000000000L});
+    public static final BitSet FOLLOW_44_in_taxonomy1767 = new BitSet(new long[]{0xFFF82011FFECE220L,0x000000000000000FL});
+    public static final BitSet FOLLOW_taxonomy_element_in_taxonomy1770 = new BitSet(new long[]{0xFFF82011FFECE220L,0x000000000000000FL});
+    public static final BitSet FOLLOW_45_in_taxonomy1773 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_enum_element_in_taxonomy_element1784 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_IMPORT_in_taxonomy_element1789 = new BitSet(new long[]{0x0000001000000000L});
+    public static final BitSet FOLLOW_fullidentifier_in_taxonomy_element1792 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_46_in_taxonomy_element1794 = new BitSet(new long[]{0x0000000000000002L});
 
 }

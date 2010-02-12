@@ -1,4 +1,4 @@
-// $ANTLR 3.1.1 org/fudgemsg/proto/antlr/Proto.g 2010-02-05 13:51:52
+// $ANTLR 3.1.1 org/fudgemsg/proto/antlr/Proto.g 2010-02-12 15:49:35
 
   package org.fudgemsg.proto.antlr;
   import org.fudgemsg.proto.Compiler;
@@ -11,7 +11,6 @@ import java.util.Stack;
 import java.util.List;
 import java.util.ArrayList;
 
-@SuppressWarnings("unused")
 public class ProtoLexer extends Lexer {
     public static final int T__68=68;
     public static final int T__66=66;
@@ -1354,8 +1353,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = FLOAT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:112:7: ( ( '+' | '-' )? ( '0' .. '9' )* '.' ( '0' .. '9' )+ ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )? )
-            // org/fudgemsg/proto/antlr/Proto.g:112:9: ( '+' | '-' )? ( '0' .. '9' )* '.' ( '0' .. '9' )+ ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )?
+            // org/fudgemsg/proto/antlr/Proto.g:112:7: ( ( '+' | '-' )? ( '0' .. '9' )* '.' ( '0' .. '9' )+ ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )? ( 'f' )? )
+            // org/fudgemsg/proto/antlr/Proto.g:112:9: ( '+' | '-' )? ( '0' .. '9' )* '.' ( '0' .. '9' )+ ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )? ( 'f' )?
             {
             // org/fudgemsg/proto/antlr/Proto.g:112:9: ( '+' | '-' )?
             int alt5=2;
@@ -1521,6 +1520,24 @@ public class ProtoLexer extends Lexer {
 
             }
 
+            // org/fudgemsg/proto/antlr/Proto.g:112:86: ( 'f' )?
+            int alt11=2;
+            int LA11_0 = input.LA(1);
+
+            if ( (LA11_0=='f') ) {
+                alt11=1;
+            }
+            switch (alt11) {
+                case 1 :
+                    // org/fudgemsg/proto/antlr/Proto.g:112:86: 'f'
+                    {
+                    match('f'); 
+
+                    }
+                    break;
+
+            }
+
 
             }
 
@@ -1543,29 +1560,29 @@ public class ProtoLexer extends Lexer {
             match("/*"); 
 
             // org/fudgemsg/proto/antlr/Proto.g:113:19: ( options {greedy=false; } : . )*
-            loop11:
+            loop12:
             do {
-                int alt11=2;
-                int LA11_0 = input.LA(1);
+                int alt12=2;
+                int LA12_0 = input.LA(1);
 
-                if ( (LA11_0=='*') ) {
-                    int LA11_1 = input.LA(2);
+                if ( (LA12_0=='*') ) {
+                    int LA12_1 = input.LA(2);
 
-                    if ( (LA11_1=='/') ) {
-                        alt11=2;
+                    if ( (LA12_1=='/') ) {
+                        alt12=2;
                     }
-                    else if ( ((LA11_1>='\u0000' && LA11_1<='.')||(LA11_1>='0' && LA11_1<='\uFFFF')) ) {
-                        alt11=1;
+                    else if ( ((LA12_1>='\u0000' && LA12_1<='.')||(LA12_1>='0' && LA12_1<='\uFFFF')) ) {
+                        alt12=1;
                     }
 
 
                 }
-                else if ( ((LA11_0>='\u0000' && LA11_0<=')')||(LA11_0>='+' && LA11_0<='\uFFFF')) ) {
-                    alt11=1;
+                else if ( ((LA12_0>='\u0000' && LA12_0<=')')||(LA12_0>='+' && LA12_0<='\uFFFF')) ) {
+                    alt12=1;
                 }
 
 
-                switch (alt11) {
+                switch (alt12) {
             	case 1 :
             	    // org/fudgemsg/proto/antlr/Proto.g:113:51: .
             	    {
@@ -1575,7 +1592,7 @@ public class ProtoLexer extends Lexer {
             	    break;
 
             	default :
-            	    break loop11;
+            	    break loop12;
                 }
             } while (true);
 
@@ -1604,18 +1621,18 @@ public class ProtoLexer extends Lexer {
             match("<<<"); 
 
             // org/fudgemsg/proto/antlr/Proto.g:115:19: ( 'a' .. 'z' | 'A' .. 'Z' )+
-            int cnt12=0;
-            loop12:
+            int cnt13=0;
+            loop13:
             do {
-                int alt12=2;
-                int LA12_0 = input.LA(1);
+                int alt13=2;
+                int LA13_0 = input.LA(1);
 
-                if ( ((LA12_0>='A' && LA12_0<='Z')||(LA12_0>='a' && LA12_0<='z')) ) {
-                    alt12=1;
+                if ( ((LA13_0>='A' && LA13_0<='Z')||(LA13_0>='a' && LA13_0<='z')) ) {
+                    alt13=1;
                 }
 
 
-                switch (alt12) {
+                switch (alt13) {
             	case 1 :
             	    // org/fudgemsg/proto/antlr/Proto.g:
             	    {
@@ -1633,12 +1650,12 @@ public class ProtoLexer extends Lexer {
             	    break;
 
             	default :
-            	    if ( cnt12 >= 1 ) break loop12;
+            	    if ( cnt13 >= 1 ) break loop13;
                         EarlyExitException eee =
-                            new EarlyExitException(12, input);
+                            new EarlyExitException(13, input);
                         throw eee;
                 }
-                cnt12++;
+                cnt13++;
             } while (true);
 
             if ( input.LA(1)=='\n'||input.LA(1)=='\r' ) {
@@ -1651,11 +1668,11 @@ public class ProtoLexer extends Lexer {
                 throw mse;}
 
             // org/fudgemsg/proto/antlr/Proto.g:115:52: ( options {greedy=false; } : . )*
-            loop13:
+            loop14:
             do {
-                int alt13=2;
-                alt13 = dfa13.predict(input);
-                switch (alt13) {
+                int alt14=2;
+                alt14 = dfa14.predict(input);
+                switch (alt14) {
             	case 1 :
             	    // org/fudgemsg/proto/antlr/Proto.g:115:84: .
             	    {
@@ -1665,7 +1682,7 @@ public class ProtoLexer extends Lexer {
             	    break;
 
             	default :
-            	    break loop13;
+            	    break loop14;
                 }
             } while (true);
 
@@ -1679,18 +1696,18 @@ public class ProtoLexer extends Lexer {
                 throw mse;}
 
             // org/fudgemsg/proto/antlr/Proto.g:115:101: ( 'a' .. 'z' | 'A' .. 'Z' )+
-            int cnt14=0;
-            loop14:
+            int cnt15=0;
+            loop15:
             do {
-                int alt14=2;
-                int LA14_0 = input.LA(1);
+                int alt15=2;
+                int LA15_0 = input.LA(1);
 
-                if ( ((LA14_0>='A' && LA14_0<='Z')||(LA14_0>='a' && LA14_0<='z')) ) {
-                    alt14=1;
+                if ( ((LA15_0>='A' && LA15_0<='Z')||(LA15_0>='a' && LA15_0<='z')) ) {
+                    alt15=1;
                 }
 
 
-                switch (alt14) {
+                switch (alt15) {
             	case 1 :
             	    // org/fudgemsg/proto/antlr/Proto.g:
             	    {
@@ -1708,12 +1725,12 @@ public class ProtoLexer extends Lexer {
             	    break;
 
             	default :
-            	    if ( cnt14 >= 1 ) break loop14;
+            	    if ( cnt15 >= 1 ) break loop15;
                         EarlyExitException eee =
-                            new EarlyExitException(14, input);
+                            new EarlyExitException(15, input);
                         throw eee;
                 }
-                cnt14++;
+                cnt15++;
             } while (true);
 
             match(';'); 
@@ -1747,56 +1764,56 @@ public class ProtoLexer extends Lexer {
             {
             match('\"'); 
             // org/fudgemsg/proto/antlr/Proto.g:116:14: ( options {greedy=false; } : ( '\\\\' . | . ) )*
-            loop16:
+            loop17:
             do {
-                int alt16=2;
-                int LA16_0 = input.LA(1);
+                int alt17=2;
+                int LA17_0 = input.LA(1);
 
-                if ( (LA16_0=='\"') ) {
-                    alt16=2;
+                if ( (LA17_0=='\"') ) {
+                    alt17=2;
                 }
-                else if ( ((LA16_0>='\u0000' && LA16_0<='!')||(LA16_0>='#' && LA16_0<='\uFFFF')) ) {
-                    alt16=1;
+                else if ( ((LA17_0>='\u0000' && LA17_0<='!')||(LA17_0>='#' && LA17_0<='\uFFFF')) ) {
+                    alt17=1;
                 }
 
 
-                switch (alt16) {
+                switch (alt17) {
             	case 1 :
             	    // org/fudgemsg/proto/antlr/Proto.g:116:46: ( '\\\\' . | . )
             	    {
             	    // org/fudgemsg/proto/antlr/Proto.g:116:46: ( '\\\\' . | . )
-            	    int alt15=2;
-            	    int LA15_0 = input.LA(1);
+            	    int alt16=2;
+            	    int LA16_0 = input.LA(1);
 
-            	    if ( (LA15_0=='\\') ) {
-            	        int LA15_1 = input.LA(2);
+            	    if ( (LA16_0=='\\') ) {
+            	        int LA16_1 = input.LA(2);
 
-            	        if ( (LA15_1=='\"') ) {
-            	            alt15=1;
+            	        if ( (LA16_1=='\"') ) {
+            	            alt16=1;
             	        }
-            	        else if ( (LA15_1=='\\') ) {
-            	            alt15=1;
+            	        else if ( (LA16_1=='\\') ) {
+            	            alt16=1;
             	        }
-            	        else if ( ((LA15_1>='\u0000' && LA15_1<='!')||(LA15_1>='#' && LA15_1<='[')||(LA15_1>=']' && LA15_1<='\uFFFF')) ) {
-            	            alt15=1;
+            	        else if ( ((LA16_1>='\u0000' && LA16_1<='!')||(LA16_1>='#' && LA16_1<='[')||(LA16_1>=']' && LA16_1<='\uFFFF')) ) {
+            	            alt16=1;
             	        }
             	        else {
             	            NoViableAltException nvae =
-            	                new NoViableAltException("", 15, 1, input);
+            	                new NoViableAltException("", 16, 1, input);
 
             	            throw nvae;
             	        }
             	    }
-            	    else if ( ((LA15_0>='\u0000' && LA15_0<='[')||(LA15_0>=']' && LA15_0<='\uFFFF')) ) {
-            	        alt15=2;
+            	    else if ( ((LA16_0>='\u0000' && LA16_0<='[')||(LA16_0>=']' && LA16_0<='\uFFFF')) ) {
+            	        alt16=2;
             	    }
             	    else {
             	        NoViableAltException nvae =
-            	            new NoViableAltException("", 15, 0, input);
+            	            new NoViableAltException("", 16, 0, input);
 
             	        throw nvae;
             	    }
-            	    switch (alt15) {
+            	    switch (alt16) {
             	        case 1 :
             	            // org/fudgemsg/proto/antlr/Proto.g:116:47: '\\\\' .
             	            {
@@ -1820,7 +1837,7 @@ public class ProtoLexer extends Lexer {
             	    break;
 
             	default :
-            	    break loop16;
+            	    break loop17;
                 }
             } while (true);
 
@@ -1845,18 +1862,18 @@ public class ProtoLexer extends Lexer {
             // org/fudgemsg/proto/antlr/Proto.g:117:14: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
             // org/fudgemsg/proto/antlr/Proto.g:117:14: ( ' ' | '\\t' | '\\r' | '\\n' )+
-            int cnt17=0;
-            loop17:
+            int cnt18=0;
+            loop18:
             do {
-                int alt17=2;
-                int LA17_0 = input.LA(1);
+                int alt18=2;
+                int LA18_0 = input.LA(1);
 
-                if ( ((LA17_0>='\t' && LA17_0<='\n')||LA17_0=='\r'||LA17_0==' ') ) {
-                    alt17=1;
+                if ( ((LA18_0>='\t' && LA18_0<='\n')||LA18_0=='\r'||LA18_0==' ') ) {
+                    alt18=1;
                 }
 
 
-                switch (alt17) {
+                switch (alt18) {
             	case 1 :
             	    // org/fudgemsg/proto/antlr/Proto.g:
             	    {
@@ -1874,12 +1891,12 @@ public class ProtoLexer extends Lexer {
             	    break;
 
             	default :
-            	    if ( cnt17 >= 1 ) break loop17;
+            	    if ( cnt18 >= 1 ) break loop18;
                         EarlyExitException eee =
-                            new EarlyExitException(17, input);
+                            new EarlyExitException(18, input);
                         throw eee;
                 }
-                cnt17++;
+                cnt18++;
             } while (true);
 
              skip (); 
@@ -1896,9 +1913,9 @@ public class ProtoLexer extends Lexer {
 
     public void mTokens() throws RecognitionException {
         // org/fudgemsg/proto/antlr/Proto.g:1:8: ( BINDING | DEFAULT | ENUM | EXTENDS | EXTERN | IMPORT | MESSAGE | MUTABLE | NAMESPACE | REPEATED | REQUIRED | T_BOOL | T_BYTE | T_DOUBLE | T_DATE | T_DATETIME | T_FLOAT | T_INDICATOR | T_INT | T_LONG | T_SHORT | T_STRING | T_TIME | TAXONOMY | USES | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | COMMENT | IDENTIFIER | INTEGER | FLOAT | ML_COMMENT | ML_STRING | STRING | WHITESPACE )
-        int alt18=58;
-        alt18 = dfa18.predict(input);
-        switch (alt18) {
+        int alt19=58;
+        alt19 = dfa19.predict(input);
+        switch (alt19) {
             case 1 :
                 // org/fudgemsg/proto/antlr/Proto.g:1:10: BINDING
                 {
@@ -2311,21 +2328,21 @@ public class ProtoLexer extends Lexer {
     }
 
 
-    protected DFA13 dfa13 = new DFA13(this);
-    protected DFA18 dfa18 = new DFA18(this);
-    static final String DFA13_eotS =
+    protected DFA14 dfa14 = new DFA14(this);
+    protected DFA19 dfa19 = new DFA19(this);
+    static final String DFA14_eotS =
         "\6\uffff";
-    static final String DFA13_eofS =
+    static final String DFA14_eofS =
         "\6\uffff";
-    static final String DFA13_minS =
+    static final String DFA14_minS =
         "\2\0\1\uffff\2\0\1\uffff";
-    static final String DFA13_maxS =
+    static final String DFA14_maxS =
         "\2\uffff\1\uffff\2\uffff\1\uffff";
-    static final String DFA13_acceptS =
+    static final String DFA14_acceptS =
         "\2\uffff\1\1\2\uffff\1\2";
-    static final String DFA13_specialS =
-        "\1\3\1\0\1\uffff\1\1\1\2\1\uffff}>";
-    static final String[] DFA13_transitionS = {
+    static final String DFA14_specialS =
+        "\1\1\1\0\1\uffff\1\2\1\3\1\uffff}>";
+    static final String[] DFA14_transitionS = {
             "\12\2\1\1\2\2\1\1\ufff2\2",
             "\101\2\32\3\6\2\32\3\uff85\2",
             "",
@@ -2334,34 +2351,34 @@ public class ProtoLexer extends Lexer {
             ""
     };
 
-    static final short[] DFA13_eot = DFA.unpackEncodedString(DFA13_eotS);
-    static final short[] DFA13_eof = DFA.unpackEncodedString(DFA13_eofS);
-    static final char[] DFA13_min = DFA.unpackEncodedStringToUnsignedChars(DFA13_minS);
-    static final char[] DFA13_max = DFA.unpackEncodedStringToUnsignedChars(DFA13_maxS);
-    static final short[] DFA13_accept = DFA.unpackEncodedString(DFA13_acceptS);
-    static final short[] DFA13_special = DFA.unpackEncodedString(DFA13_specialS);
-    static final short[][] DFA13_transition;
+    static final short[] DFA14_eot = DFA.unpackEncodedString(DFA14_eotS);
+    static final short[] DFA14_eof = DFA.unpackEncodedString(DFA14_eofS);
+    static final char[] DFA14_min = DFA.unpackEncodedStringToUnsignedChars(DFA14_minS);
+    static final char[] DFA14_max = DFA.unpackEncodedStringToUnsignedChars(DFA14_maxS);
+    static final short[] DFA14_accept = DFA.unpackEncodedString(DFA14_acceptS);
+    static final short[] DFA14_special = DFA.unpackEncodedString(DFA14_specialS);
+    static final short[][] DFA14_transition;
 
     static {
-        int numStates = DFA13_transitionS.length;
-        DFA13_transition = new short[numStates][];
+        int numStates = DFA14_transitionS.length;
+        DFA14_transition = new short[numStates][];
         for (int i=0; i<numStates; i++) {
-            DFA13_transition[i] = DFA.unpackEncodedString(DFA13_transitionS[i]);
+            DFA14_transition[i] = DFA.unpackEncodedString(DFA14_transitionS[i]);
         }
     }
 
-    class DFA13 extends DFA {
+    class DFA14 extends DFA {
 
-        public DFA13(BaseRecognizer recognizer) {
+        public DFA14(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 13;
-            this.eot = DFA13_eot;
-            this.eof = DFA13_eof;
-            this.min = DFA13_min;
-            this.max = DFA13_max;
-            this.accept = DFA13_accept;
-            this.special = DFA13_special;
-            this.transition = DFA13_transition;
+            this.decisionNumber = 14;
+            this.eot = DFA14_eot;
+            this.eof = DFA14_eof;
+            this.min = DFA14_min;
+            this.max = DFA14_max;
+            this.accept = DFA14_accept;
+            this.special = DFA14_special;
+            this.transition = DFA14_transition;
         }
         public String getDescription() {
             return "()* loopback of 115:52: ( options {greedy=false; } : . )*";
@@ -2371,55 +2388,55 @@ public class ProtoLexer extends Lexer {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA13_1 = input.LA(1);
+                        int LA14_1 = input.LA(1);
 
                         s = -1;
-                        if ( ((LA13_1>='\u0000' && LA13_1<='@')||(LA13_1>='[' && LA13_1<='`')||(LA13_1>='{' && LA13_1<='\uFFFF')) ) {s = 2;}
+                        if ( ((LA14_1>='A' && LA14_1<='Z')||(LA14_1>='a' && LA14_1<='z')) ) {s = 3;}
 
-                        else if ( ((LA13_1>='A' && LA13_1<='Z')||(LA13_1>='a' && LA13_1<='z')) ) {s = 3;}
+                        else if ( ((LA14_1>='\u0000' && LA14_1<='@')||(LA14_1>='[' && LA14_1<='`')||(LA14_1>='{' && LA14_1<='\uFFFF')) ) {s = 2;}
 
                         if ( s>=0 ) return s;
                         break;
                     case 1 : 
-                        int LA13_3 = input.LA(1);
+                        int LA14_0 = input.LA(1);
 
                         s = -1;
-                        if ( ((LA13_3>='\u0000' && LA13_3<=':')||(LA13_3>='<' && LA13_3<='@')||(LA13_3>='[' && LA13_3<='`')||(LA13_3>='{' && LA13_3<='\uFFFF')) ) {s = 2;}
+                        if ( (LA14_0=='\n'||LA14_0=='\r') ) {s = 1;}
 
-                        else if ( (LA13_3==';') ) {s = 4;}
-
-                        else if ( ((LA13_3>='A' && LA13_3<='Z')||(LA13_3>='a' && LA13_3<='z')) ) {s = 3;}
+                        else if ( ((LA14_0>='\u0000' && LA14_0<='\t')||(LA14_0>='\u000B' && LA14_0<='\f')||(LA14_0>='\u000E' && LA14_0<='\uFFFF')) ) {s = 2;}
 
                         if ( s>=0 ) return s;
                         break;
                     case 2 : 
-                        int LA13_4 = input.LA(1);
+                        int LA14_3 = input.LA(1);
 
                         s = -1;
-                        if ( (LA13_4=='\n'||LA13_4=='\r') ) {s = 5;}
+                        if ( (LA14_3==';') ) {s = 4;}
 
-                        else if ( ((LA13_4>='\u0000' && LA13_4<='\t')||(LA13_4>='\u000B' && LA13_4<='\f')||(LA13_4>='\u000E' && LA13_4<='\uFFFF')) ) {s = 2;}
+                        else if ( ((LA14_3>='A' && LA14_3<='Z')||(LA14_3>='a' && LA14_3<='z')) ) {s = 3;}
+
+                        else if ( ((LA14_3>='\u0000' && LA14_3<=':')||(LA14_3>='<' && LA14_3<='@')||(LA14_3>='[' && LA14_3<='`')||(LA14_3>='{' && LA14_3<='\uFFFF')) ) {s = 2;}
 
                         if ( s>=0 ) return s;
                         break;
                     case 3 : 
-                        int LA13_0 = input.LA(1);
+                        int LA14_4 = input.LA(1);
 
                         s = -1;
-                        if ( (LA13_0=='\n'||LA13_0=='\r') ) {s = 1;}
+                        if ( (LA14_4=='\n'||LA14_4=='\r') ) {s = 5;}
 
-                        else if ( ((LA13_0>='\u0000' && LA13_0<='\t')||(LA13_0>='\u000B' && LA13_0<='\f')||(LA13_0>='\u000E' && LA13_0<='\uFFFF')) ) {s = 2;}
+                        else if ( ((LA14_4>='\u0000' && LA14_4<='\t')||(LA14_4>='\u000B' && LA14_4<='\f')||(LA14_4>='\u000E' && LA14_4<='\uFFFF')) ) {s = 2;}
 
                         if ( s>=0 ) return s;
                         break;
             }
             NoViableAltException nvae =
-                new NoViableAltException(getDescription(), 13, _s, input);
+                new NoViableAltException(getDescription(), 14, _s, input);
             error(nvae);
             throw nvae;
         }
     }
-    static final String DFA18_eotS =
+    static final String DFA19_eotS =
         "\1\uffff\14\27\7\uffff\1\27\1\67\3\uffff\1\73\3\uffff\32\27\5\uffff"+
         "\12\27\1\147\22\27\1\173\1\174\2\27\1\u0080\1\u0081\3\27\1\u0086"+
         "\4\27\1\uffff\7\27\1\u0092\4\27\1\u0098\1\27\1\u009a\4\27\2\uffff"+
@@ -2431,9 +2448,9 @@ public class ProtoLexer extends Lexer {
         "\3\27\1\u00e6\1\u00e7\1\u00e8\1\u00e9\3\uffff\3\27\2\uffff\1\27"+
         "\3\uffff\1\u00ee\1\uffff\1\27\3\uffff\1\27\1\u00f1\1\u00f2\4\uffff"+
         "\1\u00f3\1\u00f4\1\u00f5\1\u00f6\1\uffff\1\u00f7\1\u00f8\10\uffff";
-    static final String DFA18_eofS =
+    static final String DFA19_eofS =
         "\u00f9\uffff";
-    static final String DFA18_minS =
+    static final String DFA19_minS =
         "\1\11\1\151\1\141\1\156\1\155\1\145\1\141\1\145\1\151\1\157\1\146"+
         "\1\141\1\151\7\uffff\1\160\1\60\1\52\1\uffff\2\56\3\uffff\1\156"+
         "\1\157\1\164\1\146\1\165\1\164\1\165\1\164\1\160\1\144\1\163\1\164"+
@@ -2452,7 +2469,7 @@ public class ProtoLexer extends Lexer {
         "\60\1\141\3\60\1\uffff\1\145\1\60\2\uffff\1\157\3\60\1\143\2\144"+
         "\4\60\3\uffff\1\62\1\64\1\171\2\uffff\1\154\3\uffff\1\60\1\uffff"+
         "\1\162\3\uffff\1\145\2\60\4\uffff\4\60\1\uffff\2\60\10\uffff";
-    static final String DFA18_maxS =
+    static final String DFA19_maxS =
         "\1\175\1\171\1\157\1\170\1\156\1\165\1\141\1\145\1\154\1\157\1\164"+
         "\1\151\1\163\7\uffff\1\160\1\71\1\57\1\uffff\2\71\3\uffff\1\156"+
         "\1\157\1\164\1\146\1\165\1\164\1\165\1\164\1\160\1\164\1\163\1\164"+
@@ -2472,7 +2489,7 @@ public class ProtoLexer extends Lexer {
         "\2\144\4\172\3\uffff\1\62\1\64\1\171\2\uffff\1\154\3\uffff\1\172"+
         "\1\uffff\1\162\3\uffff\1\145\2\172\4\uffff\4\172\1\uffff\2\172\10"+
         "\uffff";
-    static final String DFA18_acceptS =
+    static final String DFA19_acceptS =
         "\15\uffff\1\32\1\33\1\34\1\35\1\36\1\37\1\40\3\uffff\1\64\2\uffff"+
         "\1\70\1\71\1\72\32\uffff\1\62\1\66\1\63\1\67\1\65\53\uffff\1\23"+
         "\23\uffff\1\14\1\15\3\uffff\1\17\1\3\4\uffff\1\43\13\uffff\1\24"+
@@ -2481,9 +2498,9 @@ public class ProtoLexer extends Lexer {
         "\47\1\55\3\uffff\1\46\1\54\1\uffff\1\1\1\42\1\2\1\uffff\1\4\1\uffff"+
         "\1\52\1\7\1\10\3\uffff\1\60\1\61\1\50\1\56\4\uffff\1\20\2\uffff"+
         "\1\12\1\13\1\51\1\57\1\30\1\41\1\22\1\11";
-    static final String DFA18_specialS =
+    static final String DFA19_specialS =
         "\u00f9\uffff}>";
-    static final String[] DFA18_transitionS = {
+    static final String[] DFA19_transitionS = {
             "\2\34\2\uffff\1\34\22\uffff\1\34\1\uffff\1\33\10\uffff\1\30"+
             "\1\23\1\30\1\25\1\26\12\31\1\uffff\1\17\1\32\1\20\3\uffff\32"+
             "\27\1\21\1\uffff\1\22\1\uffff\1\27\1\uffff\1\27\1\1\1\27\1\2"+
@@ -2741,34 +2758,34 @@ public class ProtoLexer extends Lexer {
             ""
     };
 
-    static final short[] DFA18_eot = DFA.unpackEncodedString(DFA18_eotS);
-    static final short[] DFA18_eof = DFA.unpackEncodedString(DFA18_eofS);
-    static final char[] DFA18_min = DFA.unpackEncodedStringToUnsignedChars(DFA18_minS);
-    static final char[] DFA18_max = DFA.unpackEncodedStringToUnsignedChars(DFA18_maxS);
-    static final short[] DFA18_accept = DFA.unpackEncodedString(DFA18_acceptS);
-    static final short[] DFA18_special = DFA.unpackEncodedString(DFA18_specialS);
-    static final short[][] DFA18_transition;
+    static final short[] DFA19_eot = DFA.unpackEncodedString(DFA19_eotS);
+    static final short[] DFA19_eof = DFA.unpackEncodedString(DFA19_eofS);
+    static final char[] DFA19_min = DFA.unpackEncodedStringToUnsignedChars(DFA19_minS);
+    static final char[] DFA19_max = DFA.unpackEncodedStringToUnsignedChars(DFA19_maxS);
+    static final short[] DFA19_accept = DFA.unpackEncodedString(DFA19_acceptS);
+    static final short[] DFA19_special = DFA.unpackEncodedString(DFA19_specialS);
+    static final short[][] DFA19_transition;
 
     static {
-        int numStates = DFA18_transitionS.length;
-        DFA18_transition = new short[numStates][];
+        int numStates = DFA19_transitionS.length;
+        DFA19_transition = new short[numStates][];
         for (int i=0; i<numStates; i++) {
-            DFA18_transition[i] = DFA.unpackEncodedString(DFA18_transitionS[i]);
+            DFA19_transition[i] = DFA.unpackEncodedString(DFA19_transitionS[i]);
         }
     }
 
-    class DFA18 extends DFA {
+    class DFA19 extends DFA {
 
-        public DFA18(BaseRecognizer recognizer) {
+        public DFA19(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 18;
-            this.eot = DFA18_eot;
-            this.eof = DFA18_eof;
-            this.min = DFA18_min;
-            this.max = DFA18_max;
-            this.accept = DFA18_accept;
-            this.special = DFA18_special;
-            this.transition = DFA18_transition;
+            this.decisionNumber = 19;
+            this.eot = DFA19_eot;
+            this.eof = DFA19_eof;
+            this.min = DFA19_min;
+            this.max = DFA19_max;
+            this.accept = DFA19_accept;
+            this.special = DFA19_special;
+            this.transition = DFA19_transition;
         }
         public String getDescription() {
             return "1:1: Tokens : ( BINDING | DEFAULT | ENUM | EXTENDS | EXTERN | IMPORT | MESSAGE | MUTABLE | NAMESPACE | REPEATED | REQUIRED | T_BOOL | T_BYTE | T_DOUBLE | T_DATE | T_DATETIME | T_FLOAT | T_INDICATOR | T_INT | T_LONG | T_SHORT | T_STRING | T_TIME | TAXONOMY | USES | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | COMMENT | IDENTIFIER | INTEGER | FLOAT | ML_COMMENT | ML_STRING | STRING | WHITESPACE );";

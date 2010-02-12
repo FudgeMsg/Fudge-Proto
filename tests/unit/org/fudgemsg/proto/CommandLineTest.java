@@ -19,27 +19,43 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Test;
 
 public class CommandLineTest {
   
+  private static final Map<String,Boolean> s_compiled = new HashMap<String,Boolean> ();
+  
+  protected static String getTestBaseDir () {
+    // TODO 2010-02-12 Andrew -- this won't work in the combined OG-Build tests
+    return "tests";
+  }
+  
+  protected static String getTestPath (final String ... components) {
+    final StringBuilder path = new StringBuilder (getTestBaseDir ());
+    for (String component : components) {
+      path.append (File.separatorChar).append (component);
+    }
+    return path.toString ();
+  }
+  
   @Test
   public void parameterPassing () {
-    assertEquals (CommandLine.compile (new String[] { }), 0); // no parameters = no action, okay
-    assertEquals (CommandLine.compile (new String[] { "-dtests" + File.separatorChar + "output" }), 0); // select a different output folder
-    assertEquals (CommandLine.compile (new String[] { "-lC#" }), 0); // select a different language
-    assertEquals (CommandLine.compile (new String[] { "-stests" + File.separatorChar + "proto" }), 0); // select a different language
-    assertEquals (CommandLine.compile (new String[] { "-ptests" + File.separatorChar + "out_proto" }), 0); // set a search path
-    assertEquals (CommandLine.compile (new String[] { "-Xequals", "-lJava" }), 1); // code gen option before language
-    assertEquals (CommandLine.compile (new String[] { "-lJava", "-Xequals", "-XhashCode", "-XtoString" }), 0); // valid code gen options for Java
-    assertEquals (CommandLine.compile (new String[] { "-lJava", "-Xfoo" }), 1); // invalid code gen option for Java
-    assertEquals (CommandLine.compile (new String[] { "-x" }), 1); // bad parameter
+    assertEquals (0, CommandLine.compile (new String[] { })); // no parameters = no action, okay
+    assertEquals (0, CommandLine.compile (new String[] { "-d" + getTestPath ("output") })); // select a different output folder
+    assertEquals (0, CommandLine.compile (new String[] { "-lC#" })); // select a different language
+    assertEquals (0, CommandLine.compile (new String[] { "-s" + getTestPath ("proto") })); // select a different language
+    assertEquals (0, CommandLine.compile (new String[] { "-p" + getTestPath ("proto") })); // set a search path
+    assertEquals (1, CommandLine.compile (new String[] { "-Xequals", "-lJava" })); // code gen option before language
+    assertEquals (0, CommandLine.compile (new String[] { "-lJava", "-Xequals", "-XhashCode", "-XtoString" })); // valid code gen options for Java
+    assertEquals (1, CommandLine.compile (new String[] { "-lJava", "-Xfoo" })); // invalid code gen option for Java
+    assertEquals (1, CommandLine.compile (new String[] { "-x" })); // bad parameter
   }
   
   @Test
   public void simpleFileAllCodeGenerators () {
-    assertEquals (CommandLine.compile (new String[] { "-dtests" + File.separatorChar + "out_default", "tests" + File.separatorChar + "proto" + File.separatorChar + "simple.proto" }), 0); // default compilation
     fileAllCodeGenerators ("simple.proto");
   }
   
@@ -85,22 +101,52 @@ public class CommandLineTest {
   
   private void fileAllCodeGenerators (final String filename) {
     final CodeGeneratorFactory factory = new CodeGeneratorFactory ();
-    // Don't assert on each call so that we get a plethora of error behaviours from all generators, not just the first one to fall over!
     int errorCount = 0;
+    if (!fileCodeGenerator (filename, null)) errorCount++; // default compilation
     for (String language : factory.getLanguages ()) {
-      final ArrayList<String> args = new ArrayList<String> ();
-      args.add ("-dtests" + File.separatorChar + "out_" + language);
-      args.add ("-l" + language);
-      args.add ("-stests" + File.separatorChar + "proto");
-      args.add (filename);
-      if (language.equals ("Java")) {
-        args.add ("-Xequals");
-        args.add ("-XhashCode");
-        args.add ("-XtoString");
-      }
-      if (CommandLine.compile (args.toArray (new String[0])) != 0) errorCount++;
+      if (!fileCodeGenerator (filename, language)) errorCount++;
     }
     assertEquals (errorCount, 0);
+  }
+  
+  protected static void codeGeneratorAllFiles (final String language) {
+    fileCodeGenerator ("simple.proto", language);
+    fileCodeGenerator ("Literals.proto", language);
+    fileCodeGenerator ("namespace.proto", language);
+    fileCodeGenerator ("taxonomy.proto", language);
+    fileCodeGenerator ("types.proto", language);
+    fileCodeGenerator ("mutables.proto", language);
+    fileCodeGenerator ("inheritance.proto", language);
+    fileCodeGenerator ("binding.proto", language);
+    fileCodeGenerator ("extern.proto", language);
+  }
+  
+  protected static boolean fileCodeGenerator (final String filename, final String language) {
+    final String key = filename + ":" + language;
+    if (s_compiled.containsKey (key)) {
+      final boolean result = s_compiled.get (key);
+      System.out.println ("File " + filename + " already processed for " + language + " (" + (result ? "Ok" : "Failed") + ")");
+      return result;
+    }
+    final ArrayList<String> args = new ArrayList<String> ();
+    args.add ("-d" + getTestPath ("out_" + (language != null ? language : "default")));
+    args.add ("-s" + getTestPath ("proto"));
+    if (language != null) {
+      args.add ("-l" + language);
+      addLanguageOptions (language, args);
+    }
+    args.add (filename);
+    final boolean result = (CommandLine.compile (args.toArray (new String[0])) == 0);
+    s_compiled.put (key, result);
+    return result;
+  }
+  
+  protected static void addLanguageOptions (final String language, final ArrayList<String> args) {
+    if (language.equals ("Java")) {
+      args.add ("-Xequals");
+      args.add ("-XhashCode");
+      args.add ("-XtoString");
+    }
   }
   
 }

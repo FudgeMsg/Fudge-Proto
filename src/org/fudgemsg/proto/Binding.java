@@ -15,8 +15,9 @@
 
 package org.fudgemsg.proto;
 
-import java.util.Map;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Language binding data. This is custom code and instructions specific for a given code generator
@@ -57,6 +58,10 @@ public class Binding {
   public Data getData (final String key) {
     if (key == null) throw new IllegalArgumentException ("key must not be null");
     return _data.get (key);
+  }
+  
+  public Map<String,Data> getAllData () {
+    return Collections.unmodifiableMap (_data);
   }
   
   /* package */ void setData (final String key, final String data, final CodePosition codePosition) {

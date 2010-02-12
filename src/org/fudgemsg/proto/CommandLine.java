@@ -68,8 +68,8 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
       final int ext = stem.length ();
       stem.append (".proto");
       final File f = new File (dir, stem.toString ());
-      stem.delete (ext, ext + 6);
       if (f.exists ()) return new SourceFile (stem.toString (), f, this, compilationTarget);
+      stem.delete (ext, ext + 6);
     }
     return null;
   }

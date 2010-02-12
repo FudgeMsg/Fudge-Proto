@@ -109,7 +109,7 @@ tokens {
 COMMENT : '//' ( options { greedy = false; } : . )* ('\n'|'\r') { skip (); } ;
 IDENTIFIER : ('a'..'z'|'A'..'Z'|'_')('a'..'z'|'A'..'Z'|'0'..'9'|'_')* ;
 INTEGER : ('+'|'-')? '0'..'9'+ ;
-FLOAT : ('+'|'-')? ('0'..'9')* '.' ('0'..'9')+ ( ('e'|'E') ('+'|'-')? ('0'..'9')+ )? ;
+FLOAT : ('+'|'-')? ('0'..'9')* '.' ('0'..'9')+ ( ('e'|'E') ('+'|'-')? ('0'..'9')+ )? 'f'? ;
 ML_COMMENT : '/*' ( options { greedy = false; } : . )* '*/' { skip (); } ;
 // Note: the lex rule below is NOT correct
 ML_STRING : '<<<' ('a'..'z'|'A'..'Z')+ ('\r'|'\n') ( options { greedy = false; } : . )* ('\r'|'\n') ('a'..'z'|'A'..'Z')+ ';' ('\r'|'\n') ;

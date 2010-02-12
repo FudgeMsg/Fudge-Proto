@@ -14,7 +14,7 @@
 
 Name:		fudge-proto
 Version:	0.1
-Release:	1%{?dist}
+Release:	beta1%{?dist}
 Summary:	Fudge proto file compiler
 
 Group:		Development/Tools
@@ -25,7 +25,7 @@ Source1:	fudge-proto-javadocs.jar
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 BuildArch:	noarch
 
-Requires:	jpackage-utils, fudge-java, antlr3
+Requires:	jpackage-utils, fudge-java, antlr3, jakarta-commons-lang
 
 %description
 Generates Java, C, C++, and C# bindings for Fudge messages described by the .proto syntax.
@@ -43,7 +43,7 @@ cd %{buildroot}%{_javadocdir}/%{name}-%{version}
 jar xf %{SOURCE1}
 cd ..
 ln -s %{name}-%{version} %{name}
-%jpackage_script org.fudgemsg.proto.CommandLine "" "" %{name}.jar:fudge-java.jar:antlr3.jar %{name}
+%jpackage_script org.fudgemsg.proto.CommandLine "" "" %{name}.jar:fudge-java.jar:antlr3.jar:jakarta-commons-lang.jar %{name}
 
 %clean
 #rm -rf $RPM_BUILD_ROOT

@@ -18,14 +18,16 @@ package org.fudgemsg.proto.proto;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import org.fudgemsg.FudgeTypeDictionary;
-import org.fudgemsg.proto.c.CBlockCode;
-import org.fudgemsg.proto.c.CLiteralCode;
+import org.fudgemsg.proto.Binding;
 import org.fudgemsg.proto.CodeGeneratorUtil;
 import org.fudgemsg.proto.Compiler;
+import org.fudgemsg.proto.Definition;
 import org.fudgemsg.proto.EnumDefinition;
 import org.fudgemsg.proto.FieldDefinition;
 import org.fudgemsg.proto.FieldType;
@@ -33,7 +35,7 @@ import org.fudgemsg.proto.IndentWriter;
 import org.fudgemsg.proto.LiteralValue;
 import org.fudgemsg.proto.MessageDefinition;
 import org.fudgemsg.proto.TaxonomyDefinition;
-import org.fudgemsg.proto.Definition;
+import org.fudgemsg.proto.c.CBlockCode;
 
 /**
  * Code generator for internal use, creating files in the format read by the
@@ -47,58 +49,101 @@ class ProtoClassCode extends ImplementationlessClassCode {
   /* package */static final ProtoClassCode INSTANCE = new ProtoClassCode();
   
   private ProtoClassCode() {
-    super (new DocumentedClassCode (blockCodeDelegate (new CBlockCode (literalCodeDelegate (CLiteralCode.INSTANCE)))));
+    super (new DocumentedClassCode (blockCodeDelegate (new CBlockCode (literalCodeDelegate (ProtoLiteralCode.INSTANCE)))));
   }
   
-  private void beginDeclaration (final IndentWriter writer, final Definition definition, final String type) throws IOException {
+  private void beginNSDeclaration (final IndentWriter writer, final Definition definition) throws IOException {
     if (definition.getOuterDefinition () == null) {
       final String ns = definition.getNamespace ();
       if (ns != null) {
-        writer.write ("namespace ");
-        writer.write (ns);
+        writer.write ("namespace " + ns);
         beginBlock (writer); // namespace
       }
     }
-    writer.write (type);
-    writer.write (' ');
-    writer.write (definition.getName ());
-    beginBlock (writer); // declaration
   }
   
-  private void endDeclaration (final IndentWriter writer, final Definition definition) throws IOException {
-    endBlock (writer); // declaration
+  private void endNSDeclaration (final IndentWriter writer, final Definition definition) throws IOException {
     if (definition.getOuterDefinition () == null) {
       if (definition.getNamespace () != null) endBlock (writer); // namespace
+    }
+  }
+  
+  private void writeExternalReference (final IndentWriter writer, final Definition definition, Set<Definition> processed) throws IOException {
+    if (!processed.contains (definition)) {
+      processed.add (definition);
+      if (definition instanceof MessageDefinition) {
+        writer.write ("extern message " + definition.getIdentifier ());
+      } else if (definition instanceof EnumDefinition) {
+        writer.write ("extern enum " + definition.getIdentifier ());
+      } else if (definition instanceof TaxonomyDefinition) {
+        writer.write ("extern taxonomy " + definition.getIdentifier ());
+      } else {
+        throw new IllegalStateException ("invalid external reference " + definition);
+      }
+      endStmt (writer);
+    }
+  }
+  
+  private void writeExternalReferences (final IndentWriter writer, final MessageDefinition message, Set<Definition> processed) throws IOException {
+    if (message.getExtends () != null) {
+      if (!message.getExtends ().isCompilationTarget ()) {
+        writeExternalReference (writer, message.getExtends (), processed);
+      }
+    }
+    for (MessageDefinition subMessage : message.getMessageDefinitions ()) {
+      writeExternalReferences (writer, subMessage, processed);
+    }
+    for (FieldDefinition field : message.getFieldDefinitions ()) {
+      final FieldType type = field.getType ();
+      final Definition definition;
+      if (type instanceof FieldType.MessageType) {
+        definition = ((FieldType.MessageType)type).getMessageDefinition ();
+        if (definition == MessageDefinition.ANONYMOUS) continue;
+      } else if (type instanceof FieldType.EnumType) {
+        definition = ((FieldType.EnumType)type).getEnumDefinition ();
+      } else {
+        continue;
+      }
+      if (!definition.isCompilationTarget ()) {
+        writeExternalReference (writer, definition, processed);
+      }
     }
   }
 
   @Override
   public void beginClassHeaderDeclaration(final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
-    beginDeclaration (writer, message, "message");
+    if (message.getOuterDefinition () == null) {
+      final Set<Definition> processed = new HashSet<Definition> ();
+      writeExternalReferences (writer, message, processed);
+    }
+    beginNSDeclaration (writer, message);
+    writer.write ("message " + message.getName ());
+    if (message.getExtends () != null) {
+      writer.write (" extends " + message.getExtends ().getIdentifier ());
+    }
+    beginBlock (writer); // declaration
   }
 
   @Override
   public void endClassHeaderDeclaration(final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
-    endDeclaration (writer, message);
+    writeBinding (writer, message);
+    endBlock (writer); // declaration
+    endNSDeclaration (writer, message);
   }
 
   @Override
   public void writeClassHeaderAttribute(final Compiler.Context context, final FieldDefinition field, final IndentWriter writer) throws IOException {
     writer.write(field.isRequired() ? "required " : "optional ");
     if (field.isRepeated()) writer.write("repeated ");
-    writer.write(typeString(field.getType()));
-    writer.write(' ');
-    writer.write(field.getName());
+    if (field.isMutable ()) writer.write ("mutable ");
+    writer.write (typeString(field.getType ()) + " " + field.getName ());
     final Integer ordinal = field.getOrdinal();
     if (ordinal != null) {
-      writer.write(" = ");
-      writer.write(ordinal.toString());
+      writer.write (" = " + ordinal.toString ());
     }
     final LiteralValue defaultValue = field.getDefaultValue();
     if (defaultValue != null) {
-      writer.write(" [default = ");
-      writer.write (getLiteral (defaultValue));
-      writer.write("]");
+      writer.write (" [default = " + getLiteral (defaultValue) + "]");
     }
     endStmt (writer);
   }
@@ -142,12 +187,14 @@ class ProtoClassCode extends ImplementationlessClassCode {
       }
       return sb.toString();
     } else if (type instanceof FieldType.EnumType) {
-      // For an enum we can always use the name as it will have been declared in
-      // the nearest scope
-      return ((FieldType.EnumType) type).getEnumDefinition().getName();
+      return ((FieldType.EnumType) type).getEnumDefinition().getIdentifier ();
     } else if (type instanceof FieldType.MessageType) {
-      // For a message, we'll just use the fully qualified name - it's easier than tracking the scope accurately
-      return ((FieldType.MessageType) type).getMessageDefinition().getIdentifier ();
+      final MessageDefinition messageDefinition = ((FieldType.MessageType) type).getMessageDefinition();
+      if (messageDefinition == MessageDefinition.ANONYMOUS) {
+        return "message";
+      } else {
+        return messageDefinition.getIdentifier ();
+      }
     } else {
       switch (type.getFudgeFieldType()) {
       case FudgeTypeDictionary.INDICATOR_TYPE_ID:
@@ -184,33 +231,60 @@ class ProtoClassCode extends ImplementationlessClassCode {
   
   @Override
   public void writeEnumHeaderDeclaration (final Compiler.Context context, final EnumDefinition enumDefinition, final IndentWriter writer) throws IOException {
-    writer.write("enum ");
-    writer.write(enumDefinition.getName());
-    beginBlock (writer);
+    beginNSDeclaration (writer, enumDefinition);
+    writer.write ("enum " + enumDefinition.getName ());
+    beginBlock (writer); // enum decl
     final Iterator<Map.Entry<String, Integer>> elements = enumDefinition.getElements();
     while (elements.hasNext()) {
       final Map.Entry<String, Integer> element = elements.next();
-      writer.write(element.getKey());
-      writer.write(" = ");
-      writer.write(element.getValue().toString());
+      writer.write (element.getKey () + " = " + element.getValue ().toString ());
       endStmt (writer);
     }
-    endBlock (writer);
+    writeBinding (writer, enumDefinition);
+    endBlock (writer); // enum decl
+    endNSDeclaration (writer, enumDefinition);
   }
   
   @Override
   public void writeTaxonomyHeaderDeclaration (final Compiler.Context context, final TaxonomyDefinition taxonomy, final IndentWriter writer) throws IOException {
     super.writeTaxonomyHeaderDeclaration (context, taxonomy, writer);
-    beginDeclaration (writer, taxonomy, "taxonomy");
+    beginNSDeclaration (writer, taxonomy);
+    writer.write ("taxonomy " + taxonomy.getName ());
+    beginBlock (writer); // taxonomy
     final Iterator<Map.Entry<String,Integer>> elements = taxonomy.getElements ();
     while (elements.hasNext ()) {
       final Map.Entry<String,Integer> element = elements.next ();
-      writer.write (element.getKey ());
-      writer.write (" = ");
-      writer.write (element.getValue ().toString ());
+      writer.write (element.getKey () + " = " + element.getValue ().toString ());
       endStmt (writer);
     }
-    endDeclaration (writer, taxonomy);
+    writeBinding (writer, taxonomy);
+    endBlock (writer); // taxonomy
+    endNSDeclaration (writer, taxonomy);
+  }
+  
+  private void writeBinding (final IndentWriter writer, final Definition definition) throws IOException {
+    for (final Map.Entry<String,Binding> entry : definition.getAllLanguageBindings ().entrySet ()) {
+      writer.write ("binding \"" + entry.getKey () + "\"");
+      beginBlock (writer);
+      for (final Map.Entry<String,Binding.Data> binding : entry.getValue ().getAllData ().entrySet ()) {
+        writer.write (binding.getKey () + " \"");
+        final String str = binding.getValue ().getValue ();
+        for (int i = 0; i < str.length (); i++) {
+          final char c = str.charAt (i);
+          switch (c) {
+          case '\n' : writer.write ("\\n"); break;
+          case '\r' : writer.write ("\\r"); break;
+          case '\\' : writer.write ("\\"); break;
+          case '\"' : writer.write ("\""); break;
+          case '\'' : writer.write ("\'"); break;
+          default : writer.write (c); break;
+          }
+        }
+        writer.write ("\"");
+        endStmt (writer);
+      }
+      endBlock (writer);
+    }
   }
 
 }

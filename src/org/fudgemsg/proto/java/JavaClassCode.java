@@ -659,7 +659,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         if (type instanceof FieldType.AnonMessageType) {
           value = "fudgeContext.newMessage (" + value + ")";
         } else {
-          if (((FieldType.MessageType)type).getMessageDefinition ().referencesExternal ()) {
+          if (((FieldType.MessageType)type).getMessageDefinition ().hasExternalMessageReferences ()) {
             value = "fudgeContext.objectToFudgeMsg (" + value + ")";
           } else {
             value = value + ".toFudgeMsg (fudgeContext)";
@@ -675,7 +675,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   }
   
   private void writeToFudgeMsg (JavaWriter writer, final MessageDefinition message) throws IOException {
-    final String contextClass = message.referencesExternal () ? CLASS_FUDGESERIALISATIONCONTEXT : CLASS_FUDGEMESSAGEFACTORY;
+    final String contextClass = message.hasExternalMessageReferences () ? CLASS_FUDGESERIALISATIONCONTEXT : CLASS_FUDGEMESSAGEFACTORY;
     writer.method (false, CLASS_FUDGEFIELDCONTAINER, "toFudgeMsg", "final " + contextClass + " fudgeContext");
     writer = beginBlock (writer); // toFudgeMsg
     writer.ifNull ("fudgeContext");
@@ -939,7 +939,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       } else {
         if (msg.isExternal ()) {
           writer.assignment (assignTo, "fudgeContext.fudgeMsgToObject (" + messageType (msg) + ".class, " + value + ")");
-        } else if (msg.referencesExternal ()) {
+        } else if (msg.hasExternalMessageReferences ()) {
           writer.assignment (assignTo, messageType (msg) + ".fromFudgeMsg (fudgeContext, " + value + ")");
         } else {
           writer.assignment (assignTo, messageType (msg) + ".fromFudgeMsg (" + value + ")");
@@ -1085,7 +1085,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   private void writeProtectedFudgeMsgConstructor (final IndentWriter writer, final boolean builder, final MessageDefinition message) throws IOException {
     final MessageDefinition superMessage = message.getExtends ();
     writer.write ("protected " + (builder ? "Builder" : message.getName ()) + " (");
-    if (message.referencesExternal ()) {
+    if (message.hasExternalMessageReferences ()) {
       writer.write ("final " + CLASS_FUDGEDESERIALISATIONCONTEXT + " fudgeContext, ");
     }
     writer.write ("final " + CLASS_FUDGEFIELDCONTAINER + " fudgeMsg)");
@@ -1095,13 +1095,13 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         // we don't have a super constructor, so store a template of the root message
         if (superMessage.isExternal ()) {
           writer.write ("_fudgeRoot = fudgeContext.fudgeMsgToObject (" + superMessage.getIdentifier () + ".class, fudgeMsg)");
-        } else if (superMessage.referencesExternal ()) {
+        } else if (superMessage.hasExternalMessageReferences ()) {
           writer.write ("_fudgeRoot = " + superMessage.getIdentifier () + ".fromFudgeMsg (fudgeContext, fudgeMsg)");
         } else {
           writer.write ("_fudgeRoot = " + superMessage.getIdentifier () + ".fromFudgeMsg (fudgeMsg)");
         }
       } else {
-        if (superMessage.referencesExternal ()) {
+        if (superMessage.hasExternalMessageReferences ()) {
           writer.write ("super (fudgeContext, fudgeMsg)");
         } else {
           writer.write ("super (fudgeMsg)");
@@ -1180,7 +1180,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   
   private void writeFromFudgeMsg (final IndentWriter writer, final MessageDefinition message, final boolean useBuilder) throws IOException {
     final String params;
-    if (message.referencesExternal ()) {
+    if (message.hasExternalMessageReferences ()) {
       writer.write ("public static " + message.getName () + " fromFudgeMsg (final " + CLASS_FUDGEDESERIALISATIONCONTEXT + " fudgeContext, final " + CLASS_FUDGEFIELDCONTAINER + " fudgeMsg)");
       params = "fudgeContext, fudgeMsg";
     } else {

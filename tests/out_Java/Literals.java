@@ -1,5 +1,5 @@
 // Automatically created - do not modify
-// Created from Literals:3(8)
+// Created from Literals.proto:3(8)
 public class Literals implements java.io.Serializable {
   private static final long serialVersionUID = 2215538162932658061l;
   private final double _nullDouble;
