@@ -269,7 +269,8 @@
 	<target name="publish" depends="clean-build, jar"
 		description="--> publish this project in the ivy repository">
 		<ivy:publish artifactspattern="${build.dir}/[artifact].[ext]"
-			resolver="shared" pubrevision="${version}" status="release" />
+			resolver="shared" pubrevision="${version}" status="release"
+			overwrite="true" />
 		<echo message="project ${ant.project.name} released with version ${version}" />
 	</target>
 
