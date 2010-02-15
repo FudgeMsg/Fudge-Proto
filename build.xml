@@ -75,7 +75,7 @@
 		</path>
 		<taskdef name="fudgeproto" classname="org.fudgemsg.proto.AntTask" classpathref="fudge.proto.path.id" />
 		<mkdir dir="${tests.dir}/out_ant" />
-		<fudgeproto srcdir="${tests.dir}/proto" destdir="${tests.dir}/out_ant" verbose="${build.verbose}" />
+		<fudgeproto srcdir="${tests.dir}/proto" destdir="${tests.dir}/out_ant" verbose="${build.verbose}" fudgeContext="null /* compiles but crashes! */" />
 	</target>
 
 	<import file="${common.dir}/common.xml"/>

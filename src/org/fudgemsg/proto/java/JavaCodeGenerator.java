@@ -89,15 +89,26 @@ public class JavaCodeGenerator extends InnerClassCodeGenerator {
   public void writeClassImplementationConstructor (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
     super.writeClassImplementationConstructor (context, message, writer);
     // The hack below is something I'm not too keen on
-    if (message.hasExternalMessageReferences ()) {
-      String globalFudgeContext = ProtoBinding.FUDGECONTEXT.get (message);
-      if (globalFudgeContext == null) {
-        globalFudgeContext = getGlobalFudgeContext ();
-      }
-      if (globalFudgeContext != null) {
+    String globalFudgeContext = ProtoBinding.FUDGECONTEXT.get (message);
+    if (globalFudgeContext == null) {
+      globalFudgeContext = getGlobalFudgeContext ();
+    }
+    if (globalFudgeContext != null) {
+      if (message.hasExternalMessageReferences ()) {
         writer.write ("public static " + message.getName () + " fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg)");
         beginBlock (writer);
         writer.write ("return fromFudgeMsg (new org.fudgemsg.mapping.FudgeDeserializationContext (" + globalFudgeContext + "), fudgeMsg)");
+        endStmt (writer);
+        endBlock (writer);
+        writer.write ("public org.fudgemsg.FudgeFieldContainer toFudgeMsg ()");
+        beginBlock (writer);
+        writer.write ("return toFudgeMsg (new org.fudgemsg.mapping.FudgeSerializationContext (" + globalFudgeContext + "))");
+        endStmt (writer);
+        endBlock (writer);
+      } else {
+        writer.write ("public org.fudgemsg.FudgeFieldContainer toFudgeMsg ()");
+        beginBlock (writer);
+        writer.write ("return toFudgeMsg (" + globalFudgeContext + ")");
         endStmt (writer);
         endBlock (writer);
       }

@@ -1,5 +1,6 @@
 build/
 classes/
+dist/
 docs/
 ivy/
 lib/

@@ -157,8 +157,8 @@ public class Compiler {
   
   private File _targetPath = null;
   
-  //private boolean _rethrowExceptions = false; // for production build
-  private boolean _rethrowExceptions = true; // for debug build
+  private boolean _rethrowExceptions = false; // for production build
+  //private boolean _rethrowExceptions = true; // for debug build
   
   /**
    * Creates a new compiler object. Note that a compiler is not thread-safe. If you want to do concurrent compilations, use multiple Compiler objects.

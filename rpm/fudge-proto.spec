@@ -13,7 +13,7 @@
 # limitations under the License.
 
 Name:		fudge-proto
-Version:	0.1
+Version:	0.2
 Release:	beta1%{?dist}
 Summary:	Fudge proto file compiler
 
@@ -46,7 +46,7 @@ ln -s %{name}-%{version} %{name}
 %jpackage_script org.fudgemsg.proto.CommandLine "" "" %{name}.jar:fudge-java.jar:antlr3.jar:jakarta-commons-lang.jar %{name}
 
 %clean
-#rm -rf $RPM_BUILD_ROOT
+rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(0644,root,root,0755)
@@ -59,5 +59,7 @@ ln -s %{name}-%{version} %{name}
 %{_bindir}/%{name}
 
 %changelog
-* Fri Jan 8 2010 Andrew Griffin <andrew@opengamma.com
+* Mon Feb 15 2010 Andrew Griffin <andrew@opengamma.com>
+- Version incremented to 0.2beta1
+* Fri Jan 8 2010 Andrew Griffin <andrew@opengamma.com>
 - file created
