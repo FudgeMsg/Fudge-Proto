@@ -225,6 +225,7 @@ public class SubClassA extends org.fudgemsg.proto.tests.inheritance.BaseClassA i
     return java.util.Collections.unmodifiableList (_scA_rq);
   }
   public boolean equals (final Object o) {
+    if (o == this) return true;
     if (o == null) return false;
     if (!(o instanceof SubClassA)) return false;
     SubClassA msg = (SubClassA)o;

@@ -1368,6 +1368,7 @@ public class MutableRATypes_Optional implements java.io.Serializable, ATypesBase
     __Time.add (java.util.Arrays.copyOf (_Time, _Time.length));
   }
   public boolean equals (final Object o) {
+    if (o == this) return true;
     if (o == null) return false;
     if (!(o instanceof MutableRATypes_Optional)) return false;
     MutableRATypes_Optional msg = (MutableRATypes_Optional)o;

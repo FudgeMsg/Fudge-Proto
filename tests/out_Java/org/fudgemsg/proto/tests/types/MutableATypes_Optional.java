@@ -630,6 +630,7 @@ public class MutableATypes_Optional implements java.io.Serializable, ATypesBase 
     }
   }
   public boolean equals (final Object o) {
+    if (o == this) return true;
     if (o == null) return false;
     if (!(o instanceof MutableATypes_Optional)) return false;
     MutableATypes_Optional msg = (MutableATypes_Optional)o;

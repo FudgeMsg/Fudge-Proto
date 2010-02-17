@@ -106,6 +106,7 @@ public class Person implements java.io.Serializable {
       return _type;
     }
     public boolean equals (final Object o) {
+      if (o == this) return true;
       if (o == null) return false;
       if (!(o instanceof PhoneNumber)) return false;
       PhoneNumber msg = (PhoneNumber)o;
@@ -329,6 +330,7 @@ public class Person implements java.io.Serializable {
     return java.util.Collections.unmodifiableList (_phone);
   }
   public boolean equals (final Object o) {
+    if (o == this) return true;
     if (o == null) return false;
     if (!(o instanceof Person)) return false;
     Person msg = (Person)o;

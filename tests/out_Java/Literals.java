@@ -563,6 +563,7 @@ public class Literals implements java.io.Serializable {
     return _escapeString;
   }
   public boolean equals (final Object o) {
+    if (o == this) return true;
     if (o == null) return false;
     if (!(o instanceof Literals)) return false;
     Literals msg = (Literals)o;

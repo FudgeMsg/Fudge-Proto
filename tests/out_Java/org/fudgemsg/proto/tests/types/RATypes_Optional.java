@@ -1573,6 +1573,7 @@ public class RATypes_Optional implements java.io.Serializable, ATypesBase {
     return java.util.Collections.unmodifiableList (__Time);
   }
   public boolean equals (final Object o) {
+    if (o == this) return true;
     if (o == null) return false;
     if (!(o instanceof RATypes_Optional)) return false;
     RATypes_Optional msg = (RATypes_Optional)o;

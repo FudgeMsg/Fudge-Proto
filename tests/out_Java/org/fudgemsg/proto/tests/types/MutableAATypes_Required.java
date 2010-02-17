@@ -1000,6 +1000,7 @@ public class MutableAATypes_Required implements java.io.Serializable, AATypesBas
     }
   }
   public boolean equals (final Object o) {
+    if (o == this) return true;
     if (o == null) return false;
     if (!(o instanceof MutableAATypes_Required)) return false;
     MutableAATypes_Required msg = (MutableAATypes_Required)o;

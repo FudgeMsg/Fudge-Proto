@@ -74,6 +74,7 @@ public class NoneSome implements java.io.Serializable {
     return _bar;
   }
   public boolean equals (final Object o) {
+    if (o == this) return true;
     if (o == null) return false;
     if (!(o instanceof NoneSome)) return false;
     NoneSome msg = (NoneSome)o;

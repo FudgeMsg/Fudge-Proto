@@ -970,6 +970,7 @@ public class RATypes_Required implements java.io.Serializable, ATypesBase {
     return java.util.Collections.unmodifiableList (__Time);
   }
   public boolean equals (final Object o) {
+    if (o == this) return true;
     if (o == null) return false;
     if (!(o instanceof RATypes_Required)) return false;
     RATypes_Required msg = (RATypes_Required)o;

@@ -219,6 +219,7 @@ public class BaseClassB implements java.io.Serializable {
     return java.util.Collections.unmodifiableList (_bcB_rq);
   }
   public boolean equals (final Object o) {
+    if (o == this) return true;
     if (o == null) return false;
     if (!(o instanceof BaseClassB)) return false;
     BaseClassB msg = (BaseClassB)o;

@@ -299,6 +299,7 @@ public class FixedArrays_Optional implements java.io.Serializable {
     return _fixedArray4;
   }
   public boolean equals (final Object o) {
+    if (o == this) return true;
     if (o == null) return false;
     if (!(o instanceof FixedArrays_Optional)) return false;
     FixedArrays_Optional msg = (FixedArrays_Optional)o;

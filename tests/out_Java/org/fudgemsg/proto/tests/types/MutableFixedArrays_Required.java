@@ -250,6 +250,7 @@ public class MutableFixedArrays_Required implements java.io.Serializable {
     }
   }
   public boolean equals (final Object o) {
+    if (o == this) return true;
     if (o == null) return false;
     if (!(o instanceof MutableFixedArrays_Required)) return false;
     MutableFixedArrays_Required msg = (MutableFixedArrays_Required)o;
