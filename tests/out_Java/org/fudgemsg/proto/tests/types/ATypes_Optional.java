@@ -730,6 +730,7 @@ public class ATypes_Optional implements java.io.Serializable, ATypesBase {
     return __Time;
   }
   public boolean equals (final Object o) {
+    if (o == this) return true;
     if (o == null) return false;
     if (!(o instanceof ATypes_Optional)) return false;
     ATypes_Optional msg = (ATypes_Optional)o;

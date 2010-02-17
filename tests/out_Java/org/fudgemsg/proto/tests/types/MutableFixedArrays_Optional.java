@@ -256,6 +256,7 @@ public class MutableFixedArrays_Optional implements java.io.Serializable {
     }
   }
   public boolean equals (final Object o) {
+    if (o == this) return true;
     if (o == null) return false;
     if (!(o instanceof MutableFixedArrays_Optional)) return false;
     MutableFixedArrays_Optional msg = (MutableFixedArrays_Optional)o;

@@ -60,6 +60,7 @@ public class BuilderFromBuilder extends org.fudgemsg.proto.tests.inheritance.Bui
     return _c;
   }
   public boolean equals (final Object o) {
+    if (o == this) return true;
     if (o == null) return false;
     if (!(o instanceof BuilderFromBuilder)) return false;
     BuilderFromBuilder msg = (BuilderFromBuilder)o;

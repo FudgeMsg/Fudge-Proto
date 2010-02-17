@@ -71,6 +71,7 @@ public class Bar implements java.io.Serializable {
     return _foo;
   }
   public boolean equals (final Object o) {
+    if (o == this) return true;
     if (o == null) return false;
     if (!(o instanceof Bar)) return false;
     Bar msg = (Bar)o;

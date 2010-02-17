@@ -1176,6 +1176,7 @@ public class AATypes_Optional implements java.io.Serializable, AATypesBase {
     return __Time;
   }
   public boolean equals (final Object o) {
+    if (o == this) return true;
     if (o == null) return false;
     if (!(o instanceof AATypes_Optional)) return false;
     AATypes_Optional msg = (AATypes_Optional)o;

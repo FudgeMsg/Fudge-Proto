@@ -1201,6 +1201,8 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   public void writeClassImplementationEquality (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
     writer.write ("public boolean equals (final Object o)");
     beginBlock (writer);
+    writer.write ("if (o == this) return true");
+    endStmt (writer);
     writer.write ("if (o == null) return false");
     endStmt (writer);
     writer.write ("if (!(o instanceof "  + message.getName () + ")) return false");

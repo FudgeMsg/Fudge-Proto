@@ -62,6 +62,7 @@ public class BuilderFromNonBuilder extends org.fudgemsg.proto.tests.inheritance.
     return _c;
   }
   public boolean equals (final Object o) {
+    if (o == this) return true;
     if (o == null) return false;
     if (!(o instanceof BuilderFromNonBuilder)) return false;
     BuilderFromNonBuilder msg = (BuilderFromNonBuilder)o;

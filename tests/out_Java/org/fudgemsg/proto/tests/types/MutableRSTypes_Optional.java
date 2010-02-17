@@ -1128,6 +1128,7 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
     __Time.add (_Time);
   }
   public boolean equals (final Object o) {
+    if (o == this) return true;
     if (o == null) return false;
     if (!(o instanceof MutableRSTypes_Optional)) return false;
     MutableRSTypes_Optional msg = (MutableRSTypes_Optional)o;

@@ -349,6 +349,7 @@ public class MutableSTypes_Optional implements java.io.Serializable, TypesBase {
     __Time = _Time;
   }
   public boolean equals (final Object o) {
+    if (o == this) return true;
     if (o == null) return false;
     if (!(o instanceof MutableSTypes_Optional)) return false;
     MutableSTypes_Optional msg = (MutableSTypes_Optional)o;

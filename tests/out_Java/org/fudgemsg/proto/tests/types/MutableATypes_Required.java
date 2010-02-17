@@ -611,6 +611,7 @@ public class MutableATypes_Required implements java.io.Serializable, ATypesBase 
     }
   }
   public boolean equals (final Object o) {
+    if (o == this) return true;
     if (o == null) return false;
     if (!(o instanceof MutableATypes_Required)) return false;
     MutableATypes_Required msg = (MutableATypes_Required)o;

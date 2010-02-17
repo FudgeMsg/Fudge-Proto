@@ -750,6 +750,7 @@ public class RSTypes_Required implements java.io.Serializable, RSTypesBase {
     return java.util.Collections.unmodifiableList (__Time);
   }
   public boolean equals (final Object o) {
+    if (o == this) return true;
     if (o == null) return false;
     if (!(o instanceof RSTypes_Required)) return false;
     RSTypes_Required msg = (RSTypes_Required)o;

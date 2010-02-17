@@ -848,6 +848,7 @@ public class AATypes_Required implements java.io.Serializable, AATypesBase {
     return __Time;
   }
   public boolean equals (final Object o) {
+    if (o == this) return true;
     if (o == null) return false;
     if (!(o instanceof AATypes_Required)) return false;
     AATypes_Required msg = (AATypes_Required)o;
