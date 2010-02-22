@@ -1,6 +1,6 @@
 <ivy-module version="2.0">
     <info organisation="org.fudgemsg" module="fudge-proto" status="integration">
-      <license name="APLv2" url="http://www.apache.org/licenses/LICENSE-2.0"/>
+      <license name="Apache License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0"/>
       <ivyauthor name="Andrew Griffin" url="mailto:andrew@opengamma.com"/>
       <description homepage="http://www.fudgemsg.org/">
       </description>
@@ -16,9 +16,9 @@
 
     <dependencies>
         <dependency org="org.apache.commons" name="commons-lang" rev="2.4" conf="core->*"/>
-        <dependency org="org.apache.ant" name="ant" rev="1.7.1" conf="core->*" />
-        <dependency org="org.junit" name="junit" rev="4.7" conf="core->*"/>
-        <dependency org="org.antlr" name="antlr" rev="3.1" conf="core->*"/>
+        <dependency org="org.apache.ant" name="ant" rev="[1.7.0,1.8.0[" conf="core->*" />
+        <dependency org="org.junit" name="junit" rev="[4.7,5.0[" conf="core->*"/>
+        <dependency org="org.antlr" name="antlr" rev="[3.1,4.0[" conf="core->*"/>
         <dependency org="org.fudgemsg" name="fudge-java" rev="latest.integration" conf="core->*"/>
     </dependencies>
 </ivy-module>
