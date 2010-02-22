@@ -1278,7 +1278,14 @@ public class RATypes_Optional implements java.io.Serializable, ATypesBase {
       for (org.fudgemsg.proto.tests.types.SubMessage[] fudge1 : __SubMessage) {
         final org.fudgemsg.MutableFudgeFieldContainer fudge2 = fudgeContext.newMessage ();
         for (org.fudgemsg.proto.tests.types.SubMessage fudge3 : fudge1) {
-          fudge2.add (null, null, fudge3.toFudgeMsg (fudgeContext));
+          final org.fudgemsg.MutableFudgeFieldContainer fudge4 = fudgeContext.newMessage ();
+          Class<?> fudge5 = fudge3.getClass ();
+          while (!org.fudgemsg.proto.tests.types.SubMessage.class.equals (fudge5)) {
+            fudge4.add (null, 0, org.fudgemsg.types.StringFieldType.INSTANCE, fudge5.getName ());
+            fudge5 = fudge5.getSuperclass ();
+          }
+          fudge3.toFudgeMsg (fudgeContext, fudge4);
+          fudge2.add (null, null, fudge4);
         }
         msg.add (_SUBMESSAGE_KEY, null, fudge2);
       }
@@ -1330,6 +1337,17 @@ public class RATypes_Optional implements java.io.Serializable, ATypesBase {
     }
   }
   public static RATypes_Optional fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
+    final java.util.List<org.fudgemsg.FudgeField> types = fudgeMsg.getAllByOrdinal (0);
+    for (org.fudgemsg.FudgeField field : types) {
+      final String className = (String)field.getValue ();
+      if ("org.fudgemsg.proto.tests.types.RATypes_Optional".equals (className)) break;
+      try {
+        return (org.fudgemsg.proto.tests.types.RATypes_Optional)Class.forName (className).getDeclaredMethod ("fromFudgeMsg", org.fudgemsg.FudgeFieldContainer.class).invoke (null, fudgeMsg);
+      }
+      catch (Throwable t) {
+        // no-action
+      }
+    }
     return new Builder (fudgeMsg).build ();
   }
   public boolean[] get_Bool () {

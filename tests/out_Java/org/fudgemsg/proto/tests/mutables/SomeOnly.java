@@ -30,10 +30,13 @@ public class SomeOnly implements java.io.Serializable {
       throw new IllegalArgumentException ("Fudge message is not a SomeOnly - field 'bar' is not integer", e);
     }
   }
-  public SomeOnly (final SomeOnly source) {
+  protected SomeOnly (final SomeOnly source) {
     if (source == null) throw new NullPointerException ("'source' must not be null");
     _foo = source._foo;
     _bar = source._bar;
+  }
+  public SomeOnly clone () {
+    return new SomeOnly (this);
   }
   public org.fudgemsg.FudgeFieldContainer toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext) {
     if (fudgeContext == null) throw new NullPointerException ("fudgeContext must not be null");
@@ -46,6 +49,17 @@ public class SomeOnly implements java.io.Serializable {
     msg.add (BAR_KEY, null, _bar);
   }
   public static SomeOnly fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
+    final java.util.List<org.fudgemsg.FudgeField> types = fudgeMsg.getAllByOrdinal (0);
+    for (org.fudgemsg.FudgeField field : types) {
+      final String className = (String)field.getValue ();
+      if ("org.fudgemsg.proto.tests.mutables.SomeOnly".equals (className)) break;
+      try {
+        return (org.fudgemsg.proto.tests.mutables.SomeOnly)Class.forName (className).getDeclaredMethod ("fromFudgeMsg", org.fudgemsg.FudgeFieldContainer.class).invoke (null, fudgeMsg);
+      }
+      catch (Throwable t) {
+        // no-action
+      }
+    }
     return new SomeOnly (fudgeMsg);
   }
   public int getFoo () {

@@ -61,10 +61,28 @@ public class Bar implements java.io.Serializable {
   }
   public void toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext, final org.fudgemsg.MutableFudgeFieldContainer msg) {
     if (_foo != null)  {
-      msg.add (FOO_KEY, null, _foo.toFudgeMsg (fudgeContext));
+      final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
+      Class<?> fudge2 = _foo.getClass ();
+      while (!org.fudgemsg.proto.tests.namespace.Foo.class.equals (fudge2)) {
+        fudge1.add (null, 0, org.fudgemsg.types.StringFieldType.INSTANCE, fudge2.getName ());
+        fudge2 = fudge2.getSuperclass ();
+      }
+      _foo.toFudgeMsg (fudgeContext, fudge1);
+      msg.add (FOO_KEY, null, fudge1);
     }
   }
   public static Bar fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
+    final java.util.List<org.fudgemsg.FudgeField> types = fudgeMsg.getAllByOrdinal (0);
+    for (org.fudgemsg.FudgeField field : types) {
+      final String className = (String)field.getValue ();
+      if ("org.fudgemsg.proto.tests.namespace.subnamespace.Bar".equals (className)) break;
+      try {
+        return (org.fudgemsg.proto.tests.namespace.subnamespace.Bar)Class.forName (className).getDeclaredMethod ("fromFudgeMsg", org.fudgemsg.FudgeFieldContainer.class).invoke (null, fudgeMsg);
+      }
+      catch (Throwable t) {
+        // no-action
+      }
+    }
     return new Builder (fudgeMsg).build ();
   }
   public org.fudgemsg.proto.tests.namespace.Foo getFoo () {

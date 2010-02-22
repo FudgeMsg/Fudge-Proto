@@ -36,6 +36,17 @@ public class IdentificationDomain implements java.io.Serializable {
     }
   }
   public static IdentificationDomain fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
+    final java.util.List<org.fudgemsg.FudgeField> types = fudgeMsg.getAllByOrdinal (0);
+    for (org.fudgemsg.FudgeField field : types) {
+      final String className = (String)field.getValue ();
+      if ("org.fudgemsg.proto.tests.binding.IdentificationDomain".equals (className)) break;
+      try {
+        return (org.fudgemsg.proto.tests.binding.IdentificationDomain)Class.forName (className).getDeclaredMethod ("fromFudgeMsg", org.fudgemsg.FudgeFieldContainer.class).invoke (null, fudgeMsg);
+      }
+      catch (Throwable t) {
+        // no-action
+      }
+    }
     return new IdentificationDomain (fudgeMsg);
   }
   public String getDomainName () {

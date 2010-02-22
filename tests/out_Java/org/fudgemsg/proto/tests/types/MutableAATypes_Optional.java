@@ -542,7 +542,7 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
       __Time = _Time;
     }
   }
-  public MutableAATypes_Optional (final MutableAATypes_Optional source) {
+  protected MutableAATypes_Optional (final MutableAATypes_Optional source) {
     if (source == null) throw new NullPointerException ("'source' must not be null");
     if (source.__Bool == null) __Bool = null;
     else {
@@ -667,6 +667,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
       __Time = fudge0;
     }
   }
+  public MutableAATypes_Optional clone () {
+    return new MutableAATypes_Optional (this);
+  }
   public org.fudgemsg.FudgeFieldContainer toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext) {
     if (fudgeContext == null) throw new NullPointerException ("fudgeContext must not be null");
     final org.fudgemsg.MutableFudgeFieldContainer msg = fudgeContext.newMessage ();
@@ -754,7 +757,14 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
       for (org.fudgemsg.proto.tests.types.SubMessage[] fudge2 : __SubMessage) {
         final org.fudgemsg.MutableFudgeFieldContainer fudge3 = fudgeContext.newMessage ();
         for (org.fudgemsg.proto.tests.types.SubMessage fudge4 : fudge2) {
-          fudge3.add (null, null, fudge4.toFudgeMsg (fudgeContext));
+          final org.fudgemsg.MutableFudgeFieldContainer fudge5 = fudgeContext.newMessage ();
+          Class<?> fudge6 = fudge4.getClass ();
+          while (!org.fudgemsg.proto.tests.types.SubMessage.class.equals (fudge6)) {
+            fudge5.add (null, 0, org.fudgemsg.types.StringFieldType.INSTANCE, fudge6.getName ());
+            fudge6 = fudge6.getSuperclass ();
+          }
+          fudge4.toFudgeMsg (fudgeContext, fudge5);
+          fudge3.add (null, null, fudge5);
         }
         fudge1.add (null, null, fudge3);
       }
@@ -817,6 +827,17 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     }
   }
   public static MutableAATypes_Optional fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
+    final java.util.List<org.fudgemsg.FudgeField> types = fudgeMsg.getAllByOrdinal (0);
+    for (org.fudgemsg.FudgeField field : types) {
+      final String className = (String)field.getValue ();
+      if ("org.fudgemsg.proto.tests.types.MutableAATypes_Optional".equals (className)) break;
+      try {
+        return (org.fudgemsg.proto.tests.types.MutableAATypes_Optional)Class.forName (className).getDeclaredMethod ("fromFudgeMsg", org.fudgemsg.FudgeFieldContainer.class).invoke (null, fudgeMsg);
+      }
+      catch (Throwable t) {
+        // no-action
+      }
+    }
     return new MutableAATypes_Optional (fudgeMsg);
   }
   public boolean[][] get_Bool () {

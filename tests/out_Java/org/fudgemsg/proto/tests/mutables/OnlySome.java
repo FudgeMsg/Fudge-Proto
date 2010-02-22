@@ -34,10 +34,13 @@ public class OnlySome implements java.io.Serializable {
     _foo = foo;
     _bar = bar;
   }
-  public OnlySome (final OnlySome source) {
+  protected OnlySome (final OnlySome source) {
     if (source == null) throw new NullPointerException ("'source' must not be null");
     _foo = source._foo;
     _bar = source._bar;
+  }
+  public OnlySome clone () {
+    return new OnlySome (this);
   }
   public org.fudgemsg.FudgeFieldContainer toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext) {
     if (fudgeContext == null) throw new NullPointerException ("fudgeContext must not be null");
@@ -50,6 +53,17 @@ public class OnlySome implements java.io.Serializable {
     msg.add (BAR_KEY, null, _bar);
   }
   public static OnlySome fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
+    final java.util.List<org.fudgemsg.FudgeField> types = fudgeMsg.getAllByOrdinal (0);
+    for (org.fudgemsg.FudgeField field : types) {
+      final String className = (String)field.getValue ();
+      if ("org.fudgemsg.proto.tests.mutables.OnlySome".equals (className)) break;
+      try {
+        return (org.fudgemsg.proto.tests.mutables.OnlySome)Class.forName (className).getDeclaredMethod ("fromFudgeMsg", org.fudgemsg.FudgeFieldContainer.class).invoke (null, fudgeMsg);
+      }
+      catch (Throwable t) {
+        // no-action
+      }
+    }
     return new OnlySome (fudgeMsg);
   }
   public int getFoo () {

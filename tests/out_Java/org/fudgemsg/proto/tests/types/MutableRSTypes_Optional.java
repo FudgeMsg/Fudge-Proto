@@ -387,7 +387,7 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
       __Time = fudge0;
     }
   }
-  public MutableRSTypes_Optional (final MutableRSTypes_Optional source) {
+  protected MutableRSTypes_Optional (final MutableRSTypes_Optional source) {
     if (source == null) throw new NullPointerException ("'source' must not be null");
     if (source.__Bool == null) __Bool = null;
     else {
@@ -455,6 +455,9 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
       __Time = new java.util.ArrayList<org.fudgemsg.types.FudgeTime> (source.__Time);
     }
   }
+  public MutableRSTypes_Optional clone () {
+    return new MutableRSTypes_Optional (this);
+  }
   public org.fudgemsg.FudgeFieldContainer toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext) {
     if (fudgeContext == null) throw new NullPointerException ("fudgeContext must not be null");
     final org.fudgemsg.MutableFudgeFieldContainer msg = fudgeContext.newMessage ();
@@ -509,7 +512,14 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
     }
     if (__SubMessage != null)  {
       for (org.fudgemsg.proto.tests.types.SubMessage fudge1 : __SubMessage) {
-        msg.add (_SUBMESSAGE_KEY, null, fudge1.toFudgeMsg (fudgeContext));
+        final org.fudgemsg.MutableFudgeFieldContainer fudge2 = fudgeContext.newMessage ();
+        Class<?> fudge3 = fudge1.getClass ();
+        while (!org.fudgemsg.proto.tests.types.SubMessage.class.equals (fudge3)) {
+          fudge2.add (null, 0, org.fudgemsg.types.StringFieldType.INSTANCE, fudge3.getName ());
+          fudge3 = fudge3.getSuperclass ();
+        }
+        fudge1.toFudgeMsg (fudgeContext, fudge2);
+        msg.add (_SUBMESSAGE_KEY, null, fudge2);
       }
     }
     if (__CustomEnum != null)  {
@@ -539,6 +549,17 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
     }
   }
   public static MutableRSTypes_Optional fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
+    final java.util.List<org.fudgemsg.FudgeField> types = fudgeMsg.getAllByOrdinal (0);
+    for (org.fudgemsg.FudgeField field : types) {
+      final String className = (String)field.getValue ();
+      if ("org.fudgemsg.proto.tests.types.MutableRSTypes_Optional".equals (className)) break;
+      try {
+        return (org.fudgemsg.proto.tests.types.MutableRSTypes_Optional)Class.forName (className).getDeclaredMethod ("fromFudgeMsg", org.fudgemsg.FudgeFieldContainer.class).invoke (null, fudgeMsg);
+      }
+      catch (Throwable t) {
+        // no-action
+      }
+    }
     return new MutableRSTypes_Optional (fudgeMsg);
   }
   public Boolean get_Bool () {

@@ -89,6 +89,17 @@ public class UsesExtern implements java.io.Serializable {
     }
   }
   public static UsesExtern fromFudgeMsg (final org.fudgemsg.mapping.FudgeDeserializationContext fudgeContext, final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
+    final java.util.List<org.fudgemsg.FudgeField> types = fudgeMsg.getAllByOrdinal (0);
+    for (org.fudgemsg.FudgeField field : types) {
+      final String className = (String)field.getValue ();
+      if ("org.fudgemsg.proto.tests.extern.UsesExtern".equals (className)) break;
+      try {
+        return (org.fudgemsg.proto.tests.extern.UsesExtern)Class.forName (className).getDeclaredMethod ("fromFudgeMsg", org.fudgemsg.mapping.FudgeDeserializationContext.class, org.fudgemsg.FudgeFieldContainer.class).invoke (null, fudgeContext, fudgeMsg);
+      }
+      catch (Throwable t) {
+        // no-action
+      }
+    }
     return new Builder (fudgeContext, fudgeMsg).build ();
   }
   public org.fudgemsg.proto.tests.ExternalMessage getFoo () {

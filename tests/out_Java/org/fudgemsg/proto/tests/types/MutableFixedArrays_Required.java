@@ -123,7 +123,7 @@ public class MutableFixedArrays_Required implements java.io.Serializable {
       throw new IllegalArgumentException ("Fudge message is not a MutableFixedArrays_Required - field 'fixedArray4' is not integer[42][42]", e);
     }
   }
-  public MutableFixedArrays_Required (final MutableFixedArrays_Required source) {
+  protected MutableFixedArrays_Required (final MutableFixedArrays_Required source) {
     if (source == null) throw new NullPointerException ("'source' must not be null");
     if (source._fixedArray1 == null) _fixedArray1 = null;
     else {
@@ -153,6 +153,9 @@ public class MutableFixedArrays_Required implements java.io.Serializable {
       }
       _fixedArray4 = fudge0;
     }
+  }
+  public MutableFixedArrays_Required clone () {
+    return new MutableFixedArrays_Required (this);
   }
   public org.fudgemsg.FudgeFieldContainer toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext) {
     if (fudgeContext == null) throw new NullPointerException ("fudgeContext must not be null");
@@ -187,6 +190,17 @@ public class MutableFixedArrays_Required implements java.io.Serializable {
     }
   }
   public static MutableFixedArrays_Required fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
+    final java.util.List<org.fudgemsg.FudgeField> types = fudgeMsg.getAllByOrdinal (0);
+    for (org.fudgemsg.FudgeField field : types) {
+      final String className = (String)field.getValue ();
+      if ("org.fudgemsg.proto.tests.types.MutableFixedArrays_Required".equals (className)) break;
+      try {
+        return (org.fudgemsg.proto.tests.types.MutableFixedArrays_Required)Class.forName (className).getDeclaredMethod ("fromFudgeMsg", org.fudgemsg.FudgeFieldContainer.class).invoke (null, fudgeMsg);
+      }
+      catch (Throwable t) {
+        // no-action
+      }
+    }
     return new MutableFixedArrays_Required (fudgeMsg);
   }
   public int[] getFixedArray1 () {

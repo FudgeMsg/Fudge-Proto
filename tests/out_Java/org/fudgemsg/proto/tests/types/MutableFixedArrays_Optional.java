@@ -129,7 +129,7 @@ public class MutableFixedArrays_Optional implements java.io.Serializable {
       _fixedArray4 = fixedArray4;
     }
   }
-  public MutableFixedArrays_Optional (final MutableFixedArrays_Optional source) {
+  protected MutableFixedArrays_Optional (final MutableFixedArrays_Optional source) {
     if (source == null) throw new NullPointerException ("'source' must not be null");
     if (source._fixedArray1 == null) _fixedArray1 = null;
     else {
@@ -159,6 +159,9 @@ public class MutableFixedArrays_Optional implements java.io.Serializable {
       }
       _fixedArray4 = fudge0;
     }
+  }
+  public MutableFixedArrays_Optional clone () {
+    return new MutableFixedArrays_Optional (this);
   }
   public org.fudgemsg.FudgeFieldContainer toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext) {
     if (fudgeContext == null) throw new NullPointerException ("fudgeContext must not be null");
@@ -193,6 +196,17 @@ public class MutableFixedArrays_Optional implements java.io.Serializable {
     }
   }
   public static MutableFixedArrays_Optional fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
+    final java.util.List<org.fudgemsg.FudgeField> types = fudgeMsg.getAllByOrdinal (0);
+    for (org.fudgemsg.FudgeField field : types) {
+      final String className = (String)field.getValue ();
+      if ("org.fudgemsg.proto.tests.types.MutableFixedArrays_Optional".equals (className)) break;
+      try {
+        return (org.fudgemsg.proto.tests.types.MutableFixedArrays_Optional)Class.forName (className).getDeclaredMethod ("fromFudgeMsg", org.fudgemsg.FudgeFieldContainer.class).invoke (null, fudgeMsg);
+      }
+      catch (Throwable t) {
+        // no-action
+      }
+    }
     return new MutableFixedArrays_Optional (fudgeMsg);
   }
   public int[] getFixedArray1 () {

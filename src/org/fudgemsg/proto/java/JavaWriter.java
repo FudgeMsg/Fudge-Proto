@@ -529,6 +529,12 @@ import org.fudgemsg.proto.EnumDefinition;
       _writer.write(')');
     }
   }
+  
+  /* package */void whileBool (final String expression) throws IOException {
+    _writer.write ("while (");
+    _writer.write (expression);
+    _writer.write (')');
+  }
 
   /* package */IndentWriter getWriter() {
     return _writer;

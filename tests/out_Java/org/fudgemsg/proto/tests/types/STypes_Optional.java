@@ -337,7 +337,14 @@ public class STypes_Optional implements java.io.Serializable, TypesBase {
       msg.add (_STRING_KEY, null, __String);
     }
     if (__SubMessage != null)  {
-      msg.add (_SUBMESSAGE_KEY, null, __SubMessage.toFudgeMsg (fudgeContext));
+      final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
+      Class<?> fudge2 = __SubMessage.getClass ();
+      while (!org.fudgemsg.proto.tests.types.SubMessage.class.equals (fudge2)) {
+        fudge1.add (null, 0, org.fudgemsg.types.StringFieldType.INSTANCE, fudge2.getName ());
+        fudge2 = fudge2.getSuperclass ();
+      }
+      __SubMessage.toFudgeMsg (fudgeContext, fudge1);
+      msg.add (_SUBMESSAGE_KEY, null, fudge1);
     }
     if (__CustomEnum != null)  {
       msg.add (_CUSTOMENUM_KEY, null, __CustomEnum.getFudgeEncoding ());
@@ -356,6 +363,17 @@ public class STypes_Optional implements java.io.Serializable, TypesBase {
     }
   }
   public static STypes_Optional fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
+    final java.util.List<org.fudgemsg.FudgeField> types = fudgeMsg.getAllByOrdinal (0);
+    for (org.fudgemsg.FudgeField field : types) {
+      final String className = (String)field.getValue ();
+      if ("org.fudgemsg.proto.tests.types.STypes_Optional".equals (className)) break;
+      try {
+        return (org.fudgemsg.proto.tests.types.STypes_Optional)Class.forName (className).getDeclaredMethod ("fromFudgeMsg", org.fudgemsg.FudgeFieldContainer.class).invoke (null, fudgeMsg);
+      }
+      catch (Throwable t) {
+        // no-action
+      }
+    }
     return new Builder (fudgeMsg).build ();
   }
   public boolean get_Bool () {

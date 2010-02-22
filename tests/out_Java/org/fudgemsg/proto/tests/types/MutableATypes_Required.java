@@ -314,7 +314,7 @@ public class MutableATypes_Required implements java.io.Serializable, ATypesBase 
       throw new IllegalArgumentException ("Fudge message is not a MutableATypes_Required - field '_Time' is not time[]", e);
     }
   }
-  public MutableATypes_Required (final MutableATypes_Required source) {
+  protected MutableATypes_Required (final MutableATypes_Required source) {
     if (source == null) throw new NullPointerException ("'source' must not be null");
     if (source.__Bool == null) __Bool = null;
     else {
@@ -380,6 +380,9 @@ public class MutableATypes_Required implements java.io.Serializable, ATypesBase 
       __Time = java.util.Arrays.copyOf (source.__Time, source.__Time.length);
     }
   }
+  public MutableATypes_Required clone () {
+    return new MutableATypes_Required (this);
+  }
   public org.fudgemsg.FudgeFieldContainer toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext) {
     if (fudgeContext == null) throw new NullPointerException ("fudgeContext must not be null");
     final org.fudgemsg.MutableFudgeFieldContainer msg = fudgeContext.newMessage ();
@@ -429,7 +432,14 @@ public class MutableATypes_Required implements java.io.Serializable, ATypesBase 
     if (__SubMessage != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
       for (org.fudgemsg.proto.tests.types.SubMessage fudge2 : __SubMessage) {
-        fudge1.add (null, null, fudge2.toFudgeMsg (fudgeContext));
+        final org.fudgemsg.MutableFudgeFieldContainer fudge3 = fudgeContext.newMessage ();
+        Class<?> fudge4 = fudge2.getClass ();
+        while (!org.fudgemsg.proto.tests.types.SubMessage.class.equals (fudge4)) {
+          fudge3.add (null, 0, org.fudgemsg.types.StringFieldType.INSTANCE, fudge4.getName ());
+          fudge4 = fudge4.getSuperclass ();
+        }
+        fudge2.toFudgeMsg (fudgeContext, fudge3);
+        fudge1.add (null, null, fudge3);
       }
       msg.add (_SUBMESSAGE_KEY, null, fudge1);
     }
@@ -470,6 +480,17 @@ public class MutableATypes_Required implements java.io.Serializable, ATypesBase 
     }
   }
   public static MutableATypes_Required fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
+    final java.util.List<org.fudgemsg.FudgeField> types = fudgeMsg.getAllByOrdinal (0);
+    for (org.fudgemsg.FudgeField field : types) {
+      final String className = (String)field.getValue ();
+      if ("org.fudgemsg.proto.tests.types.MutableATypes_Required".equals (className)) break;
+      try {
+        return (org.fudgemsg.proto.tests.types.MutableATypes_Required)Class.forName (className).getDeclaredMethod ("fromFudgeMsg", org.fudgemsg.FudgeFieldContainer.class).invoke (null, fudgeMsg);
+      }
+      catch (Throwable t) {
+        // no-action
+      }
+    }
     return new MutableATypes_Required (fudgeMsg);
   }
   public boolean[] get_Bool () {

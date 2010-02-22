@@ -49,6 +49,17 @@ public class SubMessage implements java.io.Serializable {
     }
   }
   public static SubMessage fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
+    final java.util.List<org.fudgemsg.FudgeField> types = fudgeMsg.getAllByOrdinal (0);
+    for (org.fudgemsg.FudgeField field : types) {
+      final String className = (String)field.getValue ();
+      if ("org.fudgemsg.proto.tests.types.SubMessage".equals (className)) break;
+      try {
+        return (org.fudgemsg.proto.tests.types.SubMessage)Class.forName (className).getDeclaredMethod ("fromFudgeMsg", org.fudgemsg.FudgeFieldContainer.class).invoke (null, fudgeMsg);
+      }
+      catch (Throwable t) {
+        // no-action
+      }
+    }
     return new SubMessage (fudgeMsg);
   }
   public int getI () {

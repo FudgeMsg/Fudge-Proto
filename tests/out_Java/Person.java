@@ -97,6 +97,17 @@ public class Person implements java.io.Serializable {
       }
     }
     public static PhoneNumber fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
+      final java.util.List<org.fudgemsg.FudgeField> types = fudgeMsg.getAllByOrdinal (0);
+      for (org.fudgemsg.FudgeField field : types) {
+        final String className = (String)field.getValue ();
+        if ("Person.PhoneNumber".equals (className)) break;
+        try {
+          return (Person.PhoneNumber)Class.forName (className).getDeclaredMethod ("fromFudgeMsg", org.fudgemsg.FudgeFieldContainer.class).invoke (null, fudgeMsg);
+        }
+        catch (Throwable t) {
+          // no-action
+        }
+      }
       return new Builder (fudgeMsg).build ();
     }
     public String getNumber () {
@@ -297,11 +308,29 @@ public class Person implements java.io.Serializable {
     }
     if (_phone != null)  {
       for (Person.PhoneNumber fudge1 : _phone) {
-        msg.add (PHONE_KEY, 4, fudge1.toFudgeMsg (fudgeContext));
+        final org.fudgemsg.MutableFudgeFieldContainer fudge2 = fudgeContext.newMessage ();
+        Class<?> fudge3 = fudge1.getClass ();
+        while (!Person.PhoneNumber.class.equals (fudge3)) {
+          fudge2.add (null, 0, org.fudgemsg.types.StringFieldType.INSTANCE, fudge3.getName ());
+          fudge3 = fudge3.getSuperclass ();
+        }
+        fudge1.toFudgeMsg (fudgeContext, fudge2);
+        msg.add (PHONE_KEY, 4, fudge2);
       }
     }
   }
   public static Person fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
+    final java.util.List<org.fudgemsg.FudgeField> types = fudgeMsg.getAllByOrdinal (0);
+    for (org.fudgemsg.FudgeField field : types) {
+      final String className = (String)field.getValue ();
+      if ("Person".equals (className)) break;
+      try {
+        return (Person)Class.forName (className).getDeclaredMethod ("fromFudgeMsg", org.fudgemsg.FudgeFieldContainer.class).invoke (null, fudgeMsg);
+      }
+      catch (Throwable t) {
+        // no-action
+      }
+    }
     return new Builder (fudgeMsg).build ();
   }
   public String getName () {

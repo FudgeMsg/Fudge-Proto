@@ -194,7 +194,7 @@ public class MutableSTypes_Optional implements java.io.Serializable, TypesBase {
     __DateTime = _DateTime;
     __Time = _Time;
   }
-  public MutableSTypes_Optional (final MutableSTypes_Optional source) {
+  protected MutableSTypes_Optional (final MutableSTypes_Optional source) {
     if (source == null) throw new NullPointerException ("'source' must not be null");
     __Bool = source.__Bool;
     __Byte = source.__Byte;
@@ -215,6 +215,9 @@ public class MutableSTypes_Optional implements java.io.Serializable, TypesBase {
     __DateTime = source.__DateTime;
     __Time = source.__Time;
   }
+  public MutableSTypes_Optional clone () {
+    return new MutableSTypes_Optional (this);
+  }
   public org.fudgemsg.FudgeFieldContainer toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext) {
     if (fudgeContext == null) throw new NullPointerException ("fudgeContext must not be null");
     final org.fudgemsg.MutableFudgeFieldContainer msg = fudgeContext.newMessage ();
@@ -234,7 +237,14 @@ public class MutableSTypes_Optional implements java.io.Serializable, TypesBase {
       msg.add (_STRING_KEY, null, __String);
     }
     if (__SubMessage != null)  {
-      msg.add (_SUBMESSAGE_KEY, null, __SubMessage.toFudgeMsg (fudgeContext));
+      final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
+      Class<?> fudge2 = __SubMessage.getClass ();
+      while (!org.fudgemsg.proto.tests.types.SubMessage.class.equals (fudge2)) {
+        fudge1.add (null, 0, org.fudgemsg.types.StringFieldType.INSTANCE, fudge2.getName ());
+        fudge2 = fudge2.getSuperclass ();
+      }
+      __SubMessage.toFudgeMsg (fudgeContext, fudge1);
+      msg.add (_SUBMESSAGE_KEY, null, fudge1);
     }
     if (__CustomEnum != null)  {
       msg.add (_CUSTOMENUM_KEY, null, __CustomEnum.getFudgeEncoding ());
@@ -253,6 +263,17 @@ public class MutableSTypes_Optional implements java.io.Serializable, TypesBase {
     }
   }
   public static MutableSTypes_Optional fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
+    final java.util.List<org.fudgemsg.FudgeField> types = fudgeMsg.getAllByOrdinal (0);
+    for (org.fudgemsg.FudgeField field : types) {
+      final String className = (String)field.getValue ();
+      if ("org.fudgemsg.proto.tests.types.MutableSTypes_Optional".equals (className)) break;
+      try {
+        return (org.fudgemsg.proto.tests.types.MutableSTypes_Optional)Class.forName (className).getDeclaredMethod ("fromFudgeMsg", org.fudgemsg.FudgeFieldContainer.class).invoke (null, fudgeMsg);
+      }
+      catch (Throwable t) {
+        // no-action
+      }
+    }
     return new MutableSTypes_Optional (fudgeMsg);
   }
   public boolean get_Bool () {

@@ -1,0 +1,23 @@
+// Polymorphism test (PRO-18)
+
+namespace org.fudgemsg.proto.tests.polymorphism {
+
+  message M1 {
+    mutable string id;
+  }
+  
+  message M2 extends M1 {
+    mutable string foo;
+  }
+  
+  message M3 extends M1 {
+    mutable string bar;
+  }
+  
+  message M4 {
+    mutable M1 foo;
+    mutable M1 bar;
+    mutable M1 other;
+  }
+
+}

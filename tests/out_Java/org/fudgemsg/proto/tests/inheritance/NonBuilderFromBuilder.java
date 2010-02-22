@@ -50,6 +50,17 @@ public class NonBuilderFromBuilder extends org.fudgemsg.proto.tests.inheritance.
     msg.add (C_KEY, null, _c);
   }
   public static NonBuilderFromBuilder fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
+    final java.util.List<org.fudgemsg.FudgeField> types = fudgeMsg.getAllByOrdinal (0);
+    for (org.fudgemsg.FudgeField field : types) {
+      final String className = (String)field.getValue ();
+      if ("org.fudgemsg.proto.tests.inheritance.NonBuilderFromBuilder".equals (className)) break;
+      try {
+        return (org.fudgemsg.proto.tests.inheritance.NonBuilderFromBuilder)Class.forName (className).getDeclaredMethod ("fromFudgeMsg", org.fudgemsg.FudgeFieldContainer.class).invoke (null, fudgeMsg);
+      }
+      catch (Throwable t) {
+        // no-action
+      }
+    }
     return new Builder (fudgeMsg).build ();
   }
   public int getC () {

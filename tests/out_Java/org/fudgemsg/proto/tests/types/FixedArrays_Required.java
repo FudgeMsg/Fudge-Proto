@@ -187,6 +187,17 @@ public class FixedArrays_Required implements java.io.Serializable {
     }
   }
   public static FixedArrays_Required fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
+    final java.util.List<org.fudgemsg.FudgeField> types = fudgeMsg.getAllByOrdinal (0);
+    for (org.fudgemsg.FudgeField field : types) {
+      final String className = (String)field.getValue ();
+      if ("org.fudgemsg.proto.tests.types.FixedArrays_Required".equals (className)) break;
+      try {
+        return (org.fudgemsg.proto.tests.types.FixedArrays_Required)Class.forName (className).getDeclaredMethod ("fromFudgeMsg", org.fudgemsg.FudgeFieldContainer.class).invoke (null, fudgeMsg);
+      }
+      catch (Throwable t) {
+        // no-action
+      }
+    }
     return new FixedArrays_Required (fudgeMsg);
   }
   public int[] getFixedArray1 () {

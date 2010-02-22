@@ -39,10 +39,13 @@ public class ExtendsExtern extends org.fudgemsg.proto.tests.ExternalMessage impl
   public ExtendsExtern (int a) {
     _a = a;
   }
-  public ExtendsExtern (final ExtendsExtern source) {
+  protected ExtendsExtern (final ExtendsExtern source) {
     super (source);
     if (source == null) throw new NullPointerException ("'source' must not be null");
     _a = source._a;
+  }
+  public ExtendsExtern clone () {
+    return new ExtendsExtern (this);
   }
   public org.fudgemsg.FudgeFieldContainer toFudgeMsg (final org.fudgemsg.mapping.FudgeSerializationContext fudgeContext) {
     if (fudgeContext == null) throw new NullPointerException ("fudgeContext must not be null");
@@ -55,6 +58,17 @@ public class ExtendsExtern extends org.fudgemsg.proto.tests.ExternalMessage impl
     msg.add (A_KEY, null, _a);
   }
   public static ExtendsExtern fromFudgeMsg (final org.fudgemsg.mapping.FudgeDeserializationContext fudgeContext, final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
+    final java.util.List<org.fudgemsg.FudgeField> types = fudgeMsg.getAllByOrdinal (0);
+    for (org.fudgemsg.FudgeField field : types) {
+      final String className = (String)field.getValue ();
+      if ("org.fudgemsg.proto.tests.extern.ExtendsExtern".equals (className)) break;
+      try {
+        return (org.fudgemsg.proto.tests.extern.ExtendsExtern)Class.forName (className).getDeclaredMethod ("fromFudgeMsg", org.fudgemsg.mapping.FudgeDeserializationContext.class, org.fudgemsg.FudgeFieldContainer.class).invoke (null, fudgeContext, fudgeMsg);
+      }
+      catch (Throwable t) {
+        // no-action
+      }
+    }
     return new Builder (fudgeContext, fudgeMsg).build ();
   }
   public int getA () {

@@ -33,6 +33,17 @@ public class NonBuilderBase implements java.io.Serializable {
     msg.add (A_KEY, null, _a);
   }
   public static NonBuilderBase fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
+    final java.util.List<org.fudgemsg.FudgeField> types = fudgeMsg.getAllByOrdinal (0);
+    for (org.fudgemsg.FudgeField field : types) {
+      final String className = (String)field.getValue ();
+      if ("org.fudgemsg.proto.tests.inheritance.NonBuilderBase".equals (className)) break;
+      try {
+        return (org.fudgemsg.proto.tests.inheritance.NonBuilderBase)Class.forName (className).getDeclaredMethod ("fromFudgeMsg", org.fudgemsg.FudgeFieldContainer.class).invoke (null, fudgeMsg);
+      }
+      catch (Throwable t) {
+        // no-action
+      }
+    }
     return new NonBuilderBase (fudgeMsg);
   }
   public int getA () {

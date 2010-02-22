@@ -99,6 +99,11 @@ public class CommandLineTest {
     fileAllCodeGenerators ("extern.proto");
   }
   
+  @Test
+  public void polymorphismFileAllCodeGenerators () {
+    fileAllCodeGenerators ("polymorphism.proto");
+  }
+  
   private void fileAllCodeGenerators (final String filename) {
     final CodeGeneratorFactory factory = new CodeGeneratorFactory ();
     int errorCount = 0;
@@ -119,6 +124,7 @@ public class CommandLineTest {
     fileCodeGenerator ("inheritance.proto", language);
     fileCodeGenerator ("binding.proto", language);
     fileCodeGenerator ("extern.proto", language);
+    fileCodeGenerator ("polymorphism.proto", language);
   }
   
   protected static boolean fileCodeGenerator (final String filename, final String language) {

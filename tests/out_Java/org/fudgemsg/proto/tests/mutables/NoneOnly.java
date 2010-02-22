@@ -46,6 +46,17 @@ public class NoneOnly implements java.io.Serializable {
     msg.add (BAR_KEY, null, _bar);
   }
   public static NoneOnly fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
+    final java.util.List<org.fudgemsg.FudgeField> types = fudgeMsg.getAllByOrdinal (0);
+    for (org.fudgemsg.FudgeField field : types) {
+      final String className = (String)field.getValue ();
+      if ("org.fudgemsg.proto.tests.mutables.NoneOnly".equals (className)) break;
+      try {
+        return (org.fudgemsg.proto.tests.mutables.NoneOnly)Class.forName (className).getDeclaredMethod ("fromFudgeMsg", org.fudgemsg.FudgeFieldContainer.class).invoke (null, fudgeMsg);
+      }
+      catch (Throwable t) {
+        // no-action
+      }
+    }
     return new NoneOnly (fudgeMsg);
   }
   public int getFoo () {

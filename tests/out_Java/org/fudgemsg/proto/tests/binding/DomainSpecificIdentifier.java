@@ -53,13 +53,31 @@ public class DomainSpecificIdentifier implements java.io.Serializable {
   }
   public void toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext, final org.fudgemsg.MutableFudgeFieldContainer msg) {
     if (_domain != null)  {
-      msg.add (DOMAIN_KEY, null, _domain.toFudgeMsg (fudgeContext));
+      final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
+      Class<?> fudge2 = _domain.getClass ();
+      while (!org.fudgemsg.proto.tests.binding.IdentificationDomain.class.equals (fudge2)) {
+        fudge1.add (null, 0, org.fudgemsg.types.StringFieldType.INSTANCE, fudge2.getName ());
+        fudge2 = fudge2.getSuperclass ();
+      }
+      _domain.toFudgeMsg (fudgeContext, fudge1);
+      msg.add (DOMAIN_KEY, null, fudge1);
     }
     if (_value != null)  {
       msg.add (VALUE_KEY, null, _value);
     }
   }
   public static DomainSpecificIdentifier fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
+    final java.util.List<org.fudgemsg.FudgeField> types = fudgeMsg.getAllByOrdinal (0);
+    for (org.fudgemsg.FudgeField field : types) {
+      final String className = (String)field.getValue ();
+      if ("org.fudgemsg.proto.tests.binding.DomainSpecificIdentifier".equals (className)) break;
+      try {
+        return (org.fudgemsg.proto.tests.binding.DomainSpecificIdentifier)Class.forName (className).getDeclaredMethod ("fromFudgeMsg", org.fudgemsg.FudgeFieldContainer.class).invoke (null, fudgeMsg);
+      }
+      catch (Throwable t) {
+        // no-action
+      }
+    }
     return new DomainSpecificIdentifier (fudgeMsg);
   }
   public org.fudgemsg.proto.tests.binding.IdentificationDomain getDomain () {

@@ -184,6 +184,17 @@ public class SubClassA2 extends org.fudgemsg.proto.tests.inheritance.SubClassA i
     }
   }
   public static SubClassA2 fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
+    final java.util.List<org.fudgemsg.FudgeField> types = fudgeMsg.getAllByOrdinal (0);
+    for (org.fudgemsg.FudgeField field : types) {
+      final String className = (String)field.getValue ();
+      if ("org.fudgemsg.proto.tests.inheritance.SubClassA2".equals (className)) break;
+      try {
+        return (org.fudgemsg.proto.tests.inheritance.SubClassA2)Class.forName (className).getDeclaredMethod ("fromFudgeMsg", org.fudgemsg.FudgeFieldContainer.class).invoke (null, fudgeMsg);
+      }
+      catch (Throwable t) {
+        // no-action
+      }
+    }
     return new Builder (fudgeMsg).build ();
   }
   public int getScA2_o () {
