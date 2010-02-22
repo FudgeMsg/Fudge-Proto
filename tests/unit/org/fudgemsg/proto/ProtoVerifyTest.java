@@ -130,16 +130,16 @@ public class ProtoVerifyTest {
   
   private void testProtoReapplication (final String language) {
     final ArrayList<String> args = new ArrayList<String> ();
-    args.add ("-d" + CommandLineTest.getTestPath ("out_proto", "rerun_" + language));
+    args.add ("-d" + CompilerTest.getTestPath ("out_proto", "rerun_" + language));
     args.add ("-l" + language);
-    args.add ("-s" + CommandLineTest.getTestPath ("out_proto"));
-    findFiles (new File (CommandLineTest.getTestPath ("out_proto")), "", args);
+    args.add ("-s" + CompilerTest.getTestPath ("out_proto"));
+    findFiles (new File (CompilerTest.getTestPath ("out_proto")), "", args);
     CommandLineTest.addLanguageOptions (language, args);
     /*for (int i = 0; i < args.size (); i++) {
       System.out.println (i + ": " + args.get (i));
     }*/
     assertEquals (0, CommandLine.compile (args.toArray (new String[0])));
-    matchFiles (new File (CommandLineTest.getTestPath ("out_" + language)), new File (CommandLineTest.getTestPath ("out_proto", "rerun_" + language)));
+    matchFiles (new File (CompilerTest.getTestPath ("out_" + language)), new File (CompilerTest.getTestPath ("out_proto", "rerun_" + language)));
   }
   
   @Test

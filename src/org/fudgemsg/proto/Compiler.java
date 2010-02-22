@@ -279,8 +279,8 @@ public class Compiler {
             }
           }
         }
-        error (definition.getCodePosition (), "duplicate definition of identifier '" + definition.getIdentifier () + "'");
-        warning (prev.getCodePosition (), "this was the previously encountered definition of '" + prev.getIdentifier () + "'");
+        error (definition.getCodePosition (), "duplicate definition of identifier '" + definition.getIdentifier () + "'"); // E201002221611
+        warning (prev.getCodePosition (), "this was the previously encountered definition of '" + prev.getIdentifier () + "'"); // W201002221611
       }
     } while (false);
     _definitions.put (definition.getIdentifier (), definition);

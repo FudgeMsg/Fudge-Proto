@@ -17,7 +17,6 @@ package org.fudgemsg.proto;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,26 +27,13 @@ public class CommandLineTest {
   
   private static final Map<String,Boolean> s_compiled = new HashMap<String,Boolean> ();
   
-  protected static String getTestBaseDir () {
-    // TODO 2010-02-12 Andrew -- this won't work in the combined OG-Build tests
-    return "tests";
-  }
-  
-  protected static String getTestPath (final String ... components) {
-    final StringBuilder path = new StringBuilder (getTestBaseDir ());
-    for (String component : components) {
-      path.append (File.separatorChar).append (component);
-    }
-    return path.toString ();
-  }
-  
   @Test
   public void parameterPassing () {
     assertEquals (0, CommandLine.compile (new String[] { })); // no parameters = no action, okay
-    assertEquals (0, CommandLine.compile (new String[] { "-d" + getTestPath ("output") })); // select a different output folder
+    assertEquals (0, CommandLine.compile (new String[] { "-d" + CompilerTest.getTestPath ("output") })); // select a different output folder
     assertEquals (0, CommandLine.compile (new String[] { "-lC#" })); // select a different language
-    assertEquals (0, CommandLine.compile (new String[] { "-s" + getTestPath ("proto") })); // select a different language
-    assertEquals (0, CommandLine.compile (new String[] { "-p" + getTestPath ("proto") })); // set a search path
+    assertEquals (0, CommandLine.compile (new String[] { "-s" + CompilerTest.getTestPath ("proto") })); // select a different language
+    assertEquals (0, CommandLine.compile (new String[] { "-p" + CompilerTest.getTestPath ("proto") })); // set a search path
     assertEquals (1, CommandLine.compile (new String[] { "-Xequals", "-lJava" })); // code gen option before language
     assertEquals (0, CommandLine.compile (new String[] { "-lJava", "-Xequals", "-XhashCode", "-XtoString" })); // valid code gen options for Java
     assertEquals (1, CommandLine.compile (new String[] { "-lJava", "-Xfoo" })); // invalid code gen option for Java
@@ -135,8 +121,8 @@ public class CommandLineTest {
       return result;
     }
     final ArrayList<String> args = new ArrayList<String> ();
-    args.add ("-d" + getTestPath ("out_" + (language != null ? language : "default")));
-    args.add ("-s" + getTestPath ("proto"));
+    args.add ("-d" + CompilerTest.getTestPath ("out_" + (language != null ? language : "default")));
+    args.add ("-s" + CompilerTest.getTestPath ("proto"));
     if (language != null) {
       args.add ("-l" + language);
       addLanguageOptions (language, args);
