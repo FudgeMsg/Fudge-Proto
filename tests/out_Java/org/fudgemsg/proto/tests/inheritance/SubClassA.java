@@ -200,39 +200,13 @@ public class SubClassA extends org.fudgemsg.proto.tests.inheritance.BaseClassA i
   public int getScA_o () {
     return _scA_o;
   }
-  public Integer getScA_r () {
-    return getScA_r (0);
-  }
-  public int getScA_rCount () {
-    return (_scA_r != null) ? _scA_r.size () : 0;
-  }
-  public Integer getScA_r (final int n) {
-    if (_scA_r == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return _scA_r.get (n);
-  }
-  public java.util.List<Integer> getScA_rList () {
+  public java.util.List<Integer> getScA_r () {
     return java.util.Collections.unmodifiableList (_scA_r);
   }
   public int getScA_q () {
     return _scA_q;
   }
-  public Integer getScA_rq () {
-    return getScA_rq (0);
-  }
-  public int getScA_rqCount () {
-    return (_scA_rq != null) ? _scA_rq.size () : 0;
-  }
-  public Integer getScA_rq (final int n) {
-    if (_scA_rq == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return _scA_rq.get (n);
-  }
-  public java.util.List<Integer> getScA_rqList () {
+  public java.util.List<Integer> getScA_rq () {
     return java.util.Collections.unmodifiableList (_scA_rq);
   }
   public boolean equals (final Object o) {

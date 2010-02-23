@@ -342,20 +342,7 @@ public class Person implements java.io.Serializable {
   public String getEmail () {
     return _email;
   }
-  public Person.PhoneNumber getPhone () {
-    return getPhone (0);
-  }
-  public int getPhoneCount () {
-    return (_phone != null) ? _phone.size () : 0;
-  }
-  public Person.PhoneNumber getPhone (final int n) {
-    if (_phone == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return _phone.get (n);
-  }
-  public java.util.List<Person.PhoneNumber> getPhoneList () {
+  public java.util.List<Person.PhoneNumber> getPhone () {
     return java.util.Collections.unmodifiableList (_phone);
   }
   public boolean equals (final Object o) {

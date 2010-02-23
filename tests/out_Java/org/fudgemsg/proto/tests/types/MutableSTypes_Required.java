@@ -1,5 +1,5 @@
 // Automatically created - do not modify
-// Created from types.proto:306(10)
+// Created from types.proto:302(10)
 package org.fudgemsg.proto.tests.types;
 public class MutableSTypes_Required implements java.io.Serializable, TypesBase {
   private static final long serialVersionUID = 2511807829388664249l;

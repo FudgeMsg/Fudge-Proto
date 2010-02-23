@@ -14,10 +14,6 @@ namespace org.fudgemsg.proto.tests.types {
     FOURTH;
   }
   
-  extern message TypesBase;
-  extern message ATypesBase;
-  extern message AATypesBase;
-  
   message STypes_Optional {
     bool        _Bool;
     byte        _Byte;
@@ -91,7 +87,7 @@ namespace org.fudgemsg.proto.tests.types {
     repeated date[]       _Date;
     repeated datetime[]   _DateTime;
     repeated time[]       _Time;
-    binding Java { implements "ATypesBase"; }
+    binding Java { implements "RATypesBase"; }
   }
   
   message AATypes_Optional {
@@ -186,7 +182,7 @@ namespace org.fudgemsg.proto.tests.types {
     required repeated date[]       _Date;
     required repeated datetime[]   _DateTime;
     required repeated time[]       _Time;
-    binding Java { implements "ATypesBase"; }
+    binding Java { implements "RATypesBase"; }
   }
   
   message AATypes_Required {
@@ -281,7 +277,7 @@ namespace org.fudgemsg.proto.tests.types {
     mutable repeated date[]       _Date;
     mutable repeated datetime[]   _DateTime;
     mutable repeated time[]       _Time;
-    binding Java { implements "ATypesBase"; }
+    binding Java { implements "RATypesBase"; }
   }
   
   message MutableAATypes_Optional {
@@ -376,7 +372,7 @@ namespace org.fudgemsg.proto.tests.types {
     mutable required repeated date[]       _Date;
     mutable required repeated datetime[]   _DateTime;
     mutable required repeated time[]       _Time;
-    binding Java { implements "ATypesBase"; }
+    binding Java { implements "RATypesBase"; }
   }
   
   message MutableAATypes_Required {

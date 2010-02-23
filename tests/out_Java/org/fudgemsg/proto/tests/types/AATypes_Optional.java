@@ -1,5 +1,5 @@
 // Automatically created - do not modify
-// Created from types.proto:97(10)
+// Created from types.proto:93(10)
 package org.fudgemsg.proto.tests.types;
 public class AATypes_Optional implements java.io.Serializable, AATypesBase {
   private static final long serialVersionUID = -4470633738630618315l;

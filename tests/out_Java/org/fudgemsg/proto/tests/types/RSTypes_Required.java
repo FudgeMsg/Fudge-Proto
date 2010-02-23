@@ -1,5 +1,5 @@
 // Automatically created - do not modify
-// Created from types.proto:154(10)
+// Created from types.proto:150(10)
 package org.fudgemsg.proto.tests.types;
 public class RSTypes_Required implements java.io.Serializable, RSTypesBase {
   private static final long serialVersionUID = 6483206744971745384l;
@@ -527,244 +527,49 @@ public class RSTypes_Required implements java.io.Serializable, RSTypesBase {
     }
     return new RSTypes_Required (fudgeMsg);
   }
-  public Boolean get_Bool () {
-    return get_Bool (0);
-  }
-  public int get_BoolCount () {
-    return (__Bool != null) ? __Bool.size () : 0;
-  }
-  public Boolean get_Bool (final int n) {
-    if (__Bool == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return __Bool.get (n);
-  }
-  public java.util.List<Boolean> get_BoolList () {
+  public java.util.List<Boolean> get_Bool () {
     return java.util.Collections.unmodifiableList (__Bool);
   }
-  public Byte get_Byte () {
-    return get_Byte (0);
-  }
-  public int get_ByteCount () {
-    return (__Byte != null) ? __Byte.size () : 0;
-  }
-  public Byte get_Byte (final int n) {
-    if (__Byte == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return __Byte.get (n);
-  }
-  public java.util.List<Byte> get_ByteList () {
+  public java.util.List<Byte> get_Byte () {
     return java.util.Collections.unmodifiableList (__Byte);
   }
-  public Double get_Double () {
-    return get_Double (0);
-  }
-  public int get_DoubleCount () {
-    return (__Double != null) ? __Double.size () : 0;
-  }
-  public Double get_Double (final int n) {
-    if (__Double == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return __Double.get (n);
-  }
-  public java.util.List<Double> get_DoubleList () {
+  public java.util.List<Double> get_Double () {
     return java.util.Collections.unmodifiableList (__Double);
   }
-  public Float get_Float () {
-    return get_Float (0);
-  }
-  public int get_FloatCount () {
-    return (__Float != null) ? __Float.size () : 0;
-  }
-  public Float get_Float (final int n) {
-    if (__Float == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return __Float.get (n);
-  }
-  public java.util.List<Float> get_FloatList () {
+  public java.util.List<Float> get_Float () {
     return java.util.Collections.unmodifiableList (__Float);
   }
-  public Boolean get_Indicator () {
-    return get_Indicator (0);
-  }
-  public int get_IndicatorCount () {
-    return (__Indicator != null) ? __Indicator.size () : 0;
-  }
-  public Boolean get_Indicator (final int n) {
-    if (__Indicator == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return __Indicator.get (n);
-  }
-  public java.util.List<Boolean> get_IndicatorList () {
+  public java.util.List<Boolean> get_Indicator () {
     return java.util.Collections.unmodifiableList (__Indicator);
   }
-  public Integer get_Int () {
-    return get_Int (0);
-  }
-  public int get_IntCount () {
-    return (__Int != null) ? __Int.size () : 0;
-  }
-  public Integer get_Int (final int n) {
-    if (__Int == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return __Int.get (n);
-  }
-  public java.util.List<Integer> get_IntList () {
+  public java.util.List<Integer> get_Int () {
     return java.util.Collections.unmodifiableList (__Int);
   }
-  public Long get_Long () {
-    return get_Long (0);
-  }
-  public int get_LongCount () {
-    return (__Long != null) ? __Long.size () : 0;
-  }
-  public Long get_Long (final int n) {
-    if (__Long == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return __Long.get (n);
-  }
-  public java.util.List<Long> get_LongList () {
+  public java.util.List<Long> get_Long () {
     return java.util.Collections.unmodifiableList (__Long);
   }
-  public Short get_Short () {
-    return get_Short (0);
-  }
-  public int get_ShortCount () {
-    return (__Short != null) ? __Short.size () : 0;
-  }
-  public Short get_Short (final int n) {
-    if (__Short == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return __Short.get (n);
-  }
-  public java.util.List<Short> get_ShortList () {
+  public java.util.List<Short> get_Short () {
     return java.util.Collections.unmodifiableList (__Short);
   }
-  public String get_String () {
-    return get_String (0);
-  }
-  public int get_StringCount () {
-    return (__String != null) ? __String.size () : 0;
-  }
-  public String get_String (final int n) {
-    if (__String == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return __String.get (n);
-  }
-  public java.util.List<String> get_StringList () {
+  public java.util.List<String> get_String () {
     return java.util.Collections.unmodifiableList (__String);
   }
-  public org.fudgemsg.proto.tests.types.SubMessage get_SubMessage () {
-    return get_SubMessage (0);
-  }
-  public int get_SubMessageCount () {
-    return (__SubMessage != null) ? __SubMessage.size () : 0;
-  }
-  public org.fudgemsg.proto.tests.types.SubMessage get_SubMessage (final int n) {
-    if (__SubMessage == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return __SubMessage.get (n);
-  }
-  public java.util.List<org.fudgemsg.proto.tests.types.SubMessage> get_SubMessageList () {
+  public java.util.List<org.fudgemsg.proto.tests.types.SubMessage> get_SubMessage () {
     return java.util.Collections.unmodifiableList (__SubMessage);
   }
-  public org.fudgemsg.proto.tests.types.CustomEnum get_CustomEnum () {
-    return get_CustomEnum (0);
-  }
-  public int get_CustomEnumCount () {
-    return (__CustomEnum != null) ? __CustomEnum.size () : 0;
-  }
-  public org.fudgemsg.proto.tests.types.CustomEnum get_CustomEnum (final int n) {
-    if (__CustomEnum == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return __CustomEnum.get (n);
-  }
-  public java.util.List<org.fudgemsg.proto.tests.types.CustomEnum> get_CustomEnumList () {
+  public java.util.List<org.fudgemsg.proto.tests.types.CustomEnum> get_CustomEnum () {
     return java.util.Collections.unmodifiableList (__CustomEnum);
   }
-  public org.fudgemsg.FudgeFieldContainer get_Message () {
-    return get_Message (0);
-  }
-  public int get_MessageCount () {
-    return (__Message != null) ? __Message.size () : 0;
-  }
-  public org.fudgemsg.FudgeFieldContainer get_Message (final int n) {
-    if (__Message == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return __Message.get (n);
-  }
-  public java.util.List<org.fudgemsg.FudgeFieldContainer> get_MessageList () {
+  public java.util.List<org.fudgemsg.FudgeFieldContainer> get_Message () {
     return java.util.Collections.unmodifiableList (__Message);
   }
-  public org.fudgemsg.types.FudgeDate get_Date () {
-    return get_Date (0);
-  }
-  public int get_DateCount () {
-    return (__Date != null) ? __Date.size () : 0;
-  }
-  public org.fudgemsg.types.FudgeDate get_Date (final int n) {
-    if (__Date == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return __Date.get (n);
-  }
-  public java.util.List<org.fudgemsg.types.FudgeDate> get_DateList () {
+  public java.util.List<org.fudgemsg.types.FudgeDate> get_Date () {
     return java.util.Collections.unmodifiableList (__Date);
   }
-  public java.util.Date get_DateTime () {
-    return get_DateTime (0);
-  }
-  public int get_DateTimeCount () {
-    return (__DateTime != null) ? __DateTime.size () : 0;
-  }
-  public java.util.Date get_DateTime (final int n) {
-    if (__DateTime == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return __DateTime.get (n);
-  }
-  public java.util.List<java.util.Date> get_DateTimeList () {
+  public java.util.List<java.util.Date> get_DateTime () {
     return java.util.Collections.unmodifiableList (__DateTime);
   }
-  public org.fudgemsg.types.FudgeTime get_Time () {
-    return get_Time (0);
-  }
-  public int get_TimeCount () {
-    return (__Time != null) ? __Time.size () : 0;
-  }
-  public org.fudgemsg.types.FudgeTime get_Time (final int n) {
-    if (__Time == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return __Time.get (n);
-  }
-  public java.util.List<org.fudgemsg.types.FudgeTime> get_TimeList () {
+  public java.util.List<org.fudgemsg.types.FudgeTime> get_Time () {
     return java.util.Collections.unmodifiableList (__Time);
   }
   public boolean equals (final Object o) {

@@ -200,39 +200,13 @@ public class SubClassA2 extends org.fudgemsg.proto.tests.inheritance.SubClassA i
   public int getScA2_o () {
     return _scA2_o;
   }
-  public Integer getScA2_r () {
-    return getScA2_r (0);
-  }
-  public int getScA2_rCount () {
-    return (_scA2_r != null) ? _scA2_r.size () : 0;
-  }
-  public Integer getScA2_r (final int n) {
-    if (_scA2_r == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return _scA2_r.get (n);
-  }
-  public java.util.List<Integer> getScA2_rList () {
+  public java.util.List<Integer> getScA2_r () {
     return java.util.Collections.unmodifiableList (_scA2_r);
   }
   public int getScA2_q () {
     return _scA2_q;
   }
-  public Integer getScA2_rq () {
-    return getScA2_rq (0);
-  }
-  public int getScA2_rqCount () {
-    return (_scA2_rq != null) ? _scA2_rq.size () : 0;
-  }
-  public Integer getScA2_rq (final int n) {
-    if (_scA2_rq == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return _scA2_rq.get (n);
-  }
-  public java.util.List<Integer> getScA2_rqList () {
+  public java.util.List<Integer> getScA2_rq () {
     return java.util.Collections.unmodifiableList (_scA2_rq);
   }
   public boolean equals (final Object o) {

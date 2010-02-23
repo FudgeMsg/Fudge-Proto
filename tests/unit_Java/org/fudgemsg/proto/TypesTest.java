@@ -21,6 +21,7 @@ import static org.junit.Assert.assertNotNull;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import org.fudgemsg.FudgeContext;
@@ -43,6 +44,7 @@ import org.fudgemsg.proto.tests.types.MutableRSTypes_Optional;
 import org.fudgemsg.proto.tests.types.MutableRSTypes_Required;
 import org.fudgemsg.proto.tests.types.MutableSTypes_Optional;
 import org.fudgemsg.proto.tests.types.MutableSTypes_Required;
+import org.fudgemsg.proto.tests.types.RATypesBase;
 import org.fudgemsg.proto.tests.types.RATypes_Optional;
 import org.fudgemsg.proto.tests.types.RATypes_Required;
 import org.fudgemsg.proto.tests.types.RSTypesBase;
@@ -209,59 +211,93 @@ public class TypesTest {
     compareAAObject (object1.get_Date (), object2.get_Date ());
     compareAAObject (object1.get_DateTime (), object2.get_DateTime ());
     compareAAObject (object1.get_Time (), object2.get_Time ());
-    assertEquals (object1.equals (object2), true);
+    assertEquals (true, object1.equals (object2));
     assertEquals (object1, object2);
   }
   
+  private <T> void assertListEquals (List<T> a, List<T> b) {
+    int n, i;
+    assertEquals (n = a.size (), b.size ());
+    for (i = 0; i < n; i++) {
+      assertEquals (a.get (i), b.get (i));
+    }
+  }
+
+  private <T> void assertArrayListEquals (List<T[]> a, List<T[]> b) {
+    int n, i;
+    assertEquals (n = a.size (), b.size ());
+    for (i = 0; i < n; i++) {
+      assertArrayEquals (a.get (i), b.get (i));
+    }
+  }
+
   private void compareTypes (final RSTypesBase object1, final RSTypesBase object2) {
     if ((object1 == null) && (object2 == null)) return;
     assertNotNull (object1);
     assertNotNull (object2);
+    assertListEquals (object1.get_Bool (), object2.get_Bool ());
+    assertListEquals (object1.get_Byte (), object2.get_Byte ());
+    assertListEquals (object1.get_Double (), object2.get_Double ());
+    assertListEquals (object1.get_Float (), object2.get_Float ());
+    assertListEquals (object1.get_Indicator (), object2.get_Indicator ());
+    assertListEquals (object1.get_Int (), object2.get_Int ());
+    assertListEquals (object1.get_Long (), object2.get_Long ());
+    assertListEquals (object1.get_Short (), object2.get_Short ());
+    assertListEquals (object1.get_String (), object2.get_String ());
+    assertListEquals (object1.get_SubMessage (), object2.get_SubMessage ());
+    assertListEquals (object1.get_CustomEnum (), object2.get_CustomEnum ());
+    assertEquals (object1, object2);
+  }
+  
+  private void compareTypes (final RATypesBase object1, final RATypesBase object2) {
+    if ((object1 == null) && (object2 == null)) return;
+    assertNotNull (object1);
+    assertNotNull (object2);
     int n, i;
-    assertEquals (n = object1.get_BoolCount (), object2.get_BoolCount ());
+    List<boolean[]> raBool1 = object1.get_Bool (), raBool2 = object2.get_Bool ();
+    assertEquals (n = raBool1.size (), raBool2.size ());
     for (i = 0; i < n; i++) {
-      assertEquals (object1.get_Bool (i), object2.get_Bool (i));
+      assertEquals (true, Arrays.equals (raBool1.get (i), raBool2.get (i)));
     }
-    assertEquals (n = object1.get_ByteCount (), object2.get_ByteCount ());
+    List<byte[]> raByte1 = object1.get_Byte (), raByte2 = object2.get_Byte ();
+    assertEquals (n = raByte1.size (), raByte2.size ());
     for (i = 0; i < n; i++) {
-      assertEquals (object1.get_Byte (i), object2.get_Byte (i));
+      assertArrayEquals (raByte1.get (i), raByte2.get (i));
     }
-    assertEquals (n = object1.get_DoubleCount (), object2.get_DoubleCount ());
+    List<double[]> raDouble1 = object1.get_Double (), raDouble2 = object2.get_Double ();
+    assertEquals (n = raDouble1.size (), raDouble2.size ());
     for (i = 0; i < n; i++) {
-      assertEquals (object1.get_Double (i), object2.get_Double (i));
+      assertEquals (true, Arrays.equals (raDouble1.get (i), raDouble2.get (i)));
     }
-    assertEquals (n = object1.get_FloatCount (), object2.get_FloatCount ());
+    List<float[]> raFloat1 = object1.get_Float (), raFloat2 = object2.get_Float ();
+    assertEquals (n = raFloat1.size (), raFloat2.size ());
     for (i = 0; i < n; i++) {
-      assertEquals (object1.get_Float (i), object2.get_Float (i));
+      assertEquals (true, Arrays.equals (raFloat1.get (i), raFloat2.get (i)));
     }
-    assertEquals (n = object1.get_IndicatorCount (), object2.get_IndicatorCount ());
+    List<boolean[]> raIndicator1 = object1.get_Indicator (), raIndicator2 = object2.get_Indicator ();
+    assertEquals (n = raIndicator1.size (), raIndicator2.size ());
     for (i = 0; i < n; i++) {
-      assertEquals (object1.get_Indicator (i), object2.get_Indicator (i));
+      assertEquals (true, Arrays.equals (raIndicator1.get (i), raIndicator2.get (i)));
     }
-    assertEquals (n = object1.get_IntCount (), object2.get_IntCount ());
+    List<int[]> raInt1 = object1.get_Int (), raInt2 = object2.get_Int ();
+    assertEquals (n = raInt1.size (), raInt2.size ());
     for (i = 0; i < n; i++) {
-      assertEquals (object1.get_Int (i), object2.get_Int (i));
+      assertArrayEquals (raInt1.get (i), raInt2.get (i));
     }
-    assertEquals (n = object1.get_LongCount (), object2.get_LongCount ());
+    List<long[]> raLong1 = object1.get_Long (), raLong2 = object2.get_Long ();
+    assertEquals (n = raLong1.size (), raLong2.size ());
     for (i = 0; i < n; i++) {
-      assertEquals (object1.get_Long (i), object2.get_Long (i));
+      assertArrayEquals (raLong1.get (i), raLong2.get (i));
     }
-    assertEquals (n = object1.get_ShortCount (), object2.get_ShortCount ());
+    List<short[]> raShort1 = object1.get_Short (), raShort2 = object2.get_Short ();
+    assertEquals (n = raShort1.size (), raShort2.size ());
     for (i = 0; i < n; i++) {
-      assertEquals (object1.get_Short (i), object2.get_Short (i));
+      assertArrayEquals (raShort1.get (i), raShort2.get (i));
     }
-    assertEquals (n = object1.get_StringCount (), object2.get_StringCount ());
-    for (i = 0; i < n; i++) {
-      assertEquals (object1.get_String (i), object2.get_String (i));
-    }
-    assertEquals (n = object1.get_SubMessageCount (), object2.get_SubMessageCount ());
-    for (i = 0; i < n; i++) {
-      assertEquals (object1.get_SubMessage (i), object2.get_SubMessage (i));
-    }
-    assertEquals (n = object1.get_CustomEnumCount (), object2.get_CustomEnumCount ());
-    for (i = 0; i < n; i++) {
-      assertEquals (object1.get_CustomEnum (i), object2.get_CustomEnum (i));
-    }
+    assertArrayListEquals (object1.get_String (), object2.get_String ());
+    assertArrayListEquals (object1.get_SubMessage (), object2.get_SubMessage ());
+    assertArrayListEquals (object1.get_CustomEnum (), object2.get_CustomEnum ());
+    assertEquals (true, object1.equals (object2));
     assertEquals (object1, object2);
   }
   

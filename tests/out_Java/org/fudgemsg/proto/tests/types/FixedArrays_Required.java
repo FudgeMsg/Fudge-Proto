@@ -1,5 +1,5 @@
 // Automatically created - do not modify
-// Created from types.proto:408(10)
+// Created from types.proto:404(10)
 package org.fudgemsg.proto.tests.types;
 public class FixedArrays_Required implements java.io.Serializable {
   private static final long serialVersionUID = -3340035727419015371l;

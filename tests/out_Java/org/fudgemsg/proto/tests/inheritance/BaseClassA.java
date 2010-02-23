@@ -194,39 +194,13 @@ public class BaseClassA implements java.io.Serializable {
   public int getBcA_o () {
     return _bcA_o;
   }
-  public Integer getBcA_r () {
-    return getBcA_r (0);
-  }
-  public int getBcA_rCount () {
-    return (_bcA_r != null) ? _bcA_r.size () : 0;
-  }
-  public Integer getBcA_r (final int n) {
-    if (_bcA_r == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return _bcA_r.get (n);
-  }
-  public java.util.List<Integer> getBcA_rList () {
+  public java.util.List<Integer> getBcA_r () {
     return java.util.Collections.unmodifiableList (_bcA_r);
   }
   public int getBcA_q () {
     return _bcA_q;
   }
-  public Integer getBcA_rq () {
-    return getBcA_rq (0);
-  }
-  public int getBcA_rqCount () {
-    return (_bcA_rq != null) ? _bcA_rq.size () : 0;
-  }
-  public Integer getBcA_rq (final int n) {
-    if (_bcA_rq == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return _bcA_rq.get (n);
-  }
-  public java.util.List<Integer> getBcA_rqList () {
+  public java.util.List<Integer> getBcA_rq () {
     return java.util.Collections.unmodifiableList (_bcA_rq);
   }
   public boolean equals (final Object o) {

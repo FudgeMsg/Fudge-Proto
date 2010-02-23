@@ -1,5 +1,5 @@
 // Automatically created - do not modify
-// Created from types.proto:344(10)
+// Created from types.proto:340(10)
 package org.fudgemsg.proto.tests.types;
 public class MutableRSTypes_Required implements java.io.Serializable, RSTypesBase {
   private static final long serialVersionUID = 6483206744971745384l;
@@ -530,20 +530,7 @@ public class MutableRSTypes_Required implements java.io.Serializable, RSTypesBas
     }
     return new MutableRSTypes_Required (fudgeMsg);
   }
-  public Boolean get_Bool () {
-    return get_Bool (0);
-  }
-  public int get_BoolCount () {
-    return (__Bool != null) ? __Bool.size () : 0;
-  }
-  public Boolean get_Bool (final int n) {
-    if (__Bool == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return __Bool.get (n);
-  }
-  public java.util.List<Boolean> get_BoolList () {
+  public java.util.List<Boolean> get_Bool () {
     return java.util.Collections.unmodifiableList (__Bool);
   }
   public void set_Bool (Boolean _Bool) {
@@ -570,20 +557,7 @@ public class MutableRSTypes_Required implements java.io.Serializable, RSTypesBas
     if (__Bool == null) __Bool = new java.util.ArrayList<Boolean> ();
     __Bool.add (_Bool);
   }
-  public Byte get_Byte () {
-    return get_Byte (0);
-  }
-  public int get_ByteCount () {
-    return (__Byte != null) ? __Byte.size () : 0;
-  }
-  public Byte get_Byte (final int n) {
-    if (__Byte == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return __Byte.get (n);
-  }
-  public java.util.List<Byte> get_ByteList () {
+  public java.util.List<Byte> get_Byte () {
     return java.util.Collections.unmodifiableList (__Byte);
   }
   public void set_Byte (Byte _Byte) {
@@ -610,20 +584,7 @@ public class MutableRSTypes_Required implements java.io.Serializable, RSTypesBas
     if (__Byte == null) __Byte = new java.util.ArrayList<Byte> ();
     __Byte.add (_Byte);
   }
-  public Double get_Double () {
-    return get_Double (0);
-  }
-  public int get_DoubleCount () {
-    return (__Double != null) ? __Double.size () : 0;
-  }
-  public Double get_Double (final int n) {
-    if (__Double == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return __Double.get (n);
-  }
-  public java.util.List<Double> get_DoubleList () {
+  public java.util.List<Double> get_Double () {
     return java.util.Collections.unmodifiableList (__Double);
   }
   public void set_Double (Double _Double) {
@@ -650,20 +611,7 @@ public class MutableRSTypes_Required implements java.io.Serializable, RSTypesBas
     if (__Double == null) __Double = new java.util.ArrayList<Double> ();
     __Double.add (_Double);
   }
-  public Float get_Float () {
-    return get_Float (0);
-  }
-  public int get_FloatCount () {
-    return (__Float != null) ? __Float.size () : 0;
-  }
-  public Float get_Float (final int n) {
-    if (__Float == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return __Float.get (n);
-  }
-  public java.util.List<Float> get_FloatList () {
+  public java.util.List<Float> get_Float () {
     return java.util.Collections.unmodifiableList (__Float);
   }
   public void set_Float (Float _Float) {
@@ -690,20 +638,7 @@ public class MutableRSTypes_Required implements java.io.Serializable, RSTypesBas
     if (__Float == null) __Float = new java.util.ArrayList<Float> ();
     __Float.add (_Float);
   }
-  public Boolean get_Indicator () {
-    return get_Indicator (0);
-  }
-  public int get_IndicatorCount () {
-    return (__Indicator != null) ? __Indicator.size () : 0;
-  }
-  public Boolean get_Indicator (final int n) {
-    if (__Indicator == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return __Indicator.get (n);
-  }
-  public java.util.List<Boolean> get_IndicatorList () {
+  public java.util.List<Boolean> get_Indicator () {
     return java.util.Collections.unmodifiableList (__Indicator);
   }
   public void set_Indicator (Boolean _Indicator) {
@@ -730,20 +665,7 @@ public class MutableRSTypes_Required implements java.io.Serializable, RSTypesBas
     if (__Indicator == null) __Indicator = new java.util.ArrayList<Boolean> ();
     __Indicator.add (_Indicator);
   }
-  public Integer get_Int () {
-    return get_Int (0);
-  }
-  public int get_IntCount () {
-    return (__Int != null) ? __Int.size () : 0;
-  }
-  public Integer get_Int (final int n) {
-    if (__Int == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return __Int.get (n);
-  }
-  public java.util.List<Integer> get_IntList () {
+  public java.util.List<Integer> get_Int () {
     return java.util.Collections.unmodifiableList (__Int);
   }
   public void set_Int (Integer _Int) {
@@ -770,20 +692,7 @@ public class MutableRSTypes_Required implements java.io.Serializable, RSTypesBas
     if (__Int == null) __Int = new java.util.ArrayList<Integer> ();
     __Int.add (_Int);
   }
-  public Long get_Long () {
-    return get_Long (0);
-  }
-  public int get_LongCount () {
-    return (__Long != null) ? __Long.size () : 0;
-  }
-  public Long get_Long (final int n) {
-    if (__Long == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return __Long.get (n);
-  }
-  public java.util.List<Long> get_LongList () {
+  public java.util.List<Long> get_Long () {
     return java.util.Collections.unmodifiableList (__Long);
   }
   public void set_Long (Long _Long) {
@@ -810,20 +719,7 @@ public class MutableRSTypes_Required implements java.io.Serializable, RSTypesBas
     if (__Long == null) __Long = new java.util.ArrayList<Long> ();
     __Long.add (_Long);
   }
-  public Short get_Short () {
-    return get_Short (0);
-  }
-  public int get_ShortCount () {
-    return (__Short != null) ? __Short.size () : 0;
-  }
-  public Short get_Short (final int n) {
-    if (__Short == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return __Short.get (n);
-  }
-  public java.util.List<Short> get_ShortList () {
+  public java.util.List<Short> get_Short () {
     return java.util.Collections.unmodifiableList (__Short);
   }
   public void set_Short (Short _Short) {
@@ -850,20 +746,7 @@ public class MutableRSTypes_Required implements java.io.Serializable, RSTypesBas
     if (__Short == null) __Short = new java.util.ArrayList<Short> ();
     __Short.add (_Short);
   }
-  public String get_String () {
-    return get_String (0);
-  }
-  public int get_StringCount () {
-    return (__String != null) ? __String.size () : 0;
-  }
-  public String get_String (final int n) {
-    if (__String == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return __String.get (n);
-  }
-  public java.util.List<String> get_StringList () {
+  public java.util.List<String> get_String () {
     return java.util.Collections.unmodifiableList (__String);
   }
   public void set_String (String _String) {
@@ -890,20 +773,7 @@ public class MutableRSTypes_Required implements java.io.Serializable, RSTypesBas
     if (__String == null) __String = new java.util.ArrayList<String> ();
     __String.add (_String);
   }
-  public org.fudgemsg.proto.tests.types.SubMessage get_SubMessage () {
-    return get_SubMessage (0);
-  }
-  public int get_SubMessageCount () {
-    return (__SubMessage != null) ? __SubMessage.size () : 0;
-  }
-  public org.fudgemsg.proto.tests.types.SubMessage get_SubMessage (final int n) {
-    if (__SubMessage == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return __SubMessage.get (n);
-  }
-  public java.util.List<org.fudgemsg.proto.tests.types.SubMessage> get_SubMessageList () {
+  public java.util.List<org.fudgemsg.proto.tests.types.SubMessage> get_SubMessage () {
     return java.util.Collections.unmodifiableList (__SubMessage);
   }
   public void set_SubMessage (org.fudgemsg.proto.tests.types.SubMessage _SubMessage) {
@@ -931,20 +801,7 @@ public class MutableRSTypes_Required implements java.io.Serializable, RSTypesBas
     if (__SubMessage == null) __SubMessage = new java.util.ArrayList<org.fudgemsg.proto.tests.types.SubMessage> ();
     __SubMessage.add (_SubMessage);
   }
-  public org.fudgemsg.proto.tests.types.CustomEnum get_CustomEnum () {
-    return get_CustomEnum (0);
-  }
-  public int get_CustomEnumCount () {
-    return (__CustomEnum != null) ? __CustomEnum.size () : 0;
-  }
-  public org.fudgemsg.proto.tests.types.CustomEnum get_CustomEnum (final int n) {
-    if (__CustomEnum == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return __CustomEnum.get (n);
-  }
-  public java.util.List<org.fudgemsg.proto.tests.types.CustomEnum> get_CustomEnumList () {
+  public java.util.List<org.fudgemsg.proto.tests.types.CustomEnum> get_CustomEnum () {
     return java.util.Collections.unmodifiableList (__CustomEnum);
   }
   public void set_CustomEnum (org.fudgemsg.proto.tests.types.CustomEnum _CustomEnum) {
@@ -971,20 +828,7 @@ public class MutableRSTypes_Required implements java.io.Serializable, RSTypesBas
     if (__CustomEnum == null) __CustomEnum = new java.util.ArrayList<org.fudgemsg.proto.tests.types.CustomEnum> ();
     __CustomEnum.add (_CustomEnum);
   }
-  public org.fudgemsg.FudgeFieldContainer get_Message () {
-    return get_Message (0);
-  }
-  public int get_MessageCount () {
-    return (__Message != null) ? __Message.size () : 0;
-  }
-  public org.fudgemsg.FudgeFieldContainer get_Message (final int n) {
-    if (__Message == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return __Message.get (n);
-  }
-  public java.util.List<org.fudgemsg.FudgeFieldContainer> get_MessageList () {
+  public java.util.List<org.fudgemsg.FudgeFieldContainer> get_Message () {
     return java.util.Collections.unmodifiableList (__Message);
   }
   public void set_Message (org.fudgemsg.FudgeFieldContainer _Message) {
@@ -1011,20 +855,7 @@ public class MutableRSTypes_Required implements java.io.Serializable, RSTypesBas
     if (__Message == null) __Message = new java.util.ArrayList<org.fudgemsg.FudgeFieldContainer> ();
     __Message.add (_Message);
   }
-  public org.fudgemsg.types.FudgeDate get_Date () {
-    return get_Date (0);
-  }
-  public int get_DateCount () {
-    return (__Date != null) ? __Date.size () : 0;
-  }
-  public org.fudgemsg.types.FudgeDate get_Date (final int n) {
-    if (__Date == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return __Date.get (n);
-  }
-  public java.util.List<org.fudgemsg.types.FudgeDate> get_DateList () {
+  public java.util.List<org.fudgemsg.types.FudgeDate> get_Date () {
     return java.util.Collections.unmodifiableList (__Date);
   }
   public void set_Date (org.fudgemsg.types.FudgeDate _Date) {
@@ -1051,20 +882,7 @@ public class MutableRSTypes_Required implements java.io.Serializable, RSTypesBas
     if (__Date == null) __Date = new java.util.ArrayList<org.fudgemsg.types.FudgeDate> ();
     __Date.add (_Date);
   }
-  public java.util.Date get_DateTime () {
-    return get_DateTime (0);
-  }
-  public int get_DateTimeCount () {
-    return (__DateTime != null) ? __DateTime.size () : 0;
-  }
-  public java.util.Date get_DateTime (final int n) {
-    if (__DateTime == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return __DateTime.get (n);
-  }
-  public java.util.List<java.util.Date> get_DateTimeList () {
+  public java.util.List<java.util.Date> get_DateTime () {
     return java.util.Collections.unmodifiableList (__DateTime);
   }
   public void set_DateTime (java.util.Date _DateTime) {
@@ -1091,20 +909,7 @@ public class MutableRSTypes_Required implements java.io.Serializable, RSTypesBas
     if (__DateTime == null) __DateTime = new java.util.ArrayList<java.util.Date> ();
     __DateTime.add (_DateTime);
   }
-  public org.fudgemsg.types.FudgeTime get_Time () {
-    return get_Time (0);
-  }
-  public int get_TimeCount () {
-    return (__Time != null) ? __Time.size () : 0;
-  }
-  public org.fudgemsg.types.FudgeTime get_Time (final int n) {
-    if (__Time == null)  {
-      if (n == 0) return null;
-      throw new IndexOutOfBoundsException ("n=" + n);
-    }
-    return __Time.get (n);
-  }
-  public java.util.List<org.fudgemsg.types.FudgeTime> get_TimeList () {
+  public java.util.List<org.fudgemsg.types.FudgeTime> get_Time () {
     return java.util.Collections.unmodifiableList (__Time);
   }
   public void set_Time (org.fudgemsg.types.FudgeTime _Time) {

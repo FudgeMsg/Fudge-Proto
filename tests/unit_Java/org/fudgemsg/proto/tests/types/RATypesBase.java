@@ -22,20 +22,20 @@ import org.fudgemsg.FudgeFieldContainer;
 import org.fudgemsg.types.FudgeDate;
 import org.fudgemsg.types.FudgeTime;
 
-public interface RSTypesBase {
-  public List<Boolean> get_Bool ();
-  public List<Byte> get_Byte ();
-  public List<Double> get_Double ();
-  public List<Float> get_Float ();
-  public List<Boolean> get_Indicator ();
-  public List<Integer> get_Int ();
-  public List<Long> get_Long ();
-  public List<Short> get_Short ();
-  public List<String> get_String ();
-  public List<SubMessage> get_SubMessage ();
-  public List<CustomEnum> get_CustomEnum ();
-  public List<FudgeFieldContainer> get_Message ();
-  public List<FudgeDate> get_Date ();
-  public List<Date> get_DateTime ();
-  public List<FudgeTime> get_Time ();
+public interface RATypesBase {
+  public List<boolean[]> get_Bool ();
+  public List<byte[]> get_Byte ();
+  public List<double[]> get_Double ();
+  public List<float[]> get_Float ();
+  public List<boolean[]> get_Indicator ();
+  public List<int[]> get_Int ();
+  public List<long[]> get_Long ();
+  public List<short[]> get_Short ();
+  public List<String[]> get_String ();
+  public List<SubMessage[]> get_SubMessage ();
+  public List<CustomEnum[]> get_CustomEnum ();
+  public List<FudgeFieldContainer[]> get_Message ();
+  public List<FudgeDate[]> get_Date ();
+  public List<Date[]> get_DateTime ();
+  public List<FudgeTime[]> get_Time ();
 }
