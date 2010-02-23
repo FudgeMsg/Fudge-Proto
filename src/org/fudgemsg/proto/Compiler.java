@@ -24,29 +24,29 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * Main compiler functionality. An instance of this should be used to convert
- * the {@code .proto} files into a particular language binding.
+ * <p>Main compiler functionality. An instance of this should be used to convert
+ * the {@code .proto} files into a particular language binding.</p>
  * 
- * The compiler runs through six main phases:
- *    Parsing         - working on the supplied source files
- *    Expansion       - working on the AST
- *    Fixup           - working on the AST
- *    Semantic build  - working on the AST
- *    Semantic check  - working on the semantic representation
- *    Code generation - working on the code generation
+ * <p>The compiler runs through six main phases:</p>
+ * <dl>
+ *    <dt>Parsing</dt><dd>working on the supplied source files</dd>
+ *    <dt>Expansion</dt><dd>working on the AST</dd>
+ *    <dt>Fixup</dt><dd>working on the AST</dd>
+ *    <dt>Semantic build</dt><dd>working on the AST</dd>
+ *    <dt>Semantic check</dt><dd>working on the semantic representation</dd>
+ *    <dt>Code generation</dt><dd>working on the code generation</dd>
+ * </dl>
  *    
- * Each phase type has an interface definition so that the functionality for a phase does not clutter this class
+ * <p>Each phase type has an interface definition so that the functionality for a phase does not clutter this class
  * and can be easily substituted at a later date. It also allows for the code generation to be selected at
- * runtime so that a particular language binding can be used for the compiler output.
+ * runtime so that a particular language binding can be used for the compiler output.</p>
  * 
- * @author Andrew
+ * @author Andrew Griffin
  */
 public class Compiler {
   
   /**
    * Callback interface for handling compiler warnings.
-   * 
-   * @author Andrew
    */
   public static interface WarningListener {
     public void compilerWarning (CodePosition position, String message);
@@ -54,8 +54,6 @@ public class Compiler {
   
   /**
    * Callback interface for handling compiler errors.
-   * 
-   * @author Andrew
    */
   public static interface ErrorListener {
     public void compilerError (CodePosition position, String message);
@@ -65,8 +63,6 @@ public class Compiler {
    * Exposes enough of the Compiler API as is required for a phase to operate. This minimises visibility
    * of members to users of the Compiler, without restricting the operation of phases that aren't within
    * this package such as custom code generators.
-   * 
-   * @author Andrew
    */
   public class Context {
     

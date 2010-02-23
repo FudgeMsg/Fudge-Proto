@@ -37,6 +37,7 @@ import org.apache.tools.ant.types.PatternSet;
  *   <li>fudgeContext - default expression to use in place of a parameterized context (e.g. FudgeContext.GLOBAL_DEFAULT)
  *   <li>fieldsMutable - true if fields are mutable by default, false otherwise
  *   <li>fieldsRequired - true if fields are required by default, false otherwise
+ *   <li>gitIgnore - true to write a .gitignore file for generated files, defaults to false
  * </ul>  
  * <p><code>&lt;exclude&gt;</code> entries can be included for filename patterns to be ignored.</p>
  * 
@@ -67,6 +68,8 @@ public class AntTask extends Task {
   private Boolean _fieldsMutable = null;
   
   private Boolean _fieldsRequired = null;
+  
+  private boolean _gitIgnore = false;
   
   public void setSrcdir (final String srcdir) {
     _srcdir = srcdir;
@@ -114,6 +117,10 @@ public class AntTask extends Task {
   
   public void setFieldsRequired (final boolean fieldsRequired) {
     _fieldsRequired = fieldsRequired;
+  }
+  
+  public void setGitIgnore (final boolean gitIgnore) {
+    _gitIgnore = gitIgnore;
   }
   
   private void findFiles (final File src, File dest, final String srcExt, final String destExt, final List<String> names, final String basePath) {
@@ -191,6 +198,7 @@ public class AntTask extends Task {
     if (_toString) args.add ("-XtoString");
     if (_hashCode) args.add ("-XhashCode");
     if (_fudgeContext != null) args.add ("-XfudgeContext=" + _fudgeContext);
+    if (_gitIgnore) args.add ("-XgitIgnore");
     if (_verbose) {
       System.out.print ("Commandline:");
       for (final String arg : args) {

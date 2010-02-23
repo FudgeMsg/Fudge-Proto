@@ -20,7 +20,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.fudgemsg.proto.CodeGenerator;
@@ -48,6 +50,7 @@ public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerato
   private boolean _generateEquality = false;
   private boolean _generateHash = false;
   private boolean _generateString = false;
+  private boolean _writeGitIgnore = false;
   
   protected ClassCodeGenerator (final ClassCode delegate) {
     super (delegate);
@@ -165,6 +168,40 @@ public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerato
         writeHeaderFileFooter (context, file, writer);
       } finally {
         writer.close ();
+      }
+    }
+  }
+  
+  private void addToGitIgnore (final File file, final Map<File,Set<String>> folders) {
+    Set<String> files = folders.get (file.getParentFile ());
+    if (files == null) {
+      folders.put (file.getParentFile (), files = new HashSet<String> ()); 
+    }
+    files.add (file.getName ());
+  }
+  
+  private void writeGitIgnore (final Compiler.Context context) throws IOException {
+    final Map<File,Set<String>> folders = new HashMap<File,Set<String>> ();
+    for (File file : getImplementationFilesOpen (context)) {
+      addToGitIgnore (file, folders);
+    }
+    for (File file : getHeaderFilesOpen (context)) {
+      addToGitIgnore (file, folders);
+    }
+    for (Map.Entry<File,Set<String>> entry : folders.entrySet ()) {
+      final File gitIgnore = new File (entry.getKey (), ".gitignore");
+      if (gitIgnore.exists ()) {
+        context.warning (null, ".gitignore already exists in " + entry.getKey ());
+      } else {
+        final BufferedWriter out = new BufferedWriter (new FileWriter (gitIgnore));
+        try {
+          for (String filename : entry.getValue ()) {
+            out.write (filename);
+            out.write ("\n");
+          }
+        } finally {
+          out.close ();
+        }
       }
     }
   }
@@ -300,6 +337,7 @@ public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerato
     try {
       writeImplementationFileFooters (context);
       writeHeaderFileFooters (context);
+      if (_writeGitIgnore) writeGitIgnore (context);
     } catch (IOException e) {
       context.error (null, e.getMessage ());
     }
@@ -309,6 +347,10 @@ public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerato
   public void setOption (final String option) {
     if (option.equals ("equality")) {
       _generateEquality = true;
+      return;
+    }
+    if (option.equals ("gitIgnore")) {
+      _writeGitIgnore = true;
       return;
     }
     if (option.equals ("hash")) {
