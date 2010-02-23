@@ -38,6 +38,9 @@ public class CommandLineTest {
     assertEquals (0, CommandLine.compile (new String[] { "-lJava", "-Xequals", "-XhashCode", "-XtoString" })); // valid code gen options for Java
     assertEquals (1, CommandLine.compile (new String[] { "-lJava", "-Xfoo" })); // invalid code gen option for Java
     assertEquals (1, CommandLine.compile (new String[] { "-x" })); // bad parameter
+    assertEquals (0, CommandLine.compile (new String[] { "-freadonly", "-foptional" })); // field defaults
+    assertEquals (0, CommandLine.compile (new String[] { "-fmutable", "-frequired" })); // field defaults
+    assertEquals (1, CommandLine.compile (new String[] { "-finvalid" })); // invalid field default
   }
   
   @Test
@@ -123,6 +126,8 @@ public class CommandLineTest {
     final ArrayList<String> args = new ArrayList<String> ();
     args.add ("-d" + CompilerTest.getTestPath ("out_" + (language != null ? language : "default")));
     args.add ("-s" + CompilerTest.getTestPath ("proto"));
+    args.add ("-freadonly"); // non-mutable field default
+    args.add ("-foptional"); // optional field default
     if (language != null) {
       args.add ("-l" + language);
       addLanguageOptions (language, args);

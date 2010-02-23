@@ -135,7 +135,7 @@ class ProtoClassCode extends ImplementationlessClassCode {
   public void writeClassHeaderAttribute(final Compiler.Context context, final FieldDefinition field, final IndentWriter writer) throws IOException {
     writer.write(field.isRequired() ? "required " : "optional ");
     if (field.isRepeated()) writer.write("repeated ");
-    if (field.isMutable ()) writer.write ("mutable ");
+    writer.write (field.isMutable () ? "mutable " : "readonly ");
     writer.write (typeString(field.getType ()) + " " + field.getName ());
     final Integer ordinal = field.getOrdinal();
     if (ordinal != null) {

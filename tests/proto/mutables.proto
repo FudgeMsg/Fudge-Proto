@@ -23,37 +23,37 @@ namespace org.fudgemsg.proto.tests.mutables {
   // Some mutable fields, only required fields
   message SomeOnly {
     required mutable int foo;
-    required int bar;
+    required readonly int bar;
   }
   
   // Some mutable fields, some required fields
   message SomeSome {
     required mutable int foo;
-    int bar;
+    readonly int bar;
   }
   
   // Some mutable fields, no required fields
   message SomeNone {
     mutable int foo;
-    int bar;
+    readonly int bar;
   }
   
   // No mutable fields, only required fields
   message NoneOnly {
-    required int foo;
-    required int bar;
+    required readonly int foo;
+    required readonly int bar;
   }
   
   // No mutable fields, some required fields
   message NoneSome {
     required int foo;
-    int bar;
+    readonly int bar;
   }
   
   // No mutable fields, no required fields
   message NoneNone {
-    int foo;
-    int bar;
+    readonly int foo;
+    readonly int bar;
   }
   
 }

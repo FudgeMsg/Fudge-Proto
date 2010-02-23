@@ -39,16 +39,6 @@ public class CompilerTest {
     return path.toString ();
   }
   
-  @Test
-  public void defaultSuccessfulCompilation () {
-    final Compiler compiler = new Compiler ();
-    compiler.addSource (new SourceFile ("simple.proto", new File (getTestPath ("proto", "simple.proto"))));
-    compiler.setTargetPath (new File ("tests" + File.separatorChar + "out_default"));
-    compiler.compileAll ();
-    assertEquals (compiler.getWarningCount (), 0);
-    assertEquals (compiler.getErrorCount (), 0);
-  }
-  
   @Test(expected=CompilationException.class)
   public void defaultErrorCompilation () {
     final Compiler compiler = new Compiler ();

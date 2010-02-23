@@ -15,25 +15,36 @@
 
 package org.fudgemsg.proto;
 
-import java.util.List;
-import java.util.ArrayList;
 import java.io.File;
-import org.apache.tools.ant.Task;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.DirectoryScanner;
+import org.apache.tools.ant.Task;
+import org.apache.tools.ant.types.PatternSet;
 
 /**
- * An Ant task for generating Java files. The following attributes are supported:
+ * <p>An Ant task for generating Java files. The following attributes are supported:</p>
+ * <ul>
+ *   <li>srcdir - source directory (defaults to src), cannot take a path id
+ *   <li>destdir - destination directory (defaults to src), cannot take a path id
+ *   <li>verbose - true for verbose/debugging output, defaults to false
+ *   <li>equals - true to generate equals methods in output, defaults to true
+ *   <li>hashCode - true to generate hashCode methods in output, defaults to true
+ *   <li>toString - true to generate toString methods in output, defaults to false
+ *   <li>rebuildAll - true to ignore timestamps
+ *   <li>fudgeContext - default expression to use in place of a parameterized context (e.g. FudgeContext.GLOBAL_DEFAULT)
+ *   <li>fieldsMutable - true if fields are mutable by default, false otherwise
+ *   <li>fieldsRequired - true if fields are required by default, false otherwise
+ * </ul>  
+ * <p><code>&lt;exclude&gt;</code> entries can be included for filename patterns to be ignored.</p>
  * 
- *   srcdir - source directory (defaults to src), cannot take a path id
- *   destdir - destination directory (defaults to src), cannot take a path id
- *   verbose - true for verbose/debugging output, defaults to false
- *   equals - true to generate equals methods in output, defaults to true
- *   hashCode - true to generate hashCode methods in output, defaults to true
- *   toString - true to generate toString methods in output, defaults to false 
- * 
- * @author Andrew
+ * @author Andrew Griffin
  */
 public class AntTask extends Task {
+  
+  private PatternSet _patternSet = null;
   
   private String _srcdir = "src";
   
@@ -53,6 +64,10 @@ public class AntTask extends Task {
   
   private boolean _rebuildAll = false;
   
+  private Boolean _fieldsMutable = null;
+  
+  private Boolean _fieldsRequired = null;
+  
   public void setSrcdir (final String srcdir) {
     _srcdir = srcdir;
   }
@@ -65,24 +80,24 @@ public class AntTask extends Task {
     _searchdir = searchdir;
   }
   
-  public void setVerbose (final String verbose) {
-    _verbose = verbose.equalsIgnoreCase ("true");
+  public void setVerbose (final boolean verbose) {
+    _verbose = verbose;
   }
   
-  public void setToString (final String toString) {
-    _toString = toString.equalsIgnoreCase ("true");
+  public void setToString (final boolean toString) {
+    _toString = toString;
   }
   
-  public void setHashCode (final String hashCode) {
-    _hashCode = hashCode.equalsIgnoreCase ("true");
+  public void setHashCode (final boolean hashCode) {
+    _hashCode = hashCode;
   }
   
-  public void setEquals (final String equals) {
-    _equals = equals.equalsIgnoreCase ("true");
+  public void setEquals (final boolean equals) {
+    _equals = equals;
   }
   
-  public void setRebuildAll (final String rebuildAll) {
-    _rebuildAll = rebuildAll.equalsIgnoreCase ("true");
+  public void setRebuildAll (final boolean rebuildAll) {
+    _rebuildAll = rebuildAll;
   }
   
   public void setFudgeContext (final String fudgeContext) {
@@ -93,12 +108,20 @@ public class AntTask extends Task {
     }
   }
   
-  private void findFiles (final File src, File dest, final String srcExt, final String destExt, final List<String> names) {
+  public void setFieldsMutable (final boolean fieldsMutable) {
+    _fieldsMutable = fieldsMutable;
+  }
+  
+  public void setFieldsRequired (final boolean fieldsRequired) {
+    _fieldsRequired = fieldsRequired;
+  }
+  
+  private void findFiles (final File src, File dest, final String srcExt, final String destExt, final List<String> names, final String basePath) {
     if ((dest != null) && !dest.isDirectory ()) dest = null;
-    for (File file : src.listFiles ()) {
+    fileloop: for (File file : src.listFiles ()) {
       final String name = file.getName ();
       if (file.isDirectory ()) {
-        findFiles (file, (dest != null) ? new File (dest, name) : null, srcExt, destExt, names);
+        findFiles (file, (dest != null) ? new File (dest, name) : null, srcExt, destExt, names, basePath);
       } else {
         final int i = name.lastIndexOf ('.');
         if (i >= 0) {
@@ -108,15 +131,33 @@ public class AntTask extends Task {
                 final File target = new File (dest, name.substring (0, i) + destExt);
                 if (target.exists ()) {
                   if (target.lastModified () > file.lastModified ()) {
-                    continue;
+                    if (_verbose) {
+                      System.out.println ("Ignoring " + file);
+                    }
+                    continue fileloop;
                   }
+                }
+              }
+            }
+            String path = file.getAbsolutePath ();
+            if (path.startsWith (basePath)) {
+              path = path.substring (basePath.length ());
+            }
+            if (_patternSet != null) {
+              final String[] excludes = _patternSet.getExcludePatterns (getProject ());
+              for (final String exclude : excludes) {
+                if (DirectoryScanner.match (exclude, path)) {
+                  if (_verbose) {
+                    System.out.println ("Excluding " + file);
+                  }
+                  continue fileloop;
                 }
               }
             }
             if (_verbose) {
               System.out.println ("Loading " + file);
             }
-            names.add (file.getAbsolutePath ());
+            names.add (path);
           }
         }
       }
@@ -126,10 +167,16 @@ public class AntTask extends Task {
   @Override
   public void execute () throws BuildException {
     if (!CommandLine.checkPackages ()) throw new BuildException ("check the classpath settings");
-    final List<String> args = new ArrayList<String> (3);
+    final List<String> args = new ArrayList<String> (10);
     args.add ("-d" + _destdir);
     args.add ("-s" + _srcdir);
     args.add ("-lJava");
+    if (_fieldsMutable != null) {
+      args.add (_fieldsMutable ? "-fmutable" : "-freadonly");
+    }
+    if (_fieldsRequired != null) {
+      args.add (_fieldsRequired ? "-frequired" : "-foptional");
+    }
     if (_searchdir != null) {
       for (String dir : _searchdir.split (File.pathSeparator)) {
         if (_verbose) {
@@ -138,12 +185,26 @@ public class AntTask extends Task {
         args.add ("-p" + dir);
       }
     }
-    findFiles (new File (_srcdir), new File (_destdir), ".proto", ".java", args);
+    final File srcdir = new File (_srcdir);
+    findFiles (srcdir, new File (_destdir), ".proto", ".java", args, srcdir.getAbsolutePath () + File.separatorChar);
     if (_equals) args.add ("-Xequals");
     if (_toString) args.add ("-XtoString");
     if (_hashCode) args.add ("-XhashCode");
     if (_fudgeContext != null) args.add ("-XfudgeContext=" + _fudgeContext);
+    if (_verbose) {
+      System.out.print ("Commandline:");
+      for (final String arg : args) {
+        System.out.print (' ');
+        System.out.print (arg);
+      }
+      System.out.println ();
+    }
     if (CommandLine.compile (args.toArray (new String[args.size ()])) > 0) throw new BuildException ("compilation failed"); 
+  }
+  
+  public PatternSet.NameEntry createExclude () {
+    if (_patternSet == null) _patternSet = new PatternSet ();
+    return _patternSet.createExclude ();
   }
   
 }

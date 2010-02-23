@@ -34,7 +34,9 @@ tokens {
 	MESSAGE			= 'message';
 	MUTABLE			= 'mutable';
 	NAMESPACE		= 'namespace';
+	OPTIONAL    = 'optional';
 	ORDINAL;
+	READONLY    = 'readonly';
 	REPEATED		= 'repeated';
 	REQUIRED		= 'required';
 	ROOT;
@@ -126,6 +128,8 @@ anyword
   | MESSAGE
   | MUTABLE
   | NAMESPACE
+  | OPTIONAL
+  | READONLY
   | REPEATED
   | REQUIRED
   | T_BOOL
@@ -141,7 +145,6 @@ anyword
   | T_STRING
   | T_TIME
   | TAXONOMY
-  | TIME
   | USES
   ;
 
@@ -183,8 +186,9 @@ field_ordinal : '=' INTEGER -> ^(ORDINAL INTEGER);
 // optional is the default on all fields, recognised here for compatibility with GPB
 field_modifier
 	: MUTABLE
+	| READONLY
 	| REQUIRED
-	| 'optional'!
+	| OPTIONAL
 	| REPEATED
 	;
 

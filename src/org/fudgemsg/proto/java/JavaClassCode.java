@@ -1110,7 +1110,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       if (builder && !useBuilderPattern (superMessage)) {
         // we don't have a super constructor, so store a template of the root message
         if (superMessage.isExternal ()) {
-          writer.write ("_fudgeRoot = fudgeContext.fudgeMsgToObject (" + superMessage.getIdentifier () + ".class, fudgeMsg)");
+          writer.write ("_fudgeRoot = new " + superMessage.getIdentifier () + " (fudgeContext, fudgeMsg)");
         } else if (superMessage.hasExternalMessageReferences ()) {
           writer.write ("_fudgeRoot = " + superMessage.getIdentifier () + ".fromFudgeMsg (fudgeContext, fudgeMsg)");
         } else {

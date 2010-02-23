@@ -28,16 +28,18 @@ public class FieldDefinition extends Definition {
   
   private LiteralValue _defaultValue = null;
   
-  private boolean _flagRequired = false;
+  private boolean _flagRequired;
   
   private boolean _flagRepeated = false;
   
-  private boolean _flagMutable = false;
+  private boolean _flagMutable;
   
-  /* package */ FieldDefinition (final String identifier, final CodePosition codePosition, final MessageDefinition outerMessage, final FieldType type) {
+  /* package */ FieldDefinition (final String identifier, final CodePosition codePosition, final MessageDefinition outerMessage, final FieldType type, final boolean mutable, final boolean required) {
     super (identifier, codePosition, outerMessage, outerMessage.isCompilationTarget ());
     _ordinal = null;
     _type = type;
+    setMutable (mutable);
+    setRequired (required);
   }
   
   public Integer getOrdinal () {

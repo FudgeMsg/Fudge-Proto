@@ -12,7 +12,7 @@ public class ExtendsExtern extends org.fudgemsg.proto.tests.ExternalMessage impl
       _fudgeRoot = null;
     }
     protected Builder (final org.fudgemsg.mapping.FudgeDeserializationContext fudgeContext, final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
-      _fudgeRoot = fudgeContext.fudgeMsgToObject (org.fudgemsg.proto.tests.ExternalMessage.class, fudgeMsg);
+      _fudgeRoot = new org.fudgemsg.proto.tests.ExternalMessage (fudgeContext, fudgeMsg);
       org.fudgemsg.FudgeField fudgeField;
       fudgeField = fudgeMsg.getByName (A_KEY);
       if (fudgeField != null)  {

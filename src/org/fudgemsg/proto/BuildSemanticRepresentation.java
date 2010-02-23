@@ -321,7 +321,7 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
       context.warning (field.getCodePosition (), "this was the previous declaration of '" + identifier + "'");
       return;
     }
-    field = messageDefinition.createFieldDefinition (identifier, node.getCodePosition (), type);
+    field = messageDefinition.createFieldDefinition (identifier, node.getCodePosition (), type, context.isDefaultFieldMutable (), context.isDefaultFieldRequired ());
     for (int i = 2; i < children.size (); i++) {
       final AST element = children.get (i);
       switch (element.getNodeLabel ()) {
@@ -331,8 +331,14 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
       case ProtoLexer.MUTABLE :
         field.setMutable (true);
         break;
+      case ProtoLexer.OPTIONAL :
+        field.setRequired (false);
+        break;
       case ProtoLexer.ORDINAL :
         fieldSetOrdinal (context, field, element.getChildNodes ().get (0));
+        break;
+      case ProtoLexer.READONLY :
+        field.setMutable (false);
         break;
       case ProtoLexer.REPEATED :
         field.setRepeated (true);

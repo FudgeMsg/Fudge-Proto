@@ -104,6 +104,22 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
     return true;
   }
   
+  private boolean fieldDefaultProperty (final Compiler compiler, final String str) {
+    if (str.equals ("readonly")) {
+      compiler.setDefaultFieldsMutable (false);
+    } else if (str.equals ("mutable")) {
+      compiler.setDefaultFieldsMutable (true);
+    } else if (str.equals ("required")) {
+      compiler.setDefaultFieldsRequired (true);
+    } else if (str.equals ("optional")) {
+      compiler.setDefaultFieldsRequired (false);
+    } else {
+      compilerError (null, "invalid field modifier '" + str + "'");
+      return false;
+    }
+    return true;
+  }
+  
   /**
    * Actual implementation of the program entry point, but returns the exit code. This is to facilitate testing, or crudely embedding the
    * compiler into an IDE or something.
@@ -119,6 +135,11 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
         switch (args[i].charAt (1)) {
         case 'd' : // -d<path>        Select an output folder for the generated files
           compiler.setTargetPath (new File (args[i].substring (2)));
+          break;
+        case 'f' : // -f<property>    Set a field default property (readonly, mutable, required, optional)
+          if (!cmdLine.fieldDefaultProperty (compiler, args[i].substring (2))) {
+            return 1;
+          }
           break;
         case 'l' : // -l<language>    Select a language binding for the output files
           compiler.setCodeGenerator(codeGeneratorFactory.createCodeGenerator(args[i].substring(2)));

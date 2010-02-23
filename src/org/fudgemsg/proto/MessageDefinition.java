@@ -62,8 +62,8 @@ public abstract class MessageDefinition extends Definition {
     }
 
     @Override
-    /* package */ FieldDefinition createFieldDefinition (final String identifier, final CodePosition codePosition, final FieldType type) {
-      final FieldDefinition fieldDefinition = new FieldDefinition (identifier, codePosition, this, type);
+    /* package */ FieldDefinition createFieldDefinition (final String identifier, final CodePosition codePosition, final FieldType type, final boolean mutable, final boolean required) {
+      final FieldDefinition fieldDefinition = new FieldDefinition (identifier, codePosition, this, type, mutable, required);
       _innerFields.add (fieldDefinition);
       return fieldDefinition;
     }
@@ -135,7 +135,7 @@ public abstract class MessageDefinition extends Definition {
     return (MessageDefinition) getOuterDefinition ();
   }
   
-  /* package */ FieldDefinition createFieldDefinition (final String identifier, final CodePosition codePosition, final FieldType type) {
+  /* package */ FieldDefinition createFieldDefinition (final String identifier, final CodePosition codePosition, final FieldType type, final boolean mutable, final boolean required) {
     throw new UnsupportedOperationException ();
   }
   

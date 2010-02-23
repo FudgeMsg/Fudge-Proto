@@ -119,6 +119,14 @@ public class Compiler {
       Compiler.this.setUserState (key, state);
     }
     
+    public boolean isDefaultFieldRequired () {
+      return Compiler.this.isDefaultFieldsRequired ();
+    }
+    
+    public boolean isDefaultFieldMutable () {
+      return Compiler.this.isDefaultFieldsMutable ();
+    }
+    
   }
   
   private final Context _context = new Context ();
@@ -156,6 +164,10 @@ public class Compiler {
   private Map<String,Object> _userState = new HashMap<String,Object>();
   
   private File _targetPath = null;
+  
+  private boolean _defaultFieldsMutable = true;
+  
+  private boolean _defaultFieldsRequired = false;
   
   private boolean _rethrowExceptions = false; // for production build
   //private boolean _rethrowExceptions = true; // for debug build
@@ -221,6 +233,22 @@ public class Compiler {
   
   public void setRethrowExceptions (final boolean rethrowExceptions) {
     _rethrowExceptions = rethrowExceptions;
+  }
+  
+  public void setDefaultFieldsMutable (final boolean defaultFieldsMutable) {
+    _defaultFieldsMutable = defaultFieldsMutable;
+  }
+  
+  public boolean isDefaultFieldsMutable () {
+    return _defaultFieldsMutable;
+  }
+  
+  public void setDefaultFieldsRequired (final boolean defaultFieldsRequired) {
+    _defaultFieldsRequired = defaultFieldsRequired;
+  }
+  
+  public boolean isDefaultFieldsRequired () {
+    return _defaultFieldsRequired;
   }
   
   public void reset () {

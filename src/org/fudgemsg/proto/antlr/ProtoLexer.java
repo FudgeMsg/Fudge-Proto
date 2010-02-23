@@ -1,4 +1,4 @@
-// $ANTLR 3.1.1 org/fudgemsg/proto/antlr/Proto.g 2010-02-12 15:49:35
+// $ANTLR 3.1.1 org/fudgemsg/proto/antlr/Proto.g 2010-02-22 16:58:39
 
   package org.fudgemsg.proto.antlr;
   import org.fudgemsg.proto.Compiler;
@@ -20,20 +20,19 @@ public class ProtoLexer extends Lexer {
     public static final int T__65=65;
     public static final int T__62=62;
     public static final int T__63=63;
-    public static final int T_STRING=31;
-    public static final int ML_STRING=40;
-    public static final int T_BOOL=21;
+    public static final int T_STRING=33;
+    public static final int ML_STRING=42;
+    public static final int T_BOOL=23;
     public static final int EXTERN=11;
-    public static final int T_DOUBLE=23;
-    public static final int FLOAT=38;
+    public static final int T_DOUBLE=25;
+    public static final int FLOAT=40;
     public static final int T__61=61;
     public static final int T__60=60;
     public static final int EOF=-1;
-    public static final int T_LONG=29;
+    public static final int T_LONG=31;
     public static final int T__55=55;
-    public static final int TIME=43;
-    public static final int ML_COMMENT=39;
-    public static final int T_INDICATOR=27;
+    public static final int ML_COMMENT=41;
+    public static final int T_INDICATOR=29;
     public static final int T__56=56;
     public static final int T__57=57;
     public static final int T__58=58;
@@ -42,42 +41,43 @@ public class ProtoLexer extends Lexer {
     public static final int T__52=52;
     public static final int T__53=53;
     public static final int T__54=54;
-    public static final int IDENTIFIER=36;
-    public static final int TAXONOMY=33;
+    public static final int IDENTIFIER=38;
+    public static final int TAXONOMY=35;
     public static final int T__59=59;
-    public static final int T_INT=28;
+    public static final int T_INT=30;
     public static final int MESSAGE=14;
-    public static final int COMMENT=35;
+    public static final int COMMENT=37;
     public static final int T__50=50;
     public static final int ARRAY=4;
-    public static final int INTEGER=37;
+    public static final int INTEGER=39;
     public static final int T__46=46;
     public static final int T__47=47;
-    public static final int T__44=44;
-    public static final int T_BYTE=22;
+    public static final int T_BYTE=24;
     public static final int T__45=45;
     public static final int T__48=48;
     public static final int DIM_FIXED=7;
     public static final int T__49=49;
-    public static final int ORDINAL=17;
+    public static final int ORDINAL=18;
     public static final int DEFAULT=6;
-    public static final int REPEATED=18;
-    public static final int T_FLOAT=26;
-    public static final int WHITESPACE=42;
-    public static final int REQUIRED=19;
-    public static final int ROOT=20;
-    public static final int T_DATETIME=25;
+    public static final int REPEATED=20;
+    public static final int T_FLOAT=28;
+    public static final int WHITESPACE=44;
+    public static final int REQUIRED=21;
+    public static final int READONLY=19;
+    public static final int ROOT=22;
+    public static final int T_DATETIME=27;
     public static final int NAMESPACE=16;
+    public static final int OPTIONAL=17;
     public static final int DIM_VARIANT=8;
     public static final int ENUM=9;
-    public static final int USES=34;
-    public static final int T_DATE=24;
+    public static final int USES=36;
+    public static final int T_DATE=26;
     public static final int FIELD=12;
-    public static final int T_TIME=32;
+    public static final int T_TIME=34;
     public static final int EXTENDS=10;
-    public static final int T_SHORT=30;
+    public static final int T_SHORT=32;
     public static final int MUTABLE=15;
-    public static final int STRING=41;
+    public static final int STRING=43;
 
       private Compiler.Context _context;
       private Source _source;
@@ -300,13 +300,55 @@ public class ProtoLexer extends Lexer {
     }
     // $ANTLR end "NAMESPACE"
 
+    // $ANTLR start "OPTIONAL"
+    public final void mOPTIONAL() throws RecognitionException {
+        try {
+            int _type = OPTIONAL;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // org/fudgemsg/proto/antlr/Proto.g:38:10: ( 'optional' )
+            // org/fudgemsg/proto/antlr/Proto.g:38:12: 'optional'
+            {
+            match("optional"); 
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "OPTIONAL"
+
+    // $ANTLR start "READONLY"
+    public final void mREADONLY() throws RecognitionException {
+        try {
+            int _type = READONLY;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // org/fudgemsg/proto/antlr/Proto.g:39:10: ( 'readonly' )
+            // org/fudgemsg/proto/antlr/Proto.g:39:12: 'readonly'
+            {
+            match("readonly"); 
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "READONLY"
+
     // $ANTLR start "REPEATED"
     public final void mREPEATED() throws RecognitionException {
         try {
             int _type = REPEATED;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:38:10: ( 'repeated' )
-            // org/fudgemsg/proto/antlr/Proto.g:38:12: 'repeated'
+            // org/fudgemsg/proto/antlr/Proto.g:40:10: ( 'repeated' )
+            // org/fudgemsg/proto/antlr/Proto.g:40:12: 'repeated'
             {
             match("repeated"); 
 
@@ -326,8 +368,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = REQUIRED;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:39:10: ( 'required' )
-            // org/fudgemsg/proto/antlr/Proto.g:39:12: 'required'
+            // org/fudgemsg/proto/antlr/Proto.g:41:10: ( 'required' )
+            // org/fudgemsg/proto/antlr/Proto.g:41:12: 'required'
             {
             match("required"); 
 
@@ -347,8 +389,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T_BOOL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:40:8: ( 'bool' )
-            // org/fudgemsg/proto/antlr/Proto.g:40:10: 'bool'
+            // org/fudgemsg/proto/antlr/Proto.g:42:8: ( 'bool' )
+            // org/fudgemsg/proto/antlr/Proto.g:42:10: 'bool'
             {
             match("bool"); 
 
@@ -368,8 +410,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T_BYTE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:41:8: ( 'byte' )
-            // org/fudgemsg/proto/antlr/Proto.g:41:10: 'byte'
+            // org/fudgemsg/proto/antlr/Proto.g:43:8: ( 'byte' )
+            // org/fudgemsg/proto/antlr/Proto.g:43:10: 'byte'
             {
             match("byte"); 
 
@@ -389,8 +431,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T_DOUBLE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:42:10: ( 'double' )
-            // org/fudgemsg/proto/antlr/Proto.g:42:12: 'double'
+            // org/fudgemsg/proto/antlr/Proto.g:44:10: ( 'double' )
+            // org/fudgemsg/proto/antlr/Proto.g:44:12: 'double'
             {
             match("double"); 
 
@@ -410,8 +452,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T_DATE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:43:8: ( 'date' )
-            // org/fudgemsg/proto/antlr/Proto.g:43:10: 'date'
+            // org/fudgemsg/proto/antlr/Proto.g:45:8: ( 'date' )
+            // org/fudgemsg/proto/antlr/Proto.g:45:10: 'date'
             {
             match("date"); 
 
@@ -431,8 +473,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T_DATETIME;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:44:12: ( 'datetime' )
-            // org/fudgemsg/proto/antlr/Proto.g:44:14: 'datetime'
+            // org/fudgemsg/proto/antlr/Proto.g:46:12: ( 'datetime' )
+            // org/fudgemsg/proto/antlr/Proto.g:46:14: 'datetime'
             {
             match("datetime"); 
 
@@ -452,8 +494,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T_FLOAT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:45:9: ( 'float' )
-            // org/fudgemsg/proto/antlr/Proto.g:45:11: 'float'
+            // org/fudgemsg/proto/antlr/Proto.g:47:9: ( 'float' )
+            // org/fudgemsg/proto/antlr/Proto.g:47:11: 'float'
             {
             match("float"); 
 
@@ -473,8 +515,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T_INDICATOR;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:46:13: ( 'indicator' )
-            // org/fudgemsg/proto/antlr/Proto.g:46:15: 'indicator'
+            // org/fudgemsg/proto/antlr/Proto.g:48:13: ( 'indicator' )
+            // org/fudgemsg/proto/antlr/Proto.g:48:15: 'indicator'
             {
             match("indicator"); 
 
@@ -494,8 +536,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:47:7: ( 'int' )
-            // org/fudgemsg/proto/antlr/Proto.g:47:9: 'int'
+            // org/fudgemsg/proto/antlr/Proto.g:49:7: ( 'int' )
+            // org/fudgemsg/proto/antlr/Proto.g:49:9: 'int'
             {
             match("int"); 
 
@@ -515,8 +557,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T_LONG;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:48:8: ( 'long' )
-            // org/fudgemsg/proto/antlr/Proto.g:48:10: 'long'
+            // org/fudgemsg/proto/antlr/Proto.g:50:8: ( 'long' )
+            // org/fudgemsg/proto/antlr/Proto.g:50:10: 'long'
             {
             match("long"); 
 
@@ -536,8 +578,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T_SHORT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:49:9: ( 'short' )
-            // org/fudgemsg/proto/antlr/Proto.g:49:11: 'short'
+            // org/fudgemsg/proto/antlr/Proto.g:51:9: ( 'short' )
+            // org/fudgemsg/proto/antlr/Proto.g:51:11: 'short'
             {
             match("short"); 
 
@@ -557,8 +599,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:50:10: ( 'string' )
-            // org/fudgemsg/proto/antlr/Proto.g:50:12: 'string'
+            // org/fudgemsg/proto/antlr/Proto.g:52:10: ( 'string' )
+            // org/fudgemsg/proto/antlr/Proto.g:52:12: 'string'
             {
             match("string"); 
 
@@ -578,8 +620,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T_TIME;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:51:8: ( 'time' )
-            // org/fudgemsg/proto/antlr/Proto.g:51:10: 'time'
+            // org/fudgemsg/proto/antlr/Proto.g:53:8: ( 'time' )
+            // org/fudgemsg/proto/antlr/Proto.g:53:10: 'time'
             {
             match("time"); 
 
@@ -599,8 +641,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = TAXONOMY;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:52:10: ( 'taxonomy' )
-            // org/fudgemsg/proto/antlr/Proto.g:52:12: 'taxonomy'
+            // org/fudgemsg/proto/antlr/Proto.g:54:10: ( 'taxonomy' )
+            // org/fudgemsg/proto/antlr/Proto.g:54:12: 'taxonomy'
             {
             match("taxonomy"); 
 
@@ -620,8 +662,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = USES;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:53:6: ( 'uses' )
-            // org/fudgemsg/proto/antlr/Proto.g:53:8: 'uses'
+            // org/fudgemsg/proto/antlr/Proto.g:55:6: ( 'uses' )
+            // org/fudgemsg/proto/antlr/Proto.g:55:8: 'uses'
             {
             match("uses"); 
 
@@ -636,35 +678,15 @@ public class ProtoLexer extends Lexer {
     }
     // $ANTLR end "USES"
 
-    // $ANTLR start "T__44"
-    public final void mT__44() throws RecognitionException {
-        try {
-            int _type = T__44;
-            int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:54:7: ( '{' )
-            // org/fudgemsg/proto/antlr/Proto.g:54:9: '{'
-            {
-            match('{'); 
-
-            }
-
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end "T__44"
-
     // $ANTLR start "T__45"
     public final void mT__45() throws RecognitionException {
         try {
             int _type = T__45;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:55:7: ( '}' )
-            // org/fudgemsg/proto/antlr/Proto.g:55:9: '}'
+            // org/fudgemsg/proto/antlr/Proto.g:56:7: ( '{' )
+            // org/fudgemsg/proto/antlr/Proto.g:56:9: '{'
             {
-            match('}'); 
+            match('{'); 
 
             }
 
@@ -681,10 +703,10 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T__46;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:56:7: ( ';' )
-            // org/fudgemsg/proto/antlr/Proto.g:56:9: ';'
+            // org/fudgemsg/proto/antlr/Proto.g:57:7: ( '}' )
+            // org/fudgemsg/proto/antlr/Proto.g:57:9: '}'
             {
-            match(';'); 
+            match('}'); 
 
             }
 
@@ -701,10 +723,10 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T__47;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:57:7: ( '=' )
-            // org/fudgemsg/proto/antlr/Proto.g:57:9: '='
+            // org/fudgemsg/proto/antlr/Proto.g:58:7: ( ';' )
+            // org/fudgemsg/proto/antlr/Proto.g:58:9: ';'
             {
-            match('='); 
+            match(';'); 
 
             }
 
@@ -721,10 +743,10 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T__48;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:58:7: ( '[' )
-            // org/fudgemsg/proto/antlr/Proto.g:58:9: '['
+            // org/fudgemsg/proto/antlr/Proto.g:59:7: ( '=' )
+            // org/fudgemsg/proto/antlr/Proto.g:59:9: '='
             {
-            match('['); 
+            match('='); 
 
             }
 
@@ -741,10 +763,10 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T__49;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:59:7: ( ']' )
-            // org/fudgemsg/proto/antlr/Proto.g:59:9: ']'
+            // org/fudgemsg/proto/antlr/Proto.g:60:7: ( '[' )
+            // org/fudgemsg/proto/antlr/Proto.g:60:9: '['
             {
-            match(']'); 
+            match('['); 
 
             }
 
@@ -761,10 +783,10 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T__50;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:60:7: ( ',' )
-            // org/fudgemsg/proto/antlr/Proto.g:60:9: ','
+            // org/fudgemsg/proto/antlr/Proto.g:61:7: ( ']' )
+            // org/fudgemsg/proto/antlr/Proto.g:61:9: ']'
             {
-            match(','); 
+            match(']'); 
 
             }
 
@@ -781,11 +803,10 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T__51;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:61:7: ( 'optional' )
-            // org/fudgemsg/proto/antlr/Proto.g:61:9: 'optional'
+            // org/fudgemsg/proto/antlr/Proto.g:62:7: ( ',' )
+            // org/fudgemsg/proto/antlr/Proto.g:62:9: ','
             {
-            match("optional"); 
-
+            match(','); 
 
             }
 
@@ -802,8 +823,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T__52;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:62:7: ( 'boolean' )
-            // org/fudgemsg/proto/antlr/Proto.g:62:9: 'boolean'
+            // org/fudgemsg/proto/antlr/Proto.g:63:7: ( 'boolean' )
+            // org/fudgemsg/proto/antlr/Proto.g:63:9: 'boolean'
             {
             match("boolean"); 
 
@@ -823,8 +844,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T__53;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:63:7: ( 'int8' )
-            // org/fudgemsg/proto/antlr/Proto.g:63:9: 'int8'
+            // org/fudgemsg/proto/antlr/Proto.g:64:7: ( 'int8' )
+            // org/fudgemsg/proto/antlr/Proto.g:64:9: 'int8'
             {
             match("int8"); 
 
@@ -844,8 +865,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T__54;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:64:7: ( 'int16' )
-            // org/fudgemsg/proto/antlr/Proto.g:64:9: 'int16'
+            // org/fudgemsg/proto/antlr/Proto.g:65:7: ( 'int16' )
+            // org/fudgemsg/proto/antlr/Proto.g:65:9: 'int16'
             {
             match("int16"); 
 
@@ -865,8 +886,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T__55;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:65:7: ( 'int32' )
-            // org/fudgemsg/proto/antlr/Proto.g:65:9: 'int32'
+            // org/fudgemsg/proto/antlr/Proto.g:66:7: ( 'int32' )
+            // org/fudgemsg/proto/antlr/Proto.g:66:9: 'int32'
             {
             match("int32"); 
 
@@ -886,8 +907,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T__56;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:66:7: ( 'uint32' )
-            // org/fudgemsg/proto/antlr/Proto.g:66:9: 'uint32'
+            // org/fudgemsg/proto/antlr/Proto.g:67:7: ( 'uint32' )
+            // org/fudgemsg/proto/antlr/Proto.g:67:9: 'uint32'
             {
             match("uint32"); 
 
@@ -907,8 +928,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T__57;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:67:7: ( 'sint32' )
-            // org/fudgemsg/proto/antlr/Proto.g:67:9: 'sint32'
+            // org/fudgemsg/proto/antlr/Proto.g:68:7: ( 'sint32' )
+            // org/fudgemsg/proto/antlr/Proto.g:68:9: 'sint32'
             {
             match("sint32"); 
 
@@ -928,8 +949,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T__58;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:68:7: ( 'fixed32' )
-            // org/fudgemsg/proto/antlr/Proto.g:68:9: 'fixed32'
+            // org/fudgemsg/proto/antlr/Proto.g:69:7: ( 'fixed32' )
+            // org/fudgemsg/proto/antlr/Proto.g:69:9: 'fixed32'
             {
             match("fixed32"); 
 
@@ -949,8 +970,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T__59;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:69:7: ( 'sfixed32' )
-            // org/fudgemsg/proto/antlr/Proto.g:69:9: 'sfixed32'
+            // org/fudgemsg/proto/antlr/Proto.g:70:7: ( 'sfixed32' )
+            // org/fudgemsg/proto/antlr/Proto.g:70:9: 'sfixed32'
             {
             match("sfixed32"); 
 
@@ -970,8 +991,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T__60;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:70:7: ( 'integer' )
-            // org/fudgemsg/proto/antlr/Proto.g:70:9: 'integer'
+            // org/fudgemsg/proto/antlr/Proto.g:71:7: ( 'integer' )
+            // org/fudgemsg/proto/antlr/Proto.g:71:9: 'integer'
             {
             match("integer"); 
 
@@ -991,8 +1012,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T__61;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:71:7: ( 'int64' )
-            // org/fudgemsg/proto/antlr/Proto.g:71:9: 'int64'
+            // org/fudgemsg/proto/antlr/Proto.g:72:7: ( 'int64' )
+            // org/fudgemsg/proto/antlr/Proto.g:72:9: 'int64'
             {
             match("int64"); 
 
@@ -1012,8 +1033,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T__62;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:72:7: ( 'uint64' )
-            // org/fudgemsg/proto/antlr/Proto.g:72:9: 'uint64'
+            // org/fudgemsg/proto/antlr/Proto.g:73:7: ( 'uint64' )
+            // org/fudgemsg/proto/antlr/Proto.g:73:9: 'uint64'
             {
             match("uint64"); 
 
@@ -1033,8 +1054,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T__63;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:73:7: ( 'sint64' )
-            // org/fudgemsg/proto/antlr/Proto.g:73:9: 'sint64'
+            // org/fudgemsg/proto/antlr/Proto.g:74:7: ( 'sint64' )
+            // org/fudgemsg/proto/antlr/Proto.g:74:9: 'sint64'
             {
             match("sint64"); 
 
@@ -1054,8 +1075,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T__64;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:74:7: ( 'fixed64' )
-            // org/fudgemsg/proto/antlr/Proto.g:74:9: 'fixed64'
+            // org/fudgemsg/proto/antlr/Proto.g:75:7: ( 'fixed64' )
+            // org/fudgemsg/proto/antlr/Proto.g:75:9: 'fixed64'
             {
             match("fixed64"); 
 
@@ -1075,8 +1096,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T__65;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:75:7: ( 'sfixed64' )
-            // org/fudgemsg/proto/antlr/Proto.g:75:9: 'sfixed64'
+            // org/fudgemsg/proto/antlr/Proto.g:76:7: ( 'sfixed64' )
+            // org/fudgemsg/proto/antlr/Proto.g:76:9: 'sfixed64'
             {
             match("sfixed64"); 
 
@@ -1096,8 +1117,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T__66;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:76:7: ( 'float32' )
-            // org/fudgemsg/proto/antlr/Proto.g:76:9: 'float32'
+            // org/fudgemsg/proto/antlr/Proto.g:77:7: ( 'float32' )
+            // org/fudgemsg/proto/antlr/Proto.g:77:9: 'float32'
             {
             match("float32"); 
 
@@ -1117,8 +1138,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T__67;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:77:7: ( 'float64' )
-            // org/fudgemsg/proto/antlr/Proto.g:77:9: 'float64'
+            // org/fudgemsg/proto/antlr/Proto.g:78:7: ( 'float64' )
+            // org/fudgemsg/proto/antlr/Proto.g:78:9: 'float64'
             {
             match("float64"); 
 
@@ -1138,8 +1159,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = T__68;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:78:7: ( '.' )
-            // org/fudgemsg/proto/antlr/Proto.g:78:9: '.'
+            // org/fudgemsg/proto/antlr/Proto.g:79:7: ( '.' )
+            // org/fudgemsg/proto/antlr/Proto.g:79:9: '.'
             {
             match('.'); 
 
@@ -1158,12 +1179,12 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:109:9: ( '//' ( options {greedy=false; } : . )* ( '\\n' | '\\r' ) )
-            // org/fudgemsg/proto/antlr/Proto.g:109:11: '//' ( options {greedy=false; } : . )* ( '\\n' | '\\r' )
+            // org/fudgemsg/proto/antlr/Proto.g:111:9: ( '//' ( options {greedy=false; } : . )* ( '\\n' | '\\r' ) )
+            // org/fudgemsg/proto/antlr/Proto.g:111:11: '//' ( options {greedy=false; } : . )* ( '\\n' | '\\r' )
             {
             match("//"); 
 
-            // org/fudgemsg/proto/antlr/Proto.g:109:16: ( options {greedy=false; } : . )*
+            // org/fudgemsg/proto/antlr/Proto.g:111:16: ( options {greedy=false; } : . )*
             loop1:
             do {
                 int alt1=2;
@@ -1179,7 +1200,7 @@ public class ProtoLexer extends Lexer {
 
                 switch (alt1) {
             	case 1 :
-            	    // org/fudgemsg/proto/antlr/Proto.g:109:48: .
+            	    // org/fudgemsg/proto/antlr/Proto.g:111:48: .
             	    {
             	    matchAny(); 
 
@@ -1217,8 +1238,8 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = IDENTIFIER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:110:12: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
-            // org/fudgemsg/proto/antlr/Proto.g:110:14: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+            // org/fudgemsg/proto/antlr/Proto.g:112:12: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
+            // org/fudgemsg/proto/antlr/Proto.g:112:14: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
@@ -1229,7 +1250,7 @@ public class ProtoLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // org/fudgemsg/proto/antlr/Proto.g:110:37: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+            // org/fudgemsg/proto/antlr/Proto.g:112:37: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
             loop2:
             do {
                 int alt2=2;
@@ -1278,10 +1299,10 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = INTEGER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:111:9: ( ( '+' | '-' )? ( '0' .. '9' )+ )
-            // org/fudgemsg/proto/antlr/Proto.g:111:11: ( '+' | '-' )? ( '0' .. '9' )+
+            // org/fudgemsg/proto/antlr/Proto.g:113:9: ( ( '+' | '-' )? ( '0' .. '9' )+ )
+            // org/fudgemsg/proto/antlr/Proto.g:113:11: ( '+' | '-' )? ( '0' .. '9' )+
             {
-            // org/fudgemsg/proto/antlr/Proto.g:111:11: ( '+' | '-' )?
+            // org/fudgemsg/proto/antlr/Proto.g:113:11: ( '+' | '-' )?
             int alt3=2;
             int LA3_0 = input.LA(1);
 
@@ -1307,7 +1328,7 @@ public class ProtoLexer extends Lexer {
 
             }
 
-            // org/fudgemsg/proto/antlr/Proto.g:111:22: ( '0' .. '9' )+
+            // org/fudgemsg/proto/antlr/Proto.g:113:22: ( '0' .. '9' )+
             int cnt4=0;
             loop4:
             do {
@@ -1321,7 +1342,7 @@ public class ProtoLexer extends Lexer {
 
                 switch (alt4) {
             	case 1 :
-            	    // org/fudgemsg/proto/antlr/Proto.g:111:22: '0' .. '9'
+            	    // org/fudgemsg/proto/antlr/Proto.g:113:22: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -1353,10 +1374,10 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = FLOAT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:112:7: ( ( '+' | '-' )? ( '0' .. '9' )* '.' ( '0' .. '9' )+ ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )? ( 'f' )? )
-            // org/fudgemsg/proto/antlr/Proto.g:112:9: ( '+' | '-' )? ( '0' .. '9' )* '.' ( '0' .. '9' )+ ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )? ( 'f' )?
+            // org/fudgemsg/proto/antlr/Proto.g:114:7: ( ( '+' | '-' )? ( '0' .. '9' )* '.' ( '0' .. '9' )+ ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )? ( 'f' )? )
+            // org/fudgemsg/proto/antlr/Proto.g:114:9: ( '+' | '-' )? ( '0' .. '9' )* '.' ( '0' .. '9' )+ ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )? ( 'f' )?
             {
-            // org/fudgemsg/proto/antlr/Proto.g:112:9: ( '+' | '-' )?
+            // org/fudgemsg/proto/antlr/Proto.g:114:9: ( '+' | '-' )?
             int alt5=2;
             int LA5_0 = input.LA(1);
 
@@ -1382,7 +1403,7 @@ public class ProtoLexer extends Lexer {
 
             }
 
-            // org/fudgemsg/proto/antlr/Proto.g:112:20: ( '0' .. '9' )*
+            // org/fudgemsg/proto/antlr/Proto.g:114:20: ( '0' .. '9' )*
             loop6:
             do {
                 int alt6=2;
@@ -1395,7 +1416,7 @@ public class ProtoLexer extends Lexer {
 
                 switch (alt6) {
             	case 1 :
-            	    // org/fudgemsg/proto/antlr/Proto.g:112:21: '0' .. '9'
+            	    // org/fudgemsg/proto/antlr/Proto.g:114:21: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -1408,7 +1429,7 @@ public class ProtoLexer extends Lexer {
             } while (true);
 
             match('.'); 
-            // org/fudgemsg/proto/antlr/Proto.g:112:36: ( '0' .. '9' )+
+            // org/fudgemsg/proto/antlr/Proto.g:114:36: ( '0' .. '9' )+
             int cnt7=0;
             loop7:
             do {
@@ -1422,7 +1443,7 @@ public class ProtoLexer extends Lexer {
 
                 switch (alt7) {
             	case 1 :
-            	    // org/fudgemsg/proto/antlr/Proto.g:112:37: '0' .. '9'
+            	    // org/fudgemsg/proto/antlr/Proto.g:114:37: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -1438,7 +1459,7 @@ public class ProtoLexer extends Lexer {
                 cnt7++;
             } while (true);
 
-            // org/fudgemsg/proto/antlr/Proto.g:112:48: ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )?
+            // org/fudgemsg/proto/antlr/Proto.g:114:48: ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )?
             int alt10=2;
             int LA10_0 = input.LA(1);
 
@@ -1447,7 +1468,7 @@ public class ProtoLexer extends Lexer {
             }
             switch (alt10) {
                 case 1 :
-                    // org/fudgemsg/proto/antlr/Proto.g:112:50: ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+
+                    // org/fudgemsg/proto/antlr/Proto.g:114:50: ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+
                     {
                     if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
                         input.consume();
@@ -1458,7 +1479,7 @@ public class ProtoLexer extends Lexer {
                         recover(mse);
                         throw mse;}
 
-                    // org/fudgemsg/proto/antlr/Proto.g:112:60: ( '+' | '-' )?
+                    // org/fudgemsg/proto/antlr/Proto.g:114:60: ( '+' | '-' )?
                     int alt8=2;
                     int LA8_0 = input.LA(1);
 
@@ -1484,7 +1505,7 @@ public class ProtoLexer extends Lexer {
 
                     }
 
-                    // org/fudgemsg/proto/antlr/Proto.g:112:71: ( '0' .. '9' )+
+                    // org/fudgemsg/proto/antlr/Proto.g:114:71: ( '0' .. '9' )+
                     int cnt9=0;
                     loop9:
                     do {
@@ -1498,7 +1519,7 @@ public class ProtoLexer extends Lexer {
 
                         switch (alt9) {
                     	case 1 :
-                    	    // org/fudgemsg/proto/antlr/Proto.g:112:72: '0' .. '9'
+                    	    // org/fudgemsg/proto/antlr/Proto.g:114:72: '0' .. '9'
                     	    {
                     	    matchRange('0','9'); 
 
@@ -1520,7 +1541,7 @@ public class ProtoLexer extends Lexer {
 
             }
 
-            // org/fudgemsg/proto/antlr/Proto.g:112:86: ( 'f' )?
+            // org/fudgemsg/proto/antlr/Proto.g:114:86: ( 'f' )?
             int alt11=2;
             int LA11_0 = input.LA(1);
 
@@ -1529,7 +1550,7 @@ public class ProtoLexer extends Lexer {
             }
             switch (alt11) {
                 case 1 :
-                    // org/fudgemsg/proto/antlr/Proto.g:112:86: 'f'
+                    // org/fudgemsg/proto/antlr/Proto.g:114:86: 'f'
                     {
                     match('f'); 
 
@@ -1554,12 +1575,12 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:113:12: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // org/fudgemsg/proto/antlr/Proto.g:113:14: '/*' ( options {greedy=false; } : . )* '*/'
+            // org/fudgemsg/proto/antlr/Proto.g:115:12: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // org/fudgemsg/proto/antlr/Proto.g:115:14: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
-            // org/fudgemsg/proto/antlr/Proto.g:113:19: ( options {greedy=false; } : . )*
+            // org/fudgemsg/proto/antlr/Proto.g:115:19: ( options {greedy=false; } : . )*
             loop12:
             do {
                 int alt12=2;
@@ -1584,7 +1605,7 @@ public class ProtoLexer extends Lexer {
 
                 switch (alt12) {
             	case 1 :
-            	    // org/fudgemsg/proto/antlr/Proto.g:113:51: .
+            	    // org/fudgemsg/proto/antlr/Proto.g:115:51: .
             	    {
             	    matchAny(); 
 
@@ -1615,12 +1636,12 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = ML_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:115:11: ( '<<<' ( 'a' .. 'z' | 'A' .. 'Z' )+ ( '\\r' | '\\n' ) ( options {greedy=false; } : . )* ( '\\r' | '\\n' ) ( 'a' .. 'z' | 'A' .. 'Z' )+ ';' ( '\\r' | '\\n' ) )
-            // org/fudgemsg/proto/antlr/Proto.g:115:13: '<<<' ( 'a' .. 'z' | 'A' .. 'Z' )+ ( '\\r' | '\\n' ) ( options {greedy=false; } : . )* ( '\\r' | '\\n' ) ( 'a' .. 'z' | 'A' .. 'Z' )+ ';' ( '\\r' | '\\n' )
+            // org/fudgemsg/proto/antlr/Proto.g:117:11: ( '<<<' ( 'a' .. 'z' | 'A' .. 'Z' )+ ( '\\r' | '\\n' ) ( options {greedy=false; } : . )* ( '\\r' | '\\n' ) ( 'a' .. 'z' | 'A' .. 'Z' )+ ';' ( '\\r' | '\\n' ) )
+            // org/fudgemsg/proto/antlr/Proto.g:117:13: '<<<' ( 'a' .. 'z' | 'A' .. 'Z' )+ ( '\\r' | '\\n' ) ( options {greedy=false; } : . )* ( '\\r' | '\\n' ) ( 'a' .. 'z' | 'A' .. 'Z' )+ ';' ( '\\r' | '\\n' )
             {
             match("<<<"); 
 
-            // org/fudgemsg/proto/antlr/Proto.g:115:19: ( 'a' .. 'z' | 'A' .. 'Z' )+
+            // org/fudgemsg/proto/antlr/Proto.g:117:19: ( 'a' .. 'z' | 'A' .. 'Z' )+
             int cnt13=0;
             loop13:
             do {
@@ -1667,14 +1688,14 @@ public class ProtoLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // org/fudgemsg/proto/antlr/Proto.g:115:52: ( options {greedy=false; } : . )*
+            // org/fudgemsg/proto/antlr/Proto.g:117:52: ( options {greedy=false; } : . )*
             loop14:
             do {
                 int alt14=2;
                 alt14 = dfa14.predict(input);
                 switch (alt14) {
             	case 1 :
-            	    // org/fudgemsg/proto/antlr/Proto.g:115:84: .
+            	    // org/fudgemsg/proto/antlr/Proto.g:117:84: .
             	    {
             	    matchAny(); 
 
@@ -1695,7 +1716,7 @@ public class ProtoLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // org/fudgemsg/proto/antlr/Proto.g:115:101: ( 'a' .. 'z' | 'A' .. 'Z' )+
+            // org/fudgemsg/proto/antlr/Proto.g:117:101: ( 'a' .. 'z' | 'A' .. 'Z' )+
             int cnt15=0;
             loop15:
             do {
@@ -1759,11 +1780,11 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:116:8: ( '\"' ( options {greedy=false; } : ( '\\\\' . | . ) )* '\"' )
-            // org/fudgemsg/proto/antlr/Proto.g:116:10: '\"' ( options {greedy=false; } : ( '\\\\' . | . ) )* '\"'
+            // org/fudgemsg/proto/antlr/Proto.g:118:8: ( '\"' ( options {greedy=false; } : ( '\\\\' . | . ) )* '\"' )
+            // org/fudgemsg/proto/antlr/Proto.g:118:10: '\"' ( options {greedy=false; } : ( '\\\\' . | . ) )* '\"'
             {
             match('\"'); 
-            // org/fudgemsg/proto/antlr/Proto.g:116:14: ( options {greedy=false; } : ( '\\\\' . | . ) )*
+            // org/fudgemsg/proto/antlr/Proto.g:118:14: ( options {greedy=false; } : ( '\\\\' . | . ) )*
             loop17:
             do {
                 int alt17=2;
@@ -1779,9 +1800,9 @@ public class ProtoLexer extends Lexer {
 
                 switch (alt17) {
             	case 1 :
-            	    // org/fudgemsg/proto/antlr/Proto.g:116:46: ( '\\\\' . | . )
+            	    // org/fudgemsg/proto/antlr/Proto.g:118:46: ( '\\\\' . | . )
             	    {
-            	    // org/fudgemsg/proto/antlr/Proto.g:116:46: ( '\\\\' . | . )
+            	    // org/fudgemsg/proto/antlr/Proto.g:118:46: ( '\\\\' . | . )
             	    int alt16=2;
             	    int LA16_0 = input.LA(1);
 
@@ -1815,7 +1836,7 @@ public class ProtoLexer extends Lexer {
             	    }
             	    switch (alt16) {
             	        case 1 :
-            	            // org/fudgemsg/proto/antlr/Proto.g:116:47: '\\\\' .
+            	            // org/fudgemsg/proto/antlr/Proto.g:118:47: '\\\\' .
             	            {
             	            match('\\'); 
             	            matchAny(); 
@@ -1823,7 +1844,7 @@ public class ProtoLexer extends Lexer {
             	            }
             	            break;
             	        case 2 :
-            	            // org/fudgemsg/proto/antlr/Proto.g:116:53: .
+            	            // org/fudgemsg/proto/antlr/Proto.g:118:53: .
             	            {
             	            matchAny(); 
 
@@ -1858,10 +1879,10 @@ public class ProtoLexer extends Lexer {
         try {
             int _type = WHITESPACE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // org/fudgemsg/proto/antlr/Proto.g:117:12: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // org/fudgemsg/proto/antlr/Proto.g:117:14: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // org/fudgemsg/proto/antlr/Proto.g:119:12: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // org/fudgemsg/proto/antlr/Proto.g:119:14: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // org/fudgemsg/proto/antlr/Proto.g:117:14: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // org/fudgemsg/proto/antlr/Proto.g:119:14: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt18=0;
             loop18:
             do {
@@ -1912,8 +1933,8 @@ public class ProtoLexer extends Lexer {
     // $ANTLR end "WHITESPACE"
 
     public void mTokens() throws RecognitionException {
-        // org/fudgemsg/proto/antlr/Proto.g:1:8: ( BINDING | DEFAULT | ENUM | EXTENDS | EXTERN | IMPORT | MESSAGE | MUTABLE | NAMESPACE | REPEATED | REQUIRED | T_BOOL | T_BYTE | T_DOUBLE | T_DATE | T_DATETIME | T_FLOAT | T_INDICATOR | T_INT | T_LONG | T_SHORT | T_STRING | T_TIME | TAXONOMY | USES | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | COMMENT | IDENTIFIER | INTEGER | FLOAT | ML_COMMENT | ML_STRING | STRING | WHITESPACE )
-        int alt19=58;
+        // org/fudgemsg/proto/antlr/Proto.g:1:8: ( BINDING | DEFAULT | ENUM | EXTENDS | EXTERN | IMPORT | MESSAGE | MUTABLE | NAMESPACE | OPTIONAL | READONLY | REPEATED | REQUIRED | T_BOOL | T_BYTE | T_DOUBLE | T_DATE | T_DATETIME | T_FLOAT | T_INDICATOR | T_INT | T_LONG | T_SHORT | T_STRING | T_TIME | TAXONOMY | USES | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | COMMENT | IDENTIFIER | INTEGER | FLOAT | ML_COMMENT | ML_STRING | STRING | WHITESPACE )
+        int alt19=59;
         alt19 = dfa19.predict(input);
         switch (alt19) {
             case 1 :
@@ -1980,343 +2001,350 @@ public class ProtoLexer extends Lexer {
                 }
                 break;
             case 10 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:79: REPEATED
+                // org/fudgemsg/proto/antlr/Proto.g:1:79: OPTIONAL
+                {
+                mOPTIONAL(); 
+
+                }
+                break;
+            case 11 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:88: READONLY
+                {
+                mREADONLY(); 
+
+                }
+                break;
+            case 12 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:97: REPEATED
                 {
                 mREPEATED(); 
 
                 }
                 break;
-            case 11 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:88: REQUIRED
+            case 13 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:106: REQUIRED
                 {
                 mREQUIRED(); 
 
                 }
                 break;
-            case 12 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:97: T_BOOL
+            case 14 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:115: T_BOOL
                 {
                 mT_BOOL(); 
 
                 }
                 break;
-            case 13 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:104: T_BYTE
+            case 15 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:122: T_BYTE
                 {
                 mT_BYTE(); 
 
                 }
                 break;
-            case 14 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:111: T_DOUBLE
+            case 16 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:129: T_DOUBLE
                 {
                 mT_DOUBLE(); 
 
                 }
                 break;
-            case 15 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:120: T_DATE
+            case 17 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:138: T_DATE
                 {
                 mT_DATE(); 
 
                 }
                 break;
-            case 16 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:127: T_DATETIME
+            case 18 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:145: T_DATETIME
                 {
                 mT_DATETIME(); 
 
                 }
                 break;
-            case 17 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:138: T_FLOAT
+            case 19 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:156: T_FLOAT
                 {
                 mT_FLOAT(); 
 
                 }
                 break;
-            case 18 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:146: T_INDICATOR
+            case 20 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:164: T_INDICATOR
                 {
                 mT_INDICATOR(); 
 
                 }
                 break;
-            case 19 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:158: T_INT
+            case 21 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:176: T_INT
                 {
                 mT_INT(); 
 
                 }
                 break;
-            case 20 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:164: T_LONG
+            case 22 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:182: T_LONG
                 {
                 mT_LONG(); 
 
                 }
                 break;
-            case 21 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:171: T_SHORT
+            case 23 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:189: T_SHORT
                 {
                 mT_SHORT(); 
 
                 }
                 break;
-            case 22 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:179: T_STRING
+            case 24 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:197: T_STRING
                 {
                 mT_STRING(); 
 
                 }
                 break;
-            case 23 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:188: T_TIME
+            case 25 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:206: T_TIME
                 {
                 mT_TIME(); 
 
                 }
                 break;
-            case 24 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:195: TAXONOMY
+            case 26 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:213: TAXONOMY
                 {
                 mTAXONOMY(); 
 
                 }
                 break;
-            case 25 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:204: USES
+            case 27 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:222: USES
                 {
                 mUSES(); 
 
                 }
                 break;
-            case 26 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:209: T__44
-                {
-                mT__44(); 
-
-                }
-                break;
-            case 27 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:215: T__45
+            case 28 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:227: T__45
                 {
                 mT__45(); 
 
                 }
                 break;
-            case 28 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:221: T__46
+            case 29 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:233: T__46
                 {
                 mT__46(); 
 
                 }
                 break;
-            case 29 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:227: T__47
+            case 30 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:239: T__47
                 {
                 mT__47(); 
 
                 }
                 break;
-            case 30 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:233: T__48
+            case 31 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:245: T__48
                 {
                 mT__48(); 
 
                 }
                 break;
-            case 31 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:239: T__49
+            case 32 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:251: T__49
                 {
                 mT__49(); 
 
                 }
                 break;
-            case 32 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:245: T__50
+            case 33 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:257: T__50
                 {
                 mT__50(); 
 
                 }
                 break;
-            case 33 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:251: T__51
+            case 34 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:263: T__51
                 {
                 mT__51(); 
 
                 }
                 break;
-            case 34 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:257: T__52
+            case 35 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:269: T__52
                 {
                 mT__52(); 
 
                 }
                 break;
-            case 35 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:263: T__53
+            case 36 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:275: T__53
                 {
                 mT__53(); 
 
                 }
                 break;
-            case 36 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:269: T__54
+            case 37 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:281: T__54
                 {
                 mT__54(); 
 
                 }
                 break;
-            case 37 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:275: T__55
+            case 38 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:287: T__55
                 {
                 mT__55(); 
 
                 }
                 break;
-            case 38 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:281: T__56
+            case 39 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:293: T__56
                 {
                 mT__56(); 
 
                 }
                 break;
-            case 39 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:287: T__57
+            case 40 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:299: T__57
                 {
                 mT__57(); 
 
                 }
                 break;
-            case 40 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:293: T__58
+            case 41 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:305: T__58
                 {
                 mT__58(); 
 
                 }
                 break;
-            case 41 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:299: T__59
+            case 42 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:311: T__59
                 {
                 mT__59(); 
 
                 }
                 break;
-            case 42 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:305: T__60
+            case 43 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:317: T__60
                 {
                 mT__60(); 
 
                 }
                 break;
-            case 43 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:311: T__61
+            case 44 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:323: T__61
                 {
                 mT__61(); 
 
                 }
                 break;
-            case 44 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:317: T__62
+            case 45 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:329: T__62
                 {
                 mT__62(); 
 
                 }
                 break;
-            case 45 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:323: T__63
+            case 46 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:335: T__63
                 {
                 mT__63(); 
 
                 }
                 break;
-            case 46 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:329: T__64
+            case 47 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:341: T__64
                 {
                 mT__64(); 
 
                 }
                 break;
-            case 47 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:335: T__65
+            case 48 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:347: T__65
                 {
                 mT__65(); 
 
                 }
                 break;
-            case 48 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:341: T__66
+            case 49 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:353: T__66
                 {
                 mT__66(); 
 
                 }
                 break;
-            case 49 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:347: T__67
+            case 50 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:359: T__67
                 {
                 mT__67(); 
 
                 }
                 break;
-            case 50 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:353: T__68
+            case 51 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:365: T__68
                 {
                 mT__68(); 
 
                 }
                 break;
-            case 51 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:359: COMMENT
+            case 52 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:371: COMMENT
                 {
                 mCOMMENT(); 
 
                 }
                 break;
-            case 52 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:367: IDENTIFIER
+            case 53 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:379: IDENTIFIER
                 {
                 mIDENTIFIER(); 
 
                 }
                 break;
-            case 53 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:378: INTEGER
+            case 54 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:390: INTEGER
                 {
                 mINTEGER(); 
 
                 }
                 break;
-            case 54 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:386: FLOAT
+            case 55 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:398: FLOAT
                 {
                 mFLOAT(); 
 
                 }
                 break;
-            case 55 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:392: ML_COMMENT
+            case 56 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:404: ML_COMMENT
                 {
                 mML_COMMENT(); 
 
                 }
                 break;
-            case 56 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:403: ML_STRING
+            case 57 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:415: ML_STRING
                 {
                 mML_STRING(); 
 
                 }
                 break;
-            case 57 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:413: STRING
+            case 58 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:425: STRING
                 {
                 mSTRING(); 
 
                 }
                 break;
-            case 58 :
-                // org/fudgemsg/proto/antlr/Proto.g:1:420: WHITESPACE
+            case 59 :
+                // org/fudgemsg/proto/antlr/Proto.g:1:432: WHITESPACE
                 {
                 mWHITESPACE(); 
 
@@ -2341,7 +2369,7 @@ public class ProtoLexer extends Lexer {
     static final String DFA14_acceptS =
         "\2\uffff\1\1\2\uffff\1\2";
     static final String DFA14_specialS =
-        "\1\1\1\0\1\uffff\1\2\1\3\1\uffff}>";
+        "\1\2\1\0\1\uffff\1\1\1\3\1\uffff}>";
     static final String[] DFA14_transitionS = {
             "\12\2\1\1\2\2\1\1\ufff2\2",
             "\101\2\32\3\6\2\32\3\uff85\2",
@@ -2381,7 +2409,7 @@ public class ProtoLexer extends Lexer {
             this.transition = DFA14_transition;
         }
         public String getDescription() {
-            return "()* loopback of 115:52: ( options {greedy=false; } : . )*";
+            return "()* loopback of 117:52: ( options {greedy=false; } : . )*";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             IntStream input = _input;
@@ -2391,31 +2419,31 @@ public class ProtoLexer extends Lexer {
                         int LA14_1 = input.LA(1);
 
                         s = -1;
-                        if ( ((LA14_1>='A' && LA14_1<='Z')||(LA14_1>='a' && LA14_1<='z')) ) {s = 3;}
+                        if ( ((LA14_1>='\u0000' && LA14_1<='@')||(LA14_1>='[' && LA14_1<='`')||(LA14_1>='{' && LA14_1<='\uFFFF')) ) {s = 2;}
 
-                        else if ( ((LA14_1>='\u0000' && LA14_1<='@')||(LA14_1>='[' && LA14_1<='`')||(LA14_1>='{' && LA14_1<='\uFFFF')) ) {s = 2;}
+                        else if ( ((LA14_1>='A' && LA14_1<='Z')||(LA14_1>='a' && LA14_1<='z')) ) {s = 3;}
 
                         if ( s>=0 ) return s;
                         break;
                     case 1 : 
+                        int LA14_3 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA14_3>='\u0000' && LA14_3<=':')||(LA14_3>='<' && LA14_3<='@')||(LA14_3>='[' && LA14_3<='`')||(LA14_3>='{' && LA14_3<='\uFFFF')) ) {s = 2;}
+
+                        else if ( (LA14_3==';') ) {s = 4;}
+
+                        else if ( ((LA14_3>='A' && LA14_3<='Z')||(LA14_3>='a' && LA14_3<='z')) ) {s = 3;}
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 2 : 
                         int LA14_0 = input.LA(1);
 
                         s = -1;
                         if ( (LA14_0=='\n'||LA14_0=='\r') ) {s = 1;}
 
                         else if ( ((LA14_0>='\u0000' && LA14_0<='\t')||(LA14_0>='\u000B' && LA14_0<='\f')||(LA14_0>='\u000E' && LA14_0<='\uFFFF')) ) {s = 2;}
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 2 : 
-                        int LA14_3 = input.LA(1);
-
-                        s = -1;
-                        if ( (LA14_3==';') ) {s = 4;}
-
-                        else if ( ((LA14_3>='A' && LA14_3<='Z')||(LA14_3>='a' && LA14_3<='z')) ) {s = 3;}
-
-                        else if ( ((LA14_3>='\u0000' && LA14_3<=':')||(LA14_3>='<' && LA14_3<='@')||(LA14_3>='[' && LA14_3<='`')||(LA14_3>='{' && LA14_3<='\uFFFF')) ) {s = 2;}
 
                         if ( s>=0 ) return s;
                         break;
@@ -2437,75 +2465,76 @@ public class ProtoLexer extends Lexer {
         }
     }
     static final String DFA19_eotS =
-        "\1\uffff\14\27\7\uffff\1\27\1\67\3\uffff\1\73\3\uffff\32\27\5\uffff"+
-        "\12\27\1\147\22\27\1\173\1\174\2\27\1\u0080\1\u0081\3\27\1\u0086"+
-        "\4\27\1\uffff\7\27\1\u0092\4\27\1\u0098\1\27\1\u009a\4\27\2\uffff"+
-        "\3\27\2\uffff\4\27\1\uffff\1\u00a7\1\u00a8\1\27\1\u00aa\5\27\1\u00b2"+
-        "\1\27\1\uffff\1\u00b5\4\27\1\uffff\1\27\1\uffff\6\27\1\u00c1\2\27"+
-        "\1\u00c4\1\u00c5\1\27\2\uffff\1\27\1\uffff\7\27\1\uffff\2\27\1\uffff"+
-        "\1\u00d1\1\u00d2\1\u00d3\2\27\1\u00d7\1\u00d8\1\27\1\u00da\1\u00db"+
-        "\1\u00dc\1\uffff\1\27\1\u00de\2\uffff\1\27\1\u00e0\1\u00e1\1\u00e2"+
-        "\3\27\1\u00e6\1\u00e7\1\u00e8\1\u00e9\3\uffff\3\27\2\uffff\1\27"+
-        "\3\uffff\1\u00ee\1\uffff\1\27\3\uffff\1\27\1\u00f1\1\u00f2\4\uffff"+
-        "\1\u00f3\1\u00f4\1\u00f5\1\u00f6\1\uffff\1\u00f7\1\u00f8\10\uffff";
+        "\1\uffff\15\27\7\uffff\1\70\3\uffff\1\73\3\uffff\32\27\5\uffff\12"+
+        "\27\1\150\23\27\1\175\1\176\2\27\1\u0082\1\u0083\3\27\1\u0088\4"+
+        "\27\1\uffff\11\27\1\u0096\4\27\1\u009c\1\27\1\u009e\3\27\2\uffff"+
+        "\3\27\2\uffff\4\27\1\uffff\1\u00aa\1\u00ab\1\27\1\u00ad\7\27\1\u00b7"+
+        "\1\27\1\uffff\1\u00ba\4\27\1\uffff\1\27\1\uffff\5\27\1\u00c5\2\27"+
+        "\1\u00c8\1\u00c9\1\27\2\uffff\1\27\1\uffff\11\27\1\uffff\2\27\1"+
+        "\uffff\1\u00d7\1\u00d8\1\u00d9\2\27\1\u00dd\1\u00de\1\u00df\1\u00e0"+
+        "\1\u00e1\1\uffff\1\27\1\u00e3\2\uffff\1\27\1\u00e5\1\u00e6\1\u00e7"+
+        "\5\27\1\u00ed\1\u00ee\1\u00ef\1\u00f0\3\uffff\3\27\5\uffff\1\u00f4"+
+        "\1\uffff\1\27\3\uffff\1\27\1\u00f7\1\u00f8\1\u00f9\1\u00fa\4\uffff"+
+        "\1\u00fb\1\u00fc\1\u00fd\1\uffff\1\u00fe\1\u00ff\11\uffff";
     static final String DFA19_eofS =
-        "\u00f9\uffff";
+        "\u0100\uffff";
     static final String DFA19_minS =
-        "\1\11\1\151\1\141\1\156\1\155\1\145\1\141\1\145\1\151\1\157\1\146"+
-        "\1\141\1\151\7\uffff\1\160\1\60\1\52\1\uffff\2\56\3\uffff\1\156"+
+        "\1\11\1\151\1\141\1\156\1\155\1\145\1\141\1\160\1\145\1\151\1\157"+
+        "\1\146\1\141\1\151\7\uffff\1\60\1\52\1\uffff\2\56\3\uffff\1\156"+
         "\1\157\1\164\1\146\1\165\1\164\1\165\1\164\1\160\1\144\1\163\1\164"+
-        "\1\155\1\160\1\157\1\170\1\156\1\157\1\162\1\156\1\151\1\155\1\170"+
-        "\1\145\1\156\1\164\5\uffff\1\144\1\154\1\145\1\141\1\142\1\145\1"+
-        "\155\1\145\1\157\1\151\1\60\1\163\1\141\2\145\1\165\1\141\1\145"+
-        "\1\147\1\162\1\151\1\164\1\170\1\145\1\157\1\163\1\164\2\151\2\60"+
-        "\1\165\1\154\2\60\1\156\1\162\1\143\1\60\1\66\1\62\1\147\1\64\1"+
-        "\uffff\1\141\1\142\1\163\1\141\1\151\1\164\1\144\1\60\1\164\1\156"+
-        "\1\63\1\145\1\60\1\156\1\60\1\63\1\157\1\156\1\141\2\uffff\1\154"+
-        "\1\145\1\151\2\uffff\1\144\1\156\1\164\1\141\1\uffff\2\60\1\145"+
-        "\1\60\1\147\1\154\1\160\1\164\1\162\1\60\1\63\1\uffff\1\60\1\147"+
-        "\1\62\1\64\1\144\1\uffff\1\157\1\uffff\1\62\1\64\1\156\1\147\1\156"+
-        "\1\164\1\60\1\155\1\163\2\60\1\164\2\uffff\1\162\1\uffff\2\145\1"+
-        "\141\2\145\1\62\1\64\1\uffff\1\62\1\64\1\uffff\3\60\1\63\1\155\2"+
-        "\60\1\141\3\60\1\uffff\1\145\1\60\2\uffff\1\157\3\60\1\143\2\144"+
-        "\4\60\3\uffff\1\62\1\64\1\171\2\uffff\1\154\3\uffff\1\60\1\uffff"+
-        "\1\162\3\uffff\1\145\2\60\4\uffff\4\60\1\uffff\2\60\10\uffff";
+        "\1\155\1\164\1\141\1\157\1\170\1\156\1\157\1\162\1\156\1\151\1\155"+
+        "\1\170\1\145\1\156\5\uffff\1\144\1\154\1\145\1\141\1\142\1\145\1"+
+        "\155\1\145\1\157\1\151\1\60\1\163\1\141\1\145\1\151\1\144\1\145"+
+        "\1\165\1\141\1\145\1\147\1\162\1\151\1\164\1\170\1\145\1\157\1\163"+
+        "\1\164\1\151\2\60\1\165\1\154\2\60\1\156\1\162\1\143\1\60\1\66\1"+
+        "\62\1\147\1\64\1\uffff\1\141\1\142\1\163\2\157\1\141\1\151\1\164"+
+        "\1\144\1\60\1\164\1\156\1\63\1\145\1\60\1\156\1\60\1\63\1\156\1"+
+        "\141\2\uffff\1\154\1\145\1\151\2\uffff\1\144\1\156\1\164\1\141\1"+
+        "\uffff\2\60\1\145\1\60\1\147\1\154\1\160\2\156\1\164\1\162\1\60"+
+        "\1\63\1\uffff\1\60\1\147\1\62\1\64\1\144\1\uffff\1\157\1\uffff\1"+
+        "\62\1\64\1\147\1\156\1\164\1\60\1\155\1\163\2\60\1\164\2\uffff\1"+
+        "\162\1\uffff\2\145\2\141\1\154\2\145\1\62\1\64\1\uffff\1\62\1\64"+
+        "\1\uffff\3\60\1\63\1\155\5\60\1\uffff\1\145\1\60\2\uffff\1\157\3"+
+        "\60\1\143\1\154\1\171\2\144\4\60\3\uffff\1\62\1\64\1\171\5\uffff"+
+        "\1\60\1\uffff\1\162\3\uffff\1\145\4\60\4\uffff\3\60\1\uffff\2\60"+
+        "\11\uffff";
     static final String DFA19_maxS =
-        "\1\175\1\171\1\157\1\170\1\156\1\165\1\141\1\145\1\154\1\157\1\164"+
-        "\1\151\1\163\7\uffff\1\160\1\71\1\57\1\uffff\2\71\3\uffff\1\156"+
+        "\1\175\1\171\1\157\1\170\1\156\1\165\1\141\1\160\1\145\1\154\1\157"+
+        "\1\164\1\151\1\163\7\uffff\1\71\1\57\1\uffff\2\71\3\uffff\1\156"+
         "\1\157\1\164\1\146\1\165\1\164\1\165\1\164\1\160\1\164\1\163\1\164"+
-        "\1\155\1\161\1\157\1\170\1\156\1\157\1\162\1\156\1\151\1\155\1\170"+
-        "\1\145\1\156\1\164\5\uffff\1\144\1\154\1\145\1\141\1\142\1\145\1"+
-        "\155\1\145\1\157\1\151\1\172\1\163\1\141\2\145\1\165\1\141\1\145"+
-        "\1\147\1\162\1\151\1\164\1\170\1\145\1\157\1\163\1\164\2\151\2\172"+
-        "\1\165\1\154\2\172\2\162\1\143\1\172\1\66\1\62\1\147\1\64\1\uffff"+
-        "\1\141\1\142\1\163\1\141\1\151\1\164\1\144\1\172\1\164\1\156\1\66"+
-        "\1\145\1\172\1\156\1\172\1\66\1\157\1\156\1\141\2\uffff\1\154\1"+
-        "\145\1\151\2\uffff\1\144\1\156\1\164\1\141\1\uffff\2\172\1\145\1"+
-        "\172\1\147\1\154\1\160\1\164\1\162\1\172\1\66\1\uffff\1\172\1\147"+
-        "\1\62\1\64\1\144\1\uffff\1\157\1\uffff\1\62\1\64\1\156\1\147\1\156"+
-        "\1\164\1\172\1\155\1\163\2\172\1\164\2\uffff\1\162\1\uffff\2\145"+
-        "\1\141\2\145\1\62\1\64\1\uffff\1\62\1\64\1\uffff\3\172\1\66\1\155"+
-        "\2\172\1\141\3\172\1\uffff\1\145\1\172\2\uffff\1\157\3\172\1\143"+
-        "\2\144\4\172\3\uffff\1\62\1\64\1\171\2\uffff\1\154\3\uffff\1\172"+
-        "\1\uffff\1\162\3\uffff\1\145\2\172\4\uffff\4\172\1\uffff\2\172\10"+
-        "\uffff";
+        "\1\155\1\164\1\161\1\157\1\170\1\156\1\157\1\162\1\156\1\151\1\155"+
+        "\1\170\1\145\1\156\5\uffff\1\144\1\154\1\145\1\141\1\142\1\145\1"+
+        "\155\1\145\1\157\1\151\1\172\1\163\1\141\1\145\1\151\1\144\1\145"+
+        "\1\165\1\141\1\145\1\147\1\162\1\151\1\164\1\170\1\145\1\157\1\163"+
+        "\1\164\1\151\2\172\1\165\1\154\2\172\2\162\1\143\1\172\1\66\1\62"+
+        "\1\147\1\64\1\uffff\1\141\1\142\1\163\2\157\1\141\1\151\1\164\1"+
+        "\144\1\172\1\164\1\156\1\66\1\145\1\172\1\156\1\172\1\66\1\156\1"+
+        "\141\2\uffff\1\154\1\145\1\151\2\uffff\1\144\1\156\1\164\1\141\1"+
+        "\uffff\2\172\1\145\1\172\1\147\1\154\1\160\2\156\1\164\1\162\1\172"+
+        "\1\66\1\uffff\1\172\1\147\1\62\1\64\1\144\1\uffff\1\157\1\uffff"+
+        "\1\62\1\64\1\147\1\156\1\164\1\172\1\155\1\163\2\172\1\164\2\uffff"+
+        "\1\162\1\uffff\2\145\2\141\1\154\2\145\1\62\1\64\1\uffff\1\62\1"+
+        "\64\1\uffff\3\172\1\66\1\155\5\172\1\uffff\1\145\1\172\2\uffff\1"+
+        "\157\3\172\1\143\1\154\1\171\2\144\4\172\3\uffff\1\62\1\64\1\171"+
+        "\5\uffff\1\172\1\uffff\1\162\3\uffff\1\145\4\172\4\uffff\3\172\1"+
+        "\uffff\2\172\11\uffff";
     static final String DFA19_acceptS =
-        "\15\uffff\1\32\1\33\1\34\1\35\1\36\1\37\1\40\3\uffff\1\64\2\uffff"+
-        "\1\70\1\71\1\72\32\uffff\1\62\1\66\1\63\1\67\1\65\53\uffff\1\23"+
-        "\23\uffff\1\14\1\15\3\uffff\1\17\1\3\4\uffff\1\43\13\uffff\1\24"+
-        "\5\uffff\1\27\1\uffff\1\31\14\uffff\1\44\1\45\1\uffff\1\53\7\uffff"+
-        "\1\21\2\uffff\1\25\13\uffff\1\16\2\uffff\1\5\1\6\13\uffff\1\26\1"+
-        "\47\1\55\3\uffff\1\46\1\54\1\uffff\1\1\1\42\1\2\1\uffff\1\4\1\uffff"+
-        "\1\52\1\7\1\10\3\uffff\1\60\1\61\1\50\1\56\4\uffff\1\20\2\uffff"+
-        "\1\12\1\13\1\51\1\57\1\30\1\41\1\22\1\11";
+        "\16\uffff\1\34\1\35\1\36\1\37\1\40\1\41\1\42\2\uffff\1\65\2\uffff"+
+        "\1\71\1\72\1\73\32\uffff\1\67\1\63\1\64\1\70\1\66\54\uffff\1\25"+
+        "\24\uffff\1\16\1\17\3\uffff\1\21\1\3\4\uffff\1\44\15\uffff\1\26"+
+        "\5\uffff\1\31\1\uffff\1\33\13\uffff\1\45\1\46\1\uffff\1\54\11\uffff"+
+        "\1\23\2\uffff\1\27\12\uffff\1\20\2\uffff\1\5\1\6\15\uffff\1\30\1"+
+        "\50\1\56\3\uffff\1\47\1\55\1\1\1\43\1\2\1\uffff\1\4\1\uffff\1\53"+
+        "\1\7\1\10\5\uffff\1\61\1\62\1\51\1\57\3\uffff\1\22\2\uffff\1\12"+
+        "\1\13\1\14\1\15\1\52\1\60\1\32\1\24\1\11";
     static final String DFA19_specialS =
-        "\u00f9\uffff}>";
+        "\u0100\uffff}>";
     static final String[] DFA19_transitionS = {
             "\2\34\2\uffff\1\34\22\uffff\1\34\1\uffff\1\33\10\uffff\1\30"+
-            "\1\23\1\30\1\25\1\26\12\31\1\uffff\1\17\1\32\1\20\3\uffff\32"+
-            "\27\1\21\1\uffff\1\22\1\uffff\1\27\1\uffff\1\27\1\1\1\27\1\2"+
-            "\1\3\1\10\2\27\1\4\2\27\1\11\1\5\1\6\1\24\2\27\1\7\1\12\1\13"+
-            "\1\14\5\27\1\15\1\uffff\1\16",
+            "\1\24\1\30\1\25\1\26\12\31\1\uffff\1\20\1\32\1\21\3\uffff\32"+
+            "\27\1\22\1\uffff\1\23\1\uffff\1\27\1\uffff\1\27\1\1\1\27\1\2"+
+            "\1\3\1\11\2\27\1\4\2\27\1\12\1\5\1\6\1\7\2\27\1\10\1\13\1\14"+
+            "\1\15\5\27\1\16\1\uffff\1\17",
             "\1\35\5\uffff\1\36\11\uffff\1\37",
             "\1\42\3\uffff\1\40\11\uffff\1\41",
             "\1\43\11\uffff\1\44",
@@ -2513,11 +2542,12 @@ public class ProtoLexer extends Lexer {
             "\1\47\17\uffff\1\50",
             "\1\51",
             "\1\52",
-            "\1\54\2\uffff\1\53",
-            "\1\55",
-            "\1\61\1\uffff\1\56\1\60\12\uffff\1\57",
-            "\1\63\7\uffff\1\62",
-            "\1\65\11\uffff\1\64",
+            "\1\53",
+            "\1\55\2\uffff\1\54",
+            "\1\56",
+            "\1\62\1\uffff\1\57\1\61\12\uffff\1\60",
+            "\1\64\7\uffff\1\63",
+            "\1\66\11\uffff\1\65",
             "",
             "",
             "",
@@ -2525,12 +2555,11 @@ public class ProtoLexer extends Lexer {
             "",
             "",
             "",
-            "\1\66",
-            "\12\70",
+            "\12\67",
             "\1\72\4\uffff\1\71",
             "",
-            "\1\70\1\uffff\12\31",
-            "\1\70\1\uffff\12\31",
+            "\1\67\1\uffff\12\31",
+            "\1\67\1\uffff\12\31",
             "",
             "",
             "",
@@ -2547,9 +2576,8 @@ public class ProtoLexer extends Lexer {
             "\1\107",
             "\1\110",
             "\1\111",
-            "\1\112\1\113",
-            "\1\114",
-            "\1\115",
+            "\1\112",
+            "\1\113\16\uffff\1\114\1\115",
             "\1\116",
             "\1\117",
             "\1\120",
@@ -2560,12 +2588,12 @@ public class ProtoLexer extends Lexer {
             "\1\125",
             "\1\126",
             "\1\127",
-            "",
-            "",
-            "",
-            "",
-            "",
             "\1\130",
+            "",
+            "",
+            "",
+            "",
+            "",
             "\1\131",
             "\1\132",
             "\1\133",
@@ -2575,9 +2603,9 @@ public class ProtoLexer extends Lexer {
             "\1\137",
             "\1\140",
             "\1\141",
-            "\1\27\1\143\1\27\1\144\2\27\1\146\1\27\1\142\1\27\7\uffff\32"+
-            "\27\4\uffff\1\27\1\uffff\4\27\1\145\25\27",
-            "\1\150",
+            "\1\142",
+            "\1\27\1\144\1\27\1\145\2\27\1\147\1\27\1\143\1\27\7\uffff\32"+
+            "\27\4\uffff\1\27\1\uffff\4\27\1\146\25\27",
             "\1\151",
             "\1\152",
             "\1\153",
@@ -2595,43 +2623,41 @@ public class ProtoLexer extends Lexer {
             "\1\167",
             "\1\170",
             "\1\171",
-            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\4\27\1\172\25\27",
+            "\1\172",
+            "\1\173",
+            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\4\27\1\174\25\27",
             "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
-            "\1\175",
-            "\1\176",
-            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\23\27\1\177\6\27",
+            "\1\177",
+            "\1\u0080",
+            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\23\27\1\u0081\6\27",
             "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
-            "\1\u0082\3\uffff\1\u0083",
-            "\1\u0084",
-            "\1\u0085",
-            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
+            "\1\u0084\3\uffff\1\u0085",
+            "\1\u0086",
             "\1\u0087",
-            "\1\u0088",
+            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
             "\1\u0089",
             "\1\u008a",
-            "",
             "\1\u008b",
             "\1\u008c",
+            "",
             "\1\u008d",
             "\1\u008e",
             "\1\u008f",
             "\1\u0090",
             "\1\u0091",
-            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
+            "\1\u0092",
             "\1\u0093",
             "\1\u0094",
-            "\1\u0095\2\uffff\1\u0096",
+            "\1\u0095",
+            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
             "\1\u0097",
+            "\1\u0098",
+            "\1\u0099\2\uffff\1\u009a",
+            "\1\u009b",
             "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
-            "\1\u0099",
-            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
-            "\1\u009b\2\uffff\1\u009c",
             "\1\u009d",
-            "\1\u009e",
-            "\1\u009f",
-            "",
-            "",
-            "\1\u00a0",
+            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
+            "\1\u009f\2\uffff\1\u00a0",
             "\1\u00a1",
             "\1\u00a2",
             "",
@@ -2639,115 +2665,125 @@ public class ProtoLexer extends Lexer {
             "\1\u00a3",
             "\1\u00a4",
             "\1\u00a5",
+            "",
+            "",
             "\1\u00a6",
+            "\1\u00a7",
+            "\1\u00a8",
+            "\1\u00a9",
             "",
             "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
             "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
-            "\1\u00a9",
-            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
-            "\1\u00ab",
             "\1\u00ac",
-            "\1\u00ad",
+            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
             "\1\u00ae",
             "\1\u00af",
-            "\3\27\1\u00b0\2\27\1\u00b1\3\27\7\uffff\32\27\4\uffff\1\27\1"+
+            "\1\u00b0",
+            "\1\u00b1",
+            "\1\u00b2",
+            "\1\u00b3",
+            "\1\u00b4",
+            "\3\27\1\u00b5\2\27\1\u00b6\3\27\7\uffff\32\27\4\uffff\1\27\1"+
             "\uffff\32\27",
-            "\1\u00b3\2\uffff\1\u00b4",
+            "\1\u00b8\2\uffff\1\u00b9",
             "",
             "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
-            "\1\u00b6",
-            "\1\u00b7",
-            "\1\u00b8",
-            "\1\u00b9",
-            "",
-            "\1\u00ba",
-            "",
             "\1\u00bb",
             "\1\u00bc",
             "\1\u00bd",
             "\1\u00be",
+            "",
             "\1\u00bf",
+            "",
             "\1\u00c0",
-            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
+            "\1\u00c1",
             "\1\u00c2",
             "\1\u00c3",
-            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
+            "\1\u00c4",
             "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
             "\1\u00c6",
-            "",
-            "",
             "\1\u00c7",
-            "",
-            "\1\u00c8",
-            "\1\u00c9",
+            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
+            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
             "\1\u00ca",
+            "",
+            "",
             "\1\u00cb",
+            "",
             "\1\u00cc",
             "\1\u00cd",
             "\1\u00ce",
-            "",
             "\1\u00cf",
             "\1\u00d0",
+            "\1\u00d1",
+            "\1\u00d2",
+            "\1\u00d3",
+            "\1\u00d4",
             "",
-            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
-            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
-            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
-            "\1\u00d4\2\uffff\1\u00d5",
+            "\1\u00d5",
             "\1\u00d6",
+            "",
             "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
             "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
-            "\1\u00d9",
+            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
+            "\1\u00da\2\uffff\1\u00db",
+            "\1\u00dc",
+            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
+            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
             "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
             "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
             "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
             "",
-            "\1\u00dd",
+            "\1\u00e2",
             "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
             "",
             "",
-            "\1\u00df",
-            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
-            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
-            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
-            "\1\u00e3",
             "\1\u00e4",
-            "\1\u00e5",
             "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
             "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
             "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
-            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
-            "",
-            "",
-            "",
+            "\1\u00e8",
+            "\1\u00e9",
             "\1\u00ea",
             "\1\u00eb",
             "\1\u00ec",
-            "",
-            "",
-            "\1\u00ed",
-            "",
-            "",
-            "",
-            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
-            "",
-            "\1\u00ef",
-            "",
-            "",
-            "",
-            "\1\u00f0",
-            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
-            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
-            "",
-            "",
-            "",
-            "",
             "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
             "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
             "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
             "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
             "",
+            "",
+            "",
+            "\1\u00f1",
+            "\1\u00f2",
+            "\1\u00f3",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
+            "",
+            "\1\u00f5",
+            "",
+            "",
+            "",
+            "\1\u00f6",
             "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
             "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
+            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
+            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
+            "",
+            "",
+            "",
+            "",
+            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
+            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
+            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
+            "",
+            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
+            "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
+            "",
             "",
             "",
             "",
@@ -2788,7 +2824,7 @@ public class ProtoLexer extends Lexer {
             this.transition = DFA19_transition;
         }
         public String getDescription() {
-            return "1:1: Tokens : ( BINDING | DEFAULT | ENUM | EXTENDS | EXTERN | IMPORT | MESSAGE | MUTABLE | NAMESPACE | REPEATED | REQUIRED | T_BOOL | T_BYTE | T_DOUBLE | T_DATE | T_DATETIME | T_FLOAT | T_INDICATOR | T_INT | T_LONG | T_SHORT | T_STRING | T_TIME | TAXONOMY | USES | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | COMMENT | IDENTIFIER | INTEGER | FLOAT | ML_COMMENT | ML_STRING | STRING | WHITESPACE );";
+            return "1:1: Tokens : ( BINDING | DEFAULT | ENUM | EXTENDS | EXTERN | IMPORT | MESSAGE | MUTABLE | NAMESPACE | OPTIONAL | READONLY | REPEATED | REQUIRED | T_BOOL | T_BYTE | T_DOUBLE | T_DATE | T_DATETIME | T_FLOAT | T_INDICATOR | T_INT | T_LONG | T_SHORT | T_STRING | T_TIME | TAXONOMY | USES | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | COMMENT | IDENTIFIER | INTEGER | FLOAT | ML_COMMENT | ML_STRING | STRING | WHITESPACE );";
         }
     }
  
