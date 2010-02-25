@@ -25,7 +25,7 @@ import java.util.ArrayList;
  * 
  * @author Andrew
  */
-public class CommandLine implements Compiler.WarningListener, Compiler.ErrorListener, SourceResolver {
+public class CommandLine implements Compiler.WarningListener, Compiler.ErrorListener, Compiler.VerboseListener, SourceResolver {
   
   private static final String MSG_WARN = "Warning";
   private static final String MSG_ERROR = "Error";
@@ -35,15 +35,17 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
   
   private List<File> _searchDirs = new ArrayList<File> ();
   
+  private int _verbosity = 0;
+  
   private CommandLine () {
   }
   
-  private static void compilerMessage (final String pfx, final CodePosition position, final String message) {
+  private static void compilerMessage (final boolean err, final String pfx, final CodePosition position, final String message) {
     final StringBuilder sb = new StringBuilder ();
     if (position != null) sb.append (position.toString ()).append (": ");
     sb.append (pfx).append (": ");
     sb.append (message);
-    System.err.println (sb.toString ());
+    (err ? System.err : System.out).println (sb.toString ());
   }
   
   private void addSearchDir (final File path) {
@@ -52,12 +54,12 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
   
   @Override
   public void compilerWarning (final CodePosition position, final String message) {
-    compilerMessage (MSG_WARN, position, message);
+    compilerMessage (true, MSG_WARN, position, message);
   }
   
   @Override
   public void compilerError (final CodePosition position, final String message) {
-    compilerMessage (MSG_ERROR, position, message);
+    compilerMessage (true, MSG_ERROR, position, message);
   }
   
   private Source findSource (final File dir, final String[] identifier, final boolean compilationTarget) throws IOException {
@@ -83,6 +85,20 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
       if ((source = findSource (dir, identifierAsArray, false)) != null) return source;
     }
     return null;
+  }
+  
+  private void setVerbosity (final int level) {
+    _verbosity = level;
+  }
+  
+  @Override
+  public int getVerbosity () {
+    return _verbosity;
+  }
+  
+  @Override
+  public void verboseMessage (final String message) {
+    compilerMessage (false, MSG_INFO, null, message);
   }
   
   private boolean codeGenOption (final CodeGenerator codeGen, final String option) {
@@ -130,6 +146,7 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
     final CodeGeneratorFactory codeGeneratorFactory = new CodeGeneratorFactory ();
     compiler.setWarningListener (cmdLine);
     compiler.setErrorListener (cmdLine);
+    compiler.setVerboseListener (cmdLine);
     for (int i = 0; i < args.length; i++) {
       if (args[i].charAt (0) == '-') {
         switch (args[i].charAt (1)) {
@@ -149,6 +166,18 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
           break;
         case 'p' : // -p<path>        Add a source folder for loading additional .proto files from (no code will be generated)
           cmdLine.addSearchDir (new File (args[i].substring (2)));
+          break;
+        case 'v' : // -v[v[v]]        Verbosity level
+          if (args[i].equals ("-v")) {
+            cmdLine.setVerbosity (1);
+          } else if (args[i].equals ("-vv")) {
+            cmdLine.setVerbosity (2);
+          } else if (args[i].equals ("-vvv")) {
+            cmdLine.setVerbosity (3);
+          } else {
+            cmdLine.compilerError (null, "invalid command line option " + args[i]);
+            return 1;
+          }
           break;
         case 'X' : // -X<option>[=<value>]  Pass flags to the code generator
           if (!cmdLine.codeGenOption (compiler.getCodeGenerator (), args[i].substring (2))) {
@@ -185,7 +214,7 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
     final int warnings = compiler.getWarningCount ();
     final int errors = compiler.getErrorCount ();
     if ((warnings > 0) || (errors > 0)) {
-      compilerMessage (MSG_INFO, null, "" + warnings + " warning(s), " + errors + " error(s)");  
+      compilerMessage (true, MSG_INFO, null, "" + warnings + " warning(s), " + errors + " error(s)");  
     }
     return (errors > 0) ? 1 : 0;
   }
@@ -195,7 +224,7 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
       Class.forName (testClass, false, CommandLine.class.getClassLoader ());
       return true;
     } catch (ClassNotFoundException e) {
-      compilerMessage (MSG_ERROR, null, "The " + packageName + " is not available in the classpath");
+      compilerMessage (true, MSG_ERROR, null, "The " + packageName + " is not available in the classpath");
       return false;
     }
   }

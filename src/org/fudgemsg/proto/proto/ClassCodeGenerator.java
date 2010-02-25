@@ -108,8 +108,10 @@ public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerato
     }
   }
   
-  private IndentWriter createFile (final File file) throws IOException {
-    return createIndentWriter (new BufferedWriter (new FileWriter (file, false)));
+  private IndentWriter createFile (final Compiler.Context context, final File file) throws IOException {
+    IndentWriter iw = createIndentWriter (new BufferedWriter (new FileWriter (file, false)));
+    if (context.getVerbosity () >= 2) context.verboseMessage ("Writing " + file);
+    return iw;
   }
   
   private IndentWriter appendFile (final File file) throws IOException {
@@ -126,7 +128,7 @@ public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerato
       return appendFile (header);
     } else {
       // Create the file and write out the header
-      final IndentWriter writer = createFile (header);
+      final IndentWriter writer = createFile (context, header);
       filesOpen.add (header);
       writeHeaderFileHeader (context, header, writer);
       return writer;
@@ -143,33 +145,39 @@ public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerato
       return appendFile (implementation);
     } else {
       // Create the file and write out the header
-      final IndentWriter writer = createFile (implementation);
+      final IndentWriter writer = createFile (context, implementation);
       filesOpen.add (implementation);
       writeImplementationFileHeader (context, implementation, writer);
       return writer;
     }
   }
   
-  private void writeImplementationFileFooters (final Compiler.Context context) throws IOException {
+  private int writeImplementationFileFooters (final Compiler.Context context) throws IOException {
+    int count = 0;
     for (File file : getImplementationFilesOpen (context)) {
       final IndentWriter writer = appendFile (file);
       try {
         writeImplementationFileFooter (context, file, writer);
+        count++;
       } finally {
         writer.close ();
       }
     }
+    return count;
   }
   
-  private void writeHeaderFileFooters (final Compiler.Context context) throws IOException {
+  private int writeHeaderFileFooters (final Compiler.Context context) throws IOException {
+    int count = 0;
     for (File file : getHeaderFilesOpen (context)) {
       final IndentWriter writer = appendFile (file);
       try {
         writeHeaderFileFooter (context, file, writer);
+        count++;
       } finally {
         writer.close ();
       }
     }
+    return count;
   }
   
   private void addToGitIgnore (final File file, final Map<File,Set<String>> folders) {
@@ -180,7 +188,8 @@ public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerato
     files.add (file.getName ());
   }
   
-  private void writeGitIgnore (final Compiler.Context context) throws IOException {
+  private int writeGitIgnore (final Compiler.Context context) throws IOException {
+    int count = 0;
     final Map<File,Set<String>> folders = new HashMap<File,Set<String>> ();
     for (File file : getImplementationFilesOpen (context)) {
       addToGitIgnore (file, folders);
@@ -193,17 +202,20 @@ public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerato
       if (gitIgnore.exists ()) {
         context.warning (null, ".gitignore already exists in " + entry.getKey ());
       } else {
+        if (context.getVerbosity () >= 2) context.verboseMessage ("Writing " + gitIgnore);
         final BufferedWriter out = new BufferedWriter (new FileWriter (gitIgnore));
         try {
           for (String filename : entry.getValue ()) {
             out.write (filename);
             out.write ("\n");
           }
+          count++;
         } finally {
           out.close ();
         }
       }
     }
+    return count;
   }
   
   protected boolean flagGenerateEquality (final Definition message) {
@@ -334,10 +346,12 @@ public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerato
   
   @Override
   public void generationComplete (final Compiler.Context context, final File targetPath) {
+    int count = 0;
     try {
-      writeImplementationFileFooters (context);
-      writeHeaderFileFooters (context);
-      if (_writeGitIgnore) writeGitIgnore (context);
+      count += writeImplementationFileFooters (context);
+      count += writeHeaderFileFooters (context);
+      if (_writeGitIgnore) count += writeGitIgnore (context);
+      if (context.getVerbosity () >= 1) context.verboseMessage (count + " file(s) written");
     } catch (IOException e) {
       context.error (null, e.getMessage ());
     }

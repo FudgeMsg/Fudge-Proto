@@ -21,7 +21,7 @@ package org.fudgemsg.proto;
  * 
  * @author Andrew
  */
-/* package */ class DefaultCompilerListener implements Compiler.WarningListener, Compiler.ErrorListener {
+/* package */ class DefaultCompilerListener implements Compiler.WarningListener, Compiler.ErrorListener, Compiler.VerboseListener {
   
   /* package */ static final DefaultCompilerListener INSTANCE = new DefaultCompilerListener ();
   
@@ -45,6 +45,22 @@ package org.fudgemsg.proto;
   @Override
   public void compilerWarning (final CodePosition position, final String message) {
     // deliberate no-op
+  }
+  
+  /**
+   * Default verbosity level is off.
+   */
+  @Override
+  public int getVerbosity () {
+    return 0;
+  }
+  
+  /**
+   * It's an illegal operation to write at verbosity 0.
+   */
+  @Override
+  public void verboseMessage (final String text) {
+    throw new IllegalStateException ("verboseMessage called on at level 0");
   }
   
 }

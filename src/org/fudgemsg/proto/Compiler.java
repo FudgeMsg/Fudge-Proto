@@ -60,6 +60,14 @@ public class Compiler {
   }
   
   /**
+   * Callback interface for verbose status messages.
+   */
+  public static interface VerboseListener {
+    public int getVerbosity ();
+    public void verboseMessage (final String text);
+  }
+  
+  /**
    * Exposes enough of the Compiler API as is required for a phase to operate. This minimises visibility
    * of members to users of the Compiler, without restricting the operation of phases that aren't within
    * this package such as custom code generators.
@@ -80,6 +88,18 @@ public class Compiler {
     
     public void error (final CodePosition position, final String message) {
       Compiler.this.error (position, message);
+    }
+    
+    public int getVerbosity () {
+      return Compiler.this.getVerbosity ();
+    }
+    
+    public void verboseMessage (final String text) {
+      Compiler.this.verboseMessage (text);
+    }
+    
+    public void verboseMessage (final int level, final String message) {
+      if (level >= getVerbosity ()) verboseMessage (message);
     }
     
     public void addSource (final Source source) {
@@ -147,6 +167,8 @@ public class Compiler {
   
   private int _errorCount = 0;
   
+  private VerboseListener _verboseListener = DefaultCompilerListener.INSTANCE;
+  
   private Queue<Source> _sources = new LinkedList<Source> ();
   
   private Queue<AST> _parsedRoots = new LinkedList<AST> ();
@@ -188,6 +210,10 @@ public class Compiler {
     _errorListener = errors;
   }
   
+  public void setVerboseListener (final VerboseListener verbose) {
+    _verboseListener = (verbose != null) ? verbose : DefaultCompilerListener.INSTANCE; 
+  }
+  
   public void setCodeGenerator (final CodeGenerator codeGenerator) {
     if (codeGenerator == null) throw new IllegalArgumentException ("codeGenerator cannot be null");
     _codeGenerator = codeGenerator;
@@ -217,6 +243,14 @@ public class Compiler {
   private void error (final CodePosition position, final String message) {
     _errorCount++;
     _errorListener.compilerError (position, message);
+  }
+  
+  private int getVerbosity () {
+    return _verboseListener.getVerbosity ();
+  }
+  
+  private void verboseMessage (final String text) {
+    _verboseListener.verboseMessage (text);
   }
   
   public int getWarningCount () {
@@ -351,6 +385,7 @@ public class Compiler {
         Source src;
         while ((src = _sources.poll ()) != null) {
           try {
+            if (getVerbosity () >= 2) verboseMessage ("Compiling " + src);
             _parser.parseSource (_context, src);
           } catch (CompilationException e) {
             throw e; // default error handler
@@ -386,12 +421,15 @@ public class Compiler {
       for (Definition definition : _definitions.values ()) {
         if (definition.isCompilationTarget ()) {
           try {
+            if (getVerbosity () >= 3) verboseMessage ("Generating " + definition.getIdentifier ());
             if (definition instanceof EnumDefinition) {
               getCodeGenerator ().generateCode (_context, (EnumDefinition)definition, _targetPath);
             } else if (definition instanceof MessageDefinition) {
               getCodeGenerator ().generateCode (_context, (MessageDefinition)definition, _targetPath);
             } else if (definition instanceof TaxonomyDefinition) {
               getCodeGenerator ().generateCode (_context, (TaxonomyDefinition)definition, _targetPath);
+            } else {
+              throw new IllegalStateException ("no code generation rule for " + definition);
             }
           } catch (CompilationException e) {
             throw e; // default error handler

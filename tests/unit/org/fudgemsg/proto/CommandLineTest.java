@@ -41,6 +41,10 @@ public class CommandLineTest {
     assertEquals (0, CommandLine.compile (new String[] { "-freadonly", "-foptional" })); // field defaults
     assertEquals (0, CommandLine.compile (new String[] { "-fmutable", "-frequired" })); // field defaults
     assertEquals (1, CommandLine.compile (new String[] { "-finvalid" })); // invalid field default
+    assertEquals (0, CommandLine.compile (new String[] { "-v" })); // verbose 1
+    assertEquals (0, CommandLine.compile (new String[] { "-vv" })); // verbose 2
+    assertEquals (0, CommandLine.compile (new String[] { "-vvv" })); // verbose 3
+    assertEquals (1, CommandLine.compile (new String[] { "-vvvv" })); // invalid
   }
   
   @Test
@@ -128,6 +132,7 @@ public class CommandLineTest {
     args.add ("-s" + CompilerTest.getTestPath ("proto"));
     args.add ("-freadonly"); // non-mutable field default
     args.add ("-foptional"); // optional field default
+    args.add ("-vvv"); // full verbose output
     if (language != null) {
       args.add ("-l" + language);
       addLanguageOptions (language, args);
