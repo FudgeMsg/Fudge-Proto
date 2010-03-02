@@ -205,6 +205,7 @@ public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerato
         if (context.getVerbosity () >= 2) context.verboseMessage ("Writing " + gitIgnore);
         final BufferedWriter out = new BufferedWriter (new FileWriter (gitIgnore));
         try {
+          out.write (".gitignore\n");
           for (String filename : entry.getValue ()) {
             out.write (filename);
             out.write ("\n");
