@@ -321,6 +321,9 @@
 		</zip>
 	</target>
 
+	<target name="tarzip" depends="clean-dist,tarball,zipfile" description="--> generate a tarball and zipfile">
+	</target>
+
 	<target name="clean-local" depends="load-ivy"
 		description="--> cleans the local repository for the current module">
 		<ivy:info file="${ivy.file}" />
