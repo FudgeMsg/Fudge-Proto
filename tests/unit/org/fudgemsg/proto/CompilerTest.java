@@ -15,7 +15,6 @@
 
 package org.fudgemsg.proto;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.io.File;
@@ -27,7 +26,6 @@ import org.junit.Test;
 public class CompilerTest {
   
   protected static String getTestBaseDir () {
-    // TODO 2010-02-12 Andrew -- this won't work in the combined OG-Build tests
     return "tests";
   }
   
