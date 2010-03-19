@@ -2,7 +2,7 @@
 // Created from types.proto:17(10)
 package org.fudgemsg.proto.tests.types;
 public class STypes_Optional implements java.io.Serializable, TypesBase {
-  private static final long serialVersionUID = 2511807829388664249l;
+  private static final long serialVersionUID = 2512856431910604830l;
   private final boolean __Bool;
   public static final String _BOOL_KEY = "_Bool";
   private final byte __Byte;
@@ -27,11 +27,11 @@ public class STypes_Optional implements java.io.Serializable, TypesBase {
   public static final String _CUSTOMENUM_KEY = "_CustomEnum";
   private final org.fudgemsg.FudgeFieldContainer __Message;
   public static final String _MESSAGE_KEY = "_Message";
-  private final org.fudgemsg.types.FudgeDate __Date;
+  private final javax.time.calendar.DateProvider __Date;
   public static final String _DATE_KEY = "_Date";
-  private final java.util.Date __DateTime;
+  private final javax.time.calendar.DateTimeProvider __DateTime;
   public static final String _DATETIME_KEY = "_DateTime";
-  private final org.fudgemsg.types.FudgeTime __Time;
+  private final javax.time.calendar.TimeProvider __Time;
   public static final String _TIME_KEY = "_Time";
   public static class Builder {
     private boolean __Bool;
@@ -46,9 +46,9 @@ public class STypes_Optional implements java.io.Serializable, TypesBase {
     private org.fudgemsg.proto.tests.types.SubMessage __SubMessage;
     private org.fudgemsg.proto.tests.types.CustomEnum __CustomEnum;
     private org.fudgemsg.FudgeFieldContainer __Message;
-    private org.fudgemsg.types.FudgeDate __Date;
-    private java.util.Date __DateTime;
-    private org.fudgemsg.types.FudgeTime __Time;
+    private javax.time.calendar.DateProvider __Date;
+    private javax.time.calendar.DateTimeProvider __DateTime;
+    private javax.time.calendar.TimeProvider __Time;
     public Builder () {
     }
     protected Builder (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
@@ -165,7 +165,7 @@ public class STypes_Optional implements java.io.Serializable, TypesBase {
       fudgeField = fudgeMsg.getByName (_DATE_KEY);
       if (fudgeField != null)  {
         try {
-          _Date (fudgeMsg.getFieldValue (org.fudgemsg.types.FudgeDate.class, fudgeField));
+          _Date (fudgeMsg.getFieldValue (javax.time.calendar.DateProvider.class, fudgeField));
         }
         catch (IllegalArgumentException e) {
           throw new IllegalArgumentException ("Fudge message is not a STypes_Optional - field '_Date' is not date", e);
@@ -174,7 +174,7 @@ public class STypes_Optional implements java.io.Serializable, TypesBase {
       fudgeField = fudgeMsg.getByName (_DATETIME_KEY);
       if (fudgeField != null)  {
         try {
-          _DateTime (fudgeMsg.getFieldValue (java.util.Date.class, fudgeField));
+          _DateTime (fudgeMsg.getFieldValue (javax.time.calendar.DateTimeProvider.class, fudgeField));
         }
         catch (IllegalArgumentException e) {
           throw new IllegalArgumentException ("Fudge message is not a STypes_Optional - field '_DateTime' is not datetime", e);
@@ -183,7 +183,7 @@ public class STypes_Optional implements java.io.Serializable, TypesBase {
       fudgeField = fudgeMsg.getByName (_TIME_KEY);
       if (fudgeField != null)  {
         try {
-          _Time (fudgeMsg.getFieldValue (org.fudgemsg.types.FudgeTime.class, fudgeField));
+          _Time (fudgeMsg.getFieldValue (javax.time.calendar.TimeProvider.class, fudgeField));
         }
         catch (IllegalArgumentException e) {
           throw new IllegalArgumentException ("Fudge message is not a STypes_Optional - field '_Time' is not time", e);
@@ -241,15 +241,15 @@ public class STypes_Optional implements java.io.Serializable, TypesBase {
       __Message = _Message;
       return this;
     }
-    public Builder _Date (org.fudgemsg.types.FudgeDate _Date) {
+    public Builder _Date (javax.time.calendar.DateProvider _Date) {
       __Date = _Date;
       return this;
     }
-    public Builder _DateTime (java.util.Date _DateTime) {
+    public Builder _DateTime (javax.time.calendar.DateTimeProvider _DateTime) {
       __DateTime = _DateTime;
       return this;
     }
-    public Builder _Time (org.fudgemsg.types.FudgeTime _Time) {
+    public Builder _Time (javax.time.calendar.TimeProvider _Time) {
       __Time = _Time;
       return this;
     }
@@ -277,7 +277,7 @@ public class STypes_Optional implements java.io.Serializable, TypesBase {
     __DateTime = builder.__DateTime;
     __Time = builder.__Time;
   }
-  public STypes_Optional (boolean _Bool, byte _Byte, double _Double, float _Float, boolean _Indicator, int _Int, long _Long, short _Short, String _String, org.fudgemsg.proto.tests.types.SubMessage _SubMessage, org.fudgemsg.proto.tests.types.CustomEnum _CustomEnum, org.fudgemsg.FudgeFieldContainer _Message, org.fudgemsg.types.FudgeDate _Date, java.util.Date _DateTime, org.fudgemsg.types.FudgeTime _Time) {
+  public STypes_Optional (boolean _Bool, byte _Byte, double _Double, float _Float, boolean _Indicator, int _Int, long _Long, short _Short, String _String, org.fudgemsg.proto.tests.types.SubMessage _SubMessage, org.fudgemsg.proto.tests.types.CustomEnum _CustomEnum, org.fudgemsg.FudgeFieldContainer _Message, javax.time.calendar.DateProvider _Date, javax.time.calendar.DateTimeProvider _DateTime, javax.time.calendar.TimeProvider _Time) {
     __Bool = _Bool;
     __Byte = _Byte;
     __Double = _Double;
@@ -412,13 +412,13 @@ public class STypes_Optional implements java.io.Serializable, TypesBase {
   public org.fudgemsg.FudgeFieldContainer get_Message () {
     return __Message;
   }
-  public org.fudgemsg.types.FudgeDate get_Date () {
+  public javax.time.calendar.DateProvider get_Date () {
     return __Date;
   }
-  public java.util.Date get_DateTime () {
+  public javax.time.calendar.DateTimeProvider get_DateTime () {
     return __DateTime;
   }
-  public org.fudgemsg.types.FudgeTime get_Time () {
+  public javax.time.calendar.TimeProvider get_Time () {
     return __Time;
   }
   public boolean equals (final Object o) {

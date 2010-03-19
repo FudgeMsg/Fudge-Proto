@@ -20,9 +20,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
+
+import javax.time.calendar.Clock;
+import javax.time.calendar.DateProvider;
+import javax.time.calendar.DateTimeProvider;
+import javax.time.calendar.TimeProvider;
 
 import org.fudgemsg.FudgeContext;
 import org.fudgemsg.FudgeFieldContainer;
@@ -54,9 +58,6 @@ import org.fudgemsg.proto.tests.types.STypes_Optional;
 import org.fudgemsg.proto.tests.types.STypes_Required;
 import org.fudgemsg.proto.tests.types.SubMessage;
 import org.fudgemsg.proto.tests.types.TypesBase;
-import org.fudgemsg.types.DateTimeAccuracy;
-import org.fudgemsg.types.FudgeDate;
-import org.fudgemsg.types.FudgeTime;
 import org.junit.Test;
 
 public class TypesTest {
@@ -575,66 +576,66 @@ public class TypesTest {
     return r;
   }
   
-  private FudgeDate sdate () {
-    return new FudgeDate (sint ());
+  private DateProvider sdate () {
+    return Clock.systemDefaultZone ().dateTime ();
   }
   
-  private FudgeDate[] adate () {
+  private DateProvider[] adate () {
     final int n = arraySize ();
-    final FudgeDate[] r = new FudgeDate[n];
+    final DateProvider[] r = new DateProvider[n];
     for (int i = 0; i < n; i++) {
       r[i] = sdate ();
     }
     return r;
   }
   
-  private FudgeDate[][] aadate () {
+  private DateProvider[][] aadate () {
     final int n = arraySize ();
-    final FudgeDate[][] r = new FudgeDate[n][];
+    final DateProvider[][] r = new DateProvider[n][];
     for (int i = 0; i < n; i++) {
       r[i] = adate ();
     }
     return r;
   }
   
-  private Date sdatetime () {
-    return new Date (slong ());
+  private DateTimeProvider sdatetime () {
+    return Clock.systemDefaultZone ().dateTime ();
   }
   
-  private Date[] adatetime () {
+  private DateTimeProvider[] adatetime () {
     final int n = arraySize ();
-    final Date[] r = new Date[n];
+    final DateTimeProvider[] r = new DateTimeProvider[n];
     for (int i = 0; i < n; i++) {
       r[i] = sdatetime ();
     }
     return r;
   }
   
-  private Date[][] aadatetime () {
+  private DateTimeProvider[][] aadatetime () {
     final int n = arraySize ();
-    final Date[][] r = new Date[n][];
+    final DateTimeProvider[][] r = new DateTimeProvider[n][];
     for (int i = 0; i < n; i++) {
       r[i] = adatetime ();
     }
     return r;
   }
   
-  private FudgeTime stime () {
-    return new FudgeTime (DateTimeAccuracy.MILLISECOND, slong ());
+  private TimeProvider stime () {
+    return Clock.systemDefaultZone ().dateTime ();
   }
   
-  private FudgeTime[] atime () {
+  private TimeProvider[] atime () {
     final int n = arraySize ();
-    final FudgeTime[] r = new FudgeTime[n];
+    final TimeProvider[] r = new TimeProvider[n];
     for (int i = 0; i < n; i++) {
       r[i] = stime ();
     }
     return r;
   }
   
-  private FudgeTime[][] aatime () {
+  private TimeProvider[][] aatime () {
     final int n = arraySize ();
-    final FudgeTime[][] r = new FudgeTime[n][];
+    final TimeProvider[][] r = new TimeProvider[n][];
     for (int i = 0; i < n; i++) {
       r[i] = atime ();
     }
@@ -936,79 +937,4 @@ public class TypesTest {
     compareTypes (in, out);
   }
   
-  // TODO 2010-02-08 Andrew -- speed test ?
-  // TODO 2010-02-08 Andrew -- FixedArray 
-  
-  /*
-  @Test
-  public void builderDefaultValues () {
-    final FudgeContext context = new FudgeContext ();
-    final Types object = new Types.Builder ().build ();
-    final FudgeFieldContainer message = object.toFudgeMsg (context);
-    final Types object2 = Types.fromFudgeMsg (message);
-    compareTypes (object, object2);
-  }
-  
-  @Test
-  public void builderSingleValues () {
-    final FudgeContext context = new FudgeContext ();
-    final Types object = new Types.Builder ().sBool (true).sByte ((byte)1).sDouble (2).sFloat (3).sIndicator (true).sInt (4).sLong (5).sShort ((short)6).sString ("7").sSubMessage (new SubMessage (8, "9")).sCustomEnum (CustomEnum.SECOND).build ();
-    final FudgeFieldContainer message = object.toFudgeMsg (context);
-    final Types object2 = Types.fromFudgeMsg (message);
-    compareTypes (object, object2);
-  }
-  
-  private Types createTypesObject () {
-    final Types.Builder builder = new Types.Builder ();
-    final boolean[] aBool = new boolean[32];
-    final byte[] aByte = new byte[32];
-    final double[] aDouble = new double[32];
-    final float[] aFloat = new float[32];
-    final int[] aInt = new int[32];
-    final short[] aShort = new short[32];
-    final String[] aString = new String[32];
-    final SubMessage[] aSubMessage = new SubMessage[32];
-    final CustomEnum[] aCustomEnum = new CustomEnum[32];
-    for (int i = 0; i < 32; i++) {
-      aBool[i] = ((i % 3) == 0) || ((i % 7) == 0);
-      aByte[i] = (byte)i;
-      aDouble[i] = (double)i * 3.1415;
-      aFloat[i] = (float)i * 3.1415f;
-      aInt[i] = i;
-      aShort[i] = (short)i;
-      aString[i] = Integer.toString (i);
-      aSubMessage[i] = new SubMessage (i, Integer.toString (i));
-      aCustomEnum[i] = CustomEnum.fromFudgeEncoding ((i & 3) + 1);
-    }
-    return builder.aBool(aBool).aByte (aByte).aDouble (aDouble).aFloat (aFloat).aInt (aInt).aShort (aShort).aString (aString).aSubMessage (aSubMessage).aCustomEnum (aCustomEnum).build ();
-  }
-  
-  @Test
-  public void builderArrayValues () {
-    final FudgeContext context = new FudgeContext ();
-    final Types object = createTypesObject ();
-    final FudgeFieldContainer message = object.toFudgeMsg (context);
-    final Types object2 = Types.fromFudgeMsg (message);
-    compareTypes (object, object2);
-  }
-  
-  @Test
-  public void speedTest100000ToFudgeMsg () {
-    final FudgeContext context = new FudgeContext ();
-    final Types object = createTypesObject ();
-    for (int i = 0; i < 100000; i++) {
-      object.toFudgeMsg (context);
-    }
-  }
-  
-  @Test
-  public void speedTest100000FromFudgeMsg () {
-    final FudgeContext context = new FudgeContext ();
-    final Types object = createTypesObject ();
-    final FudgeFieldContainer message = object.toFudgeMsg (context);
-    for (int i = 0; i < 100000; i++) {
-      Types.fromFudgeMsg (message);
-    }
-  }
-  */
 }

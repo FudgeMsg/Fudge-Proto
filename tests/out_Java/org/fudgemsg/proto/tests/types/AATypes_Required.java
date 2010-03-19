@@ -2,7 +2,7 @@
 // Created from types.proto:188(10)
 package org.fudgemsg.proto.tests.types;
 public class AATypes_Required implements java.io.Serializable, AATypesBase {
-  private static final long serialVersionUID = -4470633738630618315l;
+  private static final long serialVersionUID = -4467558730677445862l;
   private final boolean[][] __Bool;
   public static final String _BOOL_KEY = "_Bool";
   private final byte[][] __Byte;
@@ -27,13 +27,13 @@ public class AATypes_Required implements java.io.Serializable, AATypesBase {
   public static final String _CUSTOMENUM_KEY = "_CustomEnum";
   private final org.fudgemsg.FudgeFieldContainer[][] __Message;
   public static final String _MESSAGE_KEY = "_Message";
-  private final org.fudgemsg.types.FudgeDate[][] __Date;
+  private final javax.time.calendar.DateProvider[][] __Date;
   public static final String _DATE_KEY = "_Date";
-  private final java.util.Date[][] __DateTime;
+  private final javax.time.calendar.DateTimeProvider[][] __DateTime;
   public static final String _DATETIME_KEY = "_DateTime";
-  private final org.fudgemsg.types.FudgeTime[][] __Time;
+  private final javax.time.calendar.TimeProvider[][] __Time;
   public static final String _TIME_KEY = "_Time";
-  public AATypes_Required (boolean[][] _Bool, byte[][] _Byte, double[][] _Double, float[][] _Float, boolean[][] _Indicator, int[][] _Int, long[][] _Long, short[][] _Short, String[][] _String, org.fudgemsg.proto.tests.types.SubMessage[][] _SubMessage, org.fudgemsg.proto.tests.types.CustomEnum[][] _CustomEnum, org.fudgemsg.FudgeFieldContainer[][] _Message, org.fudgemsg.types.FudgeDate[][] _Date, java.util.Date[][] _DateTime, org.fudgemsg.types.FudgeTime[][] _Time) {
+  public AATypes_Required (boolean[][] _Bool, byte[][] _Byte, double[][] _Double, float[][] _Float, boolean[][] _Indicator, int[][] _Int, long[][] _Long, short[][] _Short, String[][] _String, org.fudgemsg.proto.tests.types.SubMessage[][] _SubMessage, org.fudgemsg.proto.tests.types.CustomEnum[][] _CustomEnum, org.fudgemsg.FudgeFieldContainer[][] _Message, javax.time.calendar.DateProvider[][] _Date, javax.time.calendar.DateTimeProvider[][] _DateTime, javax.time.calendar.TimeProvider[][] _Time) {
     if (_Bool == null) throw new NullPointerException ("'_Bool' cannot be null");
     else {
       _Bool = java.util.Arrays.copyOf (_Bool, _Bool.length);
@@ -444,26 +444,26 @@ public class AATypes_Required implements java.io.Serializable, AATypesBase {
     if (fudgeField == null) throw new IllegalArgumentException ("Fudge message is not a AATypes_Required - field '_Date' is not present");
     try {
       final org.fudgemsg.FudgeFieldContainer fudge1 = fudgeMsg.getFieldValue (org.fudgemsg.FudgeFieldContainer.class, fudgeField);
-      final java.util.List<org.fudgemsg.types.FudgeDate[]> fudge2 = new java.util.ArrayList<org.fudgemsg.types.FudgeDate[]> ();
+      final java.util.List<javax.time.calendar.DateProvider[]> fudge2 = new java.util.ArrayList<javax.time.calendar.DateProvider[]> ();
       for (org.fudgemsg.FudgeField fudge3 : fudge1) {
         try {
           final org.fudgemsg.FudgeFieldContainer fudge4 = fudge1.getFieldValue (org.fudgemsg.FudgeFieldContainer.class, fudge3);
-          final java.util.List<org.fudgemsg.types.FudgeDate> fudge5 = new java.util.ArrayList<org.fudgemsg.types.FudgeDate> ();
+          final java.util.List<javax.time.calendar.DateProvider> fudge5 = new java.util.ArrayList<javax.time.calendar.DateProvider> ();
           for (org.fudgemsg.FudgeField fudge6 : fudge4) {
             try {
-              fudge5.add (fudge4.getFieldValue (org.fudgemsg.types.FudgeDate.class, fudge6));
+              fudge5.add (fudge4.getFieldValue (javax.time.calendar.DateProvider.class, fudge6));
             }
             catch (IllegalArgumentException e) {
               throw new IllegalArgumentException ("Fudge message is not a AATypes_Required - field '_Date[][]' is not date", e);
             }
           }
-          fudge2.add (fudge5.toArray (new org.fudgemsg.types.FudgeDate[fudge5.size ()]));
+          fudge2.add (fudge5.toArray (new javax.time.calendar.DateProvider[fudge5.size ()]));
         }
         catch (IllegalArgumentException e) {
           throw new IllegalArgumentException ("Fudge message is not a AATypes_Required - field '_Date[]' is not date[]", e);
         }
       }
-      __Date = fudge2.toArray (new org.fudgemsg.types.FudgeDate[fudge2.size ()][]);
+      __Date = fudge2.toArray (new javax.time.calendar.DateProvider[fudge2.size ()][]);
     }
     catch (IllegalArgumentException e) {
       throw new IllegalArgumentException ("Fudge message is not a AATypes_Required - field '_Date' is not date[][]", e);
@@ -472,26 +472,26 @@ public class AATypes_Required implements java.io.Serializable, AATypesBase {
     if (fudgeField == null) throw new IllegalArgumentException ("Fudge message is not a AATypes_Required - field '_DateTime' is not present");
     try {
       final org.fudgemsg.FudgeFieldContainer fudge1 = fudgeMsg.getFieldValue (org.fudgemsg.FudgeFieldContainer.class, fudgeField);
-      final java.util.List<java.util.Date[]> fudge2 = new java.util.ArrayList<java.util.Date[]> ();
+      final java.util.List<javax.time.calendar.DateTimeProvider[]> fudge2 = new java.util.ArrayList<javax.time.calendar.DateTimeProvider[]> ();
       for (org.fudgemsg.FudgeField fudge3 : fudge1) {
         try {
           final org.fudgemsg.FudgeFieldContainer fudge4 = fudge1.getFieldValue (org.fudgemsg.FudgeFieldContainer.class, fudge3);
-          final java.util.List<java.util.Date> fudge5 = new java.util.ArrayList<java.util.Date> ();
+          final java.util.List<javax.time.calendar.DateTimeProvider> fudge5 = new java.util.ArrayList<javax.time.calendar.DateTimeProvider> ();
           for (org.fudgemsg.FudgeField fudge6 : fudge4) {
             try {
-              fudge5.add (fudge4.getFieldValue (java.util.Date.class, fudge6));
+              fudge5.add (fudge4.getFieldValue (javax.time.calendar.DateTimeProvider.class, fudge6));
             }
             catch (IllegalArgumentException e) {
               throw new IllegalArgumentException ("Fudge message is not a AATypes_Required - field '_DateTime[][]' is not datetime", e);
             }
           }
-          fudge2.add (fudge5.toArray (new java.util.Date[fudge5.size ()]));
+          fudge2.add (fudge5.toArray (new javax.time.calendar.DateTimeProvider[fudge5.size ()]));
         }
         catch (IllegalArgumentException e) {
           throw new IllegalArgumentException ("Fudge message is not a AATypes_Required - field '_DateTime[]' is not datetime[]", e);
         }
       }
-      __DateTime = fudge2.toArray (new java.util.Date[fudge2.size ()][]);
+      __DateTime = fudge2.toArray (new javax.time.calendar.DateTimeProvider[fudge2.size ()][]);
     }
     catch (IllegalArgumentException e) {
       throw new IllegalArgumentException ("Fudge message is not a AATypes_Required - field '_DateTime' is not datetime[][]", e);
@@ -500,26 +500,26 @@ public class AATypes_Required implements java.io.Serializable, AATypesBase {
     if (fudgeField == null) throw new IllegalArgumentException ("Fudge message is not a AATypes_Required - field '_Time' is not present");
     try {
       final org.fudgemsg.FudgeFieldContainer fudge1 = fudgeMsg.getFieldValue (org.fudgemsg.FudgeFieldContainer.class, fudgeField);
-      final java.util.List<org.fudgemsg.types.FudgeTime[]> fudge2 = new java.util.ArrayList<org.fudgemsg.types.FudgeTime[]> ();
+      final java.util.List<javax.time.calendar.TimeProvider[]> fudge2 = new java.util.ArrayList<javax.time.calendar.TimeProvider[]> ();
       for (org.fudgemsg.FudgeField fudge3 : fudge1) {
         try {
           final org.fudgemsg.FudgeFieldContainer fudge4 = fudge1.getFieldValue (org.fudgemsg.FudgeFieldContainer.class, fudge3);
-          final java.util.List<org.fudgemsg.types.FudgeTime> fudge5 = new java.util.ArrayList<org.fudgemsg.types.FudgeTime> ();
+          final java.util.List<javax.time.calendar.TimeProvider> fudge5 = new java.util.ArrayList<javax.time.calendar.TimeProvider> ();
           for (org.fudgemsg.FudgeField fudge6 : fudge4) {
             try {
-              fudge5.add (fudge4.getFieldValue (org.fudgemsg.types.FudgeTime.class, fudge6));
+              fudge5.add (fudge4.getFieldValue (javax.time.calendar.TimeProvider.class, fudge6));
             }
             catch (IllegalArgumentException e) {
               throw new IllegalArgumentException ("Fudge message is not a AATypes_Required - field '_Time[][]' is not time", e);
             }
           }
-          fudge2.add (fudge5.toArray (new org.fudgemsg.types.FudgeTime[fudge5.size ()]));
+          fudge2.add (fudge5.toArray (new javax.time.calendar.TimeProvider[fudge5.size ()]));
         }
         catch (IllegalArgumentException e) {
           throw new IllegalArgumentException ("Fudge message is not a AATypes_Required - field '_Time[]' is not time[]", e);
         }
       }
-      __Time = fudge2.toArray (new org.fudgemsg.types.FudgeTime[fudge2.size ()][]);
+      __Time = fudge2.toArray (new javax.time.calendar.TimeProvider[fudge2.size ()][]);
     }
     catch (IllegalArgumentException e) {
       throw new IllegalArgumentException ("Fudge message is not a AATypes_Required - field '_Time' is not time[][]", e);
@@ -627,7 +627,7 @@ public class AATypes_Required implements java.io.Serializable, AATypesBase {
     }
     if (source.__Date == null) __Date = null;
     else {
-      final org.fudgemsg.types.FudgeDate[][] fudge0 = java.util.Arrays.copyOf (source.__Date, source.__Date.length);
+      final javax.time.calendar.DateProvider[][] fudge0 = java.util.Arrays.copyOf (source.__Date, source.__Date.length);
       for (int fudge1 = 0; fudge1 < fudge0.length; fudge1++) {
         fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
       }
@@ -635,7 +635,7 @@ public class AATypes_Required implements java.io.Serializable, AATypesBase {
     }
     if (source.__DateTime == null) __DateTime = null;
     else {
-      final java.util.Date[][] fudge0 = java.util.Arrays.copyOf (source.__DateTime, source.__DateTime.length);
+      final javax.time.calendar.DateTimeProvider[][] fudge0 = java.util.Arrays.copyOf (source.__DateTime, source.__DateTime.length);
       for (int fudge1 = 0; fudge1 < fudge0.length; fudge1++) {
         fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
       }
@@ -643,7 +643,7 @@ public class AATypes_Required implements java.io.Serializable, AATypesBase {
     }
     if (source.__Time == null) __Time = null;
     else {
-      final org.fudgemsg.types.FudgeTime[][] fudge0 = java.util.Arrays.copyOf (source.__Time, source.__Time.length);
+      final javax.time.calendar.TimeProvider[][] fudge0 = java.util.Arrays.copyOf (source.__Time, source.__Time.length);
       for (int fudge1 = 0; fudge1 < fudge0.length; fudge1++) {
         fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
       }
@@ -774,9 +774,9 @@ public class AATypes_Required implements java.io.Serializable, AATypesBase {
     }
     if (__Date != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
-      for (org.fudgemsg.types.FudgeDate[] fudge2 : __Date) {
+      for (javax.time.calendar.DateProvider[] fudge2 : __Date) {
         final org.fudgemsg.MutableFudgeFieldContainer fudge3 = fudgeContext.newMessage ();
-        for (org.fudgemsg.types.FudgeDate fudge4 : fudge2) {
+        for (javax.time.calendar.DateProvider fudge4 : fudge2) {
           fudge3.add (null, null, fudge4);
         }
         fudge1.add (null, null, fudge3);
@@ -785,9 +785,9 @@ public class AATypes_Required implements java.io.Serializable, AATypesBase {
     }
     if (__DateTime != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
-      for (java.util.Date[] fudge2 : __DateTime) {
+      for (javax.time.calendar.DateTimeProvider[] fudge2 : __DateTime) {
         final org.fudgemsg.MutableFudgeFieldContainer fudge3 = fudgeContext.newMessage ();
-        for (java.util.Date fudge4 : fudge2) {
+        for (javax.time.calendar.DateTimeProvider fudge4 : fudge2) {
           fudge3.add (null, null, fudge4);
         }
         fudge1.add (null, null, fudge3);
@@ -796,9 +796,9 @@ public class AATypes_Required implements java.io.Serializable, AATypesBase {
     }
     if (__Time != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
-      for (org.fudgemsg.types.FudgeTime[] fudge2 : __Time) {
+      for (javax.time.calendar.TimeProvider[] fudge2 : __Time) {
         final org.fudgemsg.MutableFudgeFieldContainer fudge3 = fudgeContext.newMessage ();
-        for (org.fudgemsg.types.FudgeTime fudge4 : fudge2) {
+        for (javax.time.calendar.TimeProvider fudge4 : fudge2) {
           fudge3.add (null, null, fudge4);
         }
         fudge1.add (null, null, fudge3);
@@ -856,13 +856,13 @@ public class AATypes_Required implements java.io.Serializable, AATypesBase {
   public org.fudgemsg.FudgeFieldContainer[][] get_Message () {
     return __Message;
   }
-  public org.fudgemsg.types.FudgeDate[][] get_Date () {
+  public javax.time.calendar.DateProvider[][] get_Date () {
     return __Date;
   }
-  public java.util.Date[][] get_DateTime () {
+  public javax.time.calendar.DateTimeProvider[][] get_DateTime () {
     return __DateTime;
   }
-  public org.fudgemsg.types.FudgeTime[][] get_Time () {
+  public javax.time.calendar.TimeProvider[][] get_Time () {
     return __Time;
   }
   public boolean equals (final Object o) {

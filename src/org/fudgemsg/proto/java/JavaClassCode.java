@@ -23,7 +23,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.fudgemsg.FudgeField;
 import org.fudgemsg.FudgeTypeDictionary;
 import org.fudgemsg.proto.CodeGeneratorUtil;
 import org.fudgemsg.proto.Compiler;
@@ -70,9 +69,17 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   private static final String CLASS_TOSTRINGBUILDER = org.apache.commons.lang.builder.ToStringBuilder.class.getName ();
   private static final String CLASS_TOSTRINGSTYLE = org.apache.commons.lang.builder.ToStringStyle.class.getName ();
   private static final String CLASS_SERIALIZABLE = java.io.Serializable.class.getName ();
-  private static final String CLASS_DATE = java.util.Date.class.getName ();
-  private static final String CLASS_FUDGEDATE = org.fudgemsg.types.FudgeDate.class.getName ();
-  private static final String CLASS_FUDGETIME = org.fudgemsg.types.FudgeTime.class.getName ();
+  
+  // JSR-310 types
+  private static final String CLASS_DATETIMEPROVIDER = javax.time.calendar.DateTimeProvider.class.getName ();
+  private static final String CLASS_DATEPROVIDER = javax.time.calendar.DateProvider.class.getName ();
+  private static final String CLASS_TIMEPROVIDER = javax.time.calendar.TimeProvider.class.getName ();
+  
+  // Non-JSR-310 types
+  //private static final String CLASS_DATETIMEPROVIDER = org.fudgemsg.types.FudgeDateTime.class.getName ();
+  //private static final String CLASS_DATEPROVIDER = org.fudgemsg.types.FudgeDate.class.getName ();
+  //private static final String CLASS_TIMEPROVIDER = org.fudgemsg.types.FudgeTime.class.getName ();
+  
   private static final String CLASS_FUDGESTRINGTYPE = org.fudgemsg.types.StringFieldType.class.getName ();
   
   private static final String VALUE_INDICATOR = CLASS_INDICATOR + ".INSTANCE";
@@ -991,13 +998,13 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         break;
       }
       case FudgeTypeDictionary.DATE_TYPE_ID :
-        assignTo = writeDecodeSimpleFudgeField (writer, CLASS_FUDGEDATE, CLASS_FUDGEDATE, fieldData, fieldRef, fieldContainer, assignTo, appendTo);
+        assignTo = writeDecodeSimpleFudgeField (writer, CLASS_DATEPROVIDER, CLASS_DATEPROVIDER, fieldData, fieldRef, fieldContainer, assignTo, appendTo);
         break;
       case FudgeTypeDictionary.DATETIME_TYPE_ID :
-        assignTo = writeDecodeSimpleFudgeField (writer, CLASS_DATE, CLASS_DATE, fieldData, fieldRef, fieldContainer, assignTo, appendTo);
+        assignTo = writeDecodeSimpleFudgeField (writer, CLASS_DATETIMEPROVIDER, CLASS_DATETIMEPROVIDER, fieldData, fieldRef, fieldContainer, assignTo, appendTo);
         break;
       case FudgeTypeDictionary.TIME_TYPE_ID :
-        assignTo = writeDecodeSimpleFudgeField (writer, CLASS_FUDGETIME, CLASS_FUDGETIME, fieldData, fieldRef, fieldContainer, assignTo, appendTo);
+        assignTo = writeDecodeSimpleFudgeField (writer, CLASS_TIMEPROVIDER, CLASS_TIMEPROVIDER, fieldData, fieldRef, fieldContainer, assignTo, appendTo);
         break;
       default :
         throw new IllegalStateException ("type '" + type + "' is not an expected type (fudge field type " + type.getFudgeFieldType () + ")");
@@ -1515,11 +1522,11 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       case FudgeTypeDictionary.STRING_TYPE_ID :
         return "String";
       case FudgeTypeDictionary.DATE_TYPE_ID :
-        return CLASS_FUDGEDATE;
+        return CLASS_DATEPROVIDER;
       case FudgeTypeDictionary.DATETIME_TYPE_ID :
-        return CLASS_DATE;
+        return CLASS_DATETIMEPROVIDER;
       case FudgeTypeDictionary.TIME_TYPE_ID :
-        return CLASS_FUDGETIME;
+        return CLASS_TIMEPROVIDER;
       default :
         throw new IllegalStateException ("type '" + type + "' is not an expected type (fudge field type " + type.getFudgeFieldType () + ")");
       }

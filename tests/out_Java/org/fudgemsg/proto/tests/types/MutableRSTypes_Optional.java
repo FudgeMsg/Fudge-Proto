@@ -2,7 +2,7 @@
 // Created from types.proto:245(10)
 package org.fudgemsg.proto.tests.types;
 public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBase {
-  private static final long serialVersionUID = 6483206744971745384l;
+  private static final long serialVersionUID = 6481051323154551075l;
   private java.util.List<Boolean> __Bool;
   public static final String _BOOL_KEY = "_Bool";
   private java.util.List<Byte> __Byte;
@@ -27,11 +27,11 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
   public static final String _CUSTOMENUM_KEY = "_CustomEnum";
   private java.util.List<org.fudgemsg.FudgeFieldContainer> __Message;
   public static final String _MESSAGE_KEY = "_Message";
-  private java.util.List<org.fudgemsg.types.FudgeDate> __Date;
+  private java.util.List<javax.time.calendar.DateProvider> __Date;
   public static final String _DATE_KEY = "_Date";
-  private java.util.List<java.util.Date> __DateTime;
+  private java.util.List<javax.time.calendar.DateTimeProvider> __DateTime;
   public static final String _DATETIME_KEY = "_DateTime";
-  private java.util.List<org.fudgemsg.types.FudgeTime> __Time;
+  private java.util.List<javax.time.calendar.TimeProvider> __Time;
   public static final String _TIME_KEY = "_Time";
   public MutableRSTypes_Optional () {
   }
@@ -208,11 +208,11 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
     }
     fudgeFields = fudgeMsg.getAllByName (_DATE_KEY);
     if (fudgeFields.size () > 0)  {
-      final java.util.List<org.fudgemsg.types.FudgeDate> fudge1;
-      fudge1 = new java.util.ArrayList<org.fudgemsg.types.FudgeDate> (fudgeFields.size ());
+      final java.util.List<javax.time.calendar.DateProvider> fudge1;
+      fudge1 = new java.util.ArrayList<javax.time.calendar.DateProvider> (fudgeFields.size ());
       for (org.fudgemsg.FudgeField fudge2 : fudgeFields) {
         try {
-          fudge1.add (fudgeMsg.getFieldValue (org.fudgemsg.types.FudgeDate.class, fudge2));
+          fudge1.add (fudgeMsg.getFieldValue (javax.time.calendar.DateProvider.class, fudge2));
         }
         catch (IllegalArgumentException e) {
           throw new IllegalArgumentException ("Fudge message is not a MutableRSTypes_Optional - field '_Date' is not date", e);
@@ -222,11 +222,11 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
     }
     fudgeFields = fudgeMsg.getAllByName (_DATETIME_KEY);
     if (fudgeFields.size () > 0)  {
-      final java.util.List<java.util.Date> fudge1;
-      fudge1 = new java.util.ArrayList<java.util.Date> (fudgeFields.size ());
+      final java.util.List<javax.time.calendar.DateTimeProvider> fudge1;
+      fudge1 = new java.util.ArrayList<javax.time.calendar.DateTimeProvider> (fudgeFields.size ());
       for (org.fudgemsg.FudgeField fudge2 : fudgeFields) {
         try {
-          fudge1.add (fudgeMsg.getFieldValue (java.util.Date.class, fudge2));
+          fudge1.add (fudgeMsg.getFieldValue (javax.time.calendar.DateTimeProvider.class, fudge2));
         }
         catch (IllegalArgumentException e) {
           throw new IllegalArgumentException ("Fudge message is not a MutableRSTypes_Optional - field '_DateTime' is not datetime", e);
@@ -236,11 +236,11 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
     }
     fudgeFields = fudgeMsg.getAllByName (_TIME_KEY);
     if (fudgeFields.size () > 0)  {
-      final java.util.List<org.fudgemsg.types.FudgeTime> fudge1;
-      fudge1 = new java.util.ArrayList<org.fudgemsg.types.FudgeTime> (fudgeFields.size ());
+      final java.util.List<javax.time.calendar.TimeProvider> fudge1;
+      fudge1 = new java.util.ArrayList<javax.time.calendar.TimeProvider> (fudgeFields.size ());
       for (org.fudgemsg.FudgeField fudge2 : fudgeFields) {
         try {
-          fudge1.add (fudgeMsg.getFieldValue (org.fudgemsg.types.FudgeTime.class, fudge2));
+          fudge1.add (fudgeMsg.getFieldValue (javax.time.calendar.TimeProvider.class, fudge2));
         }
         catch (IllegalArgumentException e) {
           throw new IllegalArgumentException ("Fudge message is not a MutableRSTypes_Optional - field '_Time' is not time", e);
@@ -249,7 +249,7 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
       set_Time (fudge1);
     }
   }
-  public MutableRSTypes_Optional (java.util.Collection<? extends Boolean> _Bool, java.util.Collection<? extends Byte> _Byte, java.util.Collection<? extends Double> _Double, java.util.Collection<? extends Float> _Float, java.util.Collection<? extends Boolean> _Indicator, java.util.Collection<? extends Integer> _Int, java.util.Collection<? extends Long> _Long, java.util.Collection<? extends Short> _Short, java.util.Collection<? extends String> _String, java.util.Collection<? extends org.fudgemsg.proto.tests.types.SubMessage> _SubMessage, java.util.Collection<? extends org.fudgemsg.proto.tests.types.CustomEnum> _CustomEnum, java.util.Collection<? extends org.fudgemsg.FudgeFieldContainer> _Message, java.util.Collection<? extends org.fudgemsg.types.FudgeDate> _Date, java.util.Collection<? extends java.util.Date> _DateTime, java.util.Collection<? extends org.fudgemsg.types.FudgeTime> _Time) {
+  public MutableRSTypes_Optional (java.util.Collection<? extends Boolean> _Bool, java.util.Collection<? extends Byte> _Byte, java.util.Collection<? extends Double> _Double, java.util.Collection<? extends Float> _Float, java.util.Collection<? extends Boolean> _Indicator, java.util.Collection<? extends Integer> _Int, java.util.Collection<? extends Long> _Long, java.util.Collection<? extends Short> _Short, java.util.Collection<? extends String> _String, java.util.Collection<? extends org.fudgemsg.proto.tests.types.SubMessage> _SubMessage, java.util.Collection<? extends org.fudgemsg.proto.tests.types.CustomEnum> _CustomEnum, java.util.Collection<? extends org.fudgemsg.FudgeFieldContainer> _Message, java.util.Collection<? extends javax.time.calendar.DateProvider> _Date, java.util.Collection<? extends javax.time.calendar.DateTimeProvider> _DateTime, java.util.Collection<? extends javax.time.calendar.TimeProvider> _Time) {
     if (_Bool == null) __Bool = null;
     else {
       final java.util.List<Boolean> fudge0 = new java.util.ArrayList<Boolean> (_Bool);
@@ -361,27 +361,27 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
     }
     if (_Date == null) __Date = null;
     else {
-      final java.util.List<org.fudgemsg.types.FudgeDate> fudge0 = new java.util.ArrayList<org.fudgemsg.types.FudgeDate> (_Date);
-      for (java.util.ListIterator<org.fudgemsg.types.FudgeDate> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
-        org.fudgemsg.types.FudgeDate fudge2 = fudge1.next ();
+      final java.util.List<javax.time.calendar.DateProvider> fudge0 = new java.util.ArrayList<javax.time.calendar.DateProvider> (_Date);
+      for (java.util.ListIterator<javax.time.calendar.DateProvider> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
+        javax.time.calendar.DateProvider fudge2 = fudge1.next ();
         if (fudge2 == null) throw new NullPointerException ("List element of '_Date' cannot be null");
       }
       __Date = fudge0;
     }
     if (_DateTime == null) __DateTime = null;
     else {
-      final java.util.List<java.util.Date> fudge0 = new java.util.ArrayList<java.util.Date> (_DateTime);
-      for (java.util.ListIterator<java.util.Date> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
-        java.util.Date fudge2 = fudge1.next ();
+      final java.util.List<javax.time.calendar.DateTimeProvider> fudge0 = new java.util.ArrayList<javax.time.calendar.DateTimeProvider> (_DateTime);
+      for (java.util.ListIterator<javax.time.calendar.DateTimeProvider> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
+        javax.time.calendar.DateTimeProvider fudge2 = fudge1.next ();
         if (fudge2 == null) throw new NullPointerException ("List element of '_DateTime' cannot be null");
       }
       __DateTime = fudge0;
     }
     if (_Time == null) __Time = null;
     else {
-      final java.util.List<org.fudgemsg.types.FudgeTime> fudge0 = new java.util.ArrayList<org.fudgemsg.types.FudgeTime> (_Time);
-      for (java.util.ListIterator<org.fudgemsg.types.FudgeTime> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
-        org.fudgemsg.types.FudgeTime fudge2 = fudge1.next ();
+      final java.util.List<javax.time.calendar.TimeProvider> fudge0 = new java.util.ArrayList<javax.time.calendar.TimeProvider> (_Time);
+      for (java.util.ListIterator<javax.time.calendar.TimeProvider> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
+        javax.time.calendar.TimeProvider fudge2 = fudge1.next ();
         if (fudge2 == null) throw new NullPointerException ("List element of '_Time' cannot be null");
       }
       __Time = fudge0;
@@ -444,15 +444,15 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
     }
     if (source.__Date == null) __Date = null;
     else {
-      __Date = new java.util.ArrayList<org.fudgemsg.types.FudgeDate> (source.__Date);
+      __Date = new java.util.ArrayList<javax.time.calendar.DateProvider> (source.__Date);
     }
     if (source.__DateTime == null) __DateTime = null;
     else {
-      __DateTime = new java.util.ArrayList<java.util.Date> (source.__DateTime);
+      __DateTime = new java.util.ArrayList<javax.time.calendar.DateTimeProvider> (source.__DateTime);
     }
     if (source.__Time == null) __Time = null;
     else {
-      __Time = new java.util.ArrayList<org.fudgemsg.types.FudgeTime> (source.__Time);
+      __Time = new java.util.ArrayList<javax.time.calendar.TimeProvider> (source.__Time);
     }
   }
   public MutableRSTypes_Optional clone () {
@@ -533,17 +533,17 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
       }
     }
     if (__Date != null)  {
-      for (org.fudgemsg.types.FudgeDate fudge1 : __Date) {
+      for (javax.time.calendar.DateProvider fudge1 : __Date) {
         msg.add (_DATE_KEY, null, fudge1);
       }
     }
     if (__DateTime != null)  {
-      for (java.util.Date fudge1 : __DateTime) {
+      for (javax.time.calendar.DateTimeProvider fudge1 : __DateTime) {
         msg.add (_DATETIME_KEY, null, fudge1);
       }
     }
     if (__Time != null)  {
-      for (org.fudgemsg.types.FudgeTime fudge1 : __Time) {
+      for (javax.time.calendar.TimeProvider fudge1 : __Time) {
         msg.add (_TIME_KEY, null, fudge1);
       }
     }
@@ -875,82 +875,82 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
     if (__Message == null) __Message = new java.util.ArrayList<org.fudgemsg.FudgeFieldContainer> ();
     __Message.add (_Message);
   }
-  public java.util.List<org.fudgemsg.types.FudgeDate> get_Date () {
+  public java.util.List<javax.time.calendar.DateProvider> get_Date () {
     return java.util.Collections.unmodifiableList (__Date);
   }
-  public void set_Date (org.fudgemsg.types.FudgeDate _Date) {
+  public void set_Date (javax.time.calendar.DateProvider _Date) {
     if (_Date == null) __Date = null;
     else {
-      __Date = new java.util.ArrayList<org.fudgemsg.types.FudgeDate> (1);
+      __Date = new java.util.ArrayList<javax.time.calendar.DateProvider> (1);
       add_Date (_Date);
     }
   }
-  public void set_Date (java.util.Collection<? extends org.fudgemsg.types.FudgeDate> _Date) {
+  public void set_Date (java.util.Collection<? extends javax.time.calendar.DateProvider> _Date) {
     if (_Date == null) __Date = null;
     else {
-      final java.util.List<org.fudgemsg.types.FudgeDate> fudge0 = new java.util.ArrayList<org.fudgemsg.types.FudgeDate> (_Date);
-      for (java.util.ListIterator<org.fudgemsg.types.FudgeDate> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
-        org.fudgemsg.types.FudgeDate fudge2 = fudge1.next ();
+      final java.util.List<javax.time.calendar.DateProvider> fudge0 = new java.util.ArrayList<javax.time.calendar.DateProvider> (_Date);
+      for (java.util.ListIterator<javax.time.calendar.DateProvider> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
+        javax.time.calendar.DateProvider fudge2 = fudge1.next ();
         if (fudge2 == null) throw new NullPointerException ("List element of '_Date' cannot be null");
       }
       __Date = fudge0;
     }
   }
-  public void add_Date (org.fudgemsg.types.FudgeDate _Date) {
+  public void add_Date (javax.time.calendar.DateProvider _Date) {
     if (_Date == null) throw new NullPointerException ("'_Date' cannot be null");
-    if (__Date == null) __Date = new java.util.ArrayList<org.fudgemsg.types.FudgeDate> ();
+    if (__Date == null) __Date = new java.util.ArrayList<javax.time.calendar.DateProvider> ();
     __Date.add (_Date);
   }
-  public java.util.List<java.util.Date> get_DateTime () {
+  public java.util.List<javax.time.calendar.DateTimeProvider> get_DateTime () {
     return java.util.Collections.unmodifiableList (__DateTime);
   }
-  public void set_DateTime (java.util.Date _DateTime) {
+  public void set_DateTime (javax.time.calendar.DateTimeProvider _DateTime) {
     if (_DateTime == null) __DateTime = null;
     else {
-      __DateTime = new java.util.ArrayList<java.util.Date> (1);
+      __DateTime = new java.util.ArrayList<javax.time.calendar.DateTimeProvider> (1);
       add_DateTime (_DateTime);
     }
   }
-  public void set_DateTime (java.util.Collection<? extends java.util.Date> _DateTime) {
+  public void set_DateTime (java.util.Collection<? extends javax.time.calendar.DateTimeProvider> _DateTime) {
     if (_DateTime == null) __DateTime = null;
     else {
-      final java.util.List<java.util.Date> fudge0 = new java.util.ArrayList<java.util.Date> (_DateTime);
-      for (java.util.ListIterator<java.util.Date> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
-        java.util.Date fudge2 = fudge1.next ();
+      final java.util.List<javax.time.calendar.DateTimeProvider> fudge0 = new java.util.ArrayList<javax.time.calendar.DateTimeProvider> (_DateTime);
+      for (java.util.ListIterator<javax.time.calendar.DateTimeProvider> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
+        javax.time.calendar.DateTimeProvider fudge2 = fudge1.next ();
         if (fudge2 == null) throw new NullPointerException ("List element of '_DateTime' cannot be null");
       }
       __DateTime = fudge0;
     }
   }
-  public void add_DateTime (java.util.Date _DateTime) {
+  public void add_DateTime (javax.time.calendar.DateTimeProvider _DateTime) {
     if (_DateTime == null) throw new NullPointerException ("'_DateTime' cannot be null");
-    if (__DateTime == null) __DateTime = new java.util.ArrayList<java.util.Date> ();
+    if (__DateTime == null) __DateTime = new java.util.ArrayList<javax.time.calendar.DateTimeProvider> ();
     __DateTime.add (_DateTime);
   }
-  public java.util.List<org.fudgemsg.types.FudgeTime> get_Time () {
+  public java.util.List<javax.time.calendar.TimeProvider> get_Time () {
     return java.util.Collections.unmodifiableList (__Time);
   }
-  public void set_Time (org.fudgemsg.types.FudgeTime _Time) {
+  public void set_Time (javax.time.calendar.TimeProvider _Time) {
     if (_Time == null) __Time = null;
     else {
-      __Time = new java.util.ArrayList<org.fudgemsg.types.FudgeTime> (1);
+      __Time = new java.util.ArrayList<javax.time.calendar.TimeProvider> (1);
       add_Time (_Time);
     }
   }
-  public void set_Time (java.util.Collection<? extends org.fudgemsg.types.FudgeTime> _Time) {
+  public void set_Time (java.util.Collection<? extends javax.time.calendar.TimeProvider> _Time) {
     if (_Time == null) __Time = null;
     else {
-      final java.util.List<org.fudgemsg.types.FudgeTime> fudge0 = new java.util.ArrayList<org.fudgemsg.types.FudgeTime> (_Time);
-      for (java.util.ListIterator<org.fudgemsg.types.FudgeTime> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
-        org.fudgemsg.types.FudgeTime fudge2 = fudge1.next ();
+      final java.util.List<javax.time.calendar.TimeProvider> fudge0 = new java.util.ArrayList<javax.time.calendar.TimeProvider> (_Time);
+      for (java.util.ListIterator<javax.time.calendar.TimeProvider> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
+        javax.time.calendar.TimeProvider fudge2 = fudge1.next ();
         if (fudge2 == null) throw new NullPointerException ("List element of '_Time' cannot be null");
       }
       __Time = fudge0;
     }
   }
-  public void add_Time (org.fudgemsg.types.FudgeTime _Time) {
+  public void add_Time (javax.time.calendar.TimeProvider _Time) {
     if (_Time == null) throw new NullPointerException ("'_Time' cannot be null");
-    if (__Time == null) __Time = new java.util.ArrayList<org.fudgemsg.types.FudgeTime> ();
+    if (__Time == null) __Time = new java.util.ArrayList<javax.time.calendar.TimeProvider> ();
     __Time.add (_Time);
   }
   public boolean equals (final Object o) {
