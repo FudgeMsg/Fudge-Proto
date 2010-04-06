@@ -18,7 +18,7 @@ public class UsesExtern implements java.io.Serializable {
       if (fudgeField != null)  {
         try {
           final org.fudgemsg.proto.tests.ExternalMessage fudge1;
-          fudge1 = fudgeContext.fudgeMsgToObject (org.fudgemsg.proto.tests.ExternalMessage.class, fudgeMsg.getFieldValue (org.fudgemsg.FudgeFieldContainer.class, fudgeField));
+          fudge1 = fudgeContext.fieldValueToObject (org.fudgemsg.proto.tests.ExternalMessage.class, fudgeField);
           foo (fudge1);
         }
         catch (IllegalArgumentException e) {

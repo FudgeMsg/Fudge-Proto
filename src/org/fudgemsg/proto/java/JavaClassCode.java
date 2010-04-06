@@ -936,7 +936,8 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         endStmt (writer);
       } else {
         if (msg.isExternal ()) {
-          writer.assignment (assignTo, "fudgeContext.fudgeMsgToObject (" + messageType (msg) + ".class, " + value + ")");
+          writer.assignment (assignTo, "fudgeContext.fieldValueToObject (" + messageType (msg) + ".class, " + fieldData + ")");
+          //writer.assignment (assignTo, "fudgeContext.fudgeMsgToObject (" + messageType (msg) + ".class, " + value + ")");
         } else if (msg.hasExternalMessageReferences ()) {
           writer.assignment (assignTo, messageType (msg) + ".fromFudgeMsg (fudgeContext, " + value + ")");
         } else {
@@ -1192,6 +1193,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       MessageDefinition superMessage = message.getExtends ();
       while (superMessage != null) {
         if (!superMessage.hasExternalMessageReferences ()) {
+          // superclass might not have a FudgeDeserializationContext available when constructing
           context.warning (message.getCodePosition (), "[PRO-18] external definitions might prevent polymorphic use as " + superMessage.getIdentifier ());
           break;
         } else {
@@ -1215,7 +1217,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     writer.write ("try");
     beginBlock (writer); // try
     writer.write ("return (" + message.getIdentifier () + ")Class.forName (className).getDeclaredMethod (\"fromFudgeMsg\", " + paramTypes + ").invoke (null, " + params + ")");
-    // TODO 2010-02-17 Andrew -- this logic is flawed; if the sub-message has external references but we don't then it won't have the correct signature (and we won't have a serialization context)
+    // TODO 2010-02-17 Andrew -- if the sub-message has external references but we don't then it won't have the correct signature (i.e. we won't have a serialization context); hence the PRO-18 warning above
     endStmt (writer);
     endBlock (writer); // try
     writer.write ("catch (Throwable t)");
