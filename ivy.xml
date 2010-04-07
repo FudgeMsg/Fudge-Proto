@@ -17,7 +17,6 @@
     <dependencies>
         <dependency org="org.apache.commons" name="commons-lang" rev="2.4" conf="core->*"/>
         <dependency org="org.apache.ant" name="ant" rev="[1.7.0,1.8.0[" conf="core->*" />
-        <dependency org="org.junit" name="junit" rev="[4.7,5.0[" conf="core->*"/>
         <dependency org="org.antlr" name="antlr" rev="[3.1,4.0[" conf="core->*"/>
         <dependency org="org.fudgemsg" name="fudge-java" rev="latest.integration" conf="core->*"/>
     </dependencies>
