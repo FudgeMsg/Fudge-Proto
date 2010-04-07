@@ -645,7 +645,9 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         } else {
           final MessageDefinition messageDefinition = ((FieldType.MessageType)type).getMessageDefinition ();
           if (messageDefinition.isExternal ()) {
-            value = "fudgeContext.objectToFudgeMsg (" + value + ")";
+            writer.invoke ("fudgeContext", "objectToFudgeMsg", msg + ", " + name + ", " + ordinal + ", " + value);
+            endStmt (writer);
+            return;
           } else {
             final String temp1 = writer.localVariable (CLASS_MUTABLEFUDGEFIELDCONTAINER, true, "fudgeContext.newMessage ()");
             endStmt (writer);
