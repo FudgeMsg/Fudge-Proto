@@ -17,8 +17,11 @@ package org.fudgemsg.proto;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.jar.JarFile;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 /**
  * A basic command line compiler.
@@ -33,7 +36,7 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
   
   private File _sourceDir = new File (".");
   
-  private List<File> _searchDirs = new ArrayList<File> ();
+  private List<Object> _searchPath = new ArrayList<Object> ();
   
   private int _verbosity = 0;
   
@@ -48,8 +51,26 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
     (err ? System.err : System.out).println (sb.toString ());
   }
   
-  private void addSearchDir (final File path) {
-    _searchDirs.add (path);
+  private boolean addSearchDir (final File path) {
+    if (path.isDirectory ()) {
+      _searchPath.add (path);
+      return true;
+    }
+    final String name = path.getName ();
+    final int dot = name.lastIndexOf ('.');
+    try {
+      if (dot > 0) {
+        final String ext = name.substring (dot + 1);
+        if (ext.equals ("zip") || ext.equals ("war") || ext.equals ("jar")) {
+          _searchPath.add (new ZipFile (path));
+          return true;
+        }
+      }
+    } catch (IOException e) {
+      // ignore - error will be handled below
+    }
+    compilerError (null, path.getPath () + " invalid search path element"); 
+    return false;
   }
   
   @Override
@@ -76,13 +97,35 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
     return null;
   }
   
+  private Source findSource (final ZipFile zip, final String[] identifier, final boolean compilationTarget) throws IOException {
+    final StringBuilder stem = new StringBuilder ();
+    for (int i = 0; i < identifier.length; i++) {
+      if (i > 0) stem.append (File.separatorChar);
+      stem.append (identifier[i]);
+      final int ext = stem.length ();
+      stem.append (".proto");
+      final ZipEntry entry = zip.getEntry (stem.toString ());
+      if (entry != null) {
+        return new ZipSourceFile (stem.toString (), zip, entry, this, compilationTarget);
+      }
+      stem.delete (ext, ext + 6);
+    }
+    return null;
+  }
+  
   @Override
   public Source findSource (final String identifier) throws IOException {
     final String[] identifierAsArray = identifier.split ("\\.");
     Source source;
     if ((source = findSource (_sourceDir, identifierAsArray, true)) != null) return source;
-    for (File dir : _searchDirs) {
-      if ((source = findSource (dir, identifierAsArray, false)) != null) return source;
+    for (Object elem : _searchPath) {
+      if (elem instanceof File) {
+        if ((source = findSource ((File)elem, identifierAsArray, false)) != null) return source;
+      } else if (elem instanceof ZipFile) {
+        if ((source = findSource ((ZipFile)elem, identifierAsArray, false)) != null) return source;
+      } else {
+        throw new IllegalStateException ("unexpected object '" + elem + "' in search path");
+      }
     }
     return null;
   }
@@ -165,7 +208,9 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
           cmdLine._sourceDir = new File (args[i].substring (2));
           break;
         case 'p' : // -p<path>        Add a source folder for loading additional .proto files from (no code will be generated)
-          cmdLine.addSearchDir (new File (args[i].substring (2)));
+          if (!cmdLine.addSearchDir (new File (args[i].substring (2)))) {
+            return 1;
+          }
           break;
         case 'v' : // -v[v[v]]        Verbosity level
           if (args[i].equals ("-v")) {
@@ -203,7 +248,7 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
               displayName = displayName.substring (pfx.length ());
             }
           }
-          compiler.addSource (new SourceFile (displayName, f, cmdLine));
+          compiler.addSource (new SourceFile (displayName, f, cmdLine, true));
         } else {
           cmdLine.compilerError (null, "source file '" + args[i] + "' doesn't exist");
           return 1;

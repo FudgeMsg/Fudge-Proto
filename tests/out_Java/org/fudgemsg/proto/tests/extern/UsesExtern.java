@@ -82,7 +82,7 @@ public class UsesExtern implements java.io.Serializable {
   }
   public void toFudgeMsg (final org.fudgemsg.mapping.FudgeSerializationContext fudgeContext, final org.fudgemsg.MutableFudgeFieldContainer msg) {
     if (_foo != null)  {
-      msg.add (FOO_KEY, null, fudgeContext.objectToFudgeMsg (_foo));
+      fudgeContext.objectToFudgeMsg (msg, FOO_KEY, null, _foo);
     }
     if (_bar != null)  {
       msg.add (BAR_KEY, null, _bar.getFudgeEncoding ());
