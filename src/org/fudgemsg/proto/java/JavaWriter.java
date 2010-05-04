@@ -20,7 +20,6 @@ import java.io.IOException;
 
 import org.fudgemsg.proto.IndentWriter;
 import org.fudgemsg.proto.MessageDefinition;
-import org.fudgemsg.proto.EnumDefinition;
 
 /**
  * Helper class for JavaClassCode for dealing with repeated code constructs and
@@ -110,31 +109,6 @@ import org.fudgemsg.proto.EnumDefinition;
     return index;
   }
 
-  /* package */void javadoc(final String text) throws IOException {
-    _writer.write("/**");
-    _writer.newLine();
-    final String[] lines = text.split("\\n");
-    int shortestWhitespace = Integer.MAX_VALUE;
-    for (String line : lines) {
-      for (int i = 0; i < line.length(); i++) {
-        if (!Character.isWhitespace(line.charAt(i))) {
-          if (i < shortestWhitespace)
-            shortestWhitespace = i;
-          break;
-        }
-      }
-    }
-    if (shortestWhitespace == Integer.MAX_VALUE)
-      shortestWhitespace = 0;
-    for (String line : lines) {
-      _writer.write(" * ");
-      _writer.write(line.substring(shortestWhitespace));
-      _writer.newLine();
-    }
-    _writer.write(" */");
-    _writer.newLine();
-  }
-
   /* package */void throwInvalidFudgeFieldException(
       final MessageDefinition message, final String fieldRef,
       final String expected, final String cause) throws IOException {
@@ -153,51 +127,11 @@ import org.fudgemsg.proto.EnumDefinition;
     _writer.write(')');
   }
 
-  /* package */void throwAssertionError(final String message)
-      throws IOException {
-    _writer.write("throw new AssertionError (\"");
-    _writer.write(message);
-    _writer.write("\")");
-  }
-
   /* package */void throwNullParameterException(final String variable)
       throws IOException {
     _writer.write("throw new NullPointerException (\"");
     _writer.write(variable);
     _writer.write(" must not be null\")");
-  }
-
-  /* package */void throwEmptyListException(final String variable)
-      throws IOException {
-    _writer.write("throw new IllegalArgumentException (\"");
-    _writer.write(variable);
-    _writer.write(" must not be an empty list\")");
-  }
-  
-  /* package */ void throwWrongSizedArrayException (final String variable, final int size) throws IOException {
-    _writer.write ("throw new IllegalArgumentException (\"");
-    _writer.write (variable);
-    _writer.write (" is not the expected length (");
-    _writer.write (Integer.toString (size));
-    _writer.write (")\")");
-  }
-
-  /* package */void defaultThrowInvalidFudgeEnumException(
-      final EnumDefinition enumDefinition, final String encodedValueExpr)
-      throws IOException {
-    _writer
-        .write("default : throw new IllegalArgumentException (\"Field is not a ");
-    _writer.write(enumDefinition.getName());
-    _writer.write(" - invalid value '\" + ");
-    _writer.write(encodedValueExpr);
-    _writer.write(" + \"'\")");
-  }
-
-  /* package */void elseThrowInvalidFudgeFieldException(
-      final MessageDefinition message, final String fieldRef,
-      final String expected, final String cause) throws IOException {
-    _writer.write("else ");
-    throwInvalidFudgeFieldException(message, fieldRef, expected, cause);
   }
 
   /* package */void ifNull(final String test) throws IOException {
@@ -218,12 +152,6 @@ import org.fudgemsg.proto.EnumDefinition;
     _writer.write(" == 0) ");
   }
 
-  /* package */void ifEmptyList(final String test) throws IOException {
-    _writer.write("if (");
-    _writer.write(test);
-    _writer.write(".size () == 0) ");
-  }
-  
   /* package */ void ifSizeNot (final String object, final String method, final int value) throws IOException {
     _writer.write ("if (");
     // object needs extra parens if it has a cast at the front
@@ -249,12 +177,6 @@ import org.fudgemsg.proto.EnumDefinition;
     _writer.write(") ");
   }
 
-  /* package */void ifNotBool(final String test) throws IOException {
-    _writer.write("if (!");
-    _writer.write(test);
-    _writer.write(") ");
-  }
-
   /* package */void assignment(final String variable, final String value)
       throws IOException {
     _writer.write(variable);
@@ -271,83 +193,6 @@ import org.fudgemsg.proto.EnumDefinition;
     if (params != null)
       _writer.write(params);
     _writer.write(')');
-  }
-
-  /* package */void anonGetValue(final String source) throws IOException {
-    if (!_anonValue) {
-      _writer.write("Object ");
-      _anonValue = true;
-    }
-    _writer.write("fudge0 = ");
-    _writer.write(source);
-    _writer.write(".getValue ()");
-  }
-
-  /* package */void ifNotInstanceOf(final String test, final String clazz)
-      throws IOException {
-    _writer.write("if (!(");
-    _writer.write(test);
-    _writer.write(" instanceof ");
-    _writer.write(clazz);
-    _writer.write(")) ");
-  }
-
-  /* package */void anonIfInstanceOf(final String clazz) throws IOException {
-    _writer.write("if (fudge0 instanceof ");
-    _writer.write(clazz);
-    _writer.write(") ");
-  }
-
-  /* package */void anonElseIfInstanceOf(final String clazz) throws IOException {
-    _writer.write("else if (fudge0 instanceof ");
-    _writer.write(clazz);
-    _writer.write(") ");
-  }
-
-  /* package */void anonIfNotInstanceOf(final String clazz) throws IOException {
-    _writer.write("if (!(fudge0 instanceof ");
-    _writer.write(clazz);
-    _writer.write(")) ");
-  }
-
-  /* package */void anonAssignment(final String target, final String type)
-      throws IOException {
-    _writer.write(target);
-    _writer.write(" = (");
-    _writer.write(type);
-    _writer.write(")fudge0");
-  }
-
-  /* package */void invoke(final String object, final String method,
-      final String params) throws IOException {
-    _writer.write(object);
-    _writer.write('.');
-    invoke(method, params);
-  }
-
-  /* package */void invoke(final String target, final String params)
-      throws IOException {
-    _writer.write(target);
-    _writer.write(" (");
-    if (params != null)
-      _writer.write(params);
-    _writer.write(')');
-  }
-
-  /* package */void guard() throws IOException {
-    _writer.write("try");
-  }
-
-  /* package */void catchIllegalArgumentException() throws IOException {
-    _writer.write("catch (IllegalArgumentException e)");
-  }
-
-  /* package */void catchCloneNotSupportedException() throws IOException {
-    _writer.write("catch (CloneNotSupportedException e)");
-  }
-
-  /* package */void otherwise() throws IOException {
-    _writer.write("else");
   }
 
   /* package */void method(final boolean isStatic, final String returnType,
@@ -395,6 +240,19 @@ import org.fudgemsg.proto.EnumDefinition;
     _writer.write(value);
   }
 
+  /* package */void invoke(final String object, final String method, final String params) throws IOException {
+    _writer.write(object);
+    _writer.write('.');
+    invoke(method, params);
+  }
+  
+  /* package */void invoke(final String target, final String params) throws IOException {
+    _writer.write(target);
+    _writer.write(" (");
+    if (params != null) _writer.write(params);
+    _writer.write(')');
+  }
+  
   /* package */void returnInvoke(final String target, final String params,
       final String cast) throws IOException {
     _writer.write("return ");
@@ -421,57 +279,14 @@ import org.fudgemsg.proto.EnumDefinition;
     _writer.write(ifNull);
   }
 
-  /* package */void returnThis() throws IOException {
-    _writer.write("return this");
+  /* package */void guard() throws IOException {
+    _writer.write("try");
   }
 
-  /* package */void returnTrue() throws IOException {
-    _writer.write("return true");
+  /* package */void catchIllegalArgumentException() throws IOException {
+    _writer.write("catch (IllegalArgumentException e)");
   }
-
-  /* package */void returnFalse() throws IOException {
-    _writer.write("return false");
-  }
-
-  /* package */void returnConstruct(final String clazz, final String params)
-      throws IOException {
-    _writer.write("return new ");
-    _writer.write(clazz);
-    _writer.write(" (");
-    if (params != null)
-      _writer.write(params);
-    _writer.write(')');
-  }
-
-  /* package */void returnNullIfZero(final String test) throws IOException {
-    _writer.write("if (");
-    _writer.write(test);
-    _writer.write(" == 0) return null");
-  }
-
-  /* package */void throwIndexOutOfBoundsException(final String variable)
-      throws IOException {
-    _writer.write("throw new IndexOutOfBoundsException (\"");
-    _writer.write(variable);
-    _writer.write("=\" + ");
-    _writer.write(variable);
-    _writer.write(')');
-  }
-
-  /* package */void select(final String variable) throws IOException {
-    _writer.write("switch (");
-    _writer.write(variable);
-    _writer.write(')');
-  }
-
-  /* package */void selectCaseReturn(final String caseValue,
-      final String retValue) throws IOException {
-    _writer.write("case ");
-    _writer.write(caseValue);
-    _writer.write(" : return ");
-    _writer.write(retValue);
-  }
-
+  
   /* package */void classDef(final boolean isStatic, final String clazz,
       final String extendsClass, final String interfaceClass)
       throws IOException {
@@ -490,16 +305,6 @@ import org.fudgemsg.proto.EnumDefinition;
     }
   }
 
-  /* package */void elseReturnFalse() throws IOException {
-    _writer.write("else return false");
-  }
-
-  /* package */void elseIfNotNull(final String test) throws IOException {
-    _writer.write("else if (");
-    _writer.write(test);
-    _writer.write(" != null) ");
-  }
-
   /* package */void packageDef(final String namespace) throws IOException {
     _writer.write("package ");
     _writer.write(namespace);
@@ -510,26 +315,6 @@ import org.fudgemsg.proto.EnumDefinition;
     _writer.write (namespace);
   }
 
-  /* package */void enumDef(final String clazz) throws IOException {
-    _writer.write("public enum ");
-    _writer.write(clazz);
-  }
-
-  /* package */void enumElementSeparator() throws IOException {
-    _writer.write(',');
-    _writer.newLine();
-  }
-
-  /* package */void enumElement(final String id, final String params)
-      throws IOException {
-    _writer.write(id);
-    if (params != null) {
-      _writer.write(" (");
-      _writer.write(params);
-      _writer.write(')');
-    }
-  }
-  
   /* package */void whileBool (final String expression) throws IOException {
     _writer.write ("while (");
     _writer.write (expression);

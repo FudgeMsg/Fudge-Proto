@@ -246,13 +246,19 @@ public class RATypes_Optional implements java.io.Serializable, RATypesBase {
         fudge1 = new java.util.ArrayList<org.fudgemsg.proto.tests.types.CustomEnum[]> (fudgeFields.size ());
         for (org.fudgemsg.FudgeField fudge2 : fudgeFields) {
           try {
-            final org.fudgemsg.proto.tests.types.CustomEnum[] fudge3;
-            final int[] fudge4 = fudgeMsg.getFieldValue (int[].class, fudge2);
-            fudge3 = new org.fudgemsg.proto.tests.types.CustomEnum[fudge4.length];
-            for (int fudge5 = 0; fudge5 < fudge4.length; fudge5++) {
-              fudge3[fudge5] = org.fudgemsg.proto.tests.types.CustomEnum.fromFudgeEncoding (fudge4[fudge5]);
+            final org.fudgemsg.FudgeFieldContainer fudge3 = fudgeMsg.getFieldValue (org.fudgemsg.FudgeFieldContainer.class, fudge2);
+            final java.util.List<org.fudgemsg.proto.tests.types.CustomEnum> fudge4 = new java.util.ArrayList<org.fudgemsg.proto.tests.types.CustomEnum> ();
+            for (org.fudgemsg.FudgeField fudge5 : fudge3) {
+              try {
+                final org.fudgemsg.proto.tests.types.CustomEnum fudge6;
+                fudge6 = fudgeContext.fieldValueToObject (org.fudgemsg.proto.tests.types.CustomEnum.class, fudge5);
+                fudge4.add (fudge6);
+              }
+              catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException ("Fudge message is not a RATypes_Optional - field '_CustomEnum[]' is not CustomEnum enum", e);
+              }
             }
-            fudge1.add (fudge3);
+            fudge1.add (fudge4.toArray (new org.fudgemsg.proto.tests.types.CustomEnum[fudge4.size ()]));
           }
           catch (IllegalArgumentException e) {
             throw new IllegalArgumentException ("Fudge message is not a RATypes_Optional - field '_CustomEnum' is not CustomEnum enum[]", e);
@@ -1292,9 +1298,9 @@ public class RATypes_Optional implements java.io.Serializable, RATypesBase {
     }
     if (__CustomEnum != null)  {
       for (org.fudgemsg.proto.tests.types.CustomEnum[] fudge1 : __CustomEnum) {
-        final int[] fudge2 = new int[fudge1.length];
-        for (int fudge3 = 0; fudge3 < fudge2.length; fudge3++) {
-          fudge2[fudge3] = fudge1[fudge3].getFudgeEncoding ();
+        final org.fudgemsg.MutableFudgeFieldContainer fudge2 = fudgeContext.newMessage ();
+        for (org.fudgemsg.proto.tests.types.CustomEnum fudge3 : fudge1) {
+          fudge2.add (null, null, fudge3);
         }
         msg.add (_CUSTOMENUM_KEY, null, fudge2);
       }

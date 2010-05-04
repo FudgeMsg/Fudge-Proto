@@ -4,8 +4,8 @@ public class Person implements java.io.Serializable {
   private static final long serialVersionUID = -1511890345953819044l;
   // Created from simple.proto:21(7)
   public enum PhoneType {
-    HOME (1),
     MOBILE (0),
+    HOME (1),
     WORK (2);
     private final int _fudgeEncoding;
     private PhoneType (final int fudgeEncoding) {
@@ -16,10 +16,10 @@ public class Person implements java.io.Serializable {
     }
     public static PhoneType fromFudgeEncoding (final int fudgeEncoding) {
       switch (fudgeEncoding) {
-        case 1 : return HOME;
         case 0 : return MOBILE;
+        case 1 : return HOME;
         case 2 : return WORK;
-        default : throw new IllegalArgumentException ("Field is not a PhoneType - invalid value '" + fudgeEncoding + "'");
+        default : throw new IllegalArgumentException ("field is not a PhoneType - invalid value '" + fudgeEncoding + "'");
       }
     }
   }

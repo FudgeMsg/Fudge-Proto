@@ -18,7 +18,6 @@ package org.fudgemsg.proto.java;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +30,7 @@ import org.fudgemsg.proto.EnumDefinition;
 import org.fudgemsg.proto.FieldDefinition;
 import org.fudgemsg.proto.FieldType;
 import org.fudgemsg.proto.IndentWriter;
+import org.fudgemsg.proto.LiteralValue;
 import org.fudgemsg.proto.MessageDefinition;
 import org.fudgemsg.proto.TaxonomyDefinition;
 import org.fudgemsg.proto.c.CBlockCode;
@@ -901,7 +901,6 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         endStmt (writer);
         final String msgElement = writer.forEach (CLASS_FUDGEFIELD, subMessage);
         writer = beginBlock (writer); // iteration
-        // this is the problem in AATypes_Required
         writeDecodeFudgeField (writer, baseType, message, msgElement, fieldRef + "[]", subMessage, null, slaveList + ".add");
         writer = endBlock (writer); // iteration
         if (appendTo != null) {
@@ -953,7 +952,11 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         assignTo = writer.localVariable (enumDefinition.getIdentifier (), true);
         endStmt (writer);
       }
-      writer.assignment (assignTo, enumDefinition.getIdentifier () + ".fromFudgeEncoding (" + fudgeFieldValueExpression (fieldContainer, "Integer", fieldData) + ")");
+      if (enumDefinition.getType () == EnumDefinition.Type.INTEGER_ENCODED) {
+        writer.assignment (assignTo, enumDefinition.getIdentifier () + ".fromFudgeEncoding (" + fudgeFieldValueExpression (fieldContainer, "Integer", fieldData) + ")");
+      } else {
+        writer.assignment (assignTo, fieldContainer + ".getFieldValue (" + enumDefinition.getIdentifier () + ".class, " + fieldData + ")");
+      }
       endStmt (writer);
     } else {
       switch (type.getFudgeFieldType ()) {
@@ -1398,60 +1401,86 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   }
 
   @Override
-  public void writeEnumImplementationDeclaration(final Compiler.Context context, EnumDefinition enumDefinition, IndentWriter iWriter) throws IOException {
-    super.writeEnumImplementationDeclaration (context, enumDefinition, iWriter);
-    JavaWriter writer = new JavaWriter (iWriter);
+  public void writeEnumImplementationDeclaration(final Compiler.Context context, EnumDefinition enumDefinition, IndentWriter writer) throws IOException {
+    super.writeEnumImplementationDeclaration (context, enumDefinition, writer);
     if (enumDefinition.getOuterDefinition () == null) {
       final String namespace = enumDefinition.getNamespace ();
       if (namespace != null) {
-        writer.packageDef (namespace);
+        writer.write ("package " + namespace);
         endStmt (writer);
       }
     }
-    writer.enumDef (enumDefinition.getName ());
-    writer = beginBlock (writer); // enum
-    Iterator<Map.Entry<String,Integer>> elements = enumDefinition.getElements ();
+    writer.write ("public enum " + enumDefinition.getName ());
+    beginBlock (writer); // enum
     boolean first = true;
-    while (elements.hasNext ()) {
-      final Map.Entry<String,Integer> element = elements.next ();
+    for (Map.Entry<String,LiteralValue> element : enumDefinition.getElements ()) {
       if (first) {
         first = false;
       } else {
-        writer.enumElementSeparator ();
+        writer.write (",");
+        writer.newLine ();
       }
-      writer.enumElement (element.getKey (), element.getValue ().toString ());
+      writer.write (element.getKey ());
+      if (enumDefinition.getType () != EnumDefinition.Type.DEFAULT) {
+        writer.write (" (" + getLiteral (element.getValue ()) + ")");
+      }
     }
-    endStmt (writer); // initial enumset
-    writer.attribute (true, "int", "_fudgeEncoding");
-    endStmt (writer); // ordinal def
-    writer.constructor ("private", enumDefinition.getName (), "final int fudgeEncoding");
-    writer = beginBlock (writer); // constructor
-    writer.assignment ("_fudgeEncoding", "fudgeEncoding");
-    endStmt (writer); // assignment
-    writer = endBlock (writer); // constructor
-    writer.method (false, "int", "getFudgeEncoding", null);
-    writer = beginBlock (writer); // getFudgeEncoding
-    writer.returnVariable ("_fudgeEncoding");
-    endStmt (writer); // return
-    writer = endBlock (writer); // getFudgeEncoding
-    writer.method (true, enumDefinition.getName (), "fromFudgeEncoding", "final int fudgeEncoding");
-    writer = beginBlock (writer); // fromFudgeEncoding
-    writer.select ("fudgeEncoding");
-    beginBlock (writer); // switch
-    elements = enumDefinition.getElements ();
-    while (elements.hasNext ()) {
-      final Map.Entry<String,Integer> element = elements.next ();
-      writer.selectCaseReturn (element.getValue ().toString (), element.getKey ());
-      endStmt (writer);
+    endStmt (writer); // set of values
+    switch (enumDefinition.getType ()) {
+      case INTEGER_ENCODED :
+        writer.write ("private final int _fudgeEncoding");
+        endStmt (writer);
+        writer.write ("private " + enumDefinition.getName () + " (final int fudgeEncoding)");
+        beginBlock (writer); // constructor
+        writer.write ("_fudgeEncoding = fudgeEncoding");
+        endStmt (writer);
+        endBlock (writer); // constructor
+        writer.write ("public int getFudgeEncoding ()");
+        beginBlock (writer); // getFudgeEncoding
+        writer.write ("return _fudgeEncoding");
+        endStmt (writer);
+        endBlock (writer); // getFudgeEncoding
+        writer.write ("public static " + enumDefinition.getName () + " fromFudgeEncoding (final int fudgeEncoding)");
+        beginBlock (writer); // fromFudgeEncoding
+        writer.write ("switch (fudgeEncoding)");
+        beginBlock (writer); // switch
+        for (Map.Entry<String, LiteralValue> element : enumDefinition.getElements ()) {
+          writer.write ("case " + getLiteral (element.getValue ()) + " : return " + element.getKey ());
+          endStmt (writer);
+        }
+        writer.write ("default : throw new IllegalArgumentException (\"field is not a " + enumDefinition.getName () + " - invalid value '\" + fudgeEncoding + \"'\")");
+        endStmt (writer);
+        endBlock (writer); // switch
+        endBlock (writer); // fromFudgeEncoding
+        break;
+      case STRING_ENCODED :
+        writer.write ("private final String _fudgeEncoding");
+        endStmt (writer);
+        writer.write ("private " + enumDefinition.getName () + " (final String fudgeEncoding)");
+        beginBlock (writer); // constructor
+        writer.write ("_fudgeEncoding = fudgeEncoding");
+        endStmt (writer);
+        endBlock (writer); // constructor
+        writer.write ("public String getFudgeEncoding ()");
+        beginBlock (writer); // getFudgeEncoding
+        writer.write ("return _fudgeEncoding");
+        endStmt (writer);
+        endBlock (writer); // getFudgeEncoding
+        writer.write ("public static " + enumDefinition.getName () + " fromFudgeEncoding (final String fudgeEncoding)");
+        beginBlock (writer); // fromFudgeEncoding
+        for (Map.Entry<String, LiteralValue> element : enumDefinition.getElements ()) {
+          writer.write ("if (fudgeEncoding.equals (" + getLiteral (element.getValue ()) + ")) return " + element.getKey ());
+          endStmt (writer);
+        }
+        writer.write ("throw new IllegalArgumentException (\"field is not a " + enumDefinition.getName () + " - invalid value '\" + fudgeEncoding + \"'\")");
+        endStmt (writer);
+        endBlock (writer); // fromFudgeEncoding
+        break;
     }
-    writer.defaultThrowInvalidFudgeEnumException (enumDefinition, "fudgeEncoding");
-    endStmt (writer); // default
-    endBlock (writer); // switch
-    endBlock (writer); // fromFudgeEncoding
     final String bodyCode = ProtoBinding.BODY.get (enumDefinition);
     if (bodyCode != null) {
-      writer.getWriter ().write (bodyCode);
-      writer.getWriter ().newLine ();
+      writer.write (bodyCode);
+      writer.newLine ();
     }
     endBlock (writer); // enum
   }
@@ -1464,9 +1493,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     endStmt (writer); // instance
     final StringBuilder sbOrdinals = new StringBuilder ();
     final StringBuilder sbStrings = new StringBuilder ();
-    final Iterator<Map.Entry<String,Integer>> elements = taxonomy.getElements ();
-    while (elements.hasNext ()) {
-      final Map.Entry<String,Integer> element = elements.next ();
+    for (Map.Entry<String,Integer> element : taxonomy.getElements ()) {
       final String name = element.getKey ();
       writer.publicStaticFinal ("String", "STR_" + name, "\"" + name + "\"");
       endStmt (writer); // STR_ decl

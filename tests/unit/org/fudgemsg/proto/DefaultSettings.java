@@ -15,15 +15,15 @@
 
 package org.fudgemsg.proto;
 
-/**
- * Semantic representation of a taxonomy definition.
- * 
- * @author Andrew
- */
-public class TaxonomyDefinition extends StringValuePairDefinition<Integer> {
-  
-  /* package */ TaxonomyDefinition (final String identifier, final CodePosition codePosition, final boolean compilationTarget) {
-    super (identifier, codePosition, null, compilationTarget);
-  }
+import org.junit.BeforeClass;
 
+public abstract class DefaultSettings {
+  
+  @BeforeClass
+  public static void configureGlobalDefaults () {
+    
+    GlobalDefault.setCompilerRethrowExceptions (true);
+    
+  }
+  
 }

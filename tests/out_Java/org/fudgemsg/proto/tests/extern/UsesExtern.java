@@ -29,7 +29,7 @@ public class UsesExtern implements java.io.Serializable {
       if (fudgeField != null)  {
         try {
           final org.fudgemsg.proto.tests.ExternalEnum fudge1;
-          fudge1 = org.fudgemsg.proto.tests.ExternalEnum.fromFudgeEncoding (fudgeMsg.getFieldValue (Integer.class, fudgeField));
+          fudge1 = fudgeContext.fieldValueToObject (org.fudgemsg.proto.tests.ExternalEnum.class, fudgeField);
           bar (fudge1);
         }
         catch (IllegalArgumentException e) {
@@ -85,7 +85,7 @@ public class UsesExtern implements java.io.Serializable {
       fudgeContext.objectToFudgeMsg (msg, FOO_KEY, null, _foo);
     }
     if (_bar != null)  {
-      msg.add (BAR_KEY, null, _bar.getFudgeEncoding ());
+      msg.add (BAR_KEY, null, _bar);
     }
   }
   public static UsesExtern fromFudgeMsg (final org.fudgemsg.mapping.FudgeDeserializationContext fudgeContext, final org.fudgemsg.FudgeFieldContainer fudgeMsg) {

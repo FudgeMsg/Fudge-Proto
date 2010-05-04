@@ -8,7 +8,7 @@ namespace org.fudgemsg.proto.tests.types {
   }
   
   enum CustomEnum {
-    FIRST  =  1;
+    FIRST;
     SECOND;
     THIRD;
     FOURTH;

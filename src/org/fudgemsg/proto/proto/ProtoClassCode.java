@@ -19,7 +19,6 @@ package org.fudgemsg.proto.proto;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -234,10 +233,11 @@ class ProtoClassCode extends ImplementationlessClassCode {
     beginNSDeclaration (writer, enumDefinition);
     writer.write ("enum " + enumDefinition.getName ());
     beginBlock (writer); // enum decl
-    final Iterator<Map.Entry<String, Integer>> elements = enumDefinition.getElements();
-    while (elements.hasNext()) {
-      final Map.Entry<String, Integer> element = elements.next();
-      writer.write (element.getKey () + " = " + element.getValue ().toString ());
+    for (Map.Entry<String, LiteralValue> element : enumDefinition.getElements ()) {
+      writer.write (element.getKey ());
+      if (!(element.getValue () instanceof LiteralValue.NullValue)) {
+        writer.write (" = " + getLiteral (element.getValue ()));
+      }
       endStmt (writer);
     }
     writeBinding (writer, enumDefinition);
@@ -251,9 +251,7 @@ class ProtoClassCode extends ImplementationlessClassCode {
     beginNSDeclaration (writer, taxonomy);
     writer.write ("taxonomy " + taxonomy.getName ());
     beginBlock (writer); // taxonomy
-    final Iterator<Map.Entry<String,Integer>> elements = taxonomy.getElements ();
-    while (elements.hasNext ()) {
-      final Map.Entry<String,Integer> element = elements.next ();
+    for (Map.Entry<String,Integer> element : taxonomy.getElements ()) {
       writer.write (element.getKey () + " = " + element.getValue ().toString ());
       endStmt (writer);
     }

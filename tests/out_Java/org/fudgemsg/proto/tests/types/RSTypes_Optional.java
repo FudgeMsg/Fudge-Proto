@@ -197,7 +197,7 @@ public class RSTypes_Optional implements java.io.Serializable, RSTypesBase {
         for (org.fudgemsg.FudgeField fudge2 : fudgeFields) {
           try {
             final org.fudgemsg.proto.tests.types.CustomEnum fudge3;
-            fudge3 = org.fudgemsg.proto.tests.types.CustomEnum.fromFudgeEncoding (fudgeMsg.getFieldValue (Integer.class, fudge2));
+            fudge3 = fudgeContext.fieldValueToObject (org.fudgemsg.proto.tests.types.CustomEnum.class, fudge2);
             fudge1.add (fudge3);
           }
           catch (IllegalArgumentException e) {
@@ -999,7 +999,7 @@ public class RSTypes_Optional implements java.io.Serializable, RSTypesBase {
     }
     if (__CustomEnum != null)  {
       for (org.fudgemsg.proto.tests.types.CustomEnum fudge1 : __CustomEnum) {
-        msg.add (_CUSTOMENUM_KEY, null, fudge1.getFudgeEncoding ());
+        msg.add (_CUSTOMENUM_KEY, null, fudge1);
       }
     }
     if (__Message != null)  {

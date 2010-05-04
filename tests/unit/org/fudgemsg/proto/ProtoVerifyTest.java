@@ -36,7 +36,7 @@ import org.junit.Test;
  * 
  * @author Andrew Griffin
  */
-public class ProtoVerifyTest {
+public class ProtoVerifyTest extends DefaultSettings {
   
   private static class IgnoreStuff implements FilenameFilter {
     
@@ -58,7 +58,7 @@ public class ProtoVerifyTest {
   
   @Before
   public void setupSourceFiles () {
-    CommandLineTest.codeGeneratorAllFiles ("proto");
+    CodeGenerationTest.codeGeneratorAllFiles ("proto");
   }
   
   private String concatenatePath (String path, final String next) {
@@ -134,7 +134,7 @@ public class ProtoVerifyTest {
     args.add ("-l" + language);
     args.add ("-s" + CompilerTest.getTestPath ("out_proto"));
     findFiles (new File (CompilerTest.getTestPath ("out_proto")), "", args);
-    CommandLineTest.addLanguageOptions (language, args);
+    CodeGenerationTest.addLanguageOptions (language, args);
     /*for (int i = 0; i < args.size (); i++) {
       System.out.println (i + ": " + args.get (i));
     }*/

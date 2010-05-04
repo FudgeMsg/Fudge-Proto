@@ -1,0 +1,33 @@
+// Enum test
+
+namespace org.fudgemsg.proto.tests.enums {
+
+  enum IntegerAssumed1 {
+    ZERO = 0;
+    ONE = 1;
+    TWO = 2;
+    THREE = 3;
+  }
+  
+  enum IntegerAssumed2 {
+    ZERO = 0;
+    ONE;
+    TWO;
+    THREE;
+  }
+  
+  enum DefaultEncoding {
+    ZERO;
+    ONE;
+    TWO;
+    THREE;
+  }
+  
+  enum StringAliasAssumed {
+    ZERO = "zero";
+    ONE = 1;
+    TWO;
+    THREE;
+  }
+
+}

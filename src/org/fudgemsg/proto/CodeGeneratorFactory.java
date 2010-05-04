@@ -29,8 +29,6 @@ public class CodeGeneratorFactory {
   
   private static CodeGeneratorFactory _defaultInstance = null;
   
-  public static final String DEFAULT_LANG = org.fudgemsg.proto.java.JavaCodeGenerator.LANG_ID;
-  
   private final HashMap<String,Class<? extends CodeGenerator>> _codeGenerators = new HashMap<String,Class<? extends CodeGenerator>>();
 
   /**
@@ -82,7 +80,7 @@ public class CodeGeneratorFactory {
   }
   
   /* package */ static CodeGenerator createDefaultCodeGenerator () {
-    return getDefaultInstance ().createCodeGenerator (DEFAULT_LANG);
+    return getDefaultInstance ().createCodeGenerator (GlobalDefault.getCodeGeneratorLanguage ());
   }
   
 }

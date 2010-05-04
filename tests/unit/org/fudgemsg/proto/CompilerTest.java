@@ -23,7 +23,7 @@ import java.util.Set;
 
 import org.junit.Test;
 
-public class CompilerTest {
+public class CompilerTest extends DefaultSettings {
   
   protected static String getTestBaseDir () {
     return "tests";

@@ -531,7 +531,13 @@ public class TypesTest {
   }
   
   private CustomEnum scustomenum () {
-    return CustomEnum.fromFudgeEncoding (_random.nextInt (3) + 1);
+    switch (_random.nextInt (3)) {
+      case 0 : return CustomEnum.FIRST;
+      case 1 : return CustomEnum.SECOND;
+      case 2 : return CustomEnum.THIRD;
+      case 3 : return CustomEnum.FOURTH;
+      default : return null;
+    }
   }
   
   private CustomEnum[] acustomenum () {

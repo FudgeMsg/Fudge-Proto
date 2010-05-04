@@ -175,7 +175,7 @@ enum_element
   | IDENTIFIER^ enum_value? ';'!
   ;
 
-enum_value : '='! INTEGER ;
+enum_value : '='! (INTEGER | STRING) ;
 
 field_constraint : constraint_default ;
 

@@ -183,12 +183,11 @@ public class Compiler {
   
   private File _targetPath = null;
   
-  private boolean _defaultFieldsMutable = true;
+  private boolean _defaultFieldsMutable = GlobalDefault.isCompilerFieldsMutable ();
   
-  private boolean _defaultFieldsRequired = false;
+  private boolean _defaultFieldsRequired = GlobalDefault.isCompilerFieldsRequired ();
   
-  private boolean _rethrowExceptions = false; // for production build
-  //private boolean _rethrowExceptions = true; // for debug build
+  private boolean _rethrowExceptions = GlobalDefault.isCompilerRethrowExceptions ();
   
   /**
    * Creates a new compiler object. Note that a compiler is not thread-safe. If you want to do concurrent compilations, use multiple Compiler objects.
