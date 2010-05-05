@@ -286,7 +286,7 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
             for (org.fudgemsg.FudgeField fudge6 : fudge4) {
               try {
                 final org.fudgemsg.proto.tests.types.CustomEnum fudge7;
-                fudge7 = fudgeContext.fieldValueToObject (org.fudgemsg.proto.tests.types.CustomEnum.class, fudge6);
+                fudge7 = fudge4.getFieldValue (org.fudgemsg.proto.tests.types.CustomEnum.class, fudge6);
                 fudge5.add (fudge7);
               }
               catch (IllegalArgumentException e) {
@@ -781,7 +781,7 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
       for (org.fudgemsg.proto.tests.types.CustomEnum[] fudge2 : __CustomEnum) {
         final org.fudgemsg.MutableFudgeFieldContainer fudge3 = fudgeContext.newMessage ();
         for (org.fudgemsg.proto.tests.types.CustomEnum fudge4 : fudge2) {
-          fudge3.add (null, null, fudge4);
+          fudge3.add (null, null, fudge4.name ());
         }
         fudge1.add (null, null, fudge3);
       }

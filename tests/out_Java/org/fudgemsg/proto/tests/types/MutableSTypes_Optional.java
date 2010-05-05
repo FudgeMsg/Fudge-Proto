@@ -128,7 +128,7 @@ public class MutableSTypes_Optional implements java.io.Serializable, TypesBase {
     if (fudgeField != null)  {
       try {
         final org.fudgemsg.proto.tests.types.CustomEnum fudge1;
-        fudge1 = fudgeContext.fieldValueToObject (org.fudgemsg.proto.tests.types.CustomEnum.class, fudgeField);
+        fudge1 = fudgeMsg.getFieldValue (org.fudgemsg.proto.tests.types.CustomEnum.class, fudgeField);
         set_CustomEnum (fudge1);
       }
       catch (IllegalArgumentException e) {
@@ -247,7 +247,7 @@ public class MutableSTypes_Optional implements java.io.Serializable, TypesBase {
       msg.add (_SUBMESSAGE_KEY, null, fudge1);
     }
     if (__CustomEnum != null)  {
-      msg.add (_CUSTOMENUM_KEY, null, __CustomEnum);
+      msg.add (_CUSTOMENUM_KEY, null, __CustomEnum.name ());
     }
     if (__Message != null)  {
       msg.add (_MESSAGE_KEY, null, fudgeContext.newMessage (__Message));

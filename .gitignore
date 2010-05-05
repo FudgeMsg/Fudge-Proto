@@ -2,7 +2,7 @@ build/
 classes/
 dist/
 docs/
-ivy/
+bootstrap/
 lib/
 tests/build/
 tests/classes/

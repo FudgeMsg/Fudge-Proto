@@ -139,7 +139,7 @@ public class STypes_Required implements java.io.Serializable, TypesBase {
     fudgeField = fudgeMsg.getByName (_CUSTOMENUM_KEY);
     if (fudgeField == null) throw new IllegalArgumentException ("Fudge message is not a STypes_Required - field '_CustomEnum' is not present");
     try {
-      __CustomEnum = fudgeContext.fieldValueToObject (org.fudgemsg.proto.tests.types.CustomEnum.class, fudgeField);
+      __CustomEnum = fudgeMsg.getFieldValue (org.fudgemsg.proto.tests.types.CustomEnum.class, fudgeField);
     }
     catch (IllegalArgumentException e) {
       throw new IllegalArgumentException ("Fudge message is not a STypes_Required - field '_CustomEnum' is not CustomEnum enum", e);
@@ -227,7 +227,7 @@ public class STypes_Required implements java.io.Serializable, TypesBase {
       msg.add (_SUBMESSAGE_KEY, null, fudge1);
     }
     if (__CustomEnum != null)  {
-      msg.add (_CUSTOMENUM_KEY, null, __CustomEnum);
+      msg.add (_CUSTOMENUM_KEY, null, __CustomEnum.name ());
     }
     if (__Message != null)  {
       msg.add (_MESSAGE_KEY, null, fudgeContext.newMessage (__Message));

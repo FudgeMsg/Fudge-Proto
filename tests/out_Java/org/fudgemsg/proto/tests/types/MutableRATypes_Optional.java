@@ -235,7 +235,7 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
           for (org.fudgemsg.FudgeField fudge5 : fudge3) {
             try {
               final org.fudgemsg.proto.tests.types.CustomEnum fudge6;
-              fudge6 = fudgeContext.fieldValueToObject (org.fudgemsg.proto.tests.types.CustomEnum.class, fudge5);
+              fudge6 = fudge3.getFieldValue (org.fudgemsg.proto.tests.types.CustomEnum.class, fudge5);
               fudge4.add (fudge6);
             }
             catch (IllegalArgumentException e) {
@@ -732,7 +732,7 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
       for (org.fudgemsg.proto.tests.types.CustomEnum[] fudge1 : __CustomEnum) {
         final org.fudgemsg.MutableFudgeFieldContainer fudge2 = fudgeContext.newMessage ();
         for (org.fudgemsg.proto.tests.types.CustomEnum fudge3 : fudge1) {
-          fudge2.add (null, null, fudge3);
+          fudge2.add (null, null, fudge3.name ());
         }
         msg.add (_CUSTOMENUM_KEY, null, fudge2);
       }

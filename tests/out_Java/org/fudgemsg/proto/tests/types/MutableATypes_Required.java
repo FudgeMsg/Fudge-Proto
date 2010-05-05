@@ -235,7 +235,7 @@ public class MutableATypes_Required implements java.io.Serializable, ATypesBase 
       for (org.fudgemsg.FudgeField fudge3 : fudge1) {
         try {
           final org.fudgemsg.proto.tests.types.CustomEnum fudge4;
-          fudge4 = fudgeContext.fieldValueToObject (org.fudgemsg.proto.tests.types.CustomEnum.class, fudge3);
+          fudge4 = fudge1.getFieldValue (org.fudgemsg.proto.tests.types.CustomEnum.class, fudge3);
           fudge2.add (fudge4);
         }
         catch (IllegalArgumentException e) {
@@ -454,7 +454,7 @@ public class MutableATypes_Required implements java.io.Serializable, ATypesBase 
     if (__CustomEnum != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
       for (org.fudgemsg.proto.tests.types.CustomEnum fudge2 : __CustomEnum) {
-        fudge1.add (null, null, fudge2);
+        fudge1.add (null, null, fudge2.name ());
       }
       msg.add (_CUSTOMENUM_KEY, null, fudge1);
     }

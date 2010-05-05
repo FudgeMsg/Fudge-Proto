@@ -181,7 +181,7 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
       for (org.fudgemsg.FudgeField fudge2 : fudgeFields) {
         try {
           final org.fudgemsg.proto.tests.types.CustomEnum fudge3;
-          fudge3 = fudgeContext.fieldValueToObject (org.fudgemsg.proto.tests.types.CustomEnum.class, fudge2);
+          fudge3 = fudgeMsg.getFieldValue (org.fudgemsg.proto.tests.types.CustomEnum.class, fudge2);
           fudge1.add (fudge3);
         }
         catch (IllegalArgumentException e) {
@@ -524,7 +524,7 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
     }
     if (__CustomEnum != null)  {
       for (org.fudgemsg.proto.tests.types.CustomEnum fudge1 : __CustomEnum) {
-        msg.add (_CUSTOMENUM_KEY, null, fudge1);
+        msg.add (_CUSTOMENUM_KEY, null, fudge1.name ());
       }
     }
     if (__Message != null)  {

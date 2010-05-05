@@ -629,6 +629,11 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         value = value + ".getFudgeEncoding ()";
       }
       break;
+    case FudgeTypeDictionary.STRING_TYPE_ID :
+      if (type instanceof FieldType.EnumType) {
+        value = value + ".name ()";
+      }
+      break;
     case FudgeTypeDictionary.FUDGE_MSG_TYPE_ID :
       if (type instanceof FieldType.ArrayType) {
         final String temp1 = writer.localVariable (CLASS_MUTABLEFUDGEFIELDCONTAINER, true, "fudgeContext.newMessage ()");
