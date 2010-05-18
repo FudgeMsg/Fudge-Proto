@@ -14,3 +14,4 @@ tests/out_default/
 tests/out_proto/
 tests/output/
 /.fudge-proto-gitignore
+/MANIFEST.MF
