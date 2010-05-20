@@ -69,17 +69,9 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   private static final String CLASS_TOSTRINGBUILDER = org.apache.commons.lang.builder.ToStringBuilder.class.getName ();
   private static final String CLASS_TOSTRINGSTYLE = org.apache.commons.lang.builder.ToStringStyle.class.getName ();
   private static final String CLASS_SERIALIZABLE = java.io.Serializable.class.getName ();
-  
-  // JSR-310 types
-  private static final String CLASS_DATETIMEPROVIDER = javax.time.calendar.DateTimeProvider.class.getName ();
-  private static final String CLASS_DATEPROVIDER = javax.time.calendar.DateProvider.class.getName ();
-  private static final String CLASS_TIMEPROVIDER = javax.time.calendar.TimeProvider.class.getName ();
-  
-  // Non-JSR-310 types
-  //private static final String CLASS_DATETIMEPROVIDER = org.fudgemsg.types.FudgeDateTime.class.getName ();
-  //private static final String CLASS_DATEPROVIDER = org.fudgemsg.types.FudgeDate.class.getName ();
-  //private static final String CLASS_TIMEPROVIDER = org.fudgemsg.types.FudgeTime.class.getName ();
-  
+  private static final String CLASS_DATETIMEPROVIDER = "javax.time.calendar.DateTimeProvider";
+  private static final String CLASS_DATEPROVIDER = "javax.time.calendar.DateProvider";
+  private static final String CLASS_TIMEPROVIDER = "javax.time.calendar.TimeProvider";
   private static final String CLASS_FUDGESTRINGTYPE = org.fudgemsg.types.StringFieldType.class.getName ();
   
   private static final String VALUE_INDICATOR = CLASS_INDICATOR + ".INSTANCE";
