@@ -107,8 +107,7 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
   
   @Override
   public void writeEnumHeaderDeclaration (final Compiler.Context context, final EnumDefinition enumDefinition, final IndentWriter writer) throws IOException {
-    writer.write ("/* enum " + enumDefinition.getIdentifier () + " */");
-    writer.newLine ();
+    super.writeEnumHeaderDeclaration (context, enumDefinition, writer);
     writer.write ("typedef int " + getIdentifier (enumDefinition));
     endStmt (writer);
     int n = 0;
@@ -167,6 +166,7 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
   
   @Override
   public void writeEnumImplementationDeclaration (final Compiler.Context context, final EnumDefinition enumDefinition, final IndentWriter writer) throws IOException {
+    super.writeEnumImplementationDeclaration (context, enumDefinition, writer);
     if (enumDefinition.getType () == Type.INTEGER_ENCODED) return; // no conversion functions (macros)
     writer.write ("const char *" + getIdentifier (enumDefinition) + "_toFudgeEncoding (int value)");
     beginBlock (writer); // toFudgeEncoding
