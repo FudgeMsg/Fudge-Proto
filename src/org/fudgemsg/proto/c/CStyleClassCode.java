@@ -50,8 +50,12 @@ public abstract class CStyleClassCode extends DocumentedClassCode {
     _implementationExtension = implementationExtension;
   }
   
+  protected String getIdentifier (final Definition definition) {
+    return definition.getIdentifier ().replace ('.', '_');
+  }
+  
   protected String sourceFileName (final Definition definition, final String extension) {
-    return definition.getIdentifier ().replace ('.', '_') + extension;
+    return getIdentifier (definition) + extension;
   }
   
   protected File sourceFile (final Compiler.Context context, final Definition definition, final File targetPath, final String extension) throws IOException {

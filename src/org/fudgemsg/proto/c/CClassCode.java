@@ -18,13 +18,18 @@ package org.fudgemsg.proto.c;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
 import org.fudgemsg.proto.Compiler;
 import org.fudgemsg.proto.EnumDefinition;
 import org.fudgemsg.proto.FieldDefinition;
+import org.fudgemsg.proto.FieldType;
 import org.fudgemsg.proto.IndentWriter;
+import org.fudgemsg.proto.LiteralValue;
 import org.fudgemsg.proto.MessageDefinition;
 import org.fudgemsg.proto.TaxonomyDefinition;
+import org.fudgemsg.proto.EnumDefinition.Type;
+import org.fudgemsg.proto.LiteralValue.IntegerValue;
 
 /**
  * Code generator for the C Fudge implementation
@@ -87,9 +92,46 @@ import org.fudgemsg.proto.TaxonomyDefinition;
     comment (writer, "TODO class header constructor");
   }
   
+  private String getEnumValueIdentifier (final EnumDefinition enumDefinition, final String value) {
+    return value;
+  }
+  
+  private String getEnumValueLiteral (final Compiler.Context context, final String name, LiteralValue value) {
+    if (value instanceof LiteralValue.NullValue) {
+      value = ((LiteralValue.NullValue)value).inferString (name);
+    } else {
+      value = value.assignmentTo (context, FieldType.STRING_TYPE);
+    }
+    return getLiteral (value);
+  }
+  
   @Override
   public void writeEnumHeaderDeclaration (final Compiler.Context context, final EnumDefinition enumDefinition, final IndentWriter writer) throws IOException {
-    comment (writer, "TODO enum header declaration");
+    writer.write ("/* enum " + enumDefinition.getIdentifier () + " */");
+    writer.newLine ();
+    writer.write ("typedef int " + getIdentifier (enumDefinition));
+    endStmt (writer);
+    int n = 0;
+    for (Map.Entry<String,LiteralValue> entry : enumDefinition.getElements ()) {
+      if (enumDefinition.getType () == Type.INTEGER_ENCODED) {
+        n = (int)((IntegerValue)entry.getValue ()).get ();
+      } else {
+        n++;
+      }
+      writer.write ("#define " + getEnumValueIdentifier (enumDefinition, entry.getKey ()) + " " + n);
+      writer.newLine ();
+    }
+    if (enumDefinition.getType () == Type.INTEGER_ENCODED) {
+      writer.write ("#define " + getIdentifier (enumDefinition) + "_toFudgeEncoding(_v_) (_v_)");
+      writer.newLine ();
+      writer.write ("#define " + getIdentifier (enumDefinition) + "_fromFudgeEncoding(_v_) (_v_)");
+      writer.newLine ();
+    } else {
+      writer.write ("const char *" + getIdentifier (enumDefinition) + "_toFudgeEncoding (int value)");
+      endStmt (writer);
+      writer.write ("int " + getIdentifier (enumDefinition) + "_fromFudgeEncoding (const char *value)");
+      endStmt (writer);
+    }
   }
 
   @Override
@@ -125,7 +167,30 @@ import org.fudgemsg.proto.TaxonomyDefinition;
   
   @Override
   public void writeEnumImplementationDeclaration (final Compiler.Context context, final EnumDefinition enumDefinition, final IndentWriter writer) throws IOException {
-    comment (writer, "TODO enum implementation declaration");
+    if (enumDefinition.getType () == Type.INTEGER_ENCODED) return; // no conversion functions (macros)
+    writer.write ("const char *" + getIdentifier (enumDefinition) + "_toFudgeEncoding (int value)");
+    beginBlock (writer); // toFudgeEncoding
+    writer.write ("switch (value)");
+    beginBlock (writer); // switch
+    for (Map.Entry<String,LiteralValue> entry : enumDefinition.getElements ()) {
+      writer.write ("case " + getEnumValueIdentifier (enumDefinition, entry.getKey ()) + " : return " + getEnumValueLiteral (context, entry.getKey (), entry.getValue ()));
+      endStmt (writer);
+    }
+    writer.write ("default : return \"\"");
+    endStmt (writer);
+    endBlock (writer); // switch
+    endBlock (writer); // toFudgeEncoding
+    writer.write ("int " + getIdentifier (enumDefinition) + "_fromFudgeEncoding (const char *value)");
+    beginBlock (writer); // fromFudgeEncoding
+    writer.write ("if (!value) return -1");
+    endStmt (writer);
+    for (Map.Entry<String,LiteralValue> entry : enumDefinition.getElements ()) {
+      writer.write ("if (!strcmp (value, " + getEnumValueLiteral (context, entry.getKey (), entry.getValue ()) + ")) return " + getEnumValueIdentifier (enumDefinition, entry.getKey ()));
+      endStmt (writer);
+    }
+    writer.write ("return -1");
+    endStmt (writer);
+    endBlock (writer); // fromFudgeEncoding
   }
 
   @Override
