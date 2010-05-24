@@ -164,8 +164,17 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     jWriter.method (false, realTypeString (field, false), fieldMethodName (field, "get"), null);
     jWriter = beginBlock (jWriter); // accessor
     if (field.isRepeated ()) {
-      // repeated fields, return an imutable list
-      jWriter.returnInvoke (CLASS_COLLECTIONS + ".unmodifiableList", attribute, null);
+      // repeated fields, return an immutable list
+      if (!field.isRequired ()) {
+        writer.write ("if (" + attribute + " != null)");
+        beginBlock (writer);
+      }
+      writer.write ("return " + CLASS_COLLECTIONS + ".unmodifiableList (" + attribute + ")");
+      if (!field.isRequired ()) {
+        endStmt (writer);
+        endBlock (writer);
+        writer.write ("else return null");
+      }
     } else {
       // non-repeated fields, return attribute directly
       jWriter.returnVariable (attribute);

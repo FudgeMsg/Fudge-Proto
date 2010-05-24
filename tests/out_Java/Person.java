@@ -347,7 +347,10 @@ public class Person implements java.io.Serializable {
     return _email;
   }
   public java.util.List<Person.PhoneNumber> getPhone () {
-    return java.util.Collections.unmodifiableList (_phone);
+    if (_phone != null) {
+      return java.util.Collections.unmodifiableList (_phone);
+    }
+    else return null;
   }
   public boolean equals (final Object o) {
     if (o == this) return true;

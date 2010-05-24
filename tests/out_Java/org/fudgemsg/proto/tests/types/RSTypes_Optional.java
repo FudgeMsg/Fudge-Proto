@@ -1042,49 +1042,94 @@ public class RSTypes_Optional implements java.io.Serializable, RSTypesBase {
     return new Builder (fudgeMsg).build ();
   }
   public java.util.List<Boolean> get_Bool () {
-    return java.util.Collections.unmodifiableList (__Bool);
+    if (__Bool != null) {
+      return java.util.Collections.unmodifiableList (__Bool);
+    }
+    else return null;
   }
   public java.util.List<Byte> get_Byte () {
-    return java.util.Collections.unmodifiableList (__Byte);
+    if (__Byte != null) {
+      return java.util.Collections.unmodifiableList (__Byte);
+    }
+    else return null;
   }
   public java.util.List<Double> get_Double () {
-    return java.util.Collections.unmodifiableList (__Double);
+    if (__Double != null) {
+      return java.util.Collections.unmodifiableList (__Double);
+    }
+    else return null;
   }
   public java.util.List<Float> get_Float () {
-    return java.util.Collections.unmodifiableList (__Float);
+    if (__Float != null) {
+      return java.util.Collections.unmodifiableList (__Float);
+    }
+    else return null;
   }
   public java.util.List<Boolean> get_Indicator () {
-    return java.util.Collections.unmodifiableList (__Indicator);
+    if (__Indicator != null) {
+      return java.util.Collections.unmodifiableList (__Indicator);
+    }
+    else return null;
   }
   public java.util.List<Integer> get_Int () {
-    return java.util.Collections.unmodifiableList (__Int);
+    if (__Int != null) {
+      return java.util.Collections.unmodifiableList (__Int);
+    }
+    else return null;
   }
   public java.util.List<Long> get_Long () {
-    return java.util.Collections.unmodifiableList (__Long);
+    if (__Long != null) {
+      return java.util.Collections.unmodifiableList (__Long);
+    }
+    else return null;
   }
   public java.util.List<Short> get_Short () {
-    return java.util.Collections.unmodifiableList (__Short);
+    if (__Short != null) {
+      return java.util.Collections.unmodifiableList (__Short);
+    }
+    else return null;
   }
   public java.util.List<String> get_String () {
-    return java.util.Collections.unmodifiableList (__String);
+    if (__String != null) {
+      return java.util.Collections.unmodifiableList (__String);
+    }
+    else return null;
   }
   public java.util.List<org.fudgemsg.proto.tests.types.SubMessage> get_SubMessage () {
-    return java.util.Collections.unmodifiableList (__SubMessage);
+    if (__SubMessage != null) {
+      return java.util.Collections.unmodifiableList (__SubMessage);
+    }
+    else return null;
   }
   public java.util.List<org.fudgemsg.proto.tests.types.CustomEnum> get_CustomEnum () {
-    return java.util.Collections.unmodifiableList (__CustomEnum);
+    if (__CustomEnum != null) {
+      return java.util.Collections.unmodifiableList (__CustomEnum);
+    }
+    else return null;
   }
   public java.util.List<org.fudgemsg.FudgeFieldContainer> get_Message () {
-    return java.util.Collections.unmodifiableList (__Message);
+    if (__Message != null) {
+      return java.util.Collections.unmodifiableList (__Message);
+    }
+    else return null;
   }
   public java.util.List<javax.time.calendar.DateProvider> get_Date () {
-    return java.util.Collections.unmodifiableList (__Date);
+    if (__Date != null) {
+      return java.util.Collections.unmodifiableList (__Date);
+    }
+    else return null;
   }
   public java.util.List<javax.time.calendar.DateTimeProvider> get_DateTime () {
-    return java.util.Collections.unmodifiableList (__DateTime);
+    if (__DateTime != null) {
+      return java.util.Collections.unmodifiableList (__DateTime);
+    }
+    else return null;
   }
   public java.util.List<javax.time.calendar.TimeProvider> get_Time () {
-    return java.util.Collections.unmodifiableList (__Time);
+    if (__Time != null) {
+      return java.util.Collections.unmodifiableList (__Time);
+    }
+    else return null;
   }
   public boolean equals (final Object o) {
     if (o == this) return true;

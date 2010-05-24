@@ -205,7 +205,10 @@ public class SubClassA extends org.fudgemsg.proto.tests.inheritance.BaseClassA i
     return _scA_o;
   }
   public java.util.List<Integer> getScA_r () {
-    return java.util.Collections.unmodifiableList (_scA_r);
+    if (_scA_r != null) {
+      return java.util.Collections.unmodifiableList (_scA_r);
+    }
+    else return null;
   }
   public int getScA_q () {
     return _scA_q;

@@ -199,7 +199,10 @@ public class BaseClassA implements java.io.Serializable {
     return _bcA_o;
   }
   public java.util.List<Integer> getBcA_r () {
-    return java.util.Collections.unmodifiableList (_bcA_r);
+    if (_bcA_r != null) {
+      return java.util.Collections.unmodifiableList (_bcA_r);
+    }
+    else return null;
   }
   public int getBcA_q () {
     return _bcA_q;

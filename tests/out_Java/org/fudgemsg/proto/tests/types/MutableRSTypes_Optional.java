@@ -567,7 +567,10 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
     return new MutableRSTypes_Optional (fudgeMsg);
   }
   public java.util.List<Boolean> get_Bool () {
-    return java.util.Collections.unmodifiableList (__Bool);
+    if (__Bool != null) {
+      return java.util.Collections.unmodifiableList (__Bool);
+    }
+    else return null;
   }
   public void set_Bool (Boolean _Bool) {
     if (_Bool == null) __Bool = null;
@@ -593,7 +596,10 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
     __Bool.add (_Bool);
   }
   public java.util.List<Byte> get_Byte () {
-    return java.util.Collections.unmodifiableList (__Byte);
+    if (__Byte != null) {
+      return java.util.Collections.unmodifiableList (__Byte);
+    }
+    else return null;
   }
   public void set_Byte (Byte _Byte) {
     if (_Byte == null) __Byte = null;
@@ -619,7 +625,10 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
     __Byte.add (_Byte);
   }
   public java.util.List<Double> get_Double () {
-    return java.util.Collections.unmodifiableList (__Double);
+    if (__Double != null) {
+      return java.util.Collections.unmodifiableList (__Double);
+    }
+    else return null;
   }
   public void set_Double (Double _Double) {
     if (_Double == null) __Double = null;
@@ -645,7 +654,10 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
     __Double.add (_Double);
   }
   public java.util.List<Float> get_Float () {
-    return java.util.Collections.unmodifiableList (__Float);
+    if (__Float != null) {
+      return java.util.Collections.unmodifiableList (__Float);
+    }
+    else return null;
   }
   public void set_Float (Float _Float) {
     if (_Float == null) __Float = null;
@@ -671,7 +683,10 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
     __Float.add (_Float);
   }
   public java.util.List<Boolean> get_Indicator () {
-    return java.util.Collections.unmodifiableList (__Indicator);
+    if (__Indicator != null) {
+      return java.util.Collections.unmodifiableList (__Indicator);
+    }
+    else return null;
   }
   public void set_Indicator (Boolean _Indicator) {
     if (_Indicator == null) __Indicator = null;
@@ -697,7 +712,10 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
     __Indicator.add (_Indicator);
   }
   public java.util.List<Integer> get_Int () {
-    return java.util.Collections.unmodifiableList (__Int);
+    if (__Int != null) {
+      return java.util.Collections.unmodifiableList (__Int);
+    }
+    else return null;
   }
   public void set_Int (Integer _Int) {
     if (_Int == null) __Int = null;
@@ -723,7 +741,10 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
     __Int.add (_Int);
   }
   public java.util.List<Long> get_Long () {
-    return java.util.Collections.unmodifiableList (__Long);
+    if (__Long != null) {
+      return java.util.Collections.unmodifiableList (__Long);
+    }
+    else return null;
   }
   public void set_Long (Long _Long) {
     if (_Long == null) __Long = null;
@@ -749,7 +770,10 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
     __Long.add (_Long);
   }
   public java.util.List<Short> get_Short () {
-    return java.util.Collections.unmodifiableList (__Short);
+    if (__Short != null) {
+      return java.util.Collections.unmodifiableList (__Short);
+    }
+    else return null;
   }
   public void set_Short (Short _Short) {
     if (_Short == null) __Short = null;
@@ -775,7 +799,10 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
     __Short.add (_Short);
   }
   public java.util.List<String> get_String () {
-    return java.util.Collections.unmodifiableList (__String);
+    if (__String != null) {
+      return java.util.Collections.unmodifiableList (__String);
+    }
+    else return null;
   }
   public void set_String (String _String) {
     if (_String == null) __String = null;
@@ -801,7 +828,10 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
     __String.add (_String);
   }
   public java.util.List<org.fudgemsg.proto.tests.types.SubMessage> get_SubMessage () {
-    return java.util.Collections.unmodifiableList (__SubMessage);
+    if (__SubMessage != null) {
+      return java.util.Collections.unmodifiableList (__SubMessage);
+    }
+    else return null;
   }
   public void set_SubMessage (org.fudgemsg.proto.tests.types.SubMessage _SubMessage) {
     if (_SubMessage == null) __SubMessage = null;
@@ -828,7 +858,10 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
     __SubMessage.add (_SubMessage);
   }
   public java.util.List<org.fudgemsg.proto.tests.types.CustomEnum> get_CustomEnum () {
-    return java.util.Collections.unmodifiableList (__CustomEnum);
+    if (__CustomEnum != null) {
+      return java.util.Collections.unmodifiableList (__CustomEnum);
+    }
+    else return null;
   }
   public void set_CustomEnum (org.fudgemsg.proto.tests.types.CustomEnum _CustomEnum) {
     if (_CustomEnum == null) __CustomEnum = null;
@@ -854,7 +887,10 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
     __CustomEnum.add (_CustomEnum);
   }
   public java.util.List<org.fudgemsg.FudgeFieldContainer> get_Message () {
-    return java.util.Collections.unmodifiableList (__Message);
+    if (__Message != null) {
+      return java.util.Collections.unmodifiableList (__Message);
+    }
+    else return null;
   }
   public void set_Message (org.fudgemsg.FudgeFieldContainer _Message) {
     if (_Message == null) __Message = null;
@@ -880,7 +916,10 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
     __Message.add (_Message);
   }
   public java.util.List<javax.time.calendar.DateProvider> get_Date () {
-    return java.util.Collections.unmodifiableList (__Date);
+    if (__Date != null) {
+      return java.util.Collections.unmodifiableList (__Date);
+    }
+    else return null;
   }
   public void set_Date (javax.time.calendar.DateProvider _Date) {
     if (_Date == null) __Date = null;
@@ -906,7 +945,10 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
     __Date.add (_Date);
   }
   public java.util.List<javax.time.calendar.DateTimeProvider> get_DateTime () {
-    return java.util.Collections.unmodifiableList (__DateTime);
+    if (__DateTime != null) {
+      return java.util.Collections.unmodifiableList (__DateTime);
+    }
+    else return null;
   }
   public void set_DateTime (javax.time.calendar.DateTimeProvider _DateTime) {
     if (_DateTime == null) __DateTime = null;
@@ -932,7 +974,10 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
     __DateTime.add (_DateTime);
   }
   public java.util.List<javax.time.calendar.TimeProvider> get_Time () {
-    return java.util.Collections.unmodifiableList (__Time);
+    if (__Time != null) {
+      return java.util.Collections.unmodifiableList (__Time);
+    }
+    else return null;
   }
   public void set_Time (javax.time.calendar.TimeProvider _Time) {
     if (_Time == null) __Time = null;

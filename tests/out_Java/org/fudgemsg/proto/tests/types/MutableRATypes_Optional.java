@@ -793,7 +793,10 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
     return new MutableRATypes_Optional (fudgeMsg);
   }
   public java.util.List<boolean[]> get_Bool () {
-    return java.util.Collections.unmodifiableList (__Bool);
+    if (__Bool != null) {
+      return java.util.Collections.unmodifiableList (__Bool);
+    }
+    else return null;
   }
   public void set_Bool (boolean[] _Bool) {
     if (_Bool == null) __Bool = null;
@@ -820,7 +823,10 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
     __Bool.add (java.util.Arrays.copyOf (_Bool, _Bool.length));
   }
   public java.util.List<byte[]> get_Byte () {
-    return java.util.Collections.unmodifiableList (__Byte);
+    if (__Byte != null) {
+      return java.util.Collections.unmodifiableList (__Byte);
+    }
+    else return null;
   }
   public void set_Byte (byte[] _Byte) {
     if (_Byte == null) __Byte = null;
@@ -847,7 +853,10 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
     __Byte.add (java.util.Arrays.copyOf (_Byte, _Byte.length));
   }
   public java.util.List<double[]> get_Double () {
-    return java.util.Collections.unmodifiableList (__Double);
+    if (__Double != null) {
+      return java.util.Collections.unmodifiableList (__Double);
+    }
+    else return null;
   }
   public void set_Double (double[] _Double) {
     if (_Double == null) __Double = null;
@@ -874,7 +883,10 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
     __Double.add (java.util.Arrays.copyOf (_Double, _Double.length));
   }
   public java.util.List<float[]> get_Float () {
-    return java.util.Collections.unmodifiableList (__Float);
+    if (__Float != null) {
+      return java.util.Collections.unmodifiableList (__Float);
+    }
+    else return null;
   }
   public void set_Float (float[] _Float) {
     if (_Float == null) __Float = null;
@@ -901,7 +913,10 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
     __Float.add (java.util.Arrays.copyOf (_Float, _Float.length));
   }
   public java.util.List<boolean[]> get_Indicator () {
-    return java.util.Collections.unmodifiableList (__Indicator);
+    if (__Indicator != null) {
+      return java.util.Collections.unmodifiableList (__Indicator);
+    }
+    else return null;
   }
   public void set_Indicator (boolean[] _Indicator) {
     if (_Indicator == null) __Indicator = null;
@@ -928,7 +943,10 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
     __Indicator.add (java.util.Arrays.copyOf (_Indicator, _Indicator.length));
   }
   public java.util.List<int[]> get_Int () {
-    return java.util.Collections.unmodifiableList (__Int);
+    if (__Int != null) {
+      return java.util.Collections.unmodifiableList (__Int);
+    }
+    else return null;
   }
   public void set_Int (int[] _Int) {
     if (_Int == null) __Int = null;
@@ -955,7 +973,10 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
     __Int.add (java.util.Arrays.copyOf (_Int, _Int.length));
   }
   public java.util.List<long[]> get_Long () {
-    return java.util.Collections.unmodifiableList (__Long);
+    if (__Long != null) {
+      return java.util.Collections.unmodifiableList (__Long);
+    }
+    else return null;
   }
   public void set_Long (long[] _Long) {
     if (_Long == null) __Long = null;
@@ -982,7 +1003,10 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
     __Long.add (java.util.Arrays.copyOf (_Long, _Long.length));
   }
   public java.util.List<short[]> get_Short () {
-    return java.util.Collections.unmodifiableList (__Short);
+    if (__Short != null) {
+      return java.util.Collections.unmodifiableList (__Short);
+    }
+    else return null;
   }
   public void set_Short (short[] _Short) {
     if (_Short == null) __Short = null;
@@ -1009,7 +1033,10 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
     __Short.add (java.util.Arrays.copyOf (_Short, _Short.length));
   }
   public java.util.List<String[]> get_String () {
-    return java.util.Collections.unmodifiableList (__String);
+    if (__String != null) {
+      return java.util.Collections.unmodifiableList (__String);
+    }
+    else return null;
   }
   public void set_String (String[] _String) {
     if (_String == null) __String = null;
@@ -1036,7 +1063,10 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
     __String.add (java.util.Arrays.copyOf (_String, _String.length));
   }
   public java.util.List<org.fudgemsg.proto.tests.types.SubMessage[]> get_SubMessage () {
-    return java.util.Collections.unmodifiableList (__SubMessage);
+    if (__SubMessage != null) {
+      return java.util.Collections.unmodifiableList (__SubMessage);
+    }
+    else return null;
   }
   public void set_SubMessage (org.fudgemsg.proto.tests.types.SubMessage[] _SubMessage) {
     if (_SubMessage == null) __SubMessage = null;
@@ -1069,7 +1099,10 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
     __SubMessage.add (_SubMessage);
   }
   public java.util.List<org.fudgemsg.proto.tests.types.CustomEnum[]> get_CustomEnum () {
-    return java.util.Collections.unmodifiableList (__CustomEnum);
+    if (__CustomEnum != null) {
+      return java.util.Collections.unmodifiableList (__CustomEnum);
+    }
+    else return null;
   }
   public void set_CustomEnum (org.fudgemsg.proto.tests.types.CustomEnum[] _CustomEnum) {
     if (_CustomEnum == null) __CustomEnum = null;
@@ -1096,7 +1129,10 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
     __CustomEnum.add (java.util.Arrays.copyOf (_CustomEnum, _CustomEnum.length));
   }
   public java.util.List<org.fudgemsg.FudgeFieldContainer[]> get_Message () {
-    return java.util.Collections.unmodifiableList (__Message);
+    if (__Message != null) {
+      return java.util.Collections.unmodifiableList (__Message);
+    }
+    else return null;
   }
   public void set_Message (org.fudgemsg.FudgeFieldContainer[] _Message) {
     if (_Message == null) __Message = null;
@@ -1123,7 +1159,10 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
     __Message.add (java.util.Arrays.copyOf (_Message, _Message.length));
   }
   public java.util.List<javax.time.calendar.DateProvider[]> get_Date () {
-    return java.util.Collections.unmodifiableList (__Date);
+    if (__Date != null) {
+      return java.util.Collections.unmodifiableList (__Date);
+    }
+    else return null;
   }
   public void set_Date (javax.time.calendar.DateProvider[] _Date) {
     if (_Date == null) __Date = null;
@@ -1150,7 +1189,10 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
     __Date.add (java.util.Arrays.copyOf (_Date, _Date.length));
   }
   public java.util.List<javax.time.calendar.DateTimeProvider[]> get_DateTime () {
-    return java.util.Collections.unmodifiableList (__DateTime);
+    if (__DateTime != null) {
+      return java.util.Collections.unmodifiableList (__DateTime);
+    }
+    else return null;
   }
   public void set_DateTime (javax.time.calendar.DateTimeProvider[] _DateTime) {
     if (_DateTime == null) __DateTime = null;
@@ -1177,7 +1219,10 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
     __DateTime.add (java.util.Arrays.copyOf (_DateTime, _DateTime.length));
   }
   public java.util.List<javax.time.calendar.TimeProvider[]> get_Time () {
-    return java.util.Collections.unmodifiableList (__Time);
+    if (__Time != null) {
+      return java.util.Collections.unmodifiableList (__Time);
+    }
+    else return null;
   }
   public void set_Time (javax.time.calendar.TimeProvider[] _Time) {
     if (_Time == null) __Time = null;
