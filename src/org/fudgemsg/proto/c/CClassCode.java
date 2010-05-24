@@ -93,6 +93,7 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
   }
   
   private String getEnumValueIdentifier (final EnumDefinition enumDefinition, final String value) {
+    // This is so that we can go to fully qualified enum values if needed
     return value;
   }
   
@@ -108,29 +109,44 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
   @Override
   public void writeEnumHeaderDeclaration (final Compiler.Context context, final EnumDefinition enumDefinition, final IndentWriter writer) throws IOException {
     super.writeEnumHeaderDeclaration (context, enumDefinition, writer);
-    writer.write ("typedef int " + getIdentifier (enumDefinition));
-    endStmt (writer);
-    int n = 0;
+    writer.write ("enum " + getIdentifier (enumDefinition));
+    beginBlock (writer);
+    boolean first = true;
     for (Map.Entry<String,LiteralValue> entry : enumDefinition.getElements ()) {
-      if (enumDefinition.getType () == Type.INTEGER_ENCODED) {
-        n = (int)((IntegerValue)entry.getValue ()).get ();
+      if (first) {
+        first = false;
       } else {
-        n++;
+        writer.write (",");
+        writer.newLine ();
       }
-      writer.write ("#define " + getEnumValueIdentifier (enumDefinition, entry.getKey ()) + " " + n);
-      writer.newLine ();
+      writer.write (getEnumValueIdentifier (enumDefinition, entry.getKey ()));
+      if (enumDefinition.getType () == Type.INTEGER_ENCODED) {
+        writer.write (" = " + ((IntegerValue)entry.getValue ()).get ());
+      }
     }
+    endBlock (writer);
+    endStmt (writer);
     if (enumDefinition.getType () == Type.INTEGER_ENCODED) {
-      writer.write ("#define " + getIdentifier (enumDefinition) + "_toFudgeEncoding(_v_) (_v_)");
+      writer.write ("#define " + getIdentifier (enumDefinition) + "_toFudgeEncoding(_v_) ((int)(_v_))");
       writer.newLine ();
-      writer.write ("#define " + getIdentifier (enumDefinition) + "_fromFudgeEncoding(_v_) (_v_)");
+      writer.write ("#define " + getIdentifier (enumDefinition) + "_fromFudgeEncoding(_v_) ((" + getIdentifier (enumDefinition) + ")(_v_))");
       writer.newLine ();
     } else {
-      writer.write ("const char *" + getIdentifier (enumDefinition) + "_toFudgeEncoding (int value)");
+      writer.write ("const char *" + getIdentifier (enumDefinition) + "_toFudgeEncoding (" + getIdentifier (enumDefinition) + " value)");
       endStmt (writer);
-      writer.write ("int " + getIdentifier (enumDefinition) + "_fromFudgeEncoding (const char *value)");
+      writer.write (getIdentifier (enumDefinition) + " " + getIdentifier (enumDefinition) + "_fromFudgeEncoding (const char *value)");
       endStmt (writer);
     }
+    writer.write ("#ifdef FUDGE_NO_NAMESPACE");
+    writer.newLine ();
+    writer.write ("#define " + enumDefinition.getName () + " " + getIdentifier (enumDefinition));
+    writer.newLine ();
+    writer.write ("#define " + enumDefinition.getName () + "_toFudgeEncoding " + getIdentifier (enumDefinition) + "_toFudgeEncoding");
+    writer.newLine ();
+    writer.write ("#define " + enumDefinition.getName () + "_fromFudgeEncoding " + getIdentifier (enumDefinition) + "_fromFudgeEncoding");
+    writer.newLine ();
+    writer.write ("#endif /* ifndef FUDGE_NO_NAMESPACE */");
+    writer.newLine ();
   }
 
   @Override
@@ -168,7 +184,7 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
   public void writeEnumImplementationDeclaration (final Compiler.Context context, final EnumDefinition enumDefinition, final IndentWriter writer) throws IOException {
     super.writeEnumImplementationDeclaration (context, enumDefinition, writer);
     if (enumDefinition.getType () == Type.INTEGER_ENCODED) return; // no conversion functions (macros)
-    writer.write ("const char *" + getIdentifier (enumDefinition) + "_toFudgeEncoding (int value)");
+    writer.write ("const char *" + getIdentifier (enumDefinition) + "_toFudgeEncoding (" + getIdentifier (enumDefinition) + " value)");
     beginBlock (writer); // toFudgeEncoding
     writer.write ("switch (value)");
     beginBlock (writer); // switch
@@ -180,7 +196,7 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
     endStmt (writer);
     endBlock (writer); // switch
     endBlock (writer); // toFudgeEncoding
-    writer.write ("int " + getIdentifier (enumDefinition) + "_fromFudgeEncoding (const char *value)");
+    writer.write (getIdentifier (enumDefinition) + " " + getIdentifier (enumDefinition) + "_fromFudgeEncoding (const char *value)");
     beginBlock (writer); // fromFudgeEncoding
     writer.write ("if (!value) return -1");
     endStmt (writer);
