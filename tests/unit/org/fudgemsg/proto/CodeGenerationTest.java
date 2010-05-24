@@ -17,6 +17,7 @@ package org.fudgemsg.proto;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -134,6 +135,8 @@ public class CodeGenerationTest extends DefaultSettings {
       args.add ("-Xequals");
       args.add ("-XhashCode");
       args.add ("-XtoString");
+      args.add ("-XfileHeaderFile=" + CompilerTest.getTestPath ("unit") + File.separatorChar + "fileheader.java.include");
+      args.add ("-XfileFooterFile=" + CompilerTest.getTestPath ("unit") + File.separatorChar + "filefooter.java.include");
     }
   }
   

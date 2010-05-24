@@ -1,4 +1,8 @@
 // Automatically created - do not modify
+/* fileheader.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */
 // Created from enums.proto:26(7)
 package org.fudgemsg.proto.tests.enums;
 public enum StringAliasAssumed {
@@ -21,3 +25,7 @@ public enum StringAliasAssumed {
     throw new IllegalArgumentException ("field is not a StringAliasAssumed - invalid value '" + fudgeEncoding + "'");
   }
 }
+/* filefooter.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */

@@ -1,4 +1,8 @@
 // Automatically created - do not modify
+/* fileheader.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */
 // Created from taxonomy.proto:5(10)
 package org.fudgemsg.proto.tests.taxon;
 public class Fruit extends org.fudgemsg.taxon.MapFudgeTaxonomy {
@@ -13,3 +17,7 @@ public class Fruit extends org.fudgemsg.taxon.MapFudgeTaxonomy {
     super (new int[] { VAL_APPLE, VAL_BANANA, VAL_PEAR }, new String[] { STR_APPLE, STR_BANANA, STR_PEAR });
   }
 }
+/* filefooter.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */

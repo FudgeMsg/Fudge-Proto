@@ -85,6 +85,8 @@
 		<mkdir dir="${tests.dir}/out_ant/reqmut" />
 		<fudgeproto srcdir="${tests.dir}/proto" destdir="${tests.dir}/out_ant/reqmut" verbose="${build.verbose}" fudgeContext="org.fudgemsg.FudgeContext.GLOBAL_DEFAULT" fieldsMutable="true" fieldsRequired="true" gitIgnore="true">
 			<exclude name="errors/*" />
+			<fileHeader>// AntTask inserted File header</fileHeader>
+			<fileFooter>// AntTask inserted File footer</fileFooter>
 		</fudgeproto>
 		<javac srcdir="${tests.dir}/out_ant/reqmut" destdir="${tests.dir}/out_ant/reqmut" classpathref="fudge.ant.path.id" debug="${build.debug}" optimize="${build.optimize}" verbose="${build.verbose}" listfiles="${build.listfiles}" />
 	</target>
@@ -92,6 +94,8 @@
 		<mkdir dir="${tests.dir}/out_ant/reqro" />
 		<fudgeproto srcdir="${tests.dir}/proto" destdir="${tests.dir}/out_ant/reqro" verbose="${build.verbose}" fudgeContext="org.fudgemsg.FudgeContext.GLOBAL_DEFAULT" fieldsMutable="false" fieldsRequired="true" gitIgnore="true">
 			<exclude name="errors/*" />
+			<fileHeader>// AntTask inserted File header</fileHeader>
+                        <fileFooter>// AntTask inserted File footer</fileFooter>
 		</fudgeproto>
 		<javac srcdir="${tests.dir}/out_ant/reqro" destdir="${tests.dir}/out_ant/reqro" classpathref="fudge.ant.path.id" debug="${build.debug}" optimize="${build.optimize}" verbose="${build.verbose}" listfiles="${build.listfiles}" />
 	</target>
@@ -99,6 +103,8 @@
 		<mkdir dir="${tests.dir}/out_ant/optmut" />
 		<fudgeproto srcdir="${tests.dir}/proto" destdir="${tests.dir}/out_ant/optmut" verbose="${build.verbose}" fudgeContext="org.fudgemsg.FudgeContext.GLOBAL_DEFAULT" fieldsMutable="true" fieldsRequired="false" gitIgnore="true">
 			<exclude name="errors/*" />
+			<fileHeader>// AntTask inserted File header</fileHeader>
+                        <fileFooter>// AntTask inserted File footer</fileFooter>
 		</fudgeproto>
 		<javac srcdir="${tests.dir}/out_ant/optmut" destdir="${tests.dir}/out_ant/optmut" classpathref="fudge.ant.path.id" debug="${build.debug}" optimize="${build.optimize}" verbose="${build.verbose}" listfiles="${build.listfiles}" />
 	</target>
@@ -106,6 +112,8 @@
 		<mkdir dir="${tests.dir}/out_ant/optro" />
 		<fudgeproto srcdir="${tests.dir}/proto" destdir="${tests.dir}/out_ant/optro" verbose="${build.verbose}" fudgeContext="org.fudgemsg.FudgeContext.GLOBAL_DEFAULT" fieldsMutable="false" fieldsRequired="false" gitIgnore="true">
 			<exclude name="errors/*" />
+			<fileHeader>// AntTask inserted File header</fileHeader>
+                        <fileFooter>// AntTask inserted File footer</fileFooter>
 		</fudgeproto>
 		<javac srcdir="${tests.dir}/out_ant/optro" destdir="${tests.dir}/out_ant/optro" classpathref="fudge.ant.path.id" debug="${build.debug}" optimize="${build.optimize}" verbose="${build.verbose}" listfiles="${build.listfiles}" />
 	</target>

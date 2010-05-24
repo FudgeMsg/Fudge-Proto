@@ -18,6 +18,7 @@ package org.fudgemsg.proto;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
@@ -39,6 +40,8 @@ import org.apache.tools.ant.types.PatternSet;
  *   <li>fieldsMutable - true if fields are mutable by default, false otherwise
  *   <li>fieldsRequired - true if fields are required by default, false otherwise
  *   <li>gitIgnore - true to write a .gitignore file for generated files, defaults to false
+ *   <li>fileHeader - filename to prepend data to generated files, e.g. a copyright statement
+ *   <li>fileFooter - filename to append data to generated files, e.g. a copyright statement
  * </ul>  
  * <p><code>&lt;exclude&gt;</code> entries can be included for filename patterns to be ignored.</p>
  * 
@@ -73,6 +76,12 @@ public class AntTask extends Task {
   private Boolean _fieldsRequired = null;
   
   private boolean _gitIgnore = false;
+  
+  private AtomicReference<String> _fileHeader = null;
+  private String _fileHeaderFile = null;
+  
+  private AtomicReference<String> _fileFooter = null;
+  private String _fileFooterFile = null;
   
   public void setSrcdir (final String srcdir) {
     _srcdir = srcdir;
@@ -128,6 +137,32 @@ public class AntTask extends Task {
   
   public void setGitIgnore (final boolean gitIgnore) {
     _gitIgnore = gitIgnore;
+  }
+  
+  public void setFileHeader (final String filename) {
+    _fileHeaderFile = filename;
+  }
+  
+  public static class TextBlock {
+    private final AtomicReference<String> _ref;
+    public TextBlock (final AtomicReference<String> ref) {
+      _ref = ref;
+    }
+    public void addText (final String text) {
+      _ref.set (text);
+    }
+  }
+  
+  public TextBlock createFileHeader () {
+    return new TextBlock (_fileHeader = new AtomicReference<String> ());
+  }
+  
+  public void setFileFooter (final String filename) {
+    _fileFooterFile = filename;
+  }
+  
+  public TextBlock createFileFooter () {
+    return new TextBlock (_fileFooter = new AtomicReference<String> ());
   }
   
   private int findFiles (final File src, File dest, final String srcExt, final String destExt, final List<String> names, final String basePath) {
@@ -214,6 +249,16 @@ public class AntTask extends Task {
     if (_hashCode) args.add ("-XhashCode");
     if (_fudgeContext != null) args.add ("-XfudgeContext=" + _fudgeContext);
     if (_gitIgnore) args.add ("-XgitIgnore");
+    if (_fileHeader != null) {
+      args.add ("-XfileHeader=" + _fileHeader.get ());
+    } else if (_fileHeaderFile != null) {
+      args.add ("-XfileHeaderFile=" + _fileHeaderFile);
+    }
+    if (_fileFooter != null) {
+      args.add ("-XfileFooter=" + _fileFooter.get ());
+    } else if (_fileFooterFile != null) {
+      args.add ("-XfileFooterFile=" + _fileFooterFile);
+    }
     if (_verbose) {
       if (_listfiles) {
         args.add ("-vvv");

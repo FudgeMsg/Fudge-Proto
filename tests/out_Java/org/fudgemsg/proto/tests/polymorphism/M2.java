@@ -1,4 +1,8 @@
 // Automatically created - do not modify
+/* fileheader.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */
 // Created from polymorphism.proto:9(10)
 package org.fudgemsg.proto.tests.polymorphism;
 public class M2 extends org.fudgemsg.proto.tests.polymorphism.M1 implements java.io.Serializable {
@@ -88,3 +92,7 @@ public class M2 extends org.fudgemsg.proto.tests.polymorphism.M1 implements java
     return org.apache.commons.lang.builder.ToStringBuilder.reflectionToString(this, org.apache.commons.lang.builder.ToStringStyle.SHORT_PREFIX_STYLE);
   }
 }
+/* filefooter.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */

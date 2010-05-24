@@ -1,4 +1,8 @@
 // Automatically created - do not modify
+/* fileheader.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */
 // Created from Literals.proto:3(8)
 public class Literals implements java.io.Serializable {
   private static final long serialVersionUID = 2215538162932658061l;
@@ -660,3 +664,7 @@ public class Literals implements java.io.Serializable {
     return org.apache.commons.lang.builder.ToStringBuilder.reflectionToString(this, org.apache.commons.lang.builder.ToStringStyle.SHORT_PREFIX_STYLE);
   }
 }
+/* filefooter.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */

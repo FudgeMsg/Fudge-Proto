@@ -1,4 +1,8 @@
 // Automatically created - do not modify
+/* fileheader.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */
 // Created from simple.proto:15(8)
 public class Person implements java.io.Serializable {
   private static final long serialVersionUID = -1511890345953819044l;
@@ -389,3 +393,7 @@ public class Person implements java.io.Serializable {
     return org.apache.commons.lang.builder.ToStringBuilder.reflectionToString(this, org.apache.commons.lang.builder.ToStringStyle.SHORT_PREFIX_STYLE);
   }
 }
+/* filefooter.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */

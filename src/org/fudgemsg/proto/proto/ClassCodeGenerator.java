@@ -16,15 +16,19 @@
 
 package org.fudgemsg.proto.proto;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.fudgemsg.FudgeRuntimeIOException;
 import org.fudgemsg.proto.CodeGenerator;
 import org.fudgemsg.proto.Compiler;
 import org.fudgemsg.proto.Definition;
@@ -51,9 +55,26 @@ public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerato
   private boolean _generateHash = false;
   private boolean _generateString = false;
   private boolean _writeGitIgnore = false;
+  private String[] _fileHeader = null;
+  private String[] _fileFooter = null;
   
   protected ClassCodeGenerator (final ClassCode delegate) {
     super (delegate);
+  }
+  
+  private String[] fileGetContents (final String fileName) throws FudgeRuntimeIOException {
+    try {
+      final ArrayList<String> content = new ArrayList<String> ();
+      final BufferedReader r = new BufferedReader (new FileReader (fileName));
+      String line;
+      while ((line = r.readLine ()) != null) {
+        content.add (line);
+      }
+      r.close ();
+      return content.toArray (new String[content.size ()]);
+    } catch (IOException e) {
+      throw new FudgeRuntimeIOException (e);
+    }
   }
   
   private Set<File> getHeaderFilesOpen (final Compiler.Context context) {
@@ -131,6 +152,8 @@ public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerato
       final IndentWriter writer = createFile (context, header);
       filesOpen.add (header);
       writeHeaderFileHeader (context, header, writer);
+      // User file headers must go after the initial file header in case there is some special setup/formatting needed for the language format
+      writeFileText (_fileHeader, writer);
       return writer;
     }
   }
@@ -148,7 +171,18 @@ public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerato
       final IndentWriter writer = createFile (context, implementation);
       filesOpen.add (implementation);
       writeImplementationFileHeader (context, implementation, writer);
+      // User file headers must go after the initial file header in case there is some special setup/formatting needed for the target language
+      writeFileText (_fileHeader, writer);
       return writer;
+    }
+  }
+  
+  private void writeFileText (final String[] text, final IndentWriter writer) throws IOException {
+    if (text != null) {
+      for (String line : text) {
+        writer.write (line);
+        writer.newLine ();
+      }
     }
   }
   
@@ -157,6 +191,8 @@ public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerato
     for (File file : getImplementationFilesOpen (context)) {
       final IndentWriter writer = appendFile (file);
       try {
+        // User file footers must come before the system footer in case there is some special setup/formatting needed for the target language
+        writeFileText (_fileFooter, writer);
         writeImplementationFileFooter (context, file, writer);
         count++;
       } finally {
@@ -171,6 +207,8 @@ public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerato
     for (File file : getHeaderFilesOpen (context)) {
       final IndentWriter writer = appendFile (file);
       try {
+        // User file footers must come before the system footer in case there is some special setup/formatting needed for the target language
+        writeFileText (_fileFooter, writer);
         writeHeaderFileFooter (context, file, writer);
         count++;
       } finally {
@@ -381,6 +419,22 @@ public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerato
   
   @Override
   public void setOption (final String option, final String value) {
+    if (option.equals ("fileHeader")) {
+      _fileHeader = new String[] { value };
+      return;
+    }
+    if (option.equals ("fileHeaderFile")) {
+      _fileHeader = fileGetContents (value);
+      return;
+    }
+    if (option.equals ("fileFooter")) {
+      _fileFooter = new String[] { value };
+      return;
+    }
+    if (option.equals ("fileFooterFile")) {
+      _fileFooter = fileGetContents (value);
+      return;
+    }
     throw new IllegalArgumentException ("unknown option '" + option + "'");
   }
   

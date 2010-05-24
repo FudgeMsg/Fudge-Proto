@@ -1,4 +1,8 @@
 // Automatically created - do not modify
+/* fileheader.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */
 // Created from taxonomy.proto:11(10)
 package org.fudgemsg.proto.tests.taxon;
 public class ImportTest extends org.fudgemsg.taxon.MapFudgeTaxonomy {
@@ -51,3 +55,7 @@ public class ImportTest extends org.fudgemsg.taxon.MapFudgeTaxonomy {
     super (new int[] { VAL_nullDouble, VAL_zeroDouble, VAL_posDouble, VAL_negDouble, VAL_piDouble, VAL_bigDouble, VAL_tinyDouble, VAL_nullFloat, VAL_zeroFloat, VAL_posFloat, VAL_negFloat, VAL_piFloat, VAL_bigFloat, VAL_tinyFloat, VAL_nullInt, VAL_zeroInt, VAL_posInt, VAL_negInt, VAL_nullString, VAL_emptyString, VAL_simpleString, VAL_escapeString }, new String[] { STR_nullDouble, STR_zeroDouble, STR_posDouble, STR_negDouble, STR_piDouble, STR_bigDouble, STR_tinyDouble, STR_nullFloat, STR_zeroFloat, STR_posFloat, STR_negFloat, STR_piFloat, STR_bigFloat, STR_tinyFloat, STR_nullInt, STR_zeroInt, STR_posInt, STR_negInt, STR_nullString, STR_emptyString, STR_simpleString, STR_escapeString });
   }
 }
+/* filefooter.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */

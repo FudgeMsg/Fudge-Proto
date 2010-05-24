@@ -1,4 +1,8 @@
 // Automatically created - do not modify
+/* fileheader.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */
 // Created from extern.proto:5(10)
 package org.fudgemsg.proto.tests.extern;
 public class ExtendsExtern extends org.fudgemsg.proto.tests.ExternalMessage implements java.io.Serializable {
@@ -91,3 +95,7 @@ public class ExtendsExtern extends org.fudgemsg.proto.tests.ExternalMessage impl
     return org.apache.commons.lang.builder.ToStringBuilder.reflectionToString(this, org.apache.commons.lang.builder.ToStringStyle.SHORT_PREFIX_STYLE);
   }
 }
+/* filefooter.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */

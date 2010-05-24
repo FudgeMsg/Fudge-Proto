@@ -1,4 +1,8 @@
 // Automatically created - do not modify
+/* fileheader.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */
 // Created from inheritance.proto:19(9)
 package org.fudgemsg.proto.tests.inheritance;
 public class SubClassA2 extends org.fudgemsg.proto.tests.inheritance.SubClassA implements java.io.Serializable {
@@ -246,3 +250,7 @@ public class SubClassA2 extends org.fudgemsg.proto.tests.inheritance.SubClassA i
     return org.apache.commons.lang.builder.ToStringBuilder.reflectionToString(this, org.apache.commons.lang.builder.ToStringStyle.SHORT_PREFIX_STYLE);
   }
 }
+/* filefooter.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */

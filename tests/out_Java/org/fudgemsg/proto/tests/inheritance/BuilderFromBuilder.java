@@ -1,4 +1,8 @@
 // Automatically created - do not modify
+/* fileheader.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */
 // Created from inheritance.proto:51(9)
 package org.fudgemsg.proto.tests.inheritance;
 public class BuilderFromBuilder extends org.fudgemsg.proto.tests.inheritance.BuilderBase implements java.io.Serializable {
@@ -87,3 +91,7 @@ public class BuilderFromBuilder extends org.fudgemsg.proto.tests.inheritance.Bui
     return org.apache.commons.lang.builder.ToStringBuilder.reflectionToString(this, org.apache.commons.lang.builder.ToStringStyle.SHORT_PREFIX_STYLE);
   }
 }
+/* filefooter.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */
