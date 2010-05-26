@@ -147,6 +147,21 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     return new File(implementation, definition.getName() + ".java");
   }
   
+  @Override
+  public void comment(IndentWriter writer, String text) throws IOException {
+    super.comment(writer, escapeCommentText(text));
+  }
+  
+  private String escapeCommentText(String text) {
+    if (text == null) {
+      return null;
+    }
+    // javac treats a backslash followed by 'u' in a comment as the start of a Unicode escape sequence. This needs to
+    // be turned into '\\u'. We know we're not going to be generating actual Unicode escape sequences within comments,
+    // so we can blindly add an extra backslash.
+    return text.replace("\\u", "\\\\u");
+  }
+
   private String fieldMethodName (final FieldDefinition field, final String prefix) {
     final StringBuilder sb = new StringBuilder ();
     if (prefix != null) {
