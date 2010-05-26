@@ -77,7 +77,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   private static final String VALUE_INDICATOR = CLASS_INDICATOR + ".INSTANCE";
 
   private JavaClassCode () {
-    super (new DocumentedClassCode (blockCodeDelegate (new CBlockCode (literalCodeDelegate (JavaLiteralCode.INSTANCE)))));
+    super (new DocumentedClassCode (blockCodeDelegate (new JavaBlockCode (literalCodeDelegate (JavaLiteralCode.INSTANCE)))));
   }
   
   private String messageDelegateName (final MessageDefinition message) {
@@ -145,21 +145,6 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     File implementation = CodeGeneratorUtil.applyNamespace(context, targetPath, definition.getIdentifierArray());
     if (implementation == null) return null;
     return new File(implementation, definition.getName() + ".java");
-  }
-  
-  @Override
-  public void comment(IndentWriter writer, String text) throws IOException {
-    super.comment(writer, escapeCommentText(text));
-  }
-  
-  private String escapeCommentText(String text) {
-    if (text == null) {
-      return null;
-    }
-    // javac treats a backslash followed by 'u' in a comment as the start of a Unicode escape sequence. This needs to
-    // be turned into '\\u'. We know we're not going to be generating actual Unicode escape sequences within comments,
-    // so we can blindly add an extra backslash.
-    return text.replace("\\u", "\\\\u");
   }
 
   private String fieldMethodName (final FieldDefinition field, final String prefix) {
