@@ -223,6 +223,16 @@ public abstract class MessageDefinition extends Definition {
     _external = true;
   }
   
+  protected boolean hasExternalMessageReferences (final FieldType type, final Set<MessageDefinition> considered) {
+    if (type instanceof FieldType.MessageType) {
+      return ((FieldType.MessageType)type).getMessageDefinition ().hasExternalMessageReferences (considered);
+    } else if (type instanceof FieldType.ArrayType) {
+      return hasExternalMessageReferences (((FieldType.ArrayType)type).getBaseType (), considered);
+    } else {
+      return false;
+    }
+  }
+  
   protected boolean hasExternalMessageReferences (Set<MessageDefinition> considered) {
     if (isExternal ()) return true;
     if (considered == null) considered = new HashSet<MessageDefinition> ();
@@ -232,9 +242,7 @@ public abstract class MessageDefinition extends Definition {
       if (getExtends ().hasExternalMessageReferences (considered)) return true;
     }
     for (final FieldDefinition field : getFieldDefinitions ()) {
-      if (field.getType () instanceof FieldType.MessageType) {
-        if (((FieldType.MessageType)field.getType ()).getMessageDefinition ().hasExternalMessageReferences (considered)) return true;
-      }
+      if (hasExternalMessageReferences (field.getType (), considered)) return true;
     }
     return false;
   }
