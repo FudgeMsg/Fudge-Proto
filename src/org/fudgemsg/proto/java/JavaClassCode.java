@@ -33,7 +33,6 @@ import org.fudgemsg.proto.IndentWriter;
 import org.fudgemsg.proto.LiteralValue;
 import org.fudgemsg.proto.MessageDefinition;
 import org.fudgemsg.proto.TaxonomyDefinition;
-import org.fudgemsg.proto.c.CBlockCode;
 import org.fudgemsg.proto.java.JavaCodeGenerator.ProtoBinding;
 import org.fudgemsg.proto.proto.DocumentedClassCode;
 import org.fudgemsg.proto.proto.HeaderlessClassCode;
