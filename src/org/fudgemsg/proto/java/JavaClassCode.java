@@ -33,7 +33,6 @@ import org.fudgemsg.proto.IndentWriter;
 import org.fudgemsg.proto.LiteralValue;
 import org.fudgemsg.proto.MessageDefinition;
 import org.fudgemsg.proto.TaxonomyDefinition;
-import org.fudgemsg.proto.c.CBlockCode;
 import org.fudgemsg.proto.java.JavaCodeGenerator.ProtoBinding;
 import org.fudgemsg.proto.proto.DocumentedClassCode;
 import org.fudgemsg.proto.proto.HeaderlessClassCode;
@@ -77,7 +76,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   private static final String VALUE_INDICATOR = CLASS_INDICATOR + ".INSTANCE";
 
   private JavaClassCode () {
-    super (new DocumentedClassCode (blockCodeDelegate (new CBlockCode (literalCodeDelegate (JavaLiteralCode.INSTANCE)))));
+    super (new DocumentedClassCode (blockCodeDelegate (new JavaBlockCode (literalCodeDelegate (JavaLiteralCode.INSTANCE)))));
   }
   
   private String messageDelegateName (final MessageDefinition message) {
@@ -146,7 +145,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     if (implementation == null) return null;
     return new File(implementation, definition.getName() + ".java");
   }
-  
+
   private String fieldMethodName (final FieldDefinition field, final String prefix) {
     final StringBuilder sb = new StringBuilder ();
     if (prefix != null) {
