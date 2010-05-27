@@ -129,6 +129,20 @@ public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerato
     }
   }
   
+  @Override
+  public File getHeaderFile (final Compiler.Context context, final Definition definition, final File targetPath) throws IOException {
+    if (definition instanceof EnumDefinition) {
+      if (definition.getOuterDefinition () != null) {
+        // the outer definition will define it
+        return null;
+      } else {
+        return super.getHeaderFile (context, definition, targetPath);
+      }
+    } else {
+      return super.getHeaderFile (context, definition, targetPath);
+    }
+  }
+  
   private IndentWriter createFile (final Compiler.Context context, final File file) throws IOException {
     IndentWriter iw = createIndentWriter (new BufferedWriter (new FileWriter (file, false)));
     if (context.getVerbosity () >= 2) context.verboseMessage ("Writing " + file);

@@ -8,7 +8,7 @@ package org.fudgemsg.proto.tests.taxon;
 public class Message2 implements java.io.Serializable {
   private static final long serialVersionUID = 3003080321l;
   private final int _bar;
-  public static final String BAR_KEY = "bar";
+  public static final int BAR_ORDINAL = 10;
   private final int _cow;
   public static final String COW_KEY = "cow";
   public static class Builder {
@@ -18,7 +18,7 @@ public class Message2 implements java.io.Serializable {
     }
     protected Builder (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
       org.fudgemsg.FudgeField fudgeField;
-      fudgeField = fudgeMsg.getByOrdinal (10);
+      fudgeField = fudgeMsg.getByOrdinal (BAR_ORDINAL);
       if (fudgeField != null)  {
         try {
           bar (fudgeMsg.getFieldValue (Integer.class, fudgeField));
@@ -69,7 +69,7 @@ public class Message2 implements java.io.Serializable {
     return msg;
   }
   public void toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext, final org.fudgemsg.MutableFudgeFieldContainer msg) {
-    msg.add (BAR_KEY, 10, _bar);
+    msg.add (null, BAR_ORDINAL, _bar);
     msg.add (COW_KEY, null, _cow);
   }
   public static Message2 fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {

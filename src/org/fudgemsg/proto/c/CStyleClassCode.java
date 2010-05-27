@@ -117,6 +117,9 @@ public abstract class CStyleClassCode extends DocumentedClassCode {
         importMessageDefinition (imports, (outerMessage != null) ? outerMessage : enumDefinition, writer);
       }
     }
+    if (message.getExtends () != null) {
+      importMessageDefinition (imports, message.getExtends (), writer);
+    }
   }
   
   @Override

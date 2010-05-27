@@ -209,14 +209,22 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     return field.getName ().toUpperCase () + "_KEY";
   }
   
+  private String fieldOrdinal (final FieldDefinition field) {
+    return field.getName ().toUpperCase () + "_ORDINAL";
+  }
+  
   @Override
   public void writeClassImplementationAttribute(final Compiler.Context context, final FieldDefinition field, final IndentWriter writer) throws IOException {
     writer.write ("private ");
     if (!field.isMutable ()) writer.write ("final ");
     writer.write (realTypeString (field, false) + " " + privateFieldName (field));
     endStmt (writer); // attribute decl
-    writer.write ("public static final String " + fieldKey (field) + " = \"" + field.getName () + "\"");
-    endStmt (writer); // public field name
+    if (field.getOrdinal () != null) {
+      writer.write ("public static final int " + fieldOrdinal (field) + " = " + field.getOrdinal ());
+    } else {
+      writer.write ("public static final String " + fieldKey (field) + " = \"" + field.getName () + "\"");
+    }
+    endStmt (writer); // public field name/ordinal
     // TODO 2010-01-26 Andrew -- if the message references a specific taxonomy, we should use references to the string place holders there instead of local ones
   }
   
@@ -714,7 +722,11 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
           writer = beginBlock (writer); // if not null
         }
       }
-      writeAddToFudgeMsg (writer, "msg", fieldKey (field), (field.getOrdinal () != null) ? field.getOrdinal ().toString () : "null", value, type);
+      if (field.getOrdinal () != null) {
+        writeAddToFudgeMsg (writer, "msg", "null", fieldOrdinal (field), value, type);
+      } else {
+        writeAddToFudgeMsg (writer, "msg", fieldKey (field), "null", value, type);
+      }
       if (field.isRepeated ()) {
         writer = endBlock (writer); // foreach
         writer = endBlock (writer); // if not null
@@ -1052,7 +1064,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       sbGetField.append ("By");
       final Integer ordinal = field.getOrdinal ();
       if (ordinal != null) {
-        sbGetField.append ("Ordinal (").append (ordinal.toString ()).append (')');
+        sbGetField.append ("Ordinal (").append (fieldOrdinal (field)).append (')');
       } else {
         sbGetField.append ("Name (").append (fieldKey (field)).append (")");
       }

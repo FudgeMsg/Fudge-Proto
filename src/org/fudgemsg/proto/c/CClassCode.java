@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
+import org.fudgemsg.FudgeTypeDictionary;
 import org.fudgemsg.proto.Compiler;
 import org.fudgemsg.proto.EnumDefinition;
 import org.fudgemsg.proto.FieldDefinition;
@@ -69,27 +70,68 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
   @Override
   public void beginClassHeaderDeclaration (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
     super.beginClassHeaderDeclaration (context, message, writer);
-    comment (writer, "TODO begin class header declaration");
+    writer.write ("typedef struct _" + getIdentifier (message) + " " + getIdentifier (message));
+    endStmt (writer);
+    writer.write ("struct _" + getIdentifier (message));
+    beginBlock (writer); // struct
+    if (message.getExtends () != null) {
+      writer.write (getIdentifier (message) + " fudgeParentMessage");
+      endStmt (writer);
+    }
+    // TODO: ancestor messages as members
   }
   
   @Override
   public void endClassHeaderDeclaration (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
-    comment (writer, "TODO end class header declaration");
+    endBlock (writer); // struct
+    endStmt (writer);
+    // TODO: methods to construct etc
+    if (message.getNamespace () != null) {
+      writer.write ("#ifdef FUDGE_NO_NAMESPACE");
+      writer.newLine ();
+      writer.write ("#define " + message.getName () + " " + getIdentifier (message));
+      writer.newLine ();
+      for (FieldDefinition field : message.getFieldDefinitions ()) {
+        writer.write ("#define " + message.getName () + "_" + field.getName ());
+        if (field.getOrdinal () != null) {
+          writer.write ("_Ordinal " + field.getOrdinal ());
+        } else {
+          writer.write ("_Key \"" + field.getName () + "\"");
+        }
+        writer.newLine ();
+      }
+      writer.write ("#else /* ifndef FUDGE_NO_NAMESPACE */");
+      writer.newLine ();
+    }
+    for (FieldDefinition field : message.getFieldDefinitions ()) {
+      writer.write ("#define " + getIdentifier (message) + "_" + field.getName ());
+      if (field.getOrdinal () != null) {
+        writer.write ("_Ordinal " + field.getOrdinal ());
+      } else {
+        writer.write ("_Key \"" + field.getName () + "\"");
+      }
+      writer.newLine ();
+    }
+    if (message.getNamespace () != null) {
+      writer.write ("#endif /* ifndef FUDGE_NO_NAMESPACE else */");
+      writer.newLine ();
+    }
   }
   
   @Override
   public void writeClassHeaderAttribute (final Compiler.Context context, final FieldDefinition field, final IndentWriter writer) throws IOException {
-    comment (writer, "TODO class header attribute");
-  }
-  
-  @Override
-  public void writeClassHeaderAccessor (final Compiler.Context context, final FieldDefinition field, final IndentWriter writer) throws IOException {
-    comment (writer, "TODO class header accessor");
+    writer.write (typeString (field.getType ()) + " " + field.getName ());
+    endStmt (writer);
   }
   
   @Override
   public void writeClassHeaderConstructor (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
-    comment (writer, "TODO class header constructor");
+    // Nothing required
+  }
+  
+  @Override
+  public void writeClassHeaderAccessor (final Compiler.Context context, final FieldDefinition field, final IndentWriter writer) throws IOException {
+    // Nothing required
   }
   
   private String getEnumValueIdentifier (final EnumDefinition enumDefinition, final String value) {
@@ -137,16 +179,18 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
       writer.write (getIdentifier (enumDefinition) + " " + getIdentifier (enumDefinition) + "_fromFudgeEncoding (const char *value)");
       endStmt (writer);
     }
-    writer.write ("#ifdef FUDGE_NO_NAMESPACE");
-    writer.newLine ();
-    writer.write ("#define " + enumDefinition.getName () + " " + getIdentifier (enumDefinition));
-    writer.newLine ();
-    writer.write ("#define " + enumDefinition.getName () + "_toFudgeEncoding " + getIdentifier (enumDefinition) + "_toFudgeEncoding");
-    writer.newLine ();
-    writer.write ("#define " + enumDefinition.getName () + "_fromFudgeEncoding " + getIdentifier (enumDefinition) + "_fromFudgeEncoding");
-    writer.newLine ();
-    writer.write ("#endif /* ifndef FUDGE_NO_NAMESPACE */");
-    writer.newLine ();
+    if (enumDefinition.getNamespace () != null) {
+      writer.write ("#ifdef FUDGE_NO_NAMESPACE");
+      writer.newLine ();
+      writer.write ("#define " + enumDefinition.getName () + " " + getIdentifier (enumDefinition));
+      writer.newLine ();
+      writer.write ("#define " + enumDefinition.getName () + "_toFudgeEncoding " + getIdentifier (enumDefinition) + "_toFudgeEncoding");
+      writer.newLine ();
+      writer.write ("#define " + enumDefinition.getName () + "_fromFudgeEncoding " + getIdentifier (enumDefinition) + "_fromFudgeEncoding");
+      writer.newLine ();
+      writer.write ("#endif /* ifndef FUDGE_NO_NAMESPACE */");
+      writer.newLine ();
+    }
   }
 
   @Override
@@ -214,4 +258,59 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
     comment (writer, "TODO taxonomy implementation declaration");
   }
 
+  private String messageType (final MessageDefinition message) {
+    if (message == MessageDefinition.ANONYMOUS) {
+      return "FudgeMsg";
+    } else {
+      return message.getIdentifier () + '*';
+    }
+  }
+
+  private String typeString (final FieldType type) {
+    if (type instanceof FieldType.ArrayType) {
+      final FieldType.ArrayType array = (FieldType.ArrayType)type;
+      final StringBuilder sb = new StringBuilder ();
+      sb.append (typeString (array.getBaseType ()));
+      sb.append ('*');
+      return sb.toString ();
+    } else if (type instanceof FieldType.EnumType) {
+      return getIdentifier (((FieldType.EnumType)type).getEnumDefinition ());
+    } else if (type instanceof FieldType.MessageType) {
+      return messageType (((FieldType.MessageType)type).getMessageDefinition ());
+    } else {
+      switch (type.getFudgeFieldType ()) {
+      case FudgeTypeDictionary.INDICATOR_TYPE_ID :
+        // We'll handle indicators as a boolean - was it in the message or not
+        return "int";
+      case FudgeTypeDictionary.BOOLEAN_TYPE_ID :
+        return "fudge_bool";
+      case FudgeTypeDictionary.BYTE_TYPE_ID :
+        return "fudge_byte";
+      case FudgeTypeDictionary.SHORT_TYPE_ID :
+        return "fudge_i16";
+      case FudgeTypeDictionary.INT_TYPE_ID :
+        return "fudge_i32";
+      case FudgeTypeDictionary.LONG_TYPE_ID :
+        return "fudge_i64";
+      case FudgeTypeDictionary.FLOAT_TYPE_ID :
+        return "fudge_f32";
+      case FudgeTypeDictionary.DOUBLE_TYPE_ID :
+        return "fudge_f64";
+      case FudgeTypeDictionary.STRING_TYPE_ID :
+        return "fudge_byte*";
+      case FudgeTypeDictionary.DATE_TYPE_ID :
+        // TODO: date?
+        return "fudge_byte*";
+      case FudgeTypeDictionary.DATETIME_TYPE_ID :
+        // TODO: datetime?
+        return "fudge_byte*";
+      case FudgeTypeDictionary.TIME_TYPE_ID :
+        // TODO: time?
+        return "fudge_byte*";
+      default :
+        throw new IllegalStateException ("type '" + type + "' is not an expected type (fudge field type " + type.getFudgeFieldType () + ")");
+      }
+    }
+  }
+  
 }

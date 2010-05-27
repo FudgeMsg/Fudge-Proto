@@ -69,6 +69,10 @@ public class IndentWriter extends FilterWriter {
     }
   }
   
+  public void uncacheNewLine () throws IOException {
+    _blankLine = false;
+  }
+  
   public void newLine () throws IOException {
     _blankLine = true;
   }
