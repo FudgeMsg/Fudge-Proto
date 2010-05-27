@@ -107,6 +107,7 @@ public abstract class CStyleClassCode extends DocumentedClassCode {
   
   private void importMessageDefinitions (final MessageDefinition message, final IndentWriter writer) throws IOException {
     final Set<Definition> imports = new HashSet<Definition> ();
+    imports.add (message);
     for (FieldDefinition field : message.getFieldDefinitions ()) {
       final FieldType type = field.getType ();
       if (type instanceof FieldType.MessageType) {

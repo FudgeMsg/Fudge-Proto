@@ -151,7 +151,9 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
   @Override
   public void writeEnumHeaderDeclaration (final Compiler.Context context, final EnumDefinition enumDefinition, final IndentWriter writer) throws IOException {
     super.writeEnumHeaderDeclaration (context, enumDefinition, writer);
-    writer.write ("enum " + getIdentifier (enumDefinition));
+    writer.write ("typedef enum _" + getIdentifier (enumDefinition) + " " + getIdentifier (enumDefinition));
+    endStmt (writer);
+    writer.write ("enum _" + getIdentifier (enumDefinition));
     beginBlock (writer);
     boolean first = true;
     for (Map.Entry<String,LiteralValue> entry : enumDefinition.getElements ()) {
