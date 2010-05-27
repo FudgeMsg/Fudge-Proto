@@ -130,4 +130,11 @@ public abstract class CStyleClassCode extends DocumentedClassCode {
     importMessageDefinition (null, message, writer);
   }
 
+  @Override
+  public void writeEnumImplementationDeclaration (final Compiler.Context context, final EnumDefinition enumDefinition, final IndentWriter writer) throws IOException {
+    super.writeEnumImplementationDeclaration (context, enumDefinition, writer);
+    final MessageDefinition outerMessage = enumDefinition.getOuterMessage ();
+    importMessageDefinition (null, (outerMessage != null) ? outerMessage : enumDefinition, writer);
+  }
+  
 }
