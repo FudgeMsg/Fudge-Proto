@@ -67,34 +67,31 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
     super.writeHeaderFileFooter (context, targetFile, writer);
   }
   
-  private boolean enableStructs = false;
-  
   @Override
   public void beginClassHeaderDeclaration (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
     super.beginClassHeaderDeclaration (context, message, writer);
-    if (enableStructs) { // This is generating empty structs for empty message which isn't legal
-      writer.write ("typedef struct _" + getIdentifier (message) + " " + getIdentifier (message));
-      endStmt (writer);
-      writer.write ("struct _" + getIdentifier (message));
-      beginBlock (writer); // struct
-      if (message.getExtends () != null) {
-        writer.write (getIdentifier (message.getExtends ()) + " fudgeParentMessage");
-        endStmt (writer);
-      }
+    writer.write ("typedef struct _" + getIdentifier (message) + " " + getIdentifier (message));
+    endStmt (writer);
+    writer.write ("struct _" + getIdentifier (message));
+    beginBlock (writer); // struct
+    if (message.getExtends () != null) {
+      writer.write (getIdentifier (message.getExtends ()) + " fudgeParent");
+    } else {
+      writer.write ("const char *fudgeClass");
     }
+    endStmt (writer);
   }
   
   @Override
   public void endClassHeaderDeclaration (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
-    if (enableStructs) { // see BeginClassHeaderDeclaration
-      endBlock (writer); // struct
-      endStmt (writer);
-      // TODO: methods to construct etc
-    }
+    endBlock (writer); // struct
+    endStmt (writer);
     if (message.getNamespace () != null) {
       writer.write ("#ifdef FUDGE_NO_NAMESPACE");
       writer.newLine ();
       writer.write ("#define " + message.getName () + " " + getIdentifier (message));
+      writer.newLine ();
+      writer.write ("#define " + message.getName () + "_Class \"" + message.getIdentifier () + "\"");
       writer.newLine ();
       for (FieldDefinition field : message.getFieldDefinitions ()) {
         writer.write ("#define " + message.getName () + "_" + field.getName ());
@@ -108,6 +105,8 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
       writer.write ("#else /* ifndef FUDGE_NO_NAMESPACE */");
       writer.newLine ();
     }
+    writer.write ("#define " + getIdentifier (message) + "_Class \"" + message.getIdentifier () + "\"");
+    writer.newLine ();
     for (FieldDefinition field : message.getFieldDefinitions ()) {
       writer.write ("#define " + getIdentifier (message) + "_" + field.getName ());
       if (field.getOrdinal () != null) {
@@ -125,10 +124,8 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
   
   @Override
   public void writeClassHeaderAttribute (final Compiler.Context context, final FieldDefinition field, final IndentWriter writer) throws IOException {
-    if (enableStructs) { // See BeginClassHeaderDeclaration
-      writer.write (typeString (field.getType ()) + " " + field.getName ());
-      endStmt (writer);
-    }
+    writer.write (typeString (field.getType ()) + " " + field.getName ());
+    endStmt (writer);
   }
   
   @Override
@@ -253,13 +250,13 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
     endBlock (writer); // toFudgeEncoding
     writer.write (getIdentifier (enumDefinition) + " " + getIdentifier (enumDefinition) + "_fromFudgeEncoding (const char *value)");
     beginBlock (writer); // fromFudgeEncoding
-    writer.write ("if (!value) return -1");
+    writer.write ("if (!value) return (" + getIdentifier (enumDefinition) + ")-1");
     endStmt (writer);
     for (Map.Entry<String,LiteralValue> entry : enumDefinition.getElements ()) {
       writer.write ("if (!strcmp (value, " + getEnumValueLiteral (context, entry.getKey (), entry.getValue ()) + ")) return " + getEnumValueIdentifier (enumDefinition, entry.getKey ()));
       endStmt (writer);
     }
-    writer.write ("return -1");
+    writer.write ("return (" + getIdentifier (enumDefinition) + ")-1");
     endStmt (writer);
     endBlock (writer); // fromFudgeEncoding
   }
