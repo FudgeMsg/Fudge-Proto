@@ -237,6 +237,8 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
   public void writeEnumImplementationDeclaration (final Compiler.Context context, final EnumDefinition enumDefinition, final IndentWriter writer) throws IOException {
     super.writeEnumImplementationDeclaration (context, enumDefinition, writer);
     if (enumDefinition.getType () == Type.INTEGER_ENCODED) return; // no conversion functions (macros)
+    writer.write ("#include <string.h>");
+    writer.newLine ();
     writer.write ("const char *" + getIdentifier (enumDefinition) + "_toFudgeEncoding (" + getIdentifier (enumDefinition) + " value)");
     beginBlock (writer); // toFudgeEncoding
     writer.write ("switch (value)");
