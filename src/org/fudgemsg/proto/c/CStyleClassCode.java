@@ -83,6 +83,8 @@ public abstract class CStyleClassCode extends DocumentedClassCode {
     writer.write ("#define __INC_");
     writer.write (headerName);
     writer.newLine ();
+    writer.write ("#include <fudge/types.h>");
+    writer.newLine ();
   }
   
   @Override
