@@ -67,25 +67,30 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
     super.writeHeaderFileFooter (context, targetFile, writer);
   }
   
+  private boolean enableStructs = false;
+  
   @Override
   public void beginClassHeaderDeclaration (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
     super.beginClassHeaderDeclaration (context, message, writer);
-    writer.write ("typedef struct _" + getIdentifier (message) + " " + getIdentifier (message));
-    endStmt (writer);
-    writer.write ("struct _" + getIdentifier (message));
-    beginBlock (writer); // struct
-    if (message.getExtends () != null) {
-      writer.write (getIdentifier (message) + " fudgeParentMessage");
+    if (enableStructs) { // This is generating empty structs for empty message which isn't legal
+      writer.write ("typedef struct _" + getIdentifier (message) + " " + getIdentifier (message));
       endStmt (writer);
+      writer.write ("struct _" + getIdentifier (message));
+      beginBlock (writer); // struct
+      if (message.getExtends () != null) {
+        writer.write (getIdentifier (message.getExtends ()) + " fudgeParentMessage");
+        endStmt (writer);
+      }
     }
-    // TODO: ancestor messages as members
   }
   
   @Override
   public void endClassHeaderDeclaration (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
-    endBlock (writer); // struct
-    endStmt (writer);
-    // TODO: methods to construct etc
+    if (enableStructs) { // see BeginClassHeaderDeclaration
+      endBlock (writer); // struct
+      endStmt (writer);
+      // TODO: methods to construct etc
+    }
     if (message.getNamespace () != null) {
       writer.write ("#ifdef FUDGE_NO_NAMESPACE");
       writer.newLine ();
@@ -120,8 +125,10 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
   
   @Override
   public void writeClassHeaderAttribute (final Compiler.Context context, final FieldDefinition field, final IndentWriter writer) throws IOException {
-    writer.write (typeString (field.getType ()) + " " + field.getName ());
-    endStmt (writer);
+    if (enableStructs) { // See BeginClassHeaderDeclaration
+      writer.write (typeString (field.getType ()) + " " + field.getName ());
+      endStmt (writer);
+    }
   }
   
   @Override
@@ -264,7 +271,7 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
     if (message == MessageDefinition.ANONYMOUS) {
       return "FudgeMsg";
     } else {
-      return message.getIdentifier () + '*';
+      return getIdentifier (message) + '*';
     }
   }
 
