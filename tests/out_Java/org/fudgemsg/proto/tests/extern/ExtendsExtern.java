@@ -6,12 +6,12 @@
 // Created from extern.proto:5(10)
 package org.fudgemsg.proto.tests.extern;
 public class ExtendsExtern extends org.fudgemsg.proto.tests.ExternalMessage implements java.io.Serializable {
-  private static final long serialVersionUID = 108399l;
-  private final int _a;
+  private static final long serialVersionUID = -672257890l;
+  private final Integer _a;
   public static final String A_KEY = "a";
   public static class Builder {
     private final org.fudgemsg.proto.tests.ExternalMessage _fudgeRoot;
-    private int _a;
+    private Integer _a;
     public Builder () {
       _fudgeRoot = null;
     }
@@ -28,7 +28,7 @@ public class ExtendsExtern extends org.fudgemsg.proto.tests.ExternalMessage impl
         }
       }
     }
-    public Builder a (int a) {
+    public Builder a (Integer a) {
       _a = a;
       return this;
     }
@@ -40,7 +40,7 @@ public class ExtendsExtern extends org.fudgemsg.proto.tests.ExternalMessage impl
     super (builder._fudgeRoot);
     _a = builder._a;
   }
-  public ExtendsExtern (int a) {
+  public ExtendsExtern (Integer a) {
     _a = a;
   }
   protected ExtendsExtern (final ExtendsExtern source) {
@@ -59,7 +59,9 @@ public class ExtendsExtern extends org.fudgemsg.proto.tests.ExternalMessage impl
   }
   public void toFudgeMsg (final org.fudgemsg.mapping.FudgeSerializationContext fudgeContext, final org.fudgemsg.MutableFudgeFieldContainer msg) {
     super.toFudgeMsg (fudgeContext, msg);
-    msg.add (A_KEY, null, _a);
+    if (_a != null)  {
+      msg.add (A_KEY, null, _a);
+    }
   }
   public static ExtendsExtern fromFudgeMsg (final org.fudgemsg.mapping.FudgeDeserializationContext fudgeContext, final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
     final java.util.List<org.fudgemsg.FudgeField> types = fudgeMsg.getAllByOrdinal (0);
@@ -75,7 +77,7 @@ public class ExtendsExtern extends org.fudgemsg.proto.tests.ExternalMessage impl
     }
     return new Builder (fudgeContext, fudgeMsg).build ();
   }
-  public int getA () {
+  public Integer getA () {
     return _a;
   }
   public boolean equals (final Object o) {
@@ -83,12 +85,19 @@ public class ExtendsExtern extends org.fudgemsg.proto.tests.ExternalMessage impl
     if (o == null) return false;
     if (!(o instanceof ExtendsExtern)) return false;
     ExtendsExtern msg = (ExtendsExtern)o;
-    if (_a != msg._a) return false;
+    if (_a != null) {
+      if (msg._a != null) {
+        if (!_a.equals (msg._a)) return false;
+      }
+      else return false;
+    }
+    else if (msg._a != null) return false;
     return super.equals (msg);
   }
   public int hashCode () {
     int hc = super.hashCode ();
-    hc = (hc * 31) + (int)_a;
+    hc *= 31;
+    if (_a != null) hc += _a.hashCode ();
     return hc;
   }
   public String toString () {

@@ -5,7 +5,7 @@
  */
 // Created from types.proto:112(10)
 package org.fudgemsg.proto.tests.types;
-public class STypes_Required implements java.io.Serializable, TypesBase {
+public class STypes_Required implements java.io.Serializable, TypesBase_Required {
   private static final long serialVersionUID = 2512856431910604830l;
   private final boolean __Bool;
   public static final String _BOOL_KEY = "_Bool";

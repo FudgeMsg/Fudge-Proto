@@ -21,15 +21,15 @@ import javax.time.calendar.TimeProvider;
 
 import org.fudgemsg.FudgeFieldContainer;
 
-public interface TypesBase {
-  public boolean get_Bool ();
-  public byte get_Byte ();
-  public double get_Double ();
-  public float get_Float ();
-  public boolean get_Indicator ();
-  public int get_Int ();
-  public long get_Long ();
-  public short get_Short ();
+public interface TypesBase_Optional {
+  public Boolean get_Bool ();
+  public Byte get_Byte ();
+  public Double get_Double ();
+  public Float get_Float ();
+  public Boolean get_Indicator ();
+  public Integer get_Int ();
+  public Long get_Long ();
+  public Short get_Short ();
   public String get_String ();
   public SubMessage get_SubMessage ();
   public CustomEnum get_CustomEnum ();

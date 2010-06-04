@@ -6,8 +6,8 @@
 // Created from inheritance.proto:19(9)
 package org.fudgemsg.proto.tests.inheritance;
 public class SubClassA2 extends org.fudgemsg.proto.tests.inheritance.SubClassA implements java.io.Serializable {
-  private static final long serialVersionUID = -6593094244036035402l;
-  private final int _scA2_o;
+  private static final long serialVersionUID = -7189821800503845211l;
+  private final Integer _scA2_o;
   public static final String SCA2_O_KEY = "scA2_o";
   private final java.util.List<Integer> _scA2_r;
   public static final String SCA2_R_KEY = "scA2_r";
@@ -16,7 +16,7 @@ public class SubClassA2 extends org.fudgemsg.proto.tests.inheritance.SubClassA i
   private final java.util.List<Integer> _scA2_rq;
   public static final String SCA2_RQ_KEY = "scA2_rq";
   public static class Builder extends org.fudgemsg.proto.tests.inheritance.SubClassA.Builder {
-    private int _scA2_o;
+    private Integer _scA2_o;
     private java.util.List<Integer> _scA2_r;
     private final int _scA2_q;
     private final java.util.List<Integer> _scA2_rq;
@@ -81,7 +81,7 @@ public class SubClassA2 extends org.fudgemsg.proto.tests.inheritance.SubClassA i
         scA2_r (fudge1);
       }
     }
-    public Builder scA2_o (int scA2_o) {
+    public Builder scA2_o (Integer scA2_o) {
       _scA2_o = scA2_o;
       return this;
     }
@@ -128,7 +128,7 @@ public class SubClassA2 extends org.fudgemsg.proto.tests.inheritance.SubClassA i
       _scA2_rq = new java.util.ArrayList<Integer> (builder._scA2_rq);
     }
   }
-  public SubClassA2 (int bcA_o, java.util.Collection<? extends Integer> bcA_r, int bcA_q, java.util.Collection<? extends Integer> bcA_rq, int scA_o, java.util.Collection<? extends Integer> scA_r, int scA_q, java.util.Collection<? extends Integer> scA_rq, int scA2_o, java.util.Collection<? extends Integer> scA2_r, int scA2_q, java.util.Collection<? extends Integer> scA2_rq) {
+  public SubClassA2 (Integer bcA_o, java.util.Collection<? extends Integer> bcA_r, int bcA_q, java.util.Collection<? extends Integer> bcA_rq, Integer scA_o, java.util.Collection<? extends Integer> scA_r, int scA_q, java.util.Collection<? extends Integer> scA_rq, Integer scA2_o, java.util.Collection<? extends Integer> scA2_r, int scA2_q, java.util.Collection<? extends Integer> scA2_rq) {
     super (bcA_o, bcA_r, bcA_q, bcA_rq, scA_o, scA_r, scA_q, scA_rq);
     _scA2_o = scA2_o;
     if (scA2_r == null) _scA2_r = null;
@@ -174,7 +174,9 @@ public class SubClassA2 extends org.fudgemsg.proto.tests.inheritance.SubClassA i
   }
   public void toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext, final org.fudgemsg.MutableFudgeFieldContainer msg) {
     super.toFudgeMsg (fudgeContext, msg);
-    msg.add (SCA2_O_KEY, null, _scA2_o);
+    if (_scA2_o != null)  {
+      msg.add (SCA2_O_KEY, null, _scA2_o);
+    }
     if (_scA2_r != null)  {
       for (Integer fudge1 : _scA2_r) {
         msg.add (SCA2_R_KEY, null, fudge1);
@@ -201,7 +203,7 @@ public class SubClassA2 extends org.fudgemsg.proto.tests.inheritance.SubClassA i
     }
     return new Builder (fudgeMsg).build ();
   }
-  public int getScA2_o () {
+  public Integer getScA2_o () {
     return _scA2_o;
   }
   public java.util.List<Integer> getScA2_r () {
@@ -221,7 +223,13 @@ public class SubClassA2 extends org.fudgemsg.proto.tests.inheritance.SubClassA i
     if (o == null) return false;
     if (!(o instanceof SubClassA2)) return false;
     SubClassA2 msg = (SubClassA2)o;
-    if (_scA2_o != msg._scA2_o) return false;
+    if (_scA2_o != null) {
+      if (msg._scA2_o != null) {
+        if (!_scA2_o.equals (msg._scA2_o)) return false;
+      }
+      else return false;
+    }
+    else if (msg._scA2_o != null) return false;
     if (_scA2_r != null) {
       if (msg._scA2_r != null) {
         if (!_scA2_r.equals (msg._scA2_r)) return false;
@@ -241,7 +249,8 @@ public class SubClassA2 extends org.fudgemsg.proto.tests.inheritance.SubClassA i
   }
   public int hashCode () {
     int hc = super.hashCode ();
-    hc = (hc * 31) + (int)_scA2_o;
+    hc *= 31;
+    if (_scA2_o != null) hc += _scA2_o.hashCode ();
     hc *= 31;
     if (_scA2_r != null) hc += _scA2_r.hashCode ();
     hc = (hc * 31) + (int)_scA2_q;

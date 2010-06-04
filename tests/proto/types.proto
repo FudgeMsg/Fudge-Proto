@@ -30,7 +30,7 @@ namespace org.fudgemsg.proto.tests.types {
     date        _Date;
     datetime    _DateTime;
     time        _Time;
-    binding Java { implements "TypesBase"; }
+    binding Java { implements "TypesBase_Optional"; }
   }
   
   message ATypes_Optional {
@@ -125,7 +125,7 @@ namespace org.fudgemsg.proto.tests.types {
     required date        _Date;
     required datetime    _DateTime;
     required time        _Time;
-    binding Java { implements "TypesBase"; }
+    binding Java { implements "TypesBase_Required"; }
   }
   
   message ATypes_Required {
@@ -220,7 +220,7 @@ namespace org.fudgemsg.proto.tests.types {
     mutable date        _Date;
     mutable datetime    _DateTime;
     mutable time        _Time;
-    binding Java { implements "TypesBase"; }
+    binding Java { implements "TypesBase_Optional"; }
   }
   
   message MutableATypes_Optional {
@@ -315,7 +315,7 @@ namespace org.fudgemsg.proto.tests.types {
     mutable required date        _Date;
     mutable required datetime    _DateTime;
     mutable required time        _Time;
-    binding Java { implements "TypesBase"; }
+    binding Java { implements "TypesBase_Required"; }
   }
   
   message MutableATypes_Required {

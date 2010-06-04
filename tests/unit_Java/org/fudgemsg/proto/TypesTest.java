@@ -57,7 +57,8 @@ import org.fudgemsg.proto.tests.types.RSTypes_Required;
 import org.fudgemsg.proto.tests.types.STypes_Optional;
 import org.fudgemsg.proto.tests.types.STypes_Required;
 import org.fudgemsg.proto.tests.types.SubMessage;
-import org.fudgemsg.proto.tests.types.TypesBase;
+import org.fudgemsg.proto.tests.types.TypesBase_Optional;
+import org.fudgemsg.proto.tests.types.TypesBase_Required;
 import org.junit.Test;
 
 public class TypesTest {
@@ -74,7 +75,29 @@ public class TypesTest {
     assertEquals (object1, object2);
   }
   
-  private void compareTypes (final TypesBase object1, final TypesBase object2) {
+  private void compareTypes (final TypesBase_Optional object1, final TypesBase_Optional object2) {
+    if ((object1 == null) && (object2 == null)) return;
+    assertNotNull (object1);
+    assertNotNull (object2);
+    assertEquals (object1.get_Bool (), object2.get_Bool ());
+    assertEquals (object1.get_Byte (), object2.get_Byte ());
+    assertEquals (object1.get_Double (), object2.get_Double (), 0);
+    assertEquals (object1.get_Float (), object2.get_Float (), 0);
+    assertEquals (object1.get_Indicator (), object2.get_Indicator ());
+    assertEquals (object1.get_Int (), object2.get_Int ());
+    assertEquals (object1.get_Long (), object2.get_Long ());
+    assertEquals (object1.get_Short (), object2.get_Short ());
+    assertEquals (object1.get_String (), object2.get_String ());
+    compareSubMessage (object1.get_SubMessage (), object2.get_SubMessage ());
+    assertEquals (object1.get_CustomEnum (), object2.get_CustomEnum ());
+    assertEquals (object1.get_Message (), object2.get_Message ());
+    assertEquals (object1.get_Date (), object2.get_Date ());
+    assertEquals (object1.get_DateTime (), object2.get_DateTime ());
+    assertEquals (object1.get_Time (), object2.get_Time ());
+    assertEquals (object1, object2);
+  }
+  
+  private void compareTypes (final TypesBase_Required object1, final TypesBase_Required object2) {
     if ((object1 == null) && (object2 == null)) return;
     assertNotNull (object1);
     assertNotNull (object2);

@@ -201,7 +201,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     if (field.isRepeated ()) {
       return generic ? genericTypeString (CLASS_COLLECTION, field.getType (), false) : listTypeString (field.getType (), false);
     } else {
-      return typeString (field.getType (), false);
+      return typeString (field.getType (), !field.isRequired ());
     }
   }
   
@@ -489,7 +489,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     final String lfn = localFieldName (field);
     final String pfn = privateFieldName (field);
     final String returnType = "public " + (builderReturn ? "Builder" : "void") + " ";
-    writer.write (returnType + fieldMethodName (field, builderReturn ? null : "set") + " (" + typeString (field.getType (), field.isRepeated ()) + " " + lfn + ")");
+    writer.write (returnType + fieldMethodName (field, builderReturn ? null : "set") + " (" + typeString (field.getType (), field.isRepeated () || !field.isRequired ()) + " " + lfn + ")");
     beginBlock (writer); // method
     if (field.isRepeated ()) {
       writer.write ("if (" + lfn + " == null) ");
@@ -712,12 +712,14 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       final FieldType type = field.getType ();
       String value = privateFieldName (field);
       if (field.isRepeated ()) {
+        //TODO don't need null check on required fields!
         writer.ifNotNull (value);
         writer = beginBlock (writer); // if not null
         value = writer.forEach (typeString (type, true), value);
         writer = beginBlock (writer); // foreach
       } else {
-        if (isObject (type)) {
+        if (isObject (type) || !field.isRequired ()) {
+          //TODO don't need null check on required fields!
           writer.ifNotNull (value);
           writer = beginBlock (writer); // if not null
         }
@@ -731,7 +733,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         writer = endBlock (writer); // foreach
         writer = endBlock (writer); // if not null
       } else {
-        if (isObject (type)) {
+        if (isObject (type) || !field.isRequired ()) {
           writer = endBlock (writer); // if not null
         }
       }
@@ -1295,7 +1297,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
           writer.write ("if (!" + CLASS_ARRAYS + "." + (isObjectArray ((FieldType.ArrayType)type) ? "deepEquals" : "equals") + " (" + a + ", " + b + ")) return false");
         }
       } else {
-        if (isObject (type) || field.isRepeated ()) {
+        if (isObject (type) || field.isRepeated () || !field.isRequired ()) {
           writer.write ("if (" + a + " != null)");
           beginBlock (writer); // if !a
           writer.write ("if (" + b + " != null)");
@@ -1342,7 +1344,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
           writer.write ("hc += " + CLASS_ARRAYS + "." + (isObjectArray ((FieldType.ArrayType)type) ? "deepHashCode" : "hashCode") + " (" + name + ")");
         }
       } else {
-        if (isObject (type) || field.isRepeated ()) {
+        if (isObject (type) || field.isRepeated () || !field.isRequired ()) {
           writer.write ("hc *= 31");
           endStmt (writer);
           writer.write ("if (" + name + " != null) hc += " + name + ".hashCode ()");

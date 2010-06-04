@@ -6,14 +6,14 @@
 // Created from taxonomy.proto:29(9)
 package org.fudgemsg.proto.tests.taxon;
 public class Message2 implements java.io.Serializable {
-  private static final long serialVersionUID = 3003080321l;
-  private final int _bar;
+  private static final long serialVersionUID = -643813289697l;
+  private final Integer _bar;
   public static final int BAR_ORDINAL = 10;
-  private final int _cow;
+  private final Integer _cow;
   public static final String COW_KEY = "cow";
   public static class Builder {
-    private int _bar;
-    private int _cow;
+    private Integer _bar;
+    private Integer _cow;
     public Builder () {
     }
     protected Builder (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
@@ -37,11 +37,11 @@ public class Message2 implements java.io.Serializable {
         }
       }
     }
-    public Builder bar (int bar) {
+    public Builder bar (Integer bar) {
       _bar = bar;
       return this;
     }
-    public Builder cow (int cow) {
+    public Builder cow (Integer cow) {
       _cow = cow;
       return this;
     }
@@ -53,7 +53,7 @@ public class Message2 implements java.io.Serializable {
     _bar = builder._bar;
     _cow = builder._cow;
   }
-  public Message2 (int bar, int cow) {
+  public Message2 (Integer bar, Integer cow) {
     _bar = bar;
     _cow = cow;
   }
@@ -69,8 +69,12 @@ public class Message2 implements java.io.Serializable {
     return msg;
   }
   public void toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext, final org.fudgemsg.MutableFudgeFieldContainer msg) {
-    msg.add (null, BAR_ORDINAL, _bar);
-    msg.add (COW_KEY, null, _cow);
+    if (_bar != null)  {
+      msg.add (null, BAR_ORDINAL, _bar);
+    }
+    if (_cow != null)  {
+      msg.add (COW_KEY, null, _cow);
+    }
   }
   public static Message2 fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
     final java.util.List<org.fudgemsg.FudgeField> types = fudgeMsg.getAllByOrdinal (0);
@@ -86,10 +90,10 @@ public class Message2 implements java.io.Serializable {
     }
     return new Builder (fudgeMsg).build ();
   }
-  public int getBar () {
+  public Integer getBar () {
     return _bar;
   }
-  public int getCow () {
+  public Integer getCow () {
     return _cow;
   }
   public boolean equals (final Object o) {
@@ -97,14 +101,28 @@ public class Message2 implements java.io.Serializable {
     if (o == null) return false;
     if (!(o instanceof Message2)) return false;
     Message2 msg = (Message2)o;
-    if (_bar != msg._bar) return false;
-    if (_cow != msg._cow) return false;
+    if (_bar != null) {
+      if (msg._bar != null) {
+        if (!_bar.equals (msg._bar)) return false;
+      }
+      else return false;
+    }
+    else if (msg._bar != null) return false;
+    if (_cow != null) {
+      if (msg._cow != null) {
+        if (!_cow.equals (msg._cow)) return false;
+      }
+      else return false;
+    }
+    else if (msg._cow != null) return false;
     return true;
   }
   public int hashCode () {
     int hc = 1;
-    hc = (hc * 31) + (int)_bar;
-    hc = (hc * 31) + (int)_cow;
+    hc *= 31;
+    if (_bar != null) hc += _bar.hashCode ();
+    hc *= 31;
+    if (_cow != null) hc += _cow.hashCode ();
     return hc;
   }
   public String toString () {

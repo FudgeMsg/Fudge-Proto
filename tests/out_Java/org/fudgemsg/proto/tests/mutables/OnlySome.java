@@ -6,10 +6,10 @@
 // Created from mutables.proto:12(10)
 package org.fudgemsg.proto.tests.mutables;
 public class OnlySome implements java.io.Serializable {
-  private static final long serialVersionUID = 3130393446l;
+  private static final long serialVersionUID = 2458027157l;
   private int _foo;
   public static final String FOO_KEY = "foo";
-  private int _bar;
+  private Integer _bar;
   public static final String BAR_KEY = "bar";
   public OnlySome (int foo) {
     _foo = foo;
@@ -34,7 +34,7 @@ public class OnlySome implements java.io.Serializable {
       }
     }
   }
-  public OnlySome (int foo, int bar) {
+  public OnlySome (int foo, Integer bar) {
     _foo = foo;
     _bar = bar;
   }
@@ -54,7 +54,9 @@ public class OnlySome implements java.io.Serializable {
   }
   public void toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext, final org.fudgemsg.MutableFudgeFieldContainer msg) {
     msg.add (FOO_KEY, null, _foo);
-    msg.add (BAR_KEY, null, _bar);
+    if (_bar != null)  {
+      msg.add (BAR_KEY, null, _bar);
+    }
   }
   public static OnlySome fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
     final java.util.List<org.fudgemsg.FudgeField> types = fudgeMsg.getAllByOrdinal (0);
@@ -76,10 +78,10 @@ public class OnlySome implements java.io.Serializable {
   public void setFoo (int foo) {
     _foo = foo;
   }
-  public int getBar () {
+  public Integer getBar () {
     return _bar;
   }
-  public void setBar (int bar) {
+  public void setBar (Integer bar) {
     _bar = bar;
   }
   public boolean equals (final Object o) {
@@ -88,13 +90,20 @@ public class OnlySome implements java.io.Serializable {
     if (!(o instanceof OnlySome)) return false;
     OnlySome msg = (OnlySome)o;
     if (_foo != msg._foo) return false;
-    if (_bar != msg._bar) return false;
+    if (_bar != null) {
+      if (msg._bar != null) {
+        if (!_bar.equals (msg._bar)) return false;
+      }
+      else return false;
+    }
+    else if (msg._bar != null) return false;
     return true;
   }
   public int hashCode () {
     int hc = 1;
     hc = (hc * 31) + (int)_foo;
-    hc = (hc * 31) + (int)_bar;
+    hc *= 31;
+    if (_bar != null) hc += _bar.hashCode ();
     return hc;
   }
   public String toString () {

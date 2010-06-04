@@ -34,7 +34,7 @@ public class NonBuilderFromBuilder extends org.fudgemsg.proto.tests.inheritance.
     super (builder);
     _c = builder._c;
   }
-  public NonBuilderFromBuilder (int b, int c) {
+  public NonBuilderFromBuilder (Integer b, int c) {
     super (b);
     _c = c;
   }

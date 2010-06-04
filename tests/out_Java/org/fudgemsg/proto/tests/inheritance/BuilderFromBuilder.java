@@ -6,11 +6,11 @@
 // Created from inheritance.proto:51(9)
 package org.fudgemsg.proto.tests.inheritance;
 public class BuilderFromBuilder extends org.fudgemsg.proto.tests.inheritance.BuilderBase implements java.io.Serializable {
-  private static final long serialVersionUID = 108461l;
-  private final int _c;
+  private static final long serialVersionUID = -672257828l;
+  private final Integer _c;
   public static final String C_KEY = "c";
   public static class Builder extends org.fudgemsg.proto.tests.inheritance.BuilderBase.Builder {
-    private int _c;
+    private Integer _c;
     public Builder () {
     }
     protected Builder (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
@@ -26,7 +26,7 @@ public class BuilderFromBuilder extends org.fudgemsg.proto.tests.inheritance.Bui
         }
       }
     }
-    public Builder c (int c) {
+    public Builder c (Integer c) {
       _c = c;
       return this;
     }
@@ -38,7 +38,7 @@ public class BuilderFromBuilder extends org.fudgemsg.proto.tests.inheritance.Bui
     super (builder);
     _c = builder._c;
   }
-  public BuilderFromBuilder (int b, int c) {
+  public BuilderFromBuilder (Integer b, Integer c) {
     super (b);
     _c = c;
   }
@@ -55,7 +55,9 @@ public class BuilderFromBuilder extends org.fudgemsg.proto.tests.inheritance.Bui
   }
   public void toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext, final org.fudgemsg.MutableFudgeFieldContainer msg) {
     super.toFudgeMsg (fudgeContext, msg);
-    msg.add (C_KEY, null, _c);
+    if (_c != null)  {
+      msg.add (C_KEY, null, _c);
+    }
   }
   public static BuilderFromBuilder fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
     final java.util.List<org.fudgemsg.FudgeField> types = fudgeMsg.getAllByOrdinal (0);
@@ -71,7 +73,7 @@ public class BuilderFromBuilder extends org.fudgemsg.proto.tests.inheritance.Bui
     }
     return new Builder (fudgeMsg).build ();
   }
-  public int getC () {
+  public Integer getC () {
     return _c;
   }
   public boolean equals (final Object o) {
@@ -79,12 +81,19 @@ public class BuilderFromBuilder extends org.fudgemsg.proto.tests.inheritance.Bui
     if (o == null) return false;
     if (!(o instanceof BuilderFromBuilder)) return false;
     BuilderFromBuilder msg = (BuilderFromBuilder)o;
-    if (_c != msg._c) return false;
+    if (_c != null) {
+      if (msg._c != null) {
+        if (!_c.equals (msg._c)) return false;
+      }
+      else return false;
+    }
+    else if (msg._c != null) return false;
     return super.equals (msg);
   }
   public int hashCode () {
     int hc = super.hashCode ();
-    hc = (hc * 31) + (int)_c;
+    hc *= 31;
+    if (_c != null) hc += _c.hashCode ();
     return hc;
   }
   public String toString () {

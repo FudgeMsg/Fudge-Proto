@@ -6,8 +6,8 @@
 // Created from inheritance.proto:26(9)
 package org.fudgemsg.proto.tests.inheritance;
 public class SubClassA extends org.fudgemsg.proto.tests.inheritance.BaseClassA implements java.io.Serializable {
-  private static final long serialVersionUID = 3008705679666207638l;
-  private final int _scA_o;
+  private static final long serialVersionUID = 2411978123198397829l;
+  private final Integer _scA_o;
   public static final String SCA_O_KEY = "scA_o";
   private final java.util.List<Integer> _scA_r;
   public static final String SCA_R_KEY = "scA_r";
@@ -16,7 +16,7 @@ public class SubClassA extends org.fudgemsg.proto.tests.inheritance.BaseClassA i
   private final java.util.List<Integer> _scA_rq;
   public static final String SCA_RQ_KEY = "scA_rq";
   public static class Builder extends org.fudgemsg.proto.tests.inheritance.BaseClassA.Builder {
-    private int _scA_o;
+    private Integer _scA_o;
     private java.util.List<Integer> _scA_r;
     private final int _scA_q;
     private final java.util.List<Integer> _scA_rq;
@@ -81,7 +81,7 @@ public class SubClassA extends org.fudgemsg.proto.tests.inheritance.BaseClassA i
         scA_r (fudge1);
       }
     }
-    public Builder scA_o (int scA_o) {
+    public Builder scA_o (Integer scA_o) {
       _scA_o = scA_o;
       return this;
     }
@@ -128,7 +128,7 @@ public class SubClassA extends org.fudgemsg.proto.tests.inheritance.BaseClassA i
       _scA_rq = new java.util.ArrayList<Integer> (builder._scA_rq);
     }
   }
-  public SubClassA (int bcA_o, java.util.Collection<? extends Integer> bcA_r, int bcA_q, java.util.Collection<? extends Integer> bcA_rq, int scA_o, java.util.Collection<? extends Integer> scA_r, int scA_q, java.util.Collection<? extends Integer> scA_rq) {
+  public SubClassA (Integer bcA_o, java.util.Collection<? extends Integer> bcA_r, int bcA_q, java.util.Collection<? extends Integer> bcA_rq, Integer scA_o, java.util.Collection<? extends Integer> scA_r, int scA_q, java.util.Collection<? extends Integer> scA_rq) {
     super (bcA_o, bcA_r, bcA_q, bcA_rq);
     _scA_o = scA_o;
     if (scA_r == null) _scA_r = null;
@@ -174,7 +174,9 @@ public class SubClassA extends org.fudgemsg.proto.tests.inheritance.BaseClassA i
   }
   public void toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext, final org.fudgemsg.MutableFudgeFieldContainer msg) {
     super.toFudgeMsg (fudgeContext, msg);
-    msg.add (SCA_O_KEY, null, _scA_o);
+    if (_scA_o != null)  {
+      msg.add (SCA_O_KEY, null, _scA_o);
+    }
     if (_scA_r != null)  {
       for (Integer fudge1 : _scA_r) {
         msg.add (SCA_R_KEY, null, fudge1);
@@ -201,7 +203,7 @@ public class SubClassA extends org.fudgemsg.proto.tests.inheritance.BaseClassA i
     }
     return new Builder (fudgeMsg).build ();
   }
-  public int getScA_o () {
+  public Integer getScA_o () {
     return _scA_o;
   }
   public java.util.List<Integer> getScA_r () {
@@ -221,7 +223,13 @@ public class SubClassA extends org.fudgemsg.proto.tests.inheritance.BaseClassA i
     if (o == null) return false;
     if (!(o instanceof SubClassA)) return false;
     SubClassA msg = (SubClassA)o;
-    if (_scA_o != msg._scA_o) return false;
+    if (_scA_o != null) {
+      if (msg._scA_o != null) {
+        if (!_scA_o.equals (msg._scA_o)) return false;
+      }
+      else return false;
+    }
+    else if (msg._scA_o != null) return false;
     if (_scA_r != null) {
       if (msg._scA_r != null) {
         if (!_scA_r.equals (msg._scA_r)) return false;
@@ -241,7 +249,8 @@ public class SubClassA extends org.fudgemsg.proto.tests.inheritance.BaseClassA i
   }
   public int hashCode () {
     int hc = super.hashCode ();
-    hc = (hc * 31) + (int)_scA_o;
+    hc *= 31;
+    if (_scA_o != null) hc += _scA_o.hashCode ();
     hc *= 31;
     if (_scA_r != null) hc += _scA_r.hashCode ();
     hc = (hc * 31) + (int)_scA_q;
