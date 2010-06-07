@@ -24,7 +24,7 @@ import javax.time.calendar.TimeProvider;
 import org.fudgemsg.FudgeFieldContainer;
 
 public interface RSTypesBase {
-  public List<Boolean> get_Bool ();
+  public List<Boolean> get_Boolean ();
   public List<Byte> get_Byte ();
   public List<Double> get_Double ();
   public List<Float> get_Float ();

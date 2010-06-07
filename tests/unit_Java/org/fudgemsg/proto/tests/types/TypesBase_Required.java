@@ -22,7 +22,7 @@ import javax.time.calendar.TimeProvider;
 import org.fudgemsg.FudgeFieldContainer;
 
 public interface TypesBase_Required {
-  public boolean get_Bool ();
+  public boolean get_Boolean ();
   public byte get_Byte ();
   public double get_Double ();
   public float get_Float ();

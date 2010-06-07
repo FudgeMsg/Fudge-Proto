@@ -6,9 +6,9 @@
 // Created from types.proto:17(10)
 package org.fudgemsg.proto.tests.types;
 public class STypes_Optional implements java.io.Serializable, TypesBase_Optional {
-  private static final long serialVersionUID = 4340358908083072877l;
-  private final Boolean __Bool;
-  public static final String _BOOL_KEY = "_Bool";
+  private static final long serialVersionUID = -6972983003430872947l;
+  private final Boolean __Boolean;
+  public static final String _BOOLEAN_KEY = "_Boolean";
   private final Byte __Byte;
   public static final String _BYTE_KEY = "_Byte";
   private final Double __Double;
@@ -38,7 +38,7 @@ public class STypes_Optional implements java.io.Serializable, TypesBase_Optional
   private final javax.time.calendar.TimeProvider __Time;
   public static final String _TIME_KEY = "_Time";
   public static class Builder {
-    private Boolean __Bool;
+    private Boolean __Boolean;
     private Byte __Byte;
     private Double __Double;
     private Float __Float;
@@ -57,13 +57,13 @@ public class STypes_Optional implements java.io.Serializable, TypesBase_Optional
     }
     protected Builder (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
       org.fudgemsg.FudgeField fudgeField;
-      fudgeField = fudgeMsg.getByName (_BOOL_KEY);
+      fudgeField = fudgeMsg.getByName (_BOOLEAN_KEY);
       if (fudgeField != null)  {
         try {
-          _Bool (fudgeMsg.getFieldValue (Boolean.class, fudgeField));
+          _Boolean (fudgeMsg.getFieldValue (Boolean.class, fudgeField));
         }
         catch (IllegalArgumentException e) {
-          throw new IllegalArgumentException ("Fudge message is not a STypes_Optional - field '_Bool' is not boolean", e);
+          throw new IllegalArgumentException ("Fudge message is not a STypes_Optional - field '_Boolean' is not boolean", e);
         }
       }
       fudgeField = fudgeMsg.getByName (_BYTE_KEY);
@@ -194,8 +194,8 @@ public class STypes_Optional implements java.io.Serializable, TypesBase_Optional
         }
       }
     }
-    public Builder _Bool (Boolean _Bool) {
-      __Bool = _Bool;
+    public Builder _Boolean (Boolean _Boolean) {
+      __Boolean = _Boolean;
       return this;
     }
     public Builder _Byte (Byte _Byte) {
@@ -262,7 +262,7 @@ public class STypes_Optional implements java.io.Serializable, TypesBase_Optional
     }
   }
   protected STypes_Optional (final Builder builder) {
-    __Bool = builder.__Bool;
+    __Boolean = builder.__Boolean;
     __Byte = builder.__Byte;
     __Double = builder.__Double;
     __Float = builder.__Float;
@@ -281,8 +281,8 @@ public class STypes_Optional implements java.io.Serializable, TypesBase_Optional
     __DateTime = builder.__DateTime;
     __Time = builder.__Time;
   }
-  public STypes_Optional (Boolean _Bool, Byte _Byte, Double _Double, Float _Float, Boolean _Indicator, Integer _Int, Long _Long, Short _Short, String _String, org.fudgemsg.proto.tests.types.SubMessage _SubMessage, org.fudgemsg.proto.tests.types.CustomEnum _CustomEnum, org.fudgemsg.FudgeFieldContainer _Message, javax.time.calendar.DateProvider _Date, javax.time.calendar.DateTimeProvider _DateTime, javax.time.calendar.TimeProvider _Time) {
-    __Bool = _Bool;
+  public STypes_Optional (Boolean _Boolean, Byte _Byte, Double _Double, Float _Float, Boolean _Indicator, Integer _Int, Long _Long, Short _Short, String _String, org.fudgemsg.proto.tests.types.SubMessage _SubMessage, org.fudgemsg.proto.tests.types.CustomEnum _CustomEnum, org.fudgemsg.FudgeFieldContainer _Message, javax.time.calendar.DateProvider _Date, javax.time.calendar.DateTimeProvider _DateTime, javax.time.calendar.TimeProvider _Time) {
+    __Boolean = _Boolean;
     __Byte = _Byte;
     __Double = _Double;
     __Float = _Float;
@@ -303,7 +303,7 @@ public class STypes_Optional implements java.io.Serializable, TypesBase_Optional
   }
   protected STypes_Optional (final STypes_Optional source) {
     if (source == null) throw new NullPointerException ("'source' must not be null");
-    __Bool = source.__Bool;
+    __Boolean = source.__Boolean;
     __Byte = source.__Byte;
     __Double = source.__Double;
     __Float = source.__Float;
@@ -329,8 +329,8 @@ public class STypes_Optional implements java.io.Serializable, TypesBase_Optional
     return msg;
   }
   public void toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext, final org.fudgemsg.MutableFudgeFieldContainer msg) {
-    if (__Bool != null)  {
-      msg.add (_BOOL_KEY, null, __Bool);
+    if (__Boolean != null)  {
+      msg.add (_BOOLEAN_KEY, null, __Boolean);
     }
     if (__Byte != null)  {
       msg.add (_BYTE_KEY, null, __Byte);
@@ -396,8 +396,8 @@ public class STypes_Optional implements java.io.Serializable, TypesBase_Optional
     }
     return new Builder (fudgeMsg).build ();
   }
-  public Boolean get_Bool () {
-    return __Bool;
+  public Boolean get_Boolean () {
+    return __Boolean;
   }
   public Byte get_Byte () {
     return __Byte;
@@ -446,13 +446,13 @@ public class STypes_Optional implements java.io.Serializable, TypesBase_Optional
     if (o == null) return false;
     if (!(o instanceof STypes_Optional)) return false;
     STypes_Optional msg = (STypes_Optional)o;
-    if (__Bool != null) {
-      if (msg.__Bool != null) {
-        if (!__Bool.equals (msg.__Bool)) return false;
+    if (__Boolean != null) {
+      if (msg.__Boolean != null) {
+        if (!__Boolean.equals (msg.__Boolean)) return false;
       }
       else return false;
     }
-    else if (msg.__Bool != null) return false;
+    else if (msg.__Boolean != null) return false;
     if (__Byte != null) {
       if (msg.__Byte != null) {
         if (!__Byte.equals (msg.__Byte)) return false;
@@ -556,7 +556,7 @@ public class STypes_Optional implements java.io.Serializable, TypesBase_Optional
   public int hashCode () {
     int hc = 1;
     hc *= 31;
-    if (__Bool != null) hc += __Bool.hashCode ();
+    if (__Boolean != null) hc += __Boolean.hashCode ();
     hc *= 31;
     if (__Byte != null) hc += __Byte.hashCode ();
     hc *= 31;

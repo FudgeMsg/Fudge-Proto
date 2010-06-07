@@ -6,9 +6,9 @@
 // Created from types.proto:207(10)
 package org.fudgemsg.proto.tests.types;
 public class MutableSTypes_Optional implements java.io.Serializable, TypesBase_Optional {
-  private static final long serialVersionUID = 4340358908083072877l;
-  private Boolean __Bool;
-  public static final String _BOOL_KEY = "_Bool";
+  private static final long serialVersionUID = -6972983003430872947l;
+  private Boolean __Boolean;
+  public static final String _BOOLEAN_KEY = "_Boolean";
   private Byte __Byte;
   public static final String _BYTE_KEY = "_Byte";
   private Double __Double;
@@ -41,13 +41,13 @@ public class MutableSTypes_Optional implements java.io.Serializable, TypesBase_O
   }
   protected MutableSTypes_Optional (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
     org.fudgemsg.FudgeField fudgeField;
-    fudgeField = fudgeMsg.getByName (_BOOL_KEY);
+    fudgeField = fudgeMsg.getByName (_BOOLEAN_KEY);
     if (fudgeField != null)  {
       try {
-        set_Bool (fudgeMsg.getFieldValue (Boolean.class, fudgeField));
+        set_Boolean (fudgeMsg.getFieldValue (Boolean.class, fudgeField));
       }
       catch (IllegalArgumentException e) {
-        throw new IllegalArgumentException ("Fudge message is not a MutableSTypes_Optional - field '_Bool' is not boolean", e);
+        throw new IllegalArgumentException ("Fudge message is not a MutableSTypes_Optional - field '_Boolean' is not boolean", e);
       }
     }
     fudgeField = fudgeMsg.getByName (_BYTE_KEY);
@@ -178,8 +178,8 @@ public class MutableSTypes_Optional implements java.io.Serializable, TypesBase_O
       }
     }
   }
-  public MutableSTypes_Optional (Boolean _Bool, Byte _Byte, Double _Double, Float _Float, Boolean _Indicator, Integer _Int, Long _Long, Short _Short, String _String, org.fudgemsg.proto.tests.types.SubMessage _SubMessage, org.fudgemsg.proto.tests.types.CustomEnum _CustomEnum, org.fudgemsg.FudgeFieldContainer _Message, javax.time.calendar.DateProvider _Date, javax.time.calendar.DateTimeProvider _DateTime, javax.time.calendar.TimeProvider _Time) {
-    __Bool = _Bool;
+  public MutableSTypes_Optional (Boolean _Boolean, Byte _Byte, Double _Double, Float _Float, Boolean _Indicator, Integer _Int, Long _Long, Short _Short, String _String, org.fudgemsg.proto.tests.types.SubMessage _SubMessage, org.fudgemsg.proto.tests.types.CustomEnum _CustomEnum, org.fudgemsg.FudgeFieldContainer _Message, javax.time.calendar.DateProvider _Date, javax.time.calendar.DateTimeProvider _DateTime, javax.time.calendar.TimeProvider _Time) {
+    __Boolean = _Boolean;
     __Byte = _Byte;
     __Double = _Double;
     __Float = _Float;
@@ -200,7 +200,7 @@ public class MutableSTypes_Optional implements java.io.Serializable, TypesBase_O
   }
   protected MutableSTypes_Optional (final MutableSTypes_Optional source) {
     if (source == null) throw new NullPointerException ("'source' must not be null");
-    __Bool = source.__Bool;
+    __Boolean = source.__Boolean;
     __Byte = source.__Byte;
     __Double = source.__Double;
     __Float = source.__Float;
@@ -229,8 +229,8 @@ public class MutableSTypes_Optional implements java.io.Serializable, TypesBase_O
     return msg;
   }
   public void toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext, final org.fudgemsg.MutableFudgeFieldContainer msg) {
-    if (__Bool != null)  {
-      msg.add (_BOOL_KEY, null, __Bool);
+    if (__Boolean != null)  {
+      msg.add (_BOOLEAN_KEY, null, __Boolean);
     }
     if (__Byte != null)  {
       msg.add (_BYTE_KEY, null, __Byte);
@@ -296,11 +296,11 @@ public class MutableSTypes_Optional implements java.io.Serializable, TypesBase_O
     }
     return new MutableSTypes_Optional (fudgeMsg);
   }
-  public Boolean get_Bool () {
-    return __Bool;
+  public Boolean get_Boolean () {
+    return __Boolean;
   }
-  public void set_Bool (Boolean _Bool) {
-    __Bool = _Bool;
+  public void set_Boolean (Boolean _Boolean) {
+    __Boolean = _Boolean;
   }
   public Byte get_Byte () {
     return __Byte;
@@ -394,13 +394,13 @@ public class MutableSTypes_Optional implements java.io.Serializable, TypesBase_O
     if (o == null) return false;
     if (!(o instanceof MutableSTypes_Optional)) return false;
     MutableSTypes_Optional msg = (MutableSTypes_Optional)o;
-    if (__Bool != null) {
-      if (msg.__Bool != null) {
-        if (!__Bool.equals (msg.__Bool)) return false;
+    if (__Boolean != null) {
+      if (msg.__Boolean != null) {
+        if (!__Boolean.equals (msg.__Boolean)) return false;
       }
       else return false;
     }
-    else if (msg.__Bool != null) return false;
+    else if (msg.__Boolean != null) return false;
     if (__Byte != null) {
       if (msg.__Byte != null) {
         if (!__Byte.equals (msg.__Byte)) return false;
@@ -504,7 +504,7 @@ public class MutableSTypes_Optional implements java.io.Serializable, TypesBase_O
   public int hashCode () {
     int hc = 1;
     hc *= 31;
-    if (__Bool != null) hc += __Bool.hashCode ();
+    if (__Boolean != null) hc += __Boolean.hashCode ();
     hc *= 31;
     if (__Byte != null) hc += __Byte.hashCode ();
     hc *= 31;

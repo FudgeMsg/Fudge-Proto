@@ -6,9 +6,9 @@
 // Created from types.proto:131(10)
 package org.fudgemsg.proto.tests.types;
 public class ATypes_Required implements java.io.Serializable, ATypesBase {
-  private static final long serialVersionUID = 1836481633587700060l;
-  private final boolean[] __Bool;
-  public static final String _BOOL_KEY = "_Bool";
+  private static final long serialVersionUID = 8969883795783305852l;
+  private final boolean[] __Boolean;
+  public static final String _BOOLEAN_KEY = "_Boolean";
   private final byte[] __Byte;
   public static final String _BYTE_KEY = "_Byte";
   private final double[] __Double;
@@ -37,10 +37,10 @@ public class ATypes_Required implements java.io.Serializable, ATypesBase {
   public static final String _DATETIME_KEY = "_DateTime";
   private final javax.time.calendar.TimeProvider[] __Time;
   public static final String _TIME_KEY = "_Time";
-  public ATypes_Required (boolean[] _Bool, byte[] _Byte, double[] _Double, float[] _Float, boolean[] _Indicator, int[] _Int, long[] _Long, short[] _Short, String[] _String, org.fudgemsg.proto.tests.types.SubMessage[] _SubMessage, org.fudgemsg.proto.tests.types.CustomEnum[] _CustomEnum, org.fudgemsg.FudgeFieldContainer[] _Message, javax.time.calendar.DateProvider[] _Date, javax.time.calendar.DateTimeProvider[] _DateTime, javax.time.calendar.TimeProvider[] _Time) {
-    if (_Bool == null) throw new NullPointerException ("'_Bool' cannot be null");
+  public ATypes_Required (boolean[] _Boolean, byte[] _Byte, double[] _Double, float[] _Float, boolean[] _Indicator, int[] _Int, long[] _Long, short[] _Short, String[] _String, org.fudgemsg.proto.tests.types.SubMessage[] _SubMessage, org.fudgemsg.proto.tests.types.CustomEnum[] _CustomEnum, org.fudgemsg.FudgeFieldContainer[] _Message, javax.time.calendar.DateProvider[] _Date, javax.time.calendar.DateTimeProvider[] _DateTime, javax.time.calendar.TimeProvider[] _Time) {
+    if (_Boolean == null) throw new NullPointerException ("'_Boolean' cannot be null");
     else {
-      __Bool = java.util.Arrays.copyOf (_Bool, _Bool.length);
+      __Boolean = java.util.Arrays.copyOf (_Boolean, _Boolean.length);
     }
     if (_Byte == null) throw new NullPointerException ("'_Byte' cannot be null");
     else {
@@ -104,8 +104,8 @@ public class ATypes_Required implements java.io.Serializable, ATypesBase {
   }
   protected ATypes_Required (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
     org.fudgemsg.FudgeField fudgeField;
-    fudgeField = fudgeMsg.getByName (_BOOL_KEY);
-    if (fudgeField == null) throw new IllegalArgumentException ("Fudge message is not a ATypes_Required - field '_Bool' is not present");
+    fudgeField = fudgeMsg.getByName (_BOOLEAN_KEY);
+    if (fudgeField == null) throw new IllegalArgumentException ("Fudge message is not a ATypes_Required - field '_Boolean' is not present");
     try {
       final org.fudgemsg.FudgeFieldContainer fudge1 = fudgeMsg.getFieldValue (org.fudgemsg.FudgeFieldContainer.class, fudgeField);
       final java.util.List<Boolean> fudge2 = new java.util.ArrayList<Boolean> ();
@@ -114,7 +114,7 @@ public class ATypes_Required implements java.io.Serializable, ATypesBase {
           fudge2.add (fudge1.getFieldValue (Boolean.class, fudge3));
         }
         catch (IllegalArgumentException e) {
-          throw new IllegalArgumentException ("Fudge message is not a ATypes_Required - field '_Bool[]' is not boolean", e);
+          throw new IllegalArgumentException ("Fudge message is not a ATypes_Required - field '_Boolean[]' is not boolean", e);
         }
       }
       final boolean[] fudge4 = new boolean[fudge2.size ()];
@@ -122,10 +122,10 @@ public class ATypes_Required implements java.io.Serializable, ATypesBase {
       for (boolean fudge6 : fudge2) {
         fudge4[fudge5++] = fudge6;
       }
-      __Bool = fudge4;
+      __Boolean = fudge4;
     }
     catch (IllegalArgumentException e) {
-      throw new IllegalArgumentException ("Fudge message is not a ATypes_Required - field '_Bool' is not boolean[]", e);
+      throw new IllegalArgumentException ("Fudge message is not a ATypes_Required - field '_Boolean' is not boolean[]", e);
     }
     fudgeField = fudgeMsg.getByName (_BYTE_KEY);
     if (fudgeField == null) throw new IllegalArgumentException ("Fudge message is not a ATypes_Required - field '_Byte' is not present");
@@ -328,9 +328,9 @@ public class ATypes_Required implements java.io.Serializable, ATypesBase {
   }
   protected ATypes_Required (final ATypes_Required source) {
     if (source == null) throw new NullPointerException ("'source' must not be null");
-    if (source.__Bool == null) __Bool = null;
+    if (source.__Boolean == null) __Boolean = null;
     else {
-      __Bool = java.util.Arrays.copyOf (source.__Bool, source.__Bool.length);
+      __Boolean = java.util.Arrays.copyOf (source.__Boolean, source.__Boolean.length);
     }
     if (source.__Byte == null) __Byte = null;
     else {
@@ -399,12 +399,12 @@ public class ATypes_Required implements java.io.Serializable, ATypesBase {
     return msg;
   }
   public void toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext, final org.fudgemsg.MutableFudgeFieldContainer msg) {
-    if (__Bool != null)  {
+    if (__Boolean != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
-      for (boolean fudge2 : __Bool) {
+      for (boolean fudge2 : __Boolean) {
         fudge1.add (null, null, fudge2);
       }
-      msg.add (_BOOL_KEY, null, fudge1);
+      msg.add (_BOOLEAN_KEY, null, fudge1);
     }
     if (__Byte != null)  {
       msg.add (_BYTE_KEY, null, __Byte);
@@ -502,8 +502,8 @@ public class ATypes_Required implements java.io.Serializable, ATypesBase {
     }
     return new ATypes_Required (fudgeMsg);
   }
-  public boolean[] get_Bool () {
-    return __Bool;
+  public boolean[] get_Boolean () {
+    return __Boolean;
   }
   public byte[] get_Byte () {
     return __Byte;
@@ -552,7 +552,7 @@ public class ATypes_Required implements java.io.Serializable, ATypesBase {
     if (o == null) return false;
     if (!(o instanceof ATypes_Required)) return false;
     ATypes_Required msg = (ATypes_Required)o;
-    if (!java.util.Arrays.equals (__Bool, msg.__Bool)) return false;
+    if (!java.util.Arrays.equals (__Boolean, msg.__Boolean)) return false;
     if (!java.util.Arrays.equals (__Byte, msg.__Byte)) return false;
     if (!java.util.Arrays.equals (__Double, msg.__Double)) return false;
     if (!java.util.Arrays.equals (__Float, msg.__Float)) return false;
@@ -572,7 +572,7 @@ public class ATypes_Required implements java.io.Serializable, ATypesBase {
   public int hashCode () {
     int hc = 1;
     hc *= 31;
-    if (__Bool != null)hc += java.util.Arrays.hashCode (__Bool);
+    if (__Boolean != null)hc += java.util.Arrays.hashCode (__Boolean);
     hc *= 31;
     if (__Byte != null)hc += java.util.Arrays.hashCode (__Byte);
     hc *= 31;

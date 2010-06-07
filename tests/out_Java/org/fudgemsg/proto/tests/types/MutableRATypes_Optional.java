@@ -6,9 +6,9 @@
 // Created from types.proto:264(10)
 package org.fudgemsg.proto.tests.types;
 public class MutableRATypes_Optional implements java.io.Serializable, RATypesBase {
-  private static final long serialVersionUID = -2750436568204478060l;
-  private java.util.List<boolean[]> __Bool;
-  public static final String _BOOL_KEY = "_Bool";
+  private static final long serialVersionUID = 4382965593991127732l;
+  private java.util.List<boolean[]> __Boolean;
+  public static final String _BOOLEAN_KEY = "_Boolean";
   private java.util.List<byte[]> __Byte;
   public static final String _BYTE_KEY = "_Byte";
   private java.util.List<double[]> __Double;
@@ -41,7 +41,7 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
   }
   protected MutableRATypes_Optional (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
     java.util.List<org.fudgemsg.FudgeField> fudgeFields;
-    fudgeFields = fudgeMsg.getAllByName (_BOOL_KEY);
+    fudgeFields = fudgeMsg.getAllByName (_BOOLEAN_KEY);
     if (fudgeFields.size () > 0)  {
       final java.util.List<boolean[]> fudge1;
       fudge1 = new java.util.ArrayList<boolean[]> (fudgeFields.size ());
@@ -54,7 +54,7 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
               fudge4.add (fudge3.getFieldValue (Boolean.class, fudge5));
             }
             catch (IllegalArgumentException e) {
-              throw new IllegalArgumentException ("Fudge message is not a MutableRATypes_Optional - field '_Bool[]' is not boolean", e);
+              throw new IllegalArgumentException ("Fudge message is not a MutableRATypes_Optional - field '_Boolean[]' is not boolean", e);
             }
           }
           final boolean[] fudge6 = new boolean[fudge4.size ()];
@@ -65,10 +65,10 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
           fudge1.add (fudge6);
         }
         catch (IllegalArgumentException e) {
-          throw new IllegalArgumentException ("Fudge message is not a MutableRATypes_Optional - field '_Bool' is not boolean[]", e);
+          throw new IllegalArgumentException ("Fudge message is not a MutableRATypes_Optional - field '_Boolean' is not boolean[]", e);
         }
       }
-      set_Bool (fudge1);
+      set_Boolean (fudge1);
     }
     fudgeFields = fudgeMsg.getAllByName (_BYTE_KEY);
     if (fudgeFields.size () > 0)  {
@@ -353,16 +353,16 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
       set_Time (fudge1);
     }
   }
-  public MutableRATypes_Optional (java.util.Collection<? extends boolean[]> _Bool, java.util.Collection<? extends byte[]> _Byte, java.util.Collection<? extends double[]> _Double, java.util.Collection<? extends float[]> _Float, java.util.Collection<? extends boolean[]> _Indicator, java.util.Collection<? extends int[]> _Int, java.util.Collection<? extends long[]> _Long, java.util.Collection<? extends short[]> _Short, java.util.Collection<? extends String[]> _String, java.util.Collection<? extends org.fudgemsg.proto.tests.types.SubMessage[]> _SubMessage, java.util.Collection<? extends org.fudgemsg.proto.tests.types.CustomEnum[]> _CustomEnum, java.util.Collection<? extends org.fudgemsg.FudgeFieldContainer[]> _Message, java.util.Collection<? extends javax.time.calendar.DateProvider[]> _Date, java.util.Collection<? extends javax.time.calendar.DateTimeProvider[]> _DateTime, java.util.Collection<? extends javax.time.calendar.TimeProvider[]> _Time) {
-    if (_Bool == null) __Bool = null;
+  public MutableRATypes_Optional (java.util.Collection<? extends boolean[]> _Boolean, java.util.Collection<? extends byte[]> _Byte, java.util.Collection<? extends double[]> _Double, java.util.Collection<? extends float[]> _Float, java.util.Collection<? extends boolean[]> _Indicator, java.util.Collection<? extends int[]> _Int, java.util.Collection<? extends long[]> _Long, java.util.Collection<? extends short[]> _Short, java.util.Collection<? extends String[]> _String, java.util.Collection<? extends org.fudgemsg.proto.tests.types.SubMessage[]> _SubMessage, java.util.Collection<? extends org.fudgemsg.proto.tests.types.CustomEnum[]> _CustomEnum, java.util.Collection<? extends org.fudgemsg.FudgeFieldContainer[]> _Message, java.util.Collection<? extends javax.time.calendar.DateProvider[]> _Date, java.util.Collection<? extends javax.time.calendar.DateTimeProvider[]> _DateTime, java.util.Collection<? extends javax.time.calendar.TimeProvider[]> _Time) {
+    if (_Boolean == null) __Boolean = null;
     else {
-      final java.util.List<boolean[]> fudge0 = new java.util.ArrayList<boolean[]> (_Bool);
+      final java.util.List<boolean[]> fudge0 = new java.util.ArrayList<boolean[]> (_Boolean);
       for (java.util.ListIterator<boolean[]> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
         boolean[] fudge2 = fudge1.next ();
-        if (fudge2 == null) throw new NullPointerException ("List element of '_Bool' cannot be null");
+        if (fudge2 == null) throw new NullPointerException ("List element of '_Boolean' cannot be null");
         fudge1.set (java.util.Arrays.copyOf (fudge2, fudge2.length));
       }
-      __Bool = fudge0;
+      __Boolean = fudge0;
     }
     if (_Byte == null) __Byte = null;
     else {
@@ -510,14 +510,14 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
   }
   protected MutableRATypes_Optional (final MutableRATypes_Optional source) {
     if (source == null) throw new NullPointerException ("'source' must not be null");
-    if (source.__Bool == null) __Bool = null;
+    if (source.__Boolean == null) __Boolean = null;
     else {
-      final java.util.List<boolean[]> fudge0 = new java.util.ArrayList<boolean[]> (source.__Bool);
+      final java.util.List<boolean[]> fudge0 = new java.util.ArrayList<boolean[]> (source.__Boolean);
       for (java.util.ListIterator<boolean[]> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
         boolean[] fudge2 = fudge1.next ();
         fudge1.set (java.util.Arrays.copyOf (fudge2, fudge2.length));
       }
-      __Bool = fudge0;
+      __Boolean = fudge0;
     }
     if (source.__Byte == null) __Byte = null;
     else {
@@ -659,13 +659,13 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
     return msg;
   }
   public void toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext, final org.fudgemsg.MutableFudgeFieldContainer msg) {
-    if (__Bool != null)  {
-      for (boolean[] fudge1 : __Bool) {
+    if (__Boolean != null)  {
+      for (boolean[] fudge1 : __Boolean) {
         final org.fudgemsg.MutableFudgeFieldContainer fudge2 = fudgeContext.newMessage ();
         for (boolean fudge3 : fudge1) {
           fudge2.add (null, null, fudge3);
         }
-        msg.add (_BOOL_KEY, null, fudge2);
+        msg.add (_BOOLEAN_KEY, null, fudge2);
       }
     }
     if (__Byte != null)  {
@@ -792,35 +792,35 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
     }
     return new MutableRATypes_Optional (fudgeMsg);
   }
-  public java.util.List<boolean[]> get_Bool () {
-    if (__Bool != null) {
-      return java.util.Collections.unmodifiableList (__Bool);
+  public java.util.List<boolean[]> get_Boolean () {
+    if (__Boolean != null) {
+      return java.util.Collections.unmodifiableList (__Boolean);
     }
     else return null;
   }
-  public void set_Bool (boolean[] _Bool) {
-    if (_Bool == null) __Bool = null;
+  public void set_Boolean (boolean[] _Boolean) {
+    if (_Boolean == null) __Boolean = null;
     else {
-      __Bool = new java.util.ArrayList<boolean[]> (1);
-      add_Bool (_Bool);
+      __Boolean = new java.util.ArrayList<boolean[]> (1);
+      add_Boolean (_Boolean);
     }
   }
-  public void set_Bool (java.util.Collection<? extends boolean[]> _Bool) {
-    if (_Bool == null) __Bool = null;
+  public void set_Boolean (java.util.Collection<? extends boolean[]> _Boolean) {
+    if (_Boolean == null) __Boolean = null;
     else {
-      final java.util.List<boolean[]> fudge0 = new java.util.ArrayList<boolean[]> (_Bool);
+      final java.util.List<boolean[]> fudge0 = new java.util.ArrayList<boolean[]> (_Boolean);
       for (java.util.ListIterator<boolean[]> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
         boolean[] fudge2 = fudge1.next ();
-        if (fudge2 == null) throw new NullPointerException ("List element of '_Bool' cannot be null");
+        if (fudge2 == null) throw new NullPointerException ("List element of '_Boolean' cannot be null");
         fudge1.set (java.util.Arrays.copyOf (fudge2, fudge2.length));
       }
-      __Bool = fudge0;
+      __Boolean = fudge0;
     }
   }
-  public void add_Bool (boolean[] _Bool) {
-    if (_Bool == null) throw new NullPointerException ("'_Bool' cannot be null");
-    if (__Bool == null) __Bool = new java.util.ArrayList<boolean[]> ();
-    __Bool.add (java.util.Arrays.copyOf (_Bool, _Bool.length));
+  public void add_Boolean (boolean[] _Boolean) {
+    if (_Boolean == null) throw new NullPointerException ("'_Boolean' cannot be null");
+    if (__Boolean == null) __Boolean = new java.util.ArrayList<boolean[]> ();
+    __Boolean.add (java.util.Arrays.copyOf (_Boolean, _Boolean.length));
   }
   public java.util.List<byte[]> get_Byte () {
     if (__Byte != null) {
@@ -1253,16 +1253,16 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
     if (o == null) return false;
     if (!(o instanceof MutableRATypes_Optional)) return false;
     MutableRATypes_Optional msg = (MutableRATypes_Optional)o;
-    if (__Bool != null) {
-      if (msg.__Bool != null) {
-        if (__Bool.size () != msg.__Bool.size ()) return false;
-        for (int i = 0; i < __Bool.size (); i++) {
-          if (!java.util.Arrays.equals (__Bool.get (i), msg.__Bool.get (i))) return false;
+    if (__Boolean != null) {
+      if (msg.__Boolean != null) {
+        if (__Boolean.size () != msg.__Boolean.size ()) return false;
+        for (int i = 0; i < __Boolean.size (); i++) {
+          if (!java.util.Arrays.equals (__Boolean.get (i), msg.__Boolean.get (i))) return false;
         }
       }
       else return false;
     }
-    else if (msg.__Bool != null) return false;
+    else if (msg.__Boolean != null) return false;
     if (__Byte != null) {
       if (msg.__Byte != null) {
         if (__Byte.size () != msg.__Byte.size ()) return false;
@@ -1408,7 +1408,7 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
   public int hashCode () {
     int hc = 1;
     hc *= 31;
-    if (__Bool != null) for (boolean[] elem : __Bool) hc = (hc * 31) + java.util.Arrays.hashCode (elem);
+    if (__Boolean != null) for (boolean[] elem : __Boolean) hc = (hc * 31) + java.util.Arrays.hashCode (elem);
     hc *= 31;
     if (__Byte != null) for (byte[] elem : __Byte) hc = (hc * 31) + java.util.Arrays.hashCode (elem);
     hc *= 31;

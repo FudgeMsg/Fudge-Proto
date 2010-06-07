@@ -6,9 +6,9 @@
 // Created from types.proto:188(10)
 package org.fudgemsg.proto.tests.types;
 public class AATypes_Required implements java.io.Serializable, AATypesBase {
-  private static final long serialVersionUID = -4467558730677445862l;
-  private final boolean[][] __Bool;
-  public static final String _BOOL_KEY = "_Bool";
+  private static final long serialVersionUID = 2665843431518159930l;
+  private final boolean[][] __Boolean;
+  public static final String _BOOLEAN_KEY = "_Boolean";
   private final byte[][] __Byte;
   public static final String _BYTE_KEY = "_Byte";
   private final double[][] __Double;
@@ -37,14 +37,14 @@ public class AATypes_Required implements java.io.Serializable, AATypesBase {
   public static final String _DATETIME_KEY = "_DateTime";
   private final javax.time.calendar.TimeProvider[][] __Time;
   public static final String _TIME_KEY = "_Time";
-  public AATypes_Required (boolean[][] _Bool, byte[][] _Byte, double[][] _Double, float[][] _Float, boolean[][] _Indicator, int[][] _Int, long[][] _Long, short[][] _Short, String[][] _String, org.fudgemsg.proto.tests.types.SubMessage[][] _SubMessage, org.fudgemsg.proto.tests.types.CustomEnum[][] _CustomEnum, org.fudgemsg.FudgeFieldContainer[][] _Message, javax.time.calendar.DateProvider[][] _Date, javax.time.calendar.DateTimeProvider[][] _DateTime, javax.time.calendar.TimeProvider[][] _Time) {
-    if (_Bool == null) throw new NullPointerException ("'_Bool' cannot be null");
+  public AATypes_Required (boolean[][] _Boolean, byte[][] _Byte, double[][] _Double, float[][] _Float, boolean[][] _Indicator, int[][] _Int, long[][] _Long, short[][] _Short, String[][] _String, org.fudgemsg.proto.tests.types.SubMessage[][] _SubMessage, org.fudgemsg.proto.tests.types.CustomEnum[][] _CustomEnum, org.fudgemsg.FudgeFieldContainer[][] _Message, javax.time.calendar.DateProvider[][] _Date, javax.time.calendar.DateTimeProvider[][] _DateTime, javax.time.calendar.TimeProvider[][] _Time) {
+    if (_Boolean == null) throw new NullPointerException ("'_Boolean' cannot be null");
     else {
-      _Bool = java.util.Arrays.copyOf (_Bool, _Bool.length);
-      for (int fudge0 = 0; fudge0 < _Bool.length; fudge0++) {
-        _Bool[fudge0] = java.util.Arrays.copyOf (_Bool[fudge0], _Bool[fudge0].length);
+      _Boolean = java.util.Arrays.copyOf (_Boolean, _Boolean.length);
+      for (int fudge0 = 0; fudge0 < _Boolean.length; fudge0++) {
+        _Boolean[fudge0] = java.util.Arrays.copyOf (_Boolean[fudge0], _Boolean[fudge0].length);
       }
-      __Bool = _Bool;
+      __Boolean = _Boolean;
     }
     if (_Byte == null) throw new NullPointerException ("'_Byte' cannot be null");
     else {
@@ -163,8 +163,8 @@ public class AATypes_Required implements java.io.Serializable, AATypesBase {
   }
   protected AATypes_Required (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
     org.fudgemsg.FudgeField fudgeField;
-    fudgeField = fudgeMsg.getByName (_BOOL_KEY);
-    if (fudgeField == null) throw new IllegalArgumentException ("Fudge message is not a AATypes_Required - field '_Bool' is not present");
+    fudgeField = fudgeMsg.getByName (_BOOLEAN_KEY);
+    if (fudgeField == null) throw new IllegalArgumentException ("Fudge message is not a AATypes_Required - field '_Boolean' is not present");
     try {
       final org.fudgemsg.FudgeFieldContainer fudge1 = fudgeMsg.getFieldValue (org.fudgemsg.FudgeFieldContainer.class, fudgeField);
       final java.util.List<boolean[]> fudge2 = new java.util.ArrayList<boolean[]> ();
@@ -177,7 +177,7 @@ public class AATypes_Required implements java.io.Serializable, AATypesBase {
               fudge5.add (fudge4.getFieldValue (Boolean.class, fudge6));
             }
             catch (IllegalArgumentException e) {
-              throw new IllegalArgumentException ("Fudge message is not a AATypes_Required - field '_Bool[][]' is not boolean", e);
+              throw new IllegalArgumentException ("Fudge message is not a AATypes_Required - field '_Boolean[][]' is not boolean", e);
             }
           }
           final boolean[] fudge7 = new boolean[fudge5.size ()];
@@ -188,13 +188,13 @@ public class AATypes_Required implements java.io.Serializable, AATypesBase {
           fudge2.add (fudge7);
         }
         catch (IllegalArgumentException e) {
-          throw new IllegalArgumentException ("Fudge message is not a AATypes_Required - field '_Bool[]' is not boolean[]", e);
+          throw new IllegalArgumentException ("Fudge message is not a AATypes_Required - field '_Boolean[]' is not boolean[]", e);
         }
       }
-      __Bool = fudge2.toArray (new boolean[fudge2.size ()][]);
+      __Boolean = fudge2.toArray (new boolean[fudge2.size ()][]);
     }
     catch (IllegalArgumentException e) {
-      throw new IllegalArgumentException ("Fudge message is not a AATypes_Required - field '_Bool' is not boolean[][]", e);
+      throw new IllegalArgumentException ("Fudge message is not a AATypes_Required - field '_Boolean' is not boolean[][]", e);
     }
     fudgeField = fudgeMsg.getByName (_BYTE_KEY);
     if (fudgeField == null) throw new IllegalArgumentException ("Fudge message is not a AATypes_Required - field '_Byte' is not present");
@@ -537,13 +537,13 @@ public class AATypes_Required implements java.io.Serializable, AATypesBase {
   }
   protected AATypes_Required (final AATypes_Required source) {
     if (source == null) throw new NullPointerException ("'source' must not be null");
-    if (source.__Bool == null) __Bool = null;
+    if (source.__Boolean == null) __Boolean = null;
     else {
-      final boolean[][] fudge0 = java.util.Arrays.copyOf (source.__Bool, source.__Bool.length);
+      final boolean[][] fudge0 = java.util.Arrays.copyOf (source.__Boolean, source.__Boolean.length);
       for (int fudge1 = 0; fudge1 < fudge0.length; fudge1++) {
         fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
       }
-      __Bool = fudge0;
+      __Boolean = fudge0;
     }
     if (source.__Byte == null) __Byte = null;
     else {
@@ -667,16 +667,16 @@ public class AATypes_Required implements java.io.Serializable, AATypesBase {
     return msg;
   }
   public void toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext, final org.fudgemsg.MutableFudgeFieldContainer msg) {
-    if (__Bool != null)  {
+    if (__Boolean != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
-      for (boolean[] fudge2 : __Bool) {
+      for (boolean[] fudge2 : __Boolean) {
         final org.fudgemsg.MutableFudgeFieldContainer fudge3 = fudgeContext.newMessage ();
         for (boolean fudge4 : fudge2) {
           fudge3.add (null, null, fudge4);
         }
         fudge1.add (null, null, fudge3);
       }
-      msg.add (_BOOL_KEY, null, fudge1);
+      msg.add (_BOOLEAN_KEY, null, fudge1);
     }
     if (__Byte != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
@@ -830,8 +830,8 @@ public class AATypes_Required implements java.io.Serializable, AATypesBase {
     }
     return new AATypes_Required (fudgeMsg);
   }
-  public boolean[][] get_Bool () {
-    return __Bool;
+  public boolean[][] get_Boolean () {
+    return __Boolean;
   }
   public byte[][] get_Byte () {
     return __Byte;
@@ -880,7 +880,7 @@ public class AATypes_Required implements java.io.Serializable, AATypesBase {
     if (o == null) return false;
     if (!(o instanceof AATypes_Required)) return false;
     AATypes_Required msg = (AATypes_Required)o;
-    if (!java.util.Arrays.deepEquals (__Bool, msg.__Bool)) return false;
+    if (!java.util.Arrays.deepEquals (__Boolean, msg.__Boolean)) return false;
     if (!java.util.Arrays.deepEquals (__Byte, msg.__Byte)) return false;
     if (!java.util.Arrays.deepEquals (__Double, msg.__Double)) return false;
     if (!java.util.Arrays.deepEquals (__Float, msg.__Float)) return false;
@@ -900,7 +900,7 @@ public class AATypes_Required implements java.io.Serializable, AATypesBase {
   public int hashCode () {
     int hc = 1;
     hc *= 31;
-    if (__Bool != null)hc += java.util.Arrays.deepHashCode (__Bool);
+    if (__Boolean != null)hc += java.util.Arrays.deepHashCode (__Boolean);
     hc *= 31;
     if (__Byte != null)hc += java.util.Arrays.deepHashCode (__Byte);
     hc *= 31;

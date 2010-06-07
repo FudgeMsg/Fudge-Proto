@@ -79,7 +79,7 @@ public class TypesTest {
     if ((object1 == null) && (object2 == null)) return;
     assertNotNull (object1);
     assertNotNull (object2);
-    assertEquals (object1.get_Bool (), object2.get_Bool ());
+    assertEquals (object1.get_Boolean (), object2.get_Boolean ());
     assertEquals (object1.get_Byte (), object2.get_Byte ());
     assertEquals (object1.get_Double (), object2.get_Double (), 0);
     assertEquals (object1.get_Float (), object2.get_Float (), 0);
@@ -101,7 +101,7 @@ public class TypesTest {
     if ((object1 == null) && (object2 == null)) return;
     assertNotNull (object1);
     assertNotNull (object2);
-    assertEquals (object1.get_Bool (), object2.get_Bool ());
+    assertEquals (object1.get_Boolean (), object2.get_Boolean ());
     assertEquals (object1.get_Byte (), object2.get_Byte ());
     assertEquals (object1.get_Double (), object2.get_Double (), 0);
     assertEquals (object1.get_Float (), object2.get_Float (), 0);
@@ -123,7 +123,7 @@ public class TypesTest {
     if ((object1 == null) && (object2 == null)) return;
     assertNotNull (object1);
     assertNotNull (object2);
-    assertEquals (Arrays.equals (object1.get_Bool (), object2.get_Bool ()), true);
+    assertEquals (Arrays.equals (object1.get_Boolean (), object2.get_Boolean ()), true);
     assertArrayEquals (object1.get_Byte (), object2.get_Byte ());
     assertEquals (Arrays.equals (object1.get_Double (), object2.get_Double ()), true);
     assertEquals (Arrays.equals (object1.get_Float (), object2.get_Float ()), true);
@@ -157,7 +157,7 @@ public class TypesTest {
     assertNotNull (object1);
     assertNotNull (object2);
     int n, i;
-    boolean[][] aaBool1 = object1.get_Bool (), aaBool2 = object2.get_Bool ();
+    boolean[][] aaBool1 = object1.get_Boolean (), aaBool2 = object2.get_Boolean ();
     if ((aaBool1 != null) || (aaBool2 != null)) {
       assertNotNull (aaBool1);
       assertNotNull (aaBool2);
@@ -259,7 +259,7 @@ public class TypesTest {
     if ((object1 == null) && (object2 == null)) return;
     assertNotNull (object1);
     assertNotNull (object2);
-    assertListEquals (object1.get_Bool (), object2.get_Bool ());
+    assertListEquals (object1.get_Boolean (), object2.get_Boolean ());
     assertListEquals (object1.get_Byte (), object2.get_Byte ());
     assertListEquals (object1.get_Double (), object2.get_Double ());
     assertListEquals (object1.get_Float (), object2.get_Float ());
@@ -278,7 +278,7 @@ public class TypesTest {
     assertNotNull (object1);
     assertNotNull (object2);
     int n, i;
-    List<boolean[]> raBool1 = object1.get_Bool (), raBool2 = object2.get_Bool ();
+    List<boolean[]> raBool1 = object1.get_Boolean (), raBool2 = object2.get_Boolean ();
     assertEquals (n = raBool1.size (), raBool2.size ());
     for (i = 0; i < n; i++) {
       assertEquals (true, Arrays.equals (raBool1.get (i), raBool2.get (i)));
@@ -674,7 +674,7 @@ public class TypesTest {
   @Test
   public void aa_optional () {
     AATypes_Optional.Builder builder = new AATypes_Optional.Builder ();
-    builder._Bool (aabool ());
+    builder._Boolean (aabool ());
     builder._Byte (aabyte ());
     builder._Double (aadouble ());
     builder._Float (aafloat ());
@@ -704,7 +704,7 @@ public class TypesTest {
   @Test
   public void a_optional () {
     ATypes_Optional.Builder builder = new ATypes_Optional.Builder ();
-    builder._Bool (abool ());
+    builder._Boolean (abool ());
     builder._Byte (abyte ());
     builder._Double (adouble ());
     builder._Float (afloat ());
@@ -734,7 +734,7 @@ public class TypesTest {
   @Test
   public void ra_optional () {
     RATypes_Optional.Builder builder = new RATypes_Optional.Builder ();
-    builder._Bool (Arrays.asList (aabool ()));
+    builder._Boolean (Arrays.asList (aabool ()));
     builder._Byte (Arrays.asList (aabyte ()));
     builder._Double (Arrays.asList (aadouble ()));
     builder._Float (Arrays.asList (aafloat ()));
@@ -764,7 +764,7 @@ public class TypesTest {
   @Test
   public void rs_optional () {
     RSTypes_Optional.Builder builder = new RSTypes_Optional.Builder ();
-    builder._Bool (Arrays.asList (sbool ()));
+    builder._Boolean (Arrays.asList (sbool ()));
     builder._Byte (Arrays.asList (sbyte ()));
     builder._Double (Arrays.asList (sdouble ()));
     builder._Float (Arrays.asList (sfloat ()));
@@ -794,7 +794,7 @@ public class TypesTest {
   @Test
   public void s_optional () {
     STypes_Optional.Builder builder = new STypes_Optional.Builder ();
-    builder._Bool (sbool ());
+    builder._Boolean (sbool ());
     builder._Byte (sbyte ());
     builder._Double (sdouble ());
     builder._Float (sfloat ());
@@ -824,7 +824,7 @@ public class TypesTest {
   @Test
   public void maa_optional () {
     MutableAATypes_Optional in = new MutableAATypes_Optional ();
-    in.set_Bool (aabool ());
+    in.set_Boolean (aabool ());
     in.set_Byte (aabyte ());
     in.set_Double (aadouble ());
     in.set_Float (aafloat ());
@@ -853,7 +853,7 @@ public class TypesTest {
   @Test
   public void ma_optional () {
     MutableATypes_Optional in = new MutableATypes_Optional ();
-    in.set_Bool (abool ());
+    in.set_Boolean (abool ());
     in.set_Byte (abyte ());
     in.set_Double (adouble ());
     in.set_Float (afloat ());
@@ -882,7 +882,7 @@ public class TypesTest {
   @Test
   public void mra_optional () {
     MutableRATypes_Optional in = new MutableRATypes_Optional ();
-    in.set_Bool (Arrays.asList (aabool ()));
+    in.set_Boolean (Arrays.asList (aabool ()));
     in.set_Byte (Arrays.asList (aabyte ()));
     in.set_Double (Arrays.asList (aadouble ()));
     in.set_Float (Arrays.asList (aafloat ()));
@@ -911,7 +911,7 @@ public class TypesTest {
   @Test
   public void mrs_optional () {
     MutableRSTypes_Optional in = new MutableRSTypes_Optional ();
-    in.set_Bool (Arrays.asList (sbool ()));
+    in.set_Boolean (Arrays.asList (sbool ()));
     in.set_Byte (Arrays.asList (sbyte ()));
     in.set_Double (Arrays.asList (sdouble ()));
     in.set_Float (Arrays.asList (sfloat ()));
@@ -940,7 +940,7 @@ public class TypesTest {
   @Test
   public void ms_optional () {
     MutableSTypes_Optional in = new MutableSTypes_Optional ();
-    in.set_Bool (sbool ());
+    in.set_Boolean (sbool ());
     in.set_Byte (sbyte ());
     in.set_Double (sdouble ());
     in.set_Float (sfloat ());

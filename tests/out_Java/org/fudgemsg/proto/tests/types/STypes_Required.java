@@ -6,9 +6,9 @@
 // Created from types.proto:112(10)
 package org.fudgemsg.proto.tests.types;
 public class STypes_Required implements java.io.Serializable, TypesBase_Required {
-  private static final long serialVersionUID = 2512856431910604830l;
-  private final boolean __Bool;
-  public static final String _BOOL_KEY = "_Bool";
+  private static final long serialVersionUID = -8800485479603340994l;
+  private final boolean __Boolean;
+  public static final String _BOOLEAN_KEY = "_Boolean";
   private final byte __Byte;
   public static final String _BYTE_KEY = "_Byte";
   private final double __Double;
@@ -37,8 +37,8 @@ public class STypes_Required implements java.io.Serializable, TypesBase_Required
   public static final String _DATETIME_KEY = "_DateTime";
   private final javax.time.calendar.TimeProvider __Time;
   public static final String _TIME_KEY = "_Time";
-  public STypes_Required (boolean _Bool, byte _Byte, double _Double, float _Float, boolean _Indicator, int _Int, long _Long, short _Short, String _String, org.fudgemsg.proto.tests.types.SubMessage _SubMessage, org.fudgemsg.proto.tests.types.CustomEnum _CustomEnum, org.fudgemsg.FudgeFieldContainer _Message, javax.time.calendar.DateProvider _Date, javax.time.calendar.DateTimeProvider _DateTime, javax.time.calendar.TimeProvider _Time) {
-    __Bool = _Bool;
+  public STypes_Required (boolean _Boolean, byte _Byte, double _Double, float _Float, boolean _Indicator, int _Int, long _Long, short _Short, String _String, org.fudgemsg.proto.tests.types.SubMessage _SubMessage, org.fudgemsg.proto.tests.types.CustomEnum _CustomEnum, org.fudgemsg.FudgeFieldContainer _Message, javax.time.calendar.DateProvider _Date, javax.time.calendar.DateTimeProvider _DateTime, javax.time.calendar.TimeProvider _Time) {
+    __Boolean = _Boolean;
     __Byte = _Byte;
     __Double = _Double;
     __Float = _Float;
@@ -65,13 +65,13 @@ public class STypes_Required implements java.io.Serializable, TypesBase_Required
   }
   protected STypes_Required (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
     org.fudgemsg.FudgeField fudgeField;
-    fudgeField = fudgeMsg.getByName (_BOOL_KEY);
-    if (fudgeField == null) throw new IllegalArgumentException ("Fudge message is not a STypes_Required - field '_Bool' is not present");
+    fudgeField = fudgeMsg.getByName (_BOOLEAN_KEY);
+    if (fudgeField == null) throw new IllegalArgumentException ("Fudge message is not a STypes_Required - field '_Boolean' is not present");
     try {
-      __Bool = fudgeMsg.getFieldValue (Boolean.class, fudgeField);
+      __Boolean = fudgeMsg.getFieldValue (Boolean.class, fudgeField);
     }
     catch (IllegalArgumentException e) {
-      throw new IllegalArgumentException ("Fudge message is not a STypes_Required - field '_Bool' is not boolean", e);
+      throw new IllegalArgumentException ("Fudge message is not a STypes_Required - field '_Boolean' is not boolean", e);
     }
     fudgeField = fudgeMsg.getByName (_BYTE_KEY);
     if (fudgeField == null) throw new IllegalArgumentException ("Fudge message is not a STypes_Required - field '_Byte' is not present");
@@ -183,7 +183,7 @@ public class STypes_Required implements java.io.Serializable, TypesBase_Required
   }
   protected STypes_Required (final STypes_Required source) {
     if (source == null) throw new NullPointerException ("'source' must not be null");
-    __Bool = source.__Bool;
+    __Boolean = source.__Boolean;
     __Byte = source.__Byte;
     __Double = source.__Double;
     __Float = source.__Float;
@@ -209,7 +209,7 @@ public class STypes_Required implements java.io.Serializable, TypesBase_Required
     return msg;
   }
   public void toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext, final org.fudgemsg.MutableFudgeFieldContainer msg) {
-    msg.add (_BOOL_KEY, null, __Bool);
+    msg.add (_BOOLEAN_KEY, null, __Boolean);
     msg.add (_BYTE_KEY, null, __Byte);
     msg.add (_DOUBLE_KEY, null, __Double);
     msg.add (_FLOAT_KEY, null, __Float);
@@ -260,8 +260,8 @@ public class STypes_Required implements java.io.Serializable, TypesBase_Required
     }
     return new STypes_Required (fudgeMsg);
   }
-  public boolean get_Bool () {
-    return __Bool;
+  public boolean get_Boolean () {
+    return __Boolean;
   }
   public byte get_Byte () {
     return __Byte;
@@ -310,7 +310,7 @@ public class STypes_Required implements java.io.Serializable, TypesBase_Required
     if (o == null) return false;
     if (!(o instanceof STypes_Required)) return false;
     STypes_Required msg = (STypes_Required)o;
-    if (__Bool != msg.__Bool) return false;
+    if (__Boolean != msg.__Boolean) return false;
     if (__Byte != msg.__Byte) return false;
     if (__Double != msg.__Double) return false;
     if (__Float != msg.__Float) return false;
@@ -372,7 +372,7 @@ public class STypes_Required implements java.io.Serializable, TypesBase_Required
   public int hashCode () {
     int hc = 1;
     hc *= 31;
-    if (__Bool) hc++;
+    if (__Boolean) hc++;
     hc = (hc * 31) + (int)__Byte;
     hc = (hc * 31) + (int)__Double;
     hc = (hc * 31) + (int)__Float;

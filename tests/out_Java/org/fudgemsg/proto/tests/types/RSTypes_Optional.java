@@ -6,9 +6,9 @@
 // Created from types.proto:55(10)
 package org.fudgemsg.proto.tests.types;
 public class RSTypes_Optional implements java.io.Serializable, RSTypesBase {
-  private static final long serialVersionUID = 6481051323154551075l;
-  private final java.util.List<Boolean> __Bool;
-  public static final String _BOOL_KEY = "_Bool";
+  private static final long serialVersionUID = -4832290588359394749l;
+  private final java.util.List<Boolean> __Boolean;
+  public static final String _BOOLEAN_KEY = "_Boolean";
   private final java.util.List<Byte> __Byte;
   public static final String _BYTE_KEY = "_Byte";
   private final java.util.List<Double> __Double;
@@ -38,7 +38,7 @@ public class RSTypes_Optional implements java.io.Serializable, RSTypesBase {
   private final java.util.List<javax.time.calendar.TimeProvider> __Time;
   public static final String _TIME_KEY = "_Time";
   public static class Builder {
-    private java.util.List<Boolean> __Bool;
+    private java.util.List<Boolean> __Boolean;
     private java.util.List<Byte> __Byte;
     private java.util.List<Double> __Double;
     private java.util.List<Float> __Float;
@@ -57,7 +57,7 @@ public class RSTypes_Optional implements java.io.Serializable, RSTypesBase {
     }
     protected Builder (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
       java.util.List<org.fudgemsg.FudgeField> fudgeFields;
-      fudgeFields = fudgeMsg.getAllByName (_BOOL_KEY);
+      fudgeFields = fudgeMsg.getAllByName (_BOOLEAN_KEY);
       if (fudgeFields.size () > 0)  {
         final java.util.List<Boolean> fudge1;
         fudge1 = new java.util.ArrayList<Boolean> (fudgeFields.size ());
@@ -66,10 +66,10 @@ public class RSTypes_Optional implements java.io.Serializable, RSTypesBase {
             fudge1.add (fudgeMsg.getFieldValue (Boolean.class, fudge2));
           }
           catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException ("Fudge message is not a RSTypes_Optional - field '_Bool' is not boolean", e);
+            throw new IllegalArgumentException ("Fudge message is not a RSTypes_Optional - field '_Boolean' is not boolean", e);
           }
         }
-        _Bool (fudge1);
+        _Boolean (fudge1);
       }
       fudgeFields = fudgeMsg.getAllByName (_BYTE_KEY);
       if (fudgeFields.size () > 0)  {
@@ -269,30 +269,30 @@ public class RSTypes_Optional implements java.io.Serializable, RSTypesBase {
         _Time (fudge1);
       }
     }
-    public Builder _Bool (Boolean _Bool) {
-      if (_Bool == null) __Bool = null;
+    public Builder _Boolean (Boolean _Boolean) {
+      if (_Boolean == null) __Boolean = null;
       else {
-        __Bool = new java.util.ArrayList<Boolean> (1);
-        add_Bool (_Bool);
+        __Boolean = new java.util.ArrayList<Boolean> (1);
+        add_Boolean (_Boolean);
       }
       return this;
     }
-    public Builder _Bool (java.util.Collection<? extends Boolean> _Bool) {
-      if (_Bool == null) __Bool = null;
+    public Builder _Boolean (java.util.Collection<? extends Boolean> _Boolean) {
+      if (_Boolean == null) __Boolean = null;
       else {
-        final java.util.List<Boolean> fudge0 = new java.util.ArrayList<Boolean> (_Bool);
+        final java.util.List<Boolean> fudge0 = new java.util.ArrayList<Boolean> (_Boolean);
         for (java.util.ListIterator<Boolean> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
           Boolean fudge2 = fudge1.next ();
-          if (fudge2 == null) throw new NullPointerException ("List element of '_Bool' cannot be null");
+          if (fudge2 == null) throw new NullPointerException ("List element of '_Boolean' cannot be null");
         }
-        __Bool = fudge0;
+        __Boolean = fudge0;
       }
       return this;
     }
-    public Builder add_Bool (Boolean _Bool) {
-      if (_Bool == null) throw new NullPointerException ("'_Bool' cannot be null");
-      if (__Bool == null) __Bool = new java.util.ArrayList<Boolean> ();
-      __Bool.add (_Bool);
+    public Builder add_Boolean (Boolean _Boolean) {
+      if (_Boolean == null) throw new NullPointerException ("'_Boolean' cannot be null");
+      if (__Boolean == null) __Boolean = new java.util.ArrayList<Boolean> ();
+      __Boolean.add (_Boolean);
       return this;
     }
     public Builder _Byte (Byte _Byte) {
@@ -665,9 +665,9 @@ public class RSTypes_Optional implements java.io.Serializable, RSTypesBase {
     }
   }
   protected RSTypes_Optional (final Builder builder) {
-    if (builder.__Bool == null) __Bool = null;
+    if (builder.__Boolean == null) __Boolean = null;
     else {
-      __Bool = new java.util.ArrayList<Boolean> (builder.__Bool);
+      __Boolean = new java.util.ArrayList<Boolean> (builder.__Boolean);
     }
     if (builder.__Byte == null) __Byte = null;
     else {
@@ -731,15 +731,15 @@ public class RSTypes_Optional implements java.io.Serializable, RSTypesBase {
       __Time = new java.util.ArrayList<javax.time.calendar.TimeProvider> (builder.__Time);
     }
   }
-  public RSTypes_Optional (java.util.Collection<? extends Boolean> _Bool, java.util.Collection<? extends Byte> _Byte, java.util.Collection<? extends Double> _Double, java.util.Collection<? extends Float> _Float, java.util.Collection<? extends Boolean> _Indicator, java.util.Collection<? extends Integer> _Int, java.util.Collection<? extends Long> _Long, java.util.Collection<? extends Short> _Short, java.util.Collection<? extends String> _String, java.util.Collection<? extends org.fudgemsg.proto.tests.types.SubMessage> _SubMessage, java.util.Collection<? extends org.fudgemsg.proto.tests.types.CustomEnum> _CustomEnum, java.util.Collection<? extends org.fudgemsg.FudgeFieldContainer> _Message, java.util.Collection<? extends javax.time.calendar.DateProvider> _Date, java.util.Collection<? extends javax.time.calendar.DateTimeProvider> _DateTime, java.util.Collection<? extends javax.time.calendar.TimeProvider> _Time) {
-    if (_Bool == null) __Bool = null;
+  public RSTypes_Optional (java.util.Collection<? extends Boolean> _Boolean, java.util.Collection<? extends Byte> _Byte, java.util.Collection<? extends Double> _Double, java.util.Collection<? extends Float> _Float, java.util.Collection<? extends Boolean> _Indicator, java.util.Collection<? extends Integer> _Int, java.util.Collection<? extends Long> _Long, java.util.Collection<? extends Short> _Short, java.util.Collection<? extends String> _String, java.util.Collection<? extends org.fudgemsg.proto.tests.types.SubMessage> _SubMessage, java.util.Collection<? extends org.fudgemsg.proto.tests.types.CustomEnum> _CustomEnum, java.util.Collection<? extends org.fudgemsg.FudgeFieldContainer> _Message, java.util.Collection<? extends javax.time.calendar.DateProvider> _Date, java.util.Collection<? extends javax.time.calendar.DateTimeProvider> _DateTime, java.util.Collection<? extends javax.time.calendar.TimeProvider> _Time) {
+    if (_Boolean == null) __Boolean = null;
     else {
-      final java.util.List<Boolean> fudge0 = new java.util.ArrayList<Boolean> (_Bool);
+      final java.util.List<Boolean> fudge0 = new java.util.ArrayList<Boolean> (_Boolean);
       for (java.util.ListIterator<Boolean> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
         Boolean fudge2 = fudge1.next ();
-        if (fudge2 == null) throw new NullPointerException ("List element of '_Bool' cannot be null");
+        if (fudge2 == null) throw new NullPointerException ("List element of '_Boolean' cannot be null");
       }
-      __Bool = fudge0;
+      __Boolean = fudge0;
     }
     if (_Byte == null) __Byte = null;
     else {
@@ -871,9 +871,9 @@ public class RSTypes_Optional implements java.io.Serializable, RSTypesBase {
   }
   protected RSTypes_Optional (final RSTypes_Optional source) {
     if (source == null) throw new NullPointerException ("'source' must not be null");
-    if (source.__Bool == null) __Bool = null;
+    if (source.__Boolean == null) __Boolean = null;
     else {
-      __Bool = new java.util.ArrayList<Boolean> (source.__Bool);
+      __Boolean = new java.util.ArrayList<Boolean> (source.__Boolean);
     }
     if (source.__Byte == null) __Byte = null;
     else {
@@ -944,9 +944,9 @@ public class RSTypes_Optional implements java.io.Serializable, RSTypesBase {
     return msg;
   }
   public void toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext, final org.fudgemsg.MutableFudgeFieldContainer msg) {
-    if (__Bool != null)  {
-      for (Boolean fudge1 : __Bool) {
-        msg.add (_BOOL_KEY, null, fudge1);
+    if (__Boolean != null)  {
+      for (Boolean fudge1 : __Boolean) {
+        msg.add (_BOOLEAN_KEY, null, fudge1);
       }
     }
     if (__Byte != null)  {
@@ -1041,9 +1041,9 @@ public class RSTypes_Optional implements java.io.Serializable, RSTypesBase {
     }
     return new Builder (fudgeMsg).build ();
   }
-  public java.util.List<Boolean> get_Bool () {
-    if (__Bool != null) {
-      return java.util.Collections.unmodifiableList (__Bool);
+  public java.util.List<Boolean> get_Boolean () {
+    if (__Boolean != null) {
+      return java.util.Collections.unmodifiableList (__Boolean);
     }
     else return null;
   }
@@ -1136,13 +1136,13 @@ public class RSTypes_Optional implements java.io.Serializable, RSTypesBase {
     if (o == null) return false;
     if (!(o instanceof RSTypes_Optional)) return false;
     RSTypes_Optional msg = (RSTypes_Optional)o;
-    if (__Bool != null) {
-      if (msg.__Bool != null) {
-        if (!__Bool.equals (msg.__Bool)) return false;
+    if (__Boolean != null) {
+      if (msg.__Boolean != null) {
+        if (!__Boolean.equals (msg.__Boolean)) return false;
       }
       else return false;
     }
-    else if (msg.__Bool != null) return false;
+    else if (msg.__Boolean != null) return false;
     if (__Byte != null) {
       if (msg.__Byte != null) {
         if (!__Byte.equals (msg.__Byte)) return false;
@@ -1246,7 +1246,7 @@ public class RSTypes_Optional implements java.io.Serializable, RSTypesBase {
   public int hashCode () {
     int hc = 1;
     hc *= 31;
-    if (__Bool != null) hc += __Bool.hashCode ();
+    if (__Boolean != null) hc += __Boolean.hashCode ();
     hc *= 31;
     if (__Byte != null) hc += __Byte.hashCode ();
     hc *= 31;
