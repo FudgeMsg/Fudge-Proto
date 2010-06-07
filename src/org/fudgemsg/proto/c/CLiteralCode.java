@@ -35,10 +35,11 @@ public class CLiteralCode extends CStyleLiteralCode {
   
   @Override
   protected String getLiteral (final LiteralValue.EnumValue value) {
-    final StringBuilder sb = new StringBuilder (value.getEnumDefinition ().getIdentifier ().replace ('.', '_'));
+    return value.get ();
+    /*final StringBuilder sb = new StringBuilder (value.getEnumDefinition ().getIdentifier ().replace ('.', '_'));
     sb.append ('_');
     sb.append (value.get ());
-    return sb.toString ();
+    return sb.toString ();*/
   }
   
 }

@@ -107,18 +107,25 @@ public abstract class CStyleClassCode extends DocumentedClassCode {
     writer.newLine ();
   }
   
+  private void importTypeDefinition (final FieldType type, final Set<Definition> imports, final IndentWriter writer) throws IOException {
+    if (type instanceof FieldType.MessageType) {
+      importMessageDefinition (imports, ((FieldType.MessageType)type).getMessageDefinition (), writer);
+    } else if (type instanceof FieldType.EnumType) {
+      final EnumDefinition enumDefinition = ((FieldType.EnumType)type).getEnumDefinition ();
+      final MessageDefinition outerMessage = enumDefinition.getOuterMessage ();
+      importMessageDefinition (imports, (outerMessage != null) ? outerMessage : enumDefinition, writer);
+    } else if (type instanceof FieldType.ArrayType) {
+      importTypeDefinition (((FieldType.ArrayType)type).getBaseType (), imports, writer);
+    }
+  }
+  
   private void importMessageDefinitions (final MessageDefinition message, final IndentWriter writer) throws IOException {
     final Set<Definition> imports = new HashSet<Definition> ();
+    imports.add (MessageDefinition.ANONYMOUS);
     imports.add (message);
     for (FieldDefinition field : message.getFieldDefinitions ()) {
       final FieldType type = field.getType ();
-      if (type instanceof FieldType.MessageType) {
-        importMessageDefinition (imports, ((FieldType.MessageType)type).getMessageDefinition (), writer);
-      } else if (field.getType () instanceof FieldType.EnumType) {
-        final EnumDefinition enumDefinition = ((FieldType.EnumType)type).getEnumDefinition ();
-        final MessageDefinition outerMessage = enumDefinition.getOuterMessage ();
-        importMessageDefinition (imports, (outerMessage != null) ? outerMessage : enumDefinition, writer);
-      }
+      importTypeDefinition (type, imports, writer);
     }
     if (message.getExtends () != null) {
       importMessageDefinition (imports, message.getExtends (), writer);

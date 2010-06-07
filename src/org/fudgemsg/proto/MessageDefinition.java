@@ -102,7 +102,7 @@ public abstract class MessageDefinition extends Definition {
   private static class AnonMessageDefinition extends MessageDefinition {
     
     private AnonMessageDefinition () {
-      super ("anomymous", null, null, false);
+      super ("anonymous", null, null, false);
     }
     
     public FieldType getFieldType () {

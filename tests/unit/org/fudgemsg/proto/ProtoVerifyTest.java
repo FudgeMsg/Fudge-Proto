@@ -48,6 +48,8 @@ public class ProtoVerifyTest extends DefaultSettings {
     public boolean accept (final File dir, final String name) {
       if (name.charAt (0) == '.') return false;
       if (name.endsWith (".class")) return false;
+      if (name.endsWith (".o") || name.endsWith (".obj")) return false;
+      if (name.endsWith (".xml")) return false;
       if (name.equals ("html")) return false;
       if (name.equals ("xml")) return false;
       if (name.startsWith ("rerun_")) return false;

@@ -1,0 +1,9 @@
+#ifndef __INC_ORG_FUDGEMSG_PROTO_TESTS_EXTERNALENUM_H
+#define __INC_ORG_FUDGEMSG_PROTO_TESTS_EXTERNALENUM_H
+
+enum _org_fudgemsg_proto_tests_ExternalEnum {
+  FOO,
+  BAR
+};
+
+#endif /* ifndef INC_ORG_FUDGEMSG_PROTO_TESTS_EXTERNALENUM_H */

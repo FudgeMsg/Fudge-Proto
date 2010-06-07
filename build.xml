@@ -68,6 +68,16 @@
 		</junitreport>
 	</target>
 
+	<target name="compile-proto-c"
+		depends="tests"
+		description="--> compile the output of the C code generator">
+		<taskdef resource="cpptasks.tasks"/>
+		<cc objdir="${tests.dir}/out_C">
+			<includepath path="${tests.dir}/unit_C" />
+			<fileset dir="${tests.dir}/out_C" includes="*.c" />
+		</cc>
+	</target>
+
 	<target name="test-ant-prep" depends="compile-src,test-proto-java">
 		<path id="fudge.proto.path.id">
 			<path refid="lib.path.id" />
