@@ -17,15 +17,17 @@ package org.fudgemsg.proto;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.jar.JarOutputStream;
+import java.util.zip.ZipEntry;
 
 import org.junit.Test;
 
-public class CommandLineTest {
-  
-  private static final Map<String,Boolean> s_compiled = new HashMap<String,Boolean> ();
+public class CommandLineTest extends DefaultSettings {
   
   @Test
   public void parameterPassing () {
@@ -41,108 +43,58 @@ public class CommandLineTest {
     assertEquals (0, CommandLine.compile (new String[] { "-freadonly", "-foptional" })); // field defaults
     assertEquals (0, CommandLine.compile (new String[] { "-fmutable", "-frequired" })); // field defaults
     assertEquals (1, CommandLine.compile (new String[] { "-finvalid" })); // invalid field default
+    assertEquals (0, CommandLine.compile (new String[] { "-v" })); // verbose 1
+    assertEquals (0, CommandLine.compile (new String[] { "-vv" })); // verbose 2
+    assertEquals (0, CommandLine.compile (new String[] { "-vvv" })); // verbose 3
+    assertEquals (1, CommandLine.compile (new String[] { "-vvvv" })); // invalid
   }
   
   @Test
-  public void simpleFileAllCodeGenerators () {
-    fileAllCodeGenerators ("simple.proto");
-  }
-  
-  @Test
-  public void literalsFileAllCodeGenerators () {
-    fileAllCodeGenerators ("Literals.proto");
-  }
-  
-  @Test
-  public void namespaceFileAllCodeGenerators () {
-    fileAllCodeGenerators ("namespace.proto");
-  }
-  
-  @Test
-  public void taxonomyFileAllCodeGenerators () {
-    fileAllCodeGenerators ("taxonomy.proto");
-  }
-  
-  @Test
-  public void typesFileAllCodeGenerators () {
-    fileAllCodeGenerators ("types.proto");
-  }
-  
-  @Test
-  public void mutablesFileAllCodeGenerators () {
-    fileAllCodeGenerators ("mutables.proto");
-  }
-  
-  @Test
-  public void inheritanceFileAllCodeGenerators () {
-    fileAllCodeGenerators ("inheritance.proto");
-  }
-  
-  @Test
-  public void bindingFileAllCodeGenerators () {
-    fileAllCodeGenerators ("binding.proto");
-  }
-  
-  @Test
-  public void externFileAllCodeGenerators () {
-    fileAllCodeGenerators ("extern.proto");
-  }
-  
-  @Test
-  public void polymorphismFileAllCodeGenerators () {
-    fileAllCodeGenerators ("polymorphism.proto");
-  }
-  
-  private void fileAllCodeGenerators (final String filename) {
-    final CodeGeneratorFactory factory = new CodeGeneratorFactory ();
-    int errorCount = 0;
-    if (!fileCodeGenerator (filename, null)) errorCount++; // default compilation
-    for (String language : factory.getLanguages ()) {
-      if (!fileCodeGenerator (filename, language)) errorCount++;
-    }
-    assertEquals (errorCount, 0);
-  }
-  
-  protected static void codeGeneratorAllFiles (final String language) {
-    fileCodeGenerator ("simple.proto", language);
-    fileCodeGenerator ("Literals.proto", language);
-    fileCodeGenerator ("namespace.proto", language);
-    fileCodeGenerator ("taxonomy.proto", language);
-    fileCodeGenerator ("types.proto", language);
-    fileCodeGenerator ("mutables.proto", language);
-    fileCodeGenerator ("inheritance.proto", language);
-    fileCodeGenerator ("binding.proto", language);
-    fileCodeGenerator ("extern.proto", language);
-    fileCodeGenerator ("polymorphism.proto", language);
-  }
-  
-  protected static boolean fileCodeGenerator (final String filename, final String language) {
-    final String key = filename + ":" + language;
-    if (s_compiled.containsKey (key)) {
-      final boolean result = s_compiled.get (key);
-      System.out.println ("File " + filename + " already processed for " + language + " (" + (result ? "Ok" : "Failed") + ")");
-      return result;
-    }
+  public void testPathResolver () {
     final ArrayList<String> args = new ArrayList<String> ();
-    args.add ("-d" + CompilerTest.getTestPath ("out_" + (language != null ? language : "default")));
-    args.add ("-s" + CompilerTest.getTestPath ("proto"));
-    args.add ("-freadonly"); // non-mutable field default
-    args.add ("-foptional"); // optional field default
-    if (language != null) {
-      args.add ("-l" + language);
-      addLanguageOptions (language, args);
-    }
-    args.add (filename);
-    final boolean result = (CommandLine.compile (args.toArray (new String[0])) == 0);
-    s_compiled.put (key, result);
-    return result;
+    args.add ("-d" + CompilerTest.getTestPath ("out_default"));
+    args.add (CompilerTest.getTestPath ("proto", "extern.proto"));
+    assertEquals (1, CommandLine.compile (args.toArray (new String[0]))); // compilation should fail as there is no search path
+    args.add ("-p" + CompilerTest.getTestPath ("proto"));
+    assertEquals (0, CommandLine.compile (args.toArray (new String[0]))); // compilation should succeed
   }
   
-  protected static void addLanguageOptions (final String language, final ArrayList<String> args) {
-    if (language.equals ("Java")) {
-      args.add ("-Xequals");
-      args.add ("-XhashCode");
-      args.add ("-XtoString");
+  private void writeJar (final JarOutputStream jos, String baseDir, final File file) throws IOException {
+    if (file.isDirectory ()) {
+      if (baseDir.length () > 0) {
+        baseDir = baseDir + File.separatorChar;
+      }
+      for (File child : file.listFiles ()) {
+        writeJar (jos, baseDir + child.getName (), child);
+      }
+    } else {
+      jos.putNextEntry (new ZipEntry (baseDir));
+      final FileInputStream in = new FileInputStream (file);
+      final byte[] buffer = new byte[4096];
+      int l;
+      while ((l = in.read (buffer)) > 0) {
+        jos.write (buffer, 0, l);
+      }
+      in.close ();
+      jos.closeEntry ();
+    }
+  }
+  
+  @Test
+  public void testJarResolver () throws IOException {
+    final ArrayList<String> args = new ArrayList<String> ();
+    args.add ("-d" + CompilerTest.getTestPath ("out_default"));
+    args.add (CompilerTest.getTestPath ("proto", "extern.proto"));
+    assertEquals (1, CommandLine.compile (args.toArray (new String[0]))); // compilation should fail as there is no search path
+    final File tempJar = File.createTempFile ("FudgeProtoTest", ".jar");
+    try {
+      final JarOutputStream jos = new JarOutputStream (new FileOutputStream (tempJar));
+      writeJar (jos, "", new File (CompilerTest.getTestPath ("proto")));
+      jos.close ();
+      args.add ("-p" + tempJar.getPath ());
+      assertEquals (0, CommandLine.compile (args.toArray (new String[0]))); // compilation should succeed
+    } finally {
+      tempJar.delete ();
     }
   }
   

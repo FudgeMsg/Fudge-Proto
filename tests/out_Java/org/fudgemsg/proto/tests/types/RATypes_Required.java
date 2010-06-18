@@ -1,10 +1,14 @@
 // Automatically created - do not modify
+/* fileheader.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */
 // Created from types.proto:169(10)
 package org.fudgemsg.proto.tests.types;
 public class RATypes_Required implements java.io.Serializable, RATypesBase {
-  private static final long serialVersionUID = -2752645678919711847l;
-  private final java.util.List<boolean[]> __Bool;
-  public static final String _BOOL_KEY = "_Bool";
+  private static final long serialVersionUID = 4382965593991127732l;
+  private final java.util.List<boolean[]> __Boolean;
+  public static final String _BOOLEAN_KEY = "_Boolean";
   private final java.util.List<byte[]> __Byte;
   public static final String _BYTE_KEY = "_Byte";
   private final java.util.List<double[]> __Double;
@@ -27,23 +31,23 @@ public class RATypes_Required implements java.io.Serializable, RATypesBase {
   public static final String _CUSTOMENUM_KEY = "_CustomEnum";
   private final java.util.List<org.fudgemsg.FudgeFieldContainer[]> __Message;
   public static final String _MESSAGE_KEY = "_Message";
-  private final java.util.List<org.fudgemsg.types.FudgeDate[]> __Date;
+  private final java.util.List<javax.time.calendar.DateProvider[]> __Date;
   public static final String _DATE_KEY = "_Date";
-  private final java.util.List<java.util.Date[]> __DateTime;
+  private final java.util.List<javax.time.calendar.DateTimeProvider[]> __DateTime;
   public static final String _DATETIME_KEY = "_DateTime";
-  private final java.util.List<org.fudgemsg.types.FudgeTime[]> __Time;
+  private final java.util.List<javax.time.calendar.TimeProvider[]> __Time;
   public static final String _TIME_KEY = "_Time";
-  public RATypes_Required (java.util.Collection<? extends boolean[]> _Bool, java.util.Collection<? extends byte[]> _Byte, java.util.Collection<? extends double[]> _Double, java.util.Collection<? extends float[]> _Float, java.util.Collection<? extends boolean[]> _Indicator, java.util.Collection<? extends int[]> _Int, java.util.Collection<? extends long[]> _Long, java.util.Collection<? extends short[]> _Short, java.util.Collection<? extends String[]> _String, java.util.Collection<? extends org.fudgemsg.proto.tests.types.SubMessage[]> _SubMessage, java.util.Collection<? extends org.fudgemsg.proto.tests.types.CustomEnum[]> _CustomEnum, java.util.Collection<? extends org.fudgemsg.FudgeFieldContainer[]> _Message, java.util.Collection<? extends org.fudgemsg.types.FudgeDate[]> _Date, java.util.Collection<? extends java.util.Date[]> _DateTime, java.util.Collection<? extends org.fudgemsg.types.FudgeTime[]> _Time) {
-    if (_Bool == null) throw new NullPointerException ("'_Bool' cannot be null");
+  public RATypes_Required (java.util.Collection<? extends boolean[]> _Boolean, java.util.Collection<? extends byte[]> _Byte, java.util.Collection<? extends double[]> _Double, java.util.Collection<? extends float[]> _Float, java.util.Collection<? extends boolean[]> _Indicator, java.util.Collection<? extends int[]> _Int, java.util.Collection<? extends long[]> _Long, java.util.Collection<? extends short[]> _Short, java.util.Collection<? extends String[]> _String, java.util.Collection<? extends org.fudgemsg.proto.tests.types.SubMessage[]> _SubMessage, java.util.Collection<? extends org.fudgemsg.proto.tests.types.CustomEnum[]> _CustomEnum, java.util.Collection<? extends org.fudgemsg.FudgeFieldContainer[]> _Message, java.util.Collection<? extends javax.time.calendar.DateProvider[]> _Date, java.util.Collection<? extends javax.time.calendar.DateTimeProvider[]> _DateTime, java.util.Collection<? extends javax.time.calendar.TimeProvider[]> _Time) {
+    if (_Boolean == null) throw new NullPointerException ("'_Boolean' cannot be null");
     else {
-      final java.util.List<boolean[]> fudge0 = new java.util.ArrayList<boolean[]> (_Bool);
-      if (_Bool.size () == 0) throw new IllegalArgumentException ("'_Bool' cannot be an empty list");
+      final java.util.List<boolean[]> fudge0 = new java.util.ArrayList<boolean[]> (_Boolean);
+      if (_Boolean.size () == 0) throw new IllegalArgumentException ("'_Boolean' cannot be an empty list");
       for (java.util.ListIterator<boolean[]> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
         boolean[] fudge2 = fudge1.next ();
-        if (fudge2 == null) throw new NullPointerException ("List element of '_Bool' cannot be null");
+        if (fudge2 == null) throw new NullPointerException ("List element of '_Boolean' cannot be null");
         fudge1.set (java.util.Arrays.copyOf (fudge2, fudge2.length));
       }
-      __Bool = fudge0;
+      __Boolean = fudge0;
     }
     if (_Byte == null) throw new NullPointerException ("'_Byte' cannot be null");
     else {
@@ -171,10 +175,10 @@ public class RATypes_Required implements java.io.Serializable, RATypesBase {
     }
     if (_Date == null) throw new NullPointerException ("'_Date' cannot be null");
     else {
-      final java.util.List<org.fudgemsg.types.FudgeDate[]> fudge0 = new java.util.ArrayList<org.fudgemsg.types.FudgeDate[]> (_Date);
+      final java.util.List<javax.time.calendar.DateProvider[]> fudge0 = new java.util.ArrayList<javax.time.calendar.DateProvider[]> (_Date);
       if (_Date.size () == 0) throw new IllegalArgumentException ("'_Date' cannot be an empty list");
-      for (java.util.ListIterator<org.fudgemsg.types.FudgeDate[]> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
-        org.fudgemsg.types.FudgeDate[] fudge2 = fudge1.next ();
+      for (java.util.ListIterator<javax.time.calendar.DateProvider[]> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
+        javax.time.calendar.DateProvider[] fudge2 = fudge1.next ();
         if (fudge2 == null) throw new NullPointerException ("List element of '_Date' cannot be null");
         fudge1.set (java.util.Arrays.copyOf (fudge2, fudge2.length));
       }
@@ -182,10 +186,10 @@ public class RATypes_Required implements java.io.Serializable, RATypesBase {
     }
     if (_DateTime == null) throw new NullPointerException ("'_DateTime' cannot be null");
     else {
-      final java.util.List<java.util.Date[]> fudge0 = new java.util.ArrayList<java.util.Date[]> (_DateTime);
+      final java.util.List<javax.time.calendar.DateTimeProvider[]> fudge0 = new java.util.ArrayList<javax.time.calendar.DateTimeProvider[]> (_DateTime);
       if (_DateTime.size () == 0) throw new IllegalArgumentException ("'_DateTime' cannot be an empty list");
-      for (java.util.ListIterator<java.util.Date[]> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
-        java.util.Date[] fudge2 = fudge1.next ();
+      for (java.util.ListIterator<javax.time.calendar.DateTimeProvider[]> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
+        javax.time.calendar.DateTimeProvider[] fudge2 = fudge1.next ();
         if (fudge2 == null) throw new NullPointerException ("List element of '_DateTime' cannot be null");
         fudge1.set (java.util.Arrays.copyOf (fudge2, fudge2.length));
       }
@@ -193,10 +197,10 @@ public class RATypes_Required implements java.io.Serializable, RATypesBase {
     }
     if (_Time == null) throw new NullPointerException ("'_Time' cannot be null");
     else {
-      final java.util.List<org.fudgemsg.types.FudgeTime[]> fudge0 = new java.util.ArrayList<org.fudgemsg.types.FudgeTime[]> (_Time);
+      final java.util.List<javax.time.calendar.TimeProvider[]> fudge0 = new java.util.ArrayList<javax.time.calendar.TimeProvider[]> (_Time);
       if (_Time.size () == 0) throw new IllegalArgumentException ("'_Time' cannot be an empty list");
-      for (java.util.ListIterator<org.fudgemsg.types.FudgeTime[]> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
-        org.fudgemsg.types.FudgeTime[] fudge2 = fudge1.next ();
+      for (java.util.ListIterator<javax.time.calendar.TimeProvider[]> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
+        javax.time.calendar.TimeProvider[] fudge2 = fudge1.next ();
         if (fudge2 == null) throw new NullPointerException ("List element of '_Time' cannot be null");
         fudge1.set (java.util.Arrays.copyOf (fudge2, fudge2.length));
       }
@@ -205,9 +209,9 @@ public class RATypes_Required implements java.io.Serializable, RATypesBase {
   }
   protected RATypes_Required (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
     java.util.List<org.fudgemsg.FudgeField> fudgeFields;
-    fudgeFields = fudgeMsg.getAllByName (_BOOL_KEY);
-    if (fudgeFields.size () == 0) throw new IllegalArgumentException ("Fudge message is not a RATypes_Required - field '_Bool' is not present");
-    __Bool = new java.util.ArrayList<boolean[]> (fudgeFields.size ());
+    fudgeFields = fudgeMsg.getAllByName (_BOOLEAN_KEY);
+    if (fudgeFields.size () == 0) throw new IllegalArgumentException ("Fudge message is not a RATypes_Required - field '_Boolean' is not present");
+    __Boolean = new java.util.ArrayList<boolean[]> (fudgeFields.size ());
     for (org.fudgemsg.FudgeField fudge1 : fudgeFields) {
       try {
         final org.fudgemsg.FudgeFieldContainer fudge2 = fudgeMsg.getFieldValue (org.fudgemsg.FudgeFieldContainer.class, fudge1);
@@ -217,7 +221,7 @@ public class RATypes_Required implements java.io.Serializable, RATypesBase {
             fudge3.add (fudge2.getFieldValue (Boolean.class, fudge4));
           }
           catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException ("Fudge message is not a RATypes_Required - field '_Bool[]' is not boolean", e);
+            throw new IllegalArgumentException ("Fudge message is not a RATypes_Required - field '_Boolean[]' is not boolean", e);
           }
         }
         final boolean[] fudge5 = new boolean[fudge3.size ()];
@@ -225,10 +229,10 @@ public class RATypes_Required implements java.io.Serializable, RATypesBase {
         for (boolean fudge7 : fudge3) {
           fudge5[fudge6++] = fudge7;
         }
-        __Bool.add (fudge5);
+        __Boolean.add (fudge5);
       }
       catch (IllegalArgumentException e) {
-        throw new IllegalArgumentException ("Fudge message is not a RATypes_Required - field '_Bool' is not boolean[]", e);
+        throw new IllegalArgumentException ("Fudge message is not a RATypes_Required - field '_Boolean' is not boolean[]", e);
       }
     }
     fudgeFields = fudgeMsg.getAllByName (_BYTE_KEY);
@@ -327,7 +331,7 @@ public class RATypes_Required implements java.io.Serializable, RATypesBase {
         final java.util.List<String> fudge11 = new java.util.ArrayList<String> ();
         for (org.fudgemsg.FudgeField fudge12 : fudge10) {
           try {
-            fudge11.add (fudge12.getValue ().toString ());
+            fudge11.add ((fudge12.getValue () != null) ? fudge12.getValue ().toString () : null);
           }
           catch (IllegalArgumentException e) {
             throw new IllegalArgumentException ("Fudge message is not a RATypes_Required - field '_String[]' is not string", e);
@@ -367,13 +371,19 @@ public class RATypes_Required implements java.io.Serializable, RATypesBase {
     __CustomEnum = new java.util.ArrayList<org.fudgemsg.proto.tests.types.CustomEnum[]> (fudgeFields.size ());
     for (org.fudgemsg.FudgeField fudge11 : fudgeFields) {
       try {
-        final org.fudgemsg.proto.tests.types.CustomEnum[] fudge12;
-        final int[] fudge13 = fudgeMsg.getFieldValue (int[].class, fudge11);
-        fudge12 = new org.fudgemsg.proto.tests.types.CustomEnum[fudge13.length];
-        for (int fudge14 = 0; fudge14 < fudge13.length; fudge14++) {
-          fudge12[fudge14] = org.fudgemsg.proto.tests.types.CustomEnum.fromFudgeEncoding (fudge13[fudge14]);
+        final org.fudgemsg.FudgeFieldContainer fudge12 = fudgeMsg.getFieldValue (org.fudgemsg.FudgeFieldContainer.class, fudge11);
+        final java.util.List<org.fudgemsg.proto.tests.types.CustomEnum> fudge13 = new java.util.ArrayList<org.fudgemsg.proto.tests.types.CustomEnum> ();
+        for (org.fudgemsg.FudgeField fudge14 : fudge12) {
+          try {
+            final org.fudgemsg.proto.tests.types.CustomEnum fudge15;
+            fudge15 = fudge12.getFieldValue (org.fudgemsg.proto.tests.types.CustomEnum.class, fudge14);
+            fudge13.add (fudge15);
+          }
+          catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException ("Fudge message is not a RATypes_Required - field '_CustomEnum[]' is not CustomEnum enum", e);
+          }
         }
-        __CustomEnum.add (fudge12);
+        __CustomEnum.add (fudge13.toArray (new org.fudgemsg.proto.tests.types.CustomEnum[fudge13.size ()]));
       }
       catch (IllegalArgumentException e) {
         throw new IllegalArgumentException ("Fudge message is not a RATypes_Required - field '_CustomEnum' is not CustomEnum enum[]", e);
@@ -404,20 +414,20 @@ public class RATypes_Required implements java.io.Serializable, RATypesBase {
     }
     fudgeFields = fudgeMsg.getAllByName (_DATE_KEY);
     if (fudgeFields.size () == 0) throw new IllegalArgumentException ("Fudge message is not a RATypes_Required - field '_Date' is not present");
-    __Date = new java.util.ArrayList<org.fudgemsg.types.FudgeDate[]> (fudgeFields.size ());
+    __Date = new java.util.ArrayList<javax.time.calendar.DateProvider[]> (fudgeFields.size ());
     for (org.fudgemsg.FudgeField fudge13 : fudgeFields) {
       try {
         final org.fudgemsg.FudgeFieldContainer fudge14 = fudgeMsg.getFieldValue (org.fudgemsg.FudgeFieldContainer.class, fudge13);
-        final java.util.List<org.fudgemsg.types.FudgeDate> fudge15 = new java.util.ArrayList<org.fudgemsg.types.FudgeDate> ();
+        final java.util.List<javax.time.calendar.DateProvider> fudge15 = new java.util.ArrayList<javax.time.calendar.DateProvider> ();
         for (org.fudgemsg.FudgeField fudge16 : fudge14) {
           try {
-            fudge15.add (fudge14.getFieldValue (org.fudgemsg.types.FudgeDate.class, fudge16));
+            fudge15.add (fudge14.getFieldValue (javax.time.calendar.DateProvider.class, fudge16));
           }
           catch (IllegalArgumentException e) {
             throw new IllegalArgumentException ("Fudge message is not a RATypes_Required - field '_Date[]' is not date", e);
           }
         }
-        __Date.add (fudge15.toArray (new org.fudgemsg.types.FudgeDate[fudge15.size ()]));
+        __Date.add (fudge15.toArray (new javax.time.calendar.DateProvider[fudge15.size ()]));
       }
       catch (IllegalArgumentException e) {
         throw new IllegalArgumentException ("Fudge message is not a RATypes_Required - field '_Date' is not date[]", e);
@@ -425,20 +435,20 @@ public class RATypes_Required implements java.io.Serializable, RATypesBase {
     }
     fudgeFields = fudgeMsg.getAllByName (_DATETIME_KEY);
     if (fudgeFields.size () == 0) throw new IllegalArgumentException ("Fudge message is not a RATypes_Required - field '_DateTime' is not present");
-    __DateTime = new java.util.ArrayList<java.util.Date[]> (fudgeFields.size ());
+    __DateTime = new java.util.ArrayList<javax.time.calendar.DateTimeProvider[]> (fudgeFields.size ());
     for (org.fudgemsg.FudgeField fudge14 : fudgeFields) {
       try {
         final org.fudgemsg.FudgeFieldContainer fudge15 = fudgeMsg.getFieldValue (org.fudgemsg.FudgeFieldContainer.class, fudge14);
-        final java.util.List<java.util.Date> fudge16 = new java.util.ArrayList<java.util.Date> ();
+        final java.util.List<javax.time.calendar.DateTimeProvider> fudge16 = new java.util.ArrayList<javax.time.calendar.DateTimeProvider> ();
         for (org.fudgemsg.FudgeField fudge17 : fudge15) {
           try {
-            fudge16.add (fudge15.getFieldValue (java.util.Date.class, fudge17));
+            fudge16.add (fudge15.getFieldValue (javax.time.calendar.DateTimeProvider.class, fudge17));
           }
           catch (IllegalArgumentException e) {
             throw new IllegalArgumentException ("Fudge message is not a RATypes_Required - field '_DateTime[]' is not datetime", e);
           }
         }
-        __DateTime.add (fudge16.toArray (new java.util.Date[fudge16.size ()]));
+        __DateTime.add (fudge16.toArray (new javax.time.calendar.DateTimeProvider[fudge16.size ()]));
       }
       catch (IllegalArgumentException e) {
         throw new IllegalArgumentException ("Fudge message is not a RATypes_Required - field '_DateTime' is not datetime[]", e);
@@ -446,20 +456,20 @@ public class RATypes_Required implements java.io.Serializable, RATypesBase {
     }
     fudgeFields = fudgeMsg.getAllByName (_TIME_KEY);
     if (fudgeFields.size () == 0) throw new IllegalArgumentException ("Fudge message is not a RATypes_Required - field '_Time' is not present");
-    __Time = new java.util.ArrayList<org.fudgemsg.types.FudgeTime[]> (fudgeFields.size ());
+    __Time = new java.util.ArrayList<javax.time.calendar.TimeProvider[]> (fudgeFields.size ());
     for (org.fudgemsg.FudgeField fudge15 : fudgeFields) {
       try {
         final org.fudgemsg.FudgeFieldContainer fudge16 = fudgeMsg.getFieldValue (org.fudgemsg.FudgeFieldContainer.class, fudge15);
-        final java.util.List<org.fudgemsg.types.FudgeTime> fudge17 = new java.util.ArrayList<org.fudgemsg.types.FudgeTime> ();
+        final java.util.List<javax.time.calendar.TimeProvider> fudge17 = new java.util.ArrayList<javax.time.calendar.TimeProvider> ();
         for (org.fudgemsg.FudgeField fudge18 : fudge16) {
           try {
-            fudge17.add (fudge16.getFieldValue (org.fudgemsg.types.FudgeTime.class, fudge18));
+            fudge17.add (fudge16.getFieldValue (javax.time.calendar.TimeProvider.class, fudge18));
           }
           catch (IllegalArgumentException e) {
             throw new IllegalArgumentException ("Fudge message is not a RATypes_Required - field '_Time[]' is not time", e);
           }
         }
-        __Time.add (fudge17.toArray (new org.fudgemsg.types.FudgeTime[fudge17.size ()]));
+        __Time.add (fudge17.toArray (new javax.time.calendar.TimeProvider[fudge17.size ()]));
       }
       catch (IllegalArgumentException e) {
         throw new IllegalArgumentException ("Fudge message is not a RATypes_Required - field '_Time' is not time[]", e);
@@ -468,14 +478,14 @@ public class RATypes_Required implements java.io.Serializable, RATypesBase {
   }
   protected RATypes_Required (final RATypes_Required source) {
     if (source == null) throw new NullPointerException ("'source' must not be null");
-    if (source.__Bool == null) __Bool = null;
+    if (source.__Boolean == null) __Boolean = null;
     else {
-      final java.util.List<boolean[]> fudge0 = new java.util.ArrayList<boolean[]> (source.__Bool);
+      final java.util.List<boolean[]> fudge0 = new java.util.ArrayList<boolean[]> (source.__Boolean);
       for (java.util.ListIterator<boolean[]> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
         boolean[] fudge2 = fudge1.next ();
         fudge1.set (java.util.Arrays.copyOf (fudge2, fudge2.length));
       }
-      __Bool = fudge0;
+      __Boolean = fudge0;
     }
     if (source.__Byte == null) __Byte = null;
     else {
@@ -581,27 +591,27 @@ public class RATypes_Required implements java.io.Serializable, RATypesBase {
     }
     if (source.__Date == null) __Date = null;
     else {
-      final java.util.List<org.fudgemsg.types.FudgeDate[]> fudge0 = new java.util.ArrayList<org.fudgemsg.types.FudgeDate[]> (source.__Date);
-      for (java.util.ListIterator<org.fudgemsg.types.FudgeDate[]> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
-        org.fudgemsg.types.FudgeDate[] fudge2 = fudge1.next ();
+      final java.util.List<javax.time.calendar.DateProvider[]> fudge0 = new java.util.ArrayList<javax.time.calendar.DateProvider[]> (source.__Date);
+      for (java.util.ListIterator<javax.time.calendar.DateProvider[]> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
+        javax.time.calendar.DateProvider[] fudge2 = fudge1.next ();
         fudge1.set (java.util.Arrays.copyOf (fudge2, fudge2.length));
       }
       __Date = fudge0;
     }
     if (source.__DateTime == null) __DateTime = null;
     else {
-      final java.util.List<java.util.Date[]> fudge0 = new java.util.ArrayList<java.util.Date[]> (source.__DateTime);
-      for (java.util.ListIterator<java.util.Date[]> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
-        java.util.Date[] fudge2 = fudge1.next ();
+      final java.util.List<javax.time.calendar.DateTimeProvider[]> fudge0 = new java.util.ArrayList<javax.time.calendar.DateTimeProvider[]> (source.__DateTime);
+      for (java.util.ListIterator<javax.time.calendar.DateTimeProvider[]> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
+        javax.time.calendar.DateTimeProvider[] fudge2 = fudge1.next ();
         fudge1.set (java.util.Arrays.copyOf (fudge2, fudge2.length));
       }
       __DateTime = fudge0;
     }
     if (source.__Time == null) __Time = null;
     else {
-      final java.util.List<org.fudgemsg.types.FudgeTime[]> fudge0 = new java.util.ArrayList<org.fudgemsg.types.FudgeTime[]> (source.__Time);
-      for (java.util.ListIterator<org.fudgemsg.types.FudgeTime[]> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
-        org.fudgemsg.types.FudgeTime[] fudge2 = fudge1.next ();
+      final java.util.List<javax.time.calendar.TimeProvider[]> fudge0 = new java.util.ArrayList<javax.time.calendar.TimeProvider[]> (source.__Time);
+      for (java.util.ListIterator<javax.time.calendar.TimeProvider[]> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
+        javax.time.calendar.TimeProvider[] fudge2 = fudge1.next ();
         fudge1.set (java.util.Arrays.copyOf (fudge2, fudge2.length));
       }
       __Time = fudge0;
@@ -614,13 +624,13 @@ public class RATypes_Required implements java.io.Serializable, RATypesBase {
     return msg;
   }
   public void toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext, final org.fudgemsg.MutableFudgeFieldContainer msg) {
-    if (__Bool != null)  {
-      for (boolean[] fudge1 : __Bool) {
+    if (__Boolean != null)  {
+      for (boolean[] fudge1 : __Boolean) {
         final org.fudgemsg.MutableFudgeFieldContainer fudge2 = fudgeContext.newMessage ();
         for (boolean fudge3 : fudge1) {
           fudge2.add (null, null, fudge3);
         }
-        msg.add (_BOOL_KEY, null, fudge2);
+        msg.add (_BOOLEAN_KEY, null, fudge2);
       }
     }
     if (__Byte != null)  {
@@ -689,9 +699,9 @@ public class RATypes_Required implements java.io.Serializable, RATypesBase {
     }
     if (__CustomEnum != null)  {
       for (org.fudgemsg.proto.tests.types.CustomEnum[] fudge1 : __CustomEnum) {
-        final int[] fudge2 = new int[fudge1.length];
-        for (int fudge3 = 0; fudge3 < fudge2.length; fudge3++) {
-          fudge2[fudge3] = fudge1[fudge3].getFudgeEncoding ();
+        final org.fudgemsg.MutableFudgeFieldContainer fudge2 = fudgeContext.newMessage ();
+        for (org.fudgemsg.proto.tests.types.CustomEnum fudge3 : fudge1) {
+          fudge2.add (null, null, fudge3.name ());
         }
         msg.add (_CUSTOMENUM_KEY, null, fudge2);
       }
@@ -706,27 +716,27 @@ public class RATypes_Required implements java.io.Serializable, RATypesBase {
       }
     }
     if (__Date != null)  {
-      for (org.fudgemsg.types.FudgeDate[] fudge1 : __Date) {
+      for (javax.time.calendar.DateProvider[] fudge1 : __Date) {
         final org.fudgemsg.MutableFudgeFieldContainer fudge2 = fudgeContext.newMessage ();
-        for (org.fudgemsg.types.FudgeDate fudge3 : fudge1) {
+        for (javax.time.calendar.DateProvider fudge3 : fudge1) {
           fudge2.add (null, null, fudge3);
         }
         msg.add (_DATE_KEY, null, fudge2);
       }
     }
     if (__DateTime != null)  {
-      for (java.util.Date[] fudge1 : __DateTime) {
+      for (javax.time.calendar.DateTimeProvider[] fudge1 : __DateTime) {
         final org.fudgemsg.MutableFudgeFieldContainer fudge2 = fudgeContext.newMessage ();
-        for (java.util.Date fudge3 : fudge1) {
+        for (javax.time.calendar.DateTimeProvider fudge3 : fudge1) {
           fudge2.add (null, null, fudge3);
         }
         msg.add (_DATETIME_KEY, null, fudge2);
       }
     }
     if (__Time != null)  {
-      for (org.fudgemsg.types.FudgeTime[] fudge1 : __Time) {
+      for (javax.time.calendar.TimeProvider[] fudge1 : __Time) {
         final org.fudgemsg.MutableFudgeFieldContainer fudge2 = fudgeContext.newMessage ();
-        for (org.fudgemsg.types.FudgeTime fudge3 : fudge1) {
+        for (javax.time.calendar.TimeProvider fudge3 : fudge1) {
           fudge2.add (null, null, fudge3);
         }
         msg.add (_TIME_KEY, null, fudge2);
@@ -747,8 +757,8 @@ public class RATypes_Required implements java.io.Serializable, RATypesBase {
     }
     return new RATypes_Required (fudgeMsg);
   }
-  public java.util.List<boolean[]> get_Bool () {
-    return java.util.Collections.unmodifiableList (__Bool);
+  public java.util.List<boolean[]> get_Boolean () {
+    return java.util.Collections.unmodifiableList (__Boolean);
   }
   public java.util.List<byte[]> get_Byte () {
     return java.util.Collections.unmodifiableList (__Byte);
@@ -783,13 +793,13 @@ public class RATypes_Required implements java.io.Serializable, RATypesBase {
   public java.util.List<org.fudgemsg.FudgeFieldContainer[]> get_Message () {
     return java.util.Collections.unmodifiableList (__Message);
   }
-  public java.util.List<org.fudgemsg.types.FudgeDate[]> get_Date () {
+  public java.util.List<javax.time.calendar.DateProvider[]> get_Date () {
     return java.util.Collections.unmodifiableList (__Date);
   }
-  public java.util.List<java.util.Date[]> get_DateTime () {
+  public java.util.List<javax.time.calendar.DateTimeProvider[]> get_DateTime () {
     return java.util.Collections.unmodifiableList (__DateTime);
   }
-  public java.util.List<org.fudgemsg.types.FudgeTime[]> get_Time () {
+  public java.util.List<javax.time.calendar.TimeProvider[]> get_Time () {
     return java.util.Collections.unmodifiableList (__Time);
   }
   public boolean equals (final Object o) {
@@ -797,16 +807,16 @@ public class RATypes_Required implements java.io.Serializable, RATypesBase {
     if (o == null) return false;
     if (!(o instanceof RATypes_Required)) return false;
     RATypes_Required msg = (RATypes_Required)o;
-    if (__Bool != null) {
-      if (msg.__Bool != null) {
-        if (__Bool.size () != msg.__Bool.size ()) return false;
-        for (int i = 0; i < __Bool.size (); i++) {
-          if (!java.util.Arrays.equals (__Bool.get (i), msg.__Bool.get (i))) return false;
+    if (__Boolean != null) {
+      if (msg.__Boolean != null) {
+        if (__Boolean.size () != msg.__Boolean.size ()) return false;
+        for (int i = 0; i < __Boolean.size (); i++) {
+          if (!java.util.Arrays.equals (__Boolean.get (i), msg.__Boolean.get (i))) return false;
         }
       }
       else return false;
     }
-    else if (msg.__Bool != null) return false;
+    else if (msg.__Boolean != null) return false;
     if (__Byte != null) {
       if (msg.__Byte != null) {
         if (__Byte.size () != msg.__Byte.size ()) return false;
@@ -952,7 +962,7 @@ public class RATypes_Required implements java.io.Serializable, RATypesBase {
   public int hashCode () {
     int hc = 1;
     hc *= 31;
-    if (__Bool != null) for (boolean[] elem : __Bool) hc = (hc * 31) + java.util.Arrays.hashCode (elem);
+    if (__Boolean != null) for (boolean[] elem : __Boolean) hc = (hc * 31) + java.util.Arrays.hashCode (elem);
     hc *= 31;
     if (__Byte != null) for (byte[] elem : __Byte) hc = (hc * 31) + java.util.Arrays.hashCode (elem);
     hc *= 31;
@@ -976,14 +986,18 @@ public class RATypes_Required implements java.io.Serializable, RATypesBase {
     hc *= 31;
     if (__Message != null) for (org.fudgemsg.FudgeFieldContainer[] elem : __Message) hc = (hc * 31) + java.util.Arrays.deepHashCode (elem);
     hc *= 31;
-    if (__Date != null) for (org.fudgemsg.types.FudgeDate[] elem : __Date) hc = (hc * 31) + java.util.Arrays.deepHashCode (elem);
+    if (__Date != null) for (javax.time.calendar.DateProvider[] elem : __Date) hc = (hc * 31) + java.util.Arrays.deepHashCode (elem);
     hc *= 31;
-    if (__DateTime != null) for (java.util.Date[] elem : __DateTime) hc = (hc * 31) + java.util.Arrays.deepHashCode (elem);
+    if (__DateTime != null) for (javax.time.calendar.DateTimeProvider[] elem : __DateTime) hc = (hc * 31) + java.util.Arrays.deepHashCode (elem);
     hc *= 31;
-    if (__Time != null) for (org.fudgemsg.types.FudgeTime[] elem : __Time) hc = (hc * 31) + java.util.Arrays.deepHashCode (elem);
+    if (__Time != null) for (javax.time.calendar.TimeProvider[] elem : __Time) hc = (hc * 31) + java.util.Arrays.deepHashCode (elem);
     return hc;
   }
   public String toString () {
     return org.apache.commons.lang.builder.ToStringBuilder.reflectionToString(this, org.apache.commons.lang.builder.ToStringStyle.SHORT_PREFIX_STYLE);
   }
 }
+/* filefooter.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */

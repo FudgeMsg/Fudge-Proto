@@ -91,5 +91,5 @@ public class DocumentedClassCode extends ClassCodeAdapter {
   public void writeEnumImplementationDeclaration (final Compiler.Context context, final EnumDefinition enumDefinition, final IndentWriter writer) throws IOException {
     createdFrom (writer, enumDefinition);
   }
-  
+
 }

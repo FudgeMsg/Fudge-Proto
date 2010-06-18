@@ -1,10 +1,14 @@
 // Automatically created - do not modify
+/* fileheader.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */
 // Created from types.proto:302(10)
 package org.fudgemsg.proto.tests.types;
-public class MutableSTypes_Required implements java.io.Serializable, TypesBase {
-  private static final long serialVersionUID = 2511807829388664249l;
-  private boolean __Bool;
-  public static final String _BOOL_KEY = "_Bool";
+public class MutableSTypes_Required implements java.io.Serializable, TypesBase_Required {
+  private static final long serialVersionUID = -8800485479603340994l;
+  private boolean __Boolean;
+  public static final String _BOOLEAN_KEY = "_Boolean";
   private byte __Byte;
   public static final String _BYTE_KEY = "_Byte";
   private double __Double;
@@ -27,14 +31,14 @@ public class MutableSTypes_Required implements java.io.Serializable, TypesBase {
   public static final String _CUSTOMENUM_KEY = "_CustomEnum";
   private org.fudgemsg.FudgeFieldContainer __Message;
   public static final String _MESSAGE_KEY = "_Message";
-  private org.fudgemsg.types.FudgeDate __Date;
+  private javax.time.calendar.DateProvider __Date;
   public static final String _DATE_KEY = "_Date";
-  private java.util.Date __DateTime;
+  private javax.time.calendar.DateTimeProvider __DateTime;
   public static final String _DATETIME_KEY = "_DateTime";
-  private org.fudgemsg.types.FudgeTime __Time;
+  private javax.time.calendar.TimeProvider __Time;
   public static final String _TIME_KEY = "_Time";
-  public MutableSTypes_Required (boolean _Bool, byte _Byte, double _Double, float _Float, boolean _Indicator, int _Int, long _Long, short _Short, String _String, org.fudgemsg.proto.tests.types.SubMessage _SubMessage, org.fudgemsg.proto.tests.types.CustomEnum _CustomEnum, org.fudgemsg.FudgeFieldContainer _Message, org.fudgemsg.types.FudgeDate _Date, java.util.Date _DateTime, org.fudgemsg.types.FudgeTime _Time) {
-    __Bool = _Bool;
+  public MutableSTypes_Required (boolean _Boolean, byte _Byte, double _Double, float _Float, boolean _Indicator, int _Int, long _Long, short _Short, String _String, org.fudgemsg.proto.tests.types.SubMessage _SubMessage, org.fudgemsg.proto.tests.types.CustomEnum _CustomEnum, org.fudgemsg.FudgeFieldContainer _Message, javax.time.calendar.DateProvider _Date, javax.time.calendar.DateTimeProvider _DateTime, javax.time.calendar.TimeProvider _Time) {
+    __Boolean = _Boolean;
     __Byte = _Byte;
     __Double = _Double;
     __Float = _Float;
@@ -61,13 +65,13 @@ public class MutableSTypes_Required implements java.io.Serializable, TypesBase {
   }
   protected MutableSTypes_Required (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
     org.fudgemsg.FudgeField fudgeField;
-    fudgeField = fudgeMsg.getByName (_BOOL_KEY);
-    if (fudgeField == null) throw new IllegalArgumentException ("Fudge message is not a MutableSTypes_Required - field '_Bool' is not present");
+    fudgeField = fudgeMsg.getByName (_BOOLEAN_KEY);
+    if (fudgeField == null) throw new IllegalArgumentException ("Fudge message is not a MutableSTypes_Required - field '_Boolean' is not present");
     try {
-      __Bool = fudgeMsg.getFieldValue (Boolean.class, fudgeField);
+      __Boolean = fudgeMsg.getFieldValue (Boolean.class, fudgeField);
     }
     catch (IllegalArgumentException e) {
-      throw new IllegalArgumentException ("Fudge message is not a MutableSTypes_Required - field '_Bool' is not boolean", e);
+      throw new IllegalArgumentException ("Fudge message is not a MutableSTypes_Required - field '_Boolean' is not boolean", e);
     }
     fudgeField = fudgeMsg.getByName (_BYTE_KEY);
     if (fudgeField == null) throw new IllegalArgumentException ("Fudge message is not a MutableSTypes_Required - field '_Byte' is not present");
@@ -139,7 +143,7 @@ public class MutableSTypes_Required implements java.io.Serializable, TypesBase {
     fudgeField = fudgeMsg.getByName (_CUSTOMENUM_KEY);
     if (fudgeField == null) throw new IllegalArgumentException ("Fudge message is not a MutableSTypes_Required - field '_CustomEnum' is not present");
     try {
-      __CustomEnum = org.fudgemsg.proto.tests.types.CustomEnum.fromFudgeEncoding (fudgeMsg.getFieldValue (Integer.class, fudgeField));
+      __CustomEnum = fudgeMsg.getFieldValue (org.fudgemsg.proto.tests.types.CustomEnum.class, fudgeField);
     }
     catch (IllegalArgumentException e) {
       throw new IllegalArgumentException ("Fudge message is not a MutableSTypes_Required - field '_CustomEnum' is not CustomEnum enum", e);
@@ -155,7 +159,7 @@ public class MutableSTypes_Required implements java.io.Serializable, TypesBase {
     fudgeField = fudgeMsg.getByName (_DATE_KEY);
     if (fudgeField == null) throw new IllegalArgumentException ("Fudge message is not a MutableSTypes_Required - field '_Date' is not present");
     try {
-      __Date = fudgeMsg.getFieldValue (org.fudgemsg.types.FudgeDate.class, fudgeField);
+      __Date = fudgeMsg.getFieldValue (javax.time.calendar.DateProvider.class, fudgeField);
     }
     catch (IllegalArgumentException e) {
       throw new IllegalArgumentException ("Fudge message is not a MutableSTypes_Required - field '_Date' is not date", e);
@@ -163,7 +167,7 @@ public class MutableSTypes_Required implements java.io.Serializable, TypesBase {
     fudgeField = fudgeMsg.getByName (_DATETIME_KEY);
     if (fudgeField == null) throw new IllegalArgumentException ("Fudge message is not a MutableSTypes_Required - field '_DateTime' is not present");
     try {
-      __DateTime = fudgeMsg.getFieldValue (java.util.Date.class, fudgeField);
+      __DateTime = fudgeMsg.getFieldValue (javax.time.calendar.DateTimeProvider.class, fudgeField);
     }
     catch (IllegalArgumentException e) {
       throw new IllegalArgumentException ("Fudge message is not a MutableSTypes_Required - field '_DateTime' is not datetime", e);
@@ -171,7 +175,7 @@ public class MutableSTypes_Required implements java.io.Serializable, TypesBase {
     fudgeField = fudgeMsg.getByName (_TIME_KEY);
     if (fudgeField == null) throw new IllegalArgumentException ("Fudge message is not a MutableSTypes_Required - field '_Time' is not present");
     try {
-      __Time = fudgeMsg.getFieldValue (org.fudgemsg.types.FudgeTime.class, fudgeField);
+      __Time = fudgeMsg.getFieldValue (javax.time.calendar.TimeProvider.class, fudgeField);
     }
     catch (IllegalArgumentException e) {
       throw new IllegalArgumentException ("Fudge message is not a MutableSTypes_Required - field '_Time' is not time", e);
@@ -179,7 +183,7 @@ public class MutableSTypes_Required implements java.io.Serializable, TypesBase {
   }
   protected MutableSTypes_Required (final MutableSTypes_Required source) {
     if (source == null) throw new NullPointerException ("'source' must not be null");
-    __Bool = source.__Bool;
+    __Boolean = source.__Boolean;
     __Byte = source.__Byte;
     __Double = source.__Double;
     __Float = source.__Float;
@@ -208,7 +212,7 @@ public class MutableSTypes_Required implements java.io.Serializable, TypesBase {
     return msg;
   }
   public void toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext, final org.fudgemsg.MutableFudgeFieldContainer msg) {
-    msg.add (_BOOL_KEY, null, __Bool);
+    msg.add (_BOOLEAN_KEY, null, __Boolean);
     msg.add (_BYTE_KEY, null, __Byte);
     msg.add (_DOUBLE_KEY, null, __Double);
     msg.add (_FLOAT_KEY, null, __Float);
@@ -230,7 +234,7 @@ public class MutableSTypes_Required implements java.io.Serializable, TypesBase {
       msg.add (_SUBMESSAGE_KEY, null, fudge1);
     }
     if (__CustomEnum != null)  {
-      msg.add (_CUSTOMENUM_KEY, null, __CustomEnum.getFudgeEncoding ());
+      msg.add (_CUSTOMENUM_KEY, null, __CustomEnum.name ());
     }
     if (__Message != null)  {
       msg.add (_MESSAGE_KEY, null, fudgeContext.newMessage (__Message));
@@ -259,11 +263,11 @@ public class MutableSTypes_Required implements java.io.Serializable, TypesBase {
     }
     return new MutableSTypes_Required (fudgeMsg);
   }
-  public boolean get_Bool () {
-    return __Bool;
+  public boolean get_Boolean () {
+    return __Boolean;
   }
-  public void set_Bool (boolean _Bool) {
-    __Bool = _Bool;
+  public void set_Boolean (boolean _Boolean) {
+    __Boolean = _Boolean;
   }
   public byte get_Byte () {
     return __Byte;
@@ -337,24 +341,24 @@ public class MutableSTypes_Required implements java.io.Serializable, TypesBase {
     if (_Message == null) throw new NullPointerException ("_Message' cannot be null");
     __Message = _Message;
   }
-  public org.fudgemsg.types.FudgeDate get_Date () {
+  public javax.time.calendar.DateProvider get_Date () {
     return __Date;
   }
-  public void set_Date (org.fudgemsg.types.FudgeDate _Date) {
+  public void set_Date (javax.time.calendar.DateProvider _Date) {
     if (_Date == null) throw new NullPointerException ("_Date' cannot be null");
     __Date = _Date;
   }
-  public java.util.Date get_DateTime () {
+  public javax.time.calendar.DateTimeProvider get_DateTime () {
     return __DateTime;
   }
-  public void set_DateTime (java.util.Date _DateTime) {
+  public void set_DateTime (javax.time.calendar.DateTimeProvider _DateTime) {
     if (_DateTime == null) throw new NullPointerException ("_DateTime' cannot be null");
     __DateTime = _DateTime;
   }
-  public org.fudgemsg.types.FudgeTime get_Time () {
+  public javax.time.calendar.TimeProvider get_Time () {
     return __Time;
   }
-  public void set_Time (org.fudgemsg.types.FudgeTime _Time) {
+  public void set_Time (javax.time.calendar.TimeProvider _Time) {
     if (_Time == null) throw new NullPointerException ("_Time' cannot be null");
     __Time = _Time;
   }
@@ -363,7 +367,7 @@ public class MutableSTypes_Required implements java.io.Serializable, TypesBase {
     if (o == null) return false;
     if (!(o instanceof MutableSTypes_Required)) return false;
     MutableSTypes_Required msg = (MutableSTypes_Required)o;
-    if (__Bool != msg.__Bool) return false;
+    if (__Boolean != msg.__Boolean) return false;
     if (__Byte != msg.__Byte) return false;
     if (__Double != msg.__Double) return false;
     if (__Float != msg.__Float) return false;
@@ -425,7 +429,7 @@ public class MutableSTypes_Required implements java.io.Serializable, TypesBase {
   public int hashCode () {
     int hc = 1;
     hc *= 31;
-    if (__Bool) hc++;
+    if (__Boolean) hc++;
     hc = (hc * 31) + (int)__Byte;
     hc = (hc * 31) + (int)__Double;
     hc = (hc * 31) + (int)__Float;
@@ -454,3 +458,7 @@ public class MutableSTypes_Required implements java.io.Serializable, TypesBase {
     return org.apache.commons.lang.builder.ToStringBuilder.reflectionToString(this, org.apache.commons.lang.builder.ToStringStyle.SHORT_PREFIX_STYLE);
   }
 }
+/* filefooter.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */

@@ -18,12 +18,10 @@ package org.fudgemsg.proto.java;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.fudgemsg.FudgeField;
 import org.fudgemsg.FudgeTypeDictionary;
 import org.fudgemsg.proto.CodeGeneratorUtil;
 import org.fudgemsg.proto.Compiler;
@@ -32,9 +30,9 @@ import org.fudgemsg.proto.EnumDefinition;
 import org.fudgemsg.proto.FieldDefinition;
 import org.fudgemsg.proto.FieldType;
 import org.fudgemsg.proto.IndentWriter;
+import org.fudgemsg.proto.LiteralValue;
 import org.fudgemsg.proto.MessageDefinition;
 import org.fudgemsg.proto.TaxonomyDefinition;
-import org.fudgemsg.proto.c.CBlockCode;
 import org.fudgemsg.proto.java.JavaCodeGenerator.ProtoBinding;
 import org.fudgemsg.proto.proto.DocumentedClassCode;
 import org.fudgemsg.proto.proto.HeaderlessClassCode;
@@ -70,15 +68,15 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   private static final String CLASS_TOSTRINGBUILDER = org.apache.commons.lang.builder.ToStringBuilder.class.getName ();
   private static final String CLASS_TOSTRINGSTYLE = org.apache.commons.lang.builder.ToStringStyle.class.getName ();
   private static final String CLASS_SERIALIZABLE = java.io.Serializable.class.getName ();
-  private static final String CLASS_DATE = java.util.Date.class.getName ();
-  private static final String CLASS_FUDGEDATE = org.fudgemsg.types.FudgeDate.class.getName ();
-  private static final String CLASS_FUDGETIME = org.fudgemsg.types.FudgeTime.class.getName ();
+  private static final String CLASS_DATETIMEPROVIDER = "javax.time.calendar.DateTimeProvider";
+  private static final String CLASS_DATEPROVIDER = "javax.time.calendar.DateProvider";
+  private static final String CLASS_TIMEPROVIDER = "javax.time.calendar.TimeProvider";
   private static final String CLASS_FUDGESTRINGTYPE = org.fudgemsg.types.StringFieldType.class.getName ();
   
   private static final String VALUE_INDICATOR = CLASS_INDICATOR + ".INSTANCE";
 
   private JavaClassCode () {
-    super (new DocumentedClassCode (blockCodeDelegate (new CBlockCode (literalCodeDelegate (JavaLiteralCode.INSTANCE)))));
+    super (new DocumentedClassCode (blockCodeDelegate (new JavaBlockCode (literalCodeDelegate (JavaLiteralCode.INSTANCE)))));
   }
   
   private String messageDelegateName (final MessageDefinition message) {
@@ -147,7 +145,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     if (implementation == null) return null;
     return new File(implementation, definition.getName() + ".java");
   }
-  
+
   private String fieldMethodName (final FieldDefinition field, final String prefix) {
     final StringBuilder sb = new StringBuilder ();
     if (prefix != null) {
@@ -165,8 +163,17 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     jWriter.method (false, realTypeString (field, false), fieldMethodName (field, "get"), null);
     jWriter = beginBlock (jWriter); // accessor
     if (field.isRepeated ()) {
-      // repeated fields, return an imutable list
-      jWriter.returnInvoke (CLASS_COLLECTIONS + ".unmodifiableList", attribute, null);
+      // repeated fields, return an immutable list
+      if (!field.isRequired ()) {
+        writer.write ("if (" + attribute + " != null)");
+        beginBlock (writer);
+      }
+      writer.write ("return " + CLASS_COLLECTIONS + ".unmodifiableList (" + attribute + ")");
+      if (!field.isRequired ()) {
+        endStmt (writer);
+        endBlock (writer);
+        writer.write ("else return null");
+      }
     } else {
       // non-repeated fields, return attribute directly
       jWriter.returnVariable (attribute);
@@ -194,12 +201,16 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     if (field.isRepeated ()) {
       return generic ? genericTypeString (CLASS_COLLECTION, field.getType (), false) : listTypeString (field.getType (), false);
     } else {
-      return typeString (field.getType (), false);
+      return typeString (field.getType (), !field.isRequired ());
     }
   }
   
   private String fieldKey (final FieldDefinition field) {
     return field.getName ().toUpperCase () + "_KEY";
+  }
+  
+  private String fieldOrdinal (final FieldDefinition field) {
+    return field.getName ().toUpperCase () + "_ORDINAL";
   }
   
   @Override
@@ -208,8 +219,12 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     if (!field.isMutable ()) writer.write ("final ");
     writer.write (realTypeString (field, false) + " " + privateFieldName (field));
     endStmt (writer); // attribute decl
-    writer.write ("public static final String " + fieldKey (field) + " = \"" + field.getName () + "\"");
-    endStmt (writer); // public field name
+    if (field.getOrdinal () != null) {
+      writer.write ("public static final int " + fieldOrdinal (field) + " = " + field.getOrdinal ());
+    } else {
+      writer.write ("public static final String " + fieldKey (field) + " = \"" + field.getName () + "\"");
+    }
+    endStmt (writer); // public field name/ordinal
     // TODO 2010-01-26 Andrew -- if the message references a specific taxonomy, we should use references to the string place holders there instead of local ones
   }
   
@@ -474,7 +489,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     final String lfn = localFieldName (field);
     final String pfn = privateFieldName (field);
     final String returnType = "public " + (builderReturn ? "Builder" : "void") + " ";
-    writer.write (returnType + fieldMethodName (field, builderReturn ? null : "set") + " (" + typeString (field.getType (), field.isRepeated ()) + " " + lfn + ")");
+    writer.write (returnType + fieldMethodName (field, builderReturn ? null : "set") + " (" + typeString (field.getType (), field.isRepeated () || !field.isRequired ()) + " " + lfn + ")");
     beginBlock (writer); // method
     if (field.isRepeated ()) {
       writer.write ("if (" + lfn + " == null) ");
@@ -622,6 +637,11 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         value = value + ".getFudgeEncoding ()";
       }
       break;
+    case FudgeTypeDictionary.STRING_TYPE_ID :
+      if (type instanceof FieldType.EnumType) {
+        value = value + ".name ()";
+      }
+      break;
     case FudgeTypeDictionary.FUDGE_MSG_TYPE_ID :
       if (type instanceof FieldType.ArrayType) {
         final String temp1 = writer.localVariable (CLASS_MUTABLEFUDGEFIELDCONTAINER, true, "fudgeContext.newMessage ()");
@@ -638,7 +658,9 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         } else {
           final MessageDefinition messageDefinition = ((FieldType.MessageType)type).getMessageDefinition ();
           if (messageDefinition.isExternal ()) {
-            value = "fudgeContext.objectToFudgeMsg (" + value + ")";
+            writer.invoke ("fudgeContext", "objectToFudgeMsg", msg + ", " + name + ", " + ordinal + ", " + value);
+            endStmt (writer);
+            return;
           } else {
             final String temp1 = writer.localVariable (CLASS_MUTABLEFUDGEFIELDCONTAINER, true, "fudgeContext.newMessage ()");
             endStmt (writer);
@@ -690,22 +712,28 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       final FieldType type = field.getType ();
       String value = privateFieldName (field);
       if (field.isRepeated ()) {
+        //TODO don't need null check on required fields!
         writer.ifNotNull (value);
         writer = beginBlock (writer); // if not null
         value = writer.forEach (typeString (type, true), value);
         writer = beginBlock (writer); // foreach
       } else {
-        if (isObject (type)) {
+        if (isObject (type) || !field.isRequired ()) {
+          //TODO don't need null check on required fields!
           writer.ifNotNull (value);
           writer = beginBlock (writer); // if not null
         }
       }
-      writeAddToFudgeMsg (writer, "msg", fieldKey (field), (field.getOrdinal () != null) ? field.getOrdinal ().toString () : "null", value, type);
+      if (field.getOrdinal () != null) {
+        writeAddToFudgeMsg (writer, "msg", "null", fieldOrdinal (field), value, type);
+      } else {
+        writeAddToFudgeMsg (writer, "msg", fieldKey (field), "null", value, type);
+      }
       if (field.isRepeated ()) {
         writer = endBlock (writer); // foreach
         writer = endBlock (writer); // if not null
       } else {
-        if (isObject (type)) {
+        if (isObject (type) || !field.isRequired ()) {
           writer = endBlock (writer); // if not null
         }
       }
@@ -827,7 +855,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     }
   }
   
-  private void writeDecodeFudgeField (JavaWriter writer, final FieldType type, final MessageDefinition message, final String fieldData, final String fieldRef, final String fieldContainer, String assignTo, final String appendTo) throws IOException {
+  private void writeDecodeFudgeField (JavaWriter writer, final FieldType type, final MessageDefinition message, final String fieldData, final String fieldRef, final String fieldContainer, String assignTo, final String appendTo, final boolean allowNull) throws IOException {
     if (type.getFudgeFieldType () != FudgeTypeDictionary.INDICATOR_TYPE_ID) {
       writer.guard ();
       writer = beginBlock (writer); // try
@@ -886,14 +914,12 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         // arbitrary array
         final String subMessage = writer.localVariable (CLASS_FUDGEFIELDCONTAINER, true, fudgeFieldValueExpression (fieldContainer, CLASS_FUDGEFIELDCONTAINER, fieldData));
         endStmt (writer);
-        if (appendTo != null) { }
         // TODO 2010-01-06 Andrew -- we could call getNumFields on the subMessage and allocate a proper array once, but might that be slower if we have a FudgeMsg implementation that makes data available as soon as its received & decoded - i.e. a big array submessage would have to be decoded in its entirety to get the length
         final String slaveList = writer.localVariable (listTypeString (baseType, false), true, "new " + listTypeString (baseType, true) + " ()");
         endStmt (writer);
         final String msgElement = writer.forEach (CLASS_FUDGEFIELD, subMessage);
         writer = beginBlock (writer); // iteration
-        // this is the problem in AATypes_Required
-        writeDecodeFudgeField (writer, baseType, message, msgElement, fieldRef + "[]", subMessage, null, slaveList + ".add");
+        writeDecodeFudgeField (writer, baseType, message, msgElement, fieldRef + "[]", subMessage, null, slaveList + ".add", true);
         writer = endBlock (writer); // iteration
         if (appendTo != null) {
           if (checkLength) {
@@ -929,7 +955,8 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         endStmt (writer);
       } else {
         if (msg.isExternal ()) {
-          writer.assignment (assignTo, "fudgeContext.fudgeMsgToObject (" + messageType (msg) + ".class, " + value + ")");
+          writer.assignment (assignTo, "fudgeContext.fieldValueToObject (" + messageType (msg) + ".class, " + fieldData + ")");
+          //writer.assignment (assignTo, "fudgeContext.fudgeMsgToObject (" + messageType (msg) + ".class, " + value + ")");
         } else if (msg.hasExternalMessageReferences ()) {
           writer.assignment (assignTo, messageType (msg) + ".fromFudgeMsg (fudgeContext, " + value + ")");
         } else {
@@ -943,7 +970,11 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         assignTo = writer.localVariable (enumDefinition.getIdentifier (), true);
         endStmt (writer);
       }
-      writer.assignment (assignTo, enumDefinition.getIdentifier () + ".fromFudgeEncoding (" + fudgeFieldValueExpression (fieldContainer, "Integer", fieldData) + ")");
+      if (enumDefinition.getType () == EnumDefinition.Type.INTEGER_ENCODED) {
+        writer.assignment (assignTo, enumDefinition.getIdentifier () + ".fromFudgeEncoding (" + fudgeFieldValueExpression (fieldContainer, "Integer", fieldData) + ")");
+      } else {
+        writer.assignment (assignTo, fieldContainer + ".getFieldValue (" + enumDefinition.getIdentifier () + ".class, " + fieldData + ")");
+      }
       endStmt (writer);
     } else {
       switch (type.getFudgeFieldType ()) {
@@ -981,23 +1012,29 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         assignTo = writeDecodeSimpleFudgeField (writer, "double", "Double", fieldData, fieldRef, fieldContainer, assignTo, appendTo);
         break;
       case FudgeTypeDictionary.STRING_TYPE_ID : {
-        final String value = fieldData + ".getValue ().toString ()";
-        if (appendTo != null) {
-          assignTo = value;
+        final String value = fieldData + ".getValue ()";
+        final String valueString;
+        if (allowNull) {
+          valueString = "(" + value + " != null) ? " + value + ".toString () : null";
         } else {
-          writer.assignment (assignTo, value);
+          valueString = value + ".toString ()";
+        }
+        if (appendTo != null) {
+          assignTo = valueString;
+        } else {
+          writer.assignment (assignTo, valueString);
           endStmt (writer);
         }
         break;
       }
       case FudgeTypeDictionary.DATE_TYPE_ID :
-        assignTo = writeDecodeSimpleFudgeField (writer, CLASS_FUDGEDATE, CLASS_FUDGEDATE, fieldData, fieldRef, fieldContainer, assignTo, appendTo);
+        assignTo = writeDecodeSimpleFudgeField (writer, CLASS_DATEPROVIDER, CLASS_DATEPROVIDER, fieldData, fieldRef, fieldContainer, assignTo, appendTo);
         break;
       case FudgeTypeDictionary.DATETIME_TYPE_ID :
-        assignTo = writeDecodeSimpleFudgeField (writer, CLASS_DATE, CLASS_DATE, fieldData, fieldRef, fieldContainer, assignTo, appendTo);
+        assignTo = writeDecodeSimpleFudgeField (writer, CLASS_DATETIMEPROVIDER, CLASS_DATETIMEPROVIDER, fieldData, fieldRef, fieldContainer, assignTo, appendTo);
         break;
       case FudgeTypeDictionary.TIME_TYPE_ID :
-        assignTo = writeDecodeSimpleFudgeField (writer, CLASS_FUDGETIME, CLASS_FUDGETIME, fieldData, fieldRef, fieldContainer, assignTo, appendTo);
+        assignTo = writeDecodeSimpleFudgeField (writer, CLASS_TIMEPROVIDER, CLASS_TIMEPROVIDER, fieldData, fieldRef, fieldContainer, assignTo, appendTo);
         break;
       default :
         throw new IllegalStateException ("type '" + type + "' is not an expected type (fudge field type " + type.getFudgeFieldType () + ")");
@@ -1022,7 +1059,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     endStmt (writer); // list construction
     final String fieldData = writer.forEach (CLASS_FUDGEFIELD, "fudgeFields");
     beginBlock (writer.getWriter ()); // iteration
-    writeDecodeFudgeField (writer, field.getType (), field.getOuterMessage (), fieldData, field.getName (), "fudgeMsg", null, localName + ".add");
+    writeDecodeFudgeField (writer, field.getType (), field.getOuterMessage (), fieldData, field.getName (), "fudgeMsg", null, localName + ".add", false);
     endBlock (writer.getWriter ()); // iteration
   }
   
@@ -1034,7 +1071,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       sbGetField.append ("By");
       final Integer ordinal = field.getOrdinal ();
       if (ordinal != null) {
-        sbGetField.append ("Ordinal (").append (ordinal.toString ()).append (')');
+        sbGetField.append ("Ordinal (").append (fieldOrdinal (field)).append (')');
       } else {
         sbGetField.append ("Name (").append (fieldKey (field)).append (")");
       }
@@ -1051,7 +1088,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         if (field.isRepeated ()) {
           writeDecodeFudgeFieldsToList (jWriter, field, privateFieldName (field));
         } else {
-          writeDecodeFudgeField (jWriter, field.getType (), field.getOuterMessage (), "fudgeField", field.getName (), "fudgeMsg", privateFieldName (field), null);
+          writeDecodeFudgeField (jWriter, field.getType (), field.getOuterMessage (), "fudgeField", field.getName (), "fudgeMsg", privateFieldName (field), null, false);
         }
       } else {
         final String method = fieldMethodName (field, builder ? null : "set");
@@ -1066,7 +1103,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         } else {
           jWriter.ifNotNull ("fudgeField");
           jWriter = beginBlock (jWriter); // if guard
-          writeDecodeFudgeField (jWriter, field.getType (), field.getOuterMessage (), "fudgeField", field.getName (), "fudgeMsg", null, method);
+          writeDecodeFudgeField (jWriter, field.getType (), field.getOuterMessage (), "fudgeField", field.getName (), "fudgeMsg", null, method, true);
         }
         jWriter = endBlock (jWriter); // if guard
       }
@@ -1185,6 +1222,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       MessageDefinition superMessage = message.getExtends ();
       while (superMessage != null) {
         if (!superMessage.hasExternalMessageReferences ()) {
+          // superclass might not have a FudgeDeserializationContext available when constructing
           context.warning (message.getCodePosition (), "[PRO-18] external definitions might prevent polymorphic use as " + superMessage.getIdentifier ());
           break;
         } else {
@@ -1208,7 +1246,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     writer.write ("try");
     beginBlock (writer); // try
     writer.write ("return (" + message.getIdentifier () + ")Class.forName (className).getDeclaredMethod (\"fromFudgeMsg\", " + paramTypes + ").invoke (null, " + params + ")");
-    // TODO 2010-02-17 Andrew -- this logic is flawed; if the sub-message has external references but we don't then it won't have the correct signature (and we won't have a serialization context)
+    // TODO 2010-02-17 Andrew -- if the sub-message has external references but we don't then it won't have the correct signature (i.e. we won't have a serialization context); hence the PRO-18 warning above
     endStmt (writer);
     endBlock (writer); // try
     writer.write ("catch (Throwable t)");
@@ -1264,7 +1302,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
           writer.write ("if (!" + CLASS_ARRAYS + "." + (isObjectArray ((FieldType.ArrayType)type) ? "deepEquals" : "equals") + " (" + a + ", " + b + ")) return false");
         }
       } else {
-        if (isObject (type) || field.isRepeated ()) {
+        if (isObject (type) || field.isRepeated () || !field.isRequired ()) {
           writer.write ("if (" + a + " != null)");
           beginBlock (writer); // if !a
           writer.write ("if (" + b + " != null)");
@@ -1311,7 +1349,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
           writer.write ("hc += " + CLASS_ARRAYS + "." + (isObjectArray ((FieldType.ArrayType)type) ? "deepHashCode" : "hashCode") + " (" + name + ")");
         }
       } else {
-        if (isObject (type) || field.isRepeated ()) {
+        if (isObject (type) || field.isRepeated () || !field.isRequired ()) {
           writer.write ("hc *= 31");
           endStmt (writer);
           writer.write ("if (" + name + " != null) hc += " + name + ".hashCode ()");
@@ -1387,60 +1425,86 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   }
 
   @Override
-  public void writeEnumImplementationDeclaration(final Compiler.Context context, EnumDefinition enumDefinition, IndentWriter iWriter) throws IOException {
-    super.writeEnumImplementationDeclaration (context, enumDefinition, iWriter);
-    JavaWriter writer = new JavaWriter (iWriter);
+  public void writeEnumImplementationDeclaration(final Compiler.Context context, EnumDefinition enumDefinition, IndentWriter writer) throws IOException {
+    super.writeEnumImplementationDeclaration (context, enumDefinition, writer);
     if (enumDefinition.getOuterDefinition () == null) {
       final String namespace = enumDefinition.getNamespace ();
       if (namespace != null) {
-        writer.packageDef (namespace);
+        writer.write ("package " + namespace);
         endStmt (writer);
       }
     }
-    writer.enumDef (enumDefinition.getName ());
-    writer = beginBlock (writer); // enum
-    Iterator<Map.Entry<String,Integer>> elements = enumDefinition.getElements ();
+    writer.write ("public enum " + enumDefinition.getName ());
+    beginBlock (writer); // enum
     boolean first = true;
-    while (elements.hasNext ()) {
-      final Map.Entry<String,Integer> element = elements.next ();
+    for (Map.Entry<String,LiteralValue> element : enumDefinition.getElements ()) {
       if (first) {
         first = false;
       } else {
-        writer.enumElementSeparator ();
+        writer.write (",");
+        writer.newLine ();
       }
-      writer.enumElement (element.getKey (), element.getValue ().toString ());
+      writer.write (element.getKey ());
+      if (enumDefinition.getType () != EnumDefinition.Type.DEFAULT) {
+        writer.write (" (" + getLiteral (element.getValue ()) + ")");
+      }
     }
-    endStmt (writer); // initial enumset
-    writer.attribute (true, "int", "_fudgeEncoding");
-    endStmt (writer); // ordinal def
-    writer.constructor ("private", enumDefinition.getName (), "final int fudgeEncoding");
-    writer = beginBlock (writer); // constructor
-    writer.assignment ("_fudgeEncoding", "fudgeEncoding");
-    endStmt (writer); // assignment
-    writer = endBlock (writer); // constructor
-    writer.method (false, "int", "getFudgeEncoding", null);
-    writer = beginBlock (writer); // getFudgeEncoding
-    writer.returnVariable ("_fudgeEncoding");
-    endStmt (writer); // return
-    writer = endBlock (writer); // getFudgeEncoding
-    writer.method (true, enumDefinition.getName (), "fromFudgeEncoding", "final int fudgeEncoding");
-    writer = beginBlock (writer); // fromFudgeEncoding
-    writer.select ("fudgeEncoding");
-    beginBlock (writer); // switch
-    elements = enumDefinition.getElements ();
-    while (elements.hasNext ()) {
-      final Map.Entry<String,Integer> element = elements.next ();
-      writer.selectCaseReturn (element.getValue ().toString (), element.getKey ());
-      endStmt (writer);
+    endStmt (writer); // set of values
+    switch (enumDefinition.getType ()) {
+      case INTEGER_ENCODED :
+        writer.write ("private final int _fudgeEncoding");
+        endStmt (writer);
+        writer.write ("private " + enumDefinition.getName () + " (final int fudgeEncoding)");
+        beginBlock (writer); // constructor
+        writer.write ("_fudgeEncoding = fudgeEncoding");
+        endStmt (writer);
+        endBlock (writer); // constructor
+        writer.write ("public int getFudgeEncoding ()");
+        beginBlock (writer); // getFudgeEncoding
+        writer.write ("return _fudgeEncoding");
+        endStmt (writer);
+        endBlock (writer); // getFudgeEncoding
+        writer.write ("public static " + enumDefinition.getName () + " fromFudgeEncoding (final int fudgeEncoding)");
+        beginBlock (writer); // fromFudgeEncoding
+        writer.write ("switch (fudgeEncoding)");
+        beginBlock (writer); // switch
+        for (Map.Entry<String, LiteralValue> element : enumDefinition.getElements ()) {
+          writer.write ("case " + getLiteral (element.getValue ()) + " : return " + element.getKey ());
+          endStmt (writer);
+        }
+        writer.write ("default : throw new IllegalArgumentException (\"field is not a " + enumDefinition.getName () + " - invalid value '\" + fudgeEncoding + \"'\")");
+        endStmt (writer);
+        endBlock (writer); // switch
+        endBlock (writer); // fromFudgeEncoding
+        break;
+      case STRING_ENCODED :
+        writer.write ("private final String _fudgeEncoding");
+        endStmt (writer);
+        writer.write ("private " + enumDefinition.getName () + " (final String fudgeEncoding)");
+        beginBlock (writer); // constructor
+        writer.write ("_fudgeEncoding = fudgeEncoding");
+        endStmt (writer);
+        endBlock (writer); // constructor
+        writer.write ("public String getFudgeEncoding ()");
+        beginBlock (writer); // getFudgeEncoding
+        writer.write ("return _fudgeEncoding");
+        endStmt (writer);
+        endBlock (writer); // getFudgeEncoding
+        writer.write ("public static " + enumDefinition.getName () + " fromFudgeEncoding (final String fudgeEncoding)");
+        beginBlock (writer); // fromFudgeEncoding
+        for (Map.Entry<String, LiteralValue> element : enumDefinition.getElements ()) {
+          writer.write ("if (fudgeEncoding.equals (" + getLiteral (element.getValue ()) + ")) return " + element.getKey ());
+          endStmt (writer);
+        }
+        writer.write ("throw new IllegalArgumentException (\"field is not a " + enumDefinition.getName () + " - invalid value '\" + fudgeEncoding + \"'\")");
+        endStmt (writer);
+        endBlock (writer); // fromFudgeEncoding
+        break;
     }
-    writer.defaultThrowInvalidFudgeEnumException (enumDefinition, "fudgeEncoding");
-    endStmt (writer); // default
-    endBlock (writer); // switch
-    endBlock (writer); // fromFudgeEncoding
     final String bodyCode = ProtoBinding.BODY.get (enumDefinition);
     if (bodyCode != null) {
-      writer.getWriter ().write (bodyCode);
-      writer.getWriter ().newLine ();
+      writer.write (bodyCode);
+      writer.newLine ();
     }
     endBlock (writer); // enum
   }
@@ -1453,9 +1517,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     endStmt (writer); // instance
     final StringBuilder sbOrdinals = new StringBuilder ();
     final StringBuilder sbStrings = new StringBuilder ();
-    final Iterator<Map.Entry<String,Integer>> elements = taxonomy.getElements ();
-    while (elements.hasNext ()) {
-      final Map.Entry<String,Integer> element = elements.next ();
+    for (Map.Entry<String,Integer> element : taxonomy.getElements ()) {
       final String name = element.getKey ();
       writer.publicStaticFinal ("String", "STR_" + name, "\"" + name + "\"");
       endStmt (writer); // STR_ decl
@@ -1515,11 +1577,11 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       case FudgeTypeDictionary.STRING_TYPE_ID :
         return "String";
       case FudgeTypeDictionary.DATE_TYPE_ID :
-        return CLASS_FUDGEDATE;
+        return CLASS_DATEPROVIDER;
       case FudgeTypeDictionary.DATETIME_TYPE_ID :
-        return CLASS_DATE;
+        return CLASS_DATETIMEPROVIDER;
       case FudgeTypeDictionary.TIME_TYPE_ID :
-        return CLASS_FUDGETIME;
+        return CLASS_TIMEPROVIDER;
       default :
         throw new IllegalStateException ("type '" + type + "' is not an expected type (fudge field type " + type.getFudgeFieldType () + ")");
       }

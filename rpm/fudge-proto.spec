@@ -43,7 +43,7 @@ cd %{buildroot}%{_javadocdir}/%{name}-%{version}
 jar xf %{SOURCE1}
 cd ..
 ln -s %{name}-%{version} %{name}
-%jpackage_script org.fudgemsg.proto.CommandLine "" "" %{name}.jar:fudge-java.jar:antlr3.jar:jakarta-commons-lang.jar %{name}
+%jpackage_script org.fudgemsg.proto.CommandLine "" "" %{name}.jar:fudge-java.jar:antlr3.jar:antlr3-runtime.jar:jakarta-commons-lang.jar %{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -59,6 +59,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/%{name}
 
 %changelog
+* Thu May 20 2010 Andrew Griffin <andrew@opengamma.com>
+- Correct JARs for Antlr in launch file
 * Mon Feb 15 2010 Andrew Griffin <andrew@opengamma.com>
 - Version incremented to 0.2beta1
 * Fri Jan 8 2010 Andrew Griffin <andrew@opengamma.com>

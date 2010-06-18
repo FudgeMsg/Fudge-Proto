@@ -15,25 +15,26 @@
 
 package org.fudgemsg.proto.tests.types;
 
-import org.fudgemsg.FudgeFieldContainer;
-import org.fudgemsg.types.FudgeDate;
-import org.fudgemsg.types.FudgeTime;
-import java.util.Date;
+import javax.time.calendar.DateProvider;
+import javax.time.calendar.DateTimeProvider;
+import javax.time.calendar.TimeProvider;
 
-public interface TypesBase {
-  public boolean get_Bool ();
-  public byte get_Byte ();
-  public double get_Double ();
-  public float get_Float ();
-  public boolean get_Indicator ();
-  public int get_Int ();
-  public long get_Long ();
-  public short get_Short ();
+import org.fudgemsg.FudgeFieldContainer;
+
+public interface TypesBase_Optional {
+  public Boolean get_Boolean ();
+  public Byte get_Byte ();
+  public Double get_Double ();
+  public Float get_Float ();
+  public Boolean get_Indicator ();
+  public Integer get_Int ();
+  public Long get_Long ();
+  public Short get_Short ();
   public String get_String ();
   public SubMessage get_SubMessage ();
   public CustomEnum get_CustomEnum ();
   public FudgeFieldContainer get_Message ();
-  public FudgeDate get_Date ();
-  public Date get_DateTime ();
-  public FudgeTime get_Time ();
+  public DateProvider get_Date ();
+  public DateTimeProvider get_DateTime ();
+  public TimeProvider get_Time ();
 }

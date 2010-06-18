@@ -8,14 +8,14 @@ namespace org.fudgemsg.proto.tests.types {
   }
   
   enum CustomEnum {
-    FIRST  =  1;
+    FIRST;
     SECOND;
     THIRD;
     FOURTH;
   }
   
   message STypes_Optional {
-    bool        _Bool;
+    bool        _Boolean;
     byte        _Byte;
     double      _Double;
     float       _Float;
@@ -30,11 +30,11 @@ namespace org.fudgemsg.proto.tests.types {
     date        _Date;
     datetime    _DateTime;
     time        _Time;
-    binding Java { implements "TypesBase"; }
+    binding Java { implements "TypesBase_Optional"; }
   }
   
   message ATypes_Optional {
-    bool[]        _Bool;
+    bool[]        _Boolean;
     byte[]        _Byte;
     double[]      _Double;
     float[]       _Float;
@@ -53,7 +53,7 @@ namespace org.fudgemsg.proto.tests.types {
   }
   
   message RSTypes_Optional {   
-    repeated bool       _Bool;
+    repeated bool       _Boolean;
     repeated byte       _Byte;
     repeated double     _Double;
     repeated float      _Float;
@@ -72,7 +72,7 @@ namespace org.fudgemsg.proto.tests.types {
   }
   
   message RATypes_Optional {
-    repeated bool[]       _Bool;
+    repeated bool[]       _Boolean;
     repeated byte[]       _Byte;
     repeated double[]     _Double;
     repeated float[]      _Float;
@@ -91,7 +91,7 @@ namespace org.fudgemsg.proto.tests.types {
   }
   
   message AATypes_Optional {
-    bool[][]        _Bool;
+    bool[][]        _Boolean;
     byte[][]        _Byte;
     double[][]      _Double;
     float[][]       _Float;
@@ -110,7 +110,7 @@ namespace org.fudgemsg.proto.tests.types {
   }
   
   message STypes_Required {
-    required bool        _Bool;
+    required bool        _Boolean;
     required byte        _Byte;
     required double      _Double;
     required float       _Float;
@@ -125,11 +125,11 @@ namespace org.fudgemsg.proto.tests.types {
     required date        _Date;
     required datetime    _DateTime;
     required time        _Time;
-    binding Java { implements "TypesBase"; }
+    binding Java { implements "TypesBase_Required"; }
   }
   
   message ATypes_Required {
-    required bool[]        _Bool;
+    required bool[]        _Boolean;
     required byte[]        _Byte;
     required double[]      _Double;
     required float[]       _Float;
@@ -148,7 +148,7 @@ namespace org.fudgemsg.proto.tests.types {
   }
   
   message RSTypes_Required {
-    required repeated bool       _Bool;
+    required repeated bool       _Boolean;
     required repeated byte       _Byte;
     required repeated double     _Double;
     required repeated float      _Float;
@@ -167,7 +167,7 @@ namespace org.fudgemsg.proto.tests.types {
   }
   
   message RATypes_Required {
-    required repeated bool[]       _Bool;
+    required repeated bool[]       _Boolean;
     required repeated byte[]       _Byte;
     required repeated double[]     _Double;
     required repeated float[]      _Float;
@@ -186,7 +186,7 @@ namespace org.fudgemsg.proto.tests.types {
   }
   
   message AATypes_Required {
-    required bool[][]        _Bool;
+    required bool[][]        _Boolean;
     required byte[][]        _Byte;
     required double[][]      _Double;
     required float[][]       _Float;
@@ -205,7 +205,7 @@ namespace org.fudgemsg.proto.tests.types {
   }
   
   message MutableSTypes_Optional {
-    mutable bool        _Bool;
+    mutable bool        _Boolean;
     mutable byte        _Byte;
     mutable double      _Double;
     mutable float       _Float;
@@ -220,11 +220,11 @@ namespace org.fudgemsg.proto.tests.types {
     mutable date        _Date;
     mutable datetime    _DateTime;
     mutable time        _Time;
-    binding Java { implements "TypesBase"; }
+    binding Java { implements "TypesBase_Optional"; }
   }
   
   message MutableATypes_Optional {
-    mutable bool[]        _Bool;
+    mutable bool[]        _Boolean;
     mutable byte[]        _Byte;
     mutable double[]      _Double;
     mutable float[]       _Float;
@@ -243,7 +243,7 @@ namespace org.fudgemsg.proto.tests.types {
   }
   
   message MutableRSTypes_Optional {   
-    mutable repeated bool       _Bool;
+    mutable repeated bool       _Boolean;
     mutable repeated byte       _Byte;
     mutable repeated double     _Double;
     mutable repeated float      _Float;
@@ -262,7 +262,7 @@ namespace org.fudgemsg.proto.tests.types {
   }
   
   message MutableRATypes_Optional {
-    mutable repeated bool[]       _Bool;
+    mutable repeated bool[]       _Boolean;
     mutable repeated byte[]       _Byte;
     mutable repeated double[]     _Double;
     mutable repeated float[]      _Float;
@@ -281,7 +281,7 @@ namespace org.fudgemsg.proto.tests.types {
   }
   
   message MutableAATypes_Optional {
-    mutable bool[][]        _Bool;
+    mutable bool[][]        _Boolean;
     mutable byte[][]        _Byte;
     mutable double[][]      _Double;
     mutable float[][]       _Float;
@@ -300,7 +300,7 @@ namespace org.fudgemsg.proto.tests.types {
   }
   
   message MutableSTypes_Required {
-    mutable required bool        _Bool;
+    mutable required bool        _Boolean;
     mutable required byte        _Byte;
     mutable required double      _Double;
     mutable required float       _Float;
@@ -315,11 +315,11 @@ namespace org.fudgemsg.proto.tests.types {
     mutable required date        _Date;
     mutable required datetime    _DateTime;
     mutable required time        _Time;
-    binding Java { implements "TypesBase"; }
+    binding Java { implements "TypesBase_Required"; }
   }
   
   message MutableATypes_Required {
-    mutable required bool[]        _Bool;
+    mutable required bool[]        _Boolean;
     mutable required byte[]        _Byte;
     mutable required double[]      _Double;
     mutable required float[]       _Float;
@@ -338,7 +338,7 @@ namespace org.fudgemsg.proto.tests.types {
   }
   
   message MutableRSTypes_Required {
-    mutable required repeated bool       _Bool;
+    mutable required repeated bool       _Boolean;
     mutable required repeated byte       _Byte;
     mutable required repeated double     _Double;
     mutable required repeated float      _Float;
@@ -357,7 +357,7 @@ namespace org.fudgemsg.proto.tests.types {
   }
   
   message MutableRATypes_Required {
-    mutable required repeated bool[]       _Bool;
+    mutable required repeated bool[]       _Boolean;
     mutable required repeated byte[]       _Byte;
     mutable required repeated double[]     _Double;
     mutable required repeated float[]      _Float;
@@ -376,7 +376,7 @@ namespace org.fudgemsg.proto.tests.types {
   }
   
   message MutableAATypes_Required {
-    mutable required bool[][]        _Bool;
+    mutable required bool[][]        _Boolean;
     mutable required byte[][]        _Byte;
     mutable required double[][]      _Double;
     mutable required float[][]       _Float;

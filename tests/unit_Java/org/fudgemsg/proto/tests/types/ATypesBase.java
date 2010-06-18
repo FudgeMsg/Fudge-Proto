@@ -15,13 +15,14 @@
 
 package org.fudgemsg.proto.tests.types;
 
+import javax.time.calendar.DateProvider;
+import javax.time.calendar.DateTimeProvider;
+import javax.time.calendar.TimeProvider;
+
 import org.fudgemsg.FudgeFieldContainer;
-import org.fudgemsg.types.FudgeDate;
-import org.fudgemsg.types.FudgeTime;
-import java.util.Date;
 
 public interface ATypesBase {
-  public boolean[] get_Bool ();
+  public boolean[] get_Boolean ();
   public byte[] get_Byte ();
   public double[] get_Double ();
   public float[] get_Float ();
@@ -33,7 +34,7 @@ public interface ATypesBase {
   public SubMessage[] get_SubMessage ();
   public CustomEnum[] get_CustomEnum ();
   public FudgeFieldContainer[] get_Message ();
-  public FudgeDate[] get_Date ();
-  public Date[] get_DateTime ();
-  public FudgeTime[] get_Time ();
+  public DateProvider[] get_Date ();
+  public DateTimeProvider[] get_DateTime ();
+  public TimeProvider[] get_Time ();
 }

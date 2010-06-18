@@ -1,42 +1,46 @@
 // Automatically created - do not modify
+/* fileheader.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */
 // Created from Literals.proto:3(8)
 public class Literals implements java.io.Serializable {
-  private static final long serialVersionUID = 2215538162932658061l;
-  private final double _nullDouble;
+  private static final long serialVersionUID = -6304599754091825719l;
+  private final Double _nullDouble;
   public static final String NULLDOUBLE_KEY = "nullDouble";
-  private final double _zeroDouble;
+  private final Double _zeroDouble;
   public static final String ZERODOUBLE_KEY = "zeroDouble";
-  private final double _posDouble;
+  private final Double _posDouble;
   public static final String POSDOUBLE_KEY = "posDouble";
-  private final double _negDouble;
+  private final Double _negDouble;
   public static final String NEGDOUBLE_KEY = "negDouble";
-  private final double _piDouble;
+  private final Double _piDouble;
   public static final String PIDOUBLE_KEY = "piDouble";
-  private final double _bigDouble;
+  private final Double _bigDouble;
   public static final String BIGDOUBLE_KEY = "bigDouble";
-  private final double _tinyDouble;
+  private final Double _tinyDouble;
   public static final String TINYDOUBLE_KEY = "tinyDouble";
-  private final float _nullFloat;
+  private final Float _nullFloat;
   public static final String NULLFLOAT_KEY = "nullFloat";
-  private final float _zeroFloat;
+  private final Float _zeroFloat;
   public static final String ZEROFLOAT_KEY = "zeroFloat";
-  private final float _posFloat;
+  private final Float _posFloat;
   public static final String POSFLOAT_KEY = "posFloat";
-  private final float _negFloat;
+  private final Float _negFloat;
   public static final String NEGFLOAT_KEY = "negFloat";
-  private final float _piFloat;
+  private final Float _piFloat;
   public static final String PIFLOAT_KEY = "piFloat";
-  private final float _bigFloat;
+  private final Float _bigFloat;
   public static final String BIGFLOAT_KEY = "bigFloat";
-  private final float _tinyFloat;
+  private final Float _tinyFloat;
   public static final String TINYFLOAT_KEY = "tinyFloat";
-  private final int _nullInt;
+  private final Integer _nullInt;
   public static final String NULLINT_KEY = "nullInt";
-  private final int _zeroInt;
+  private final Integer _zeroInt;
   public static final String ZEROINT_KEY = "zeroInt";
-  private final int _posInt;
+  private final Integer _posInt;
   public static final String POSINT_KEY = "posInt";
-  private final int _negInt;
+  private final Integer _negInt;
   public static final String NEGINT_KEY = "negInt";
   private final String _nullString;
   public static final String NULLSTRING_KEY = "nullString";
@@ -47,24 +51,24 @@ public class Literals implements java.io.Serializable {
   private final String _escapeString;
   public static final String ESCAPESTRING_KEY = "escapeString";
   public static class Builder {
-    private double _nullDouble;
-    private double _zeroDouble;
-    private double _posDouble;
-    private double _negDouble;
-    private double _piDouble;
-    private double _bigDouble;
-    private double _tinyDouble;
-    private float _nullFloat;
-    private float _zeroFloat;
-    private float _posFloat;
-    private float _negFloat;
-    private float _piFloat;
-    private float _bigFloat;
-    private float _tinyFloat;
-    private int _nullInt;
-    private int _zeroInt;
-    private int _posInt;
-    private int _negInt;
+    private Double _nullDouble;
+    private Double _zeroDouble;
+    private Double _posDouble;
+    private Double _negDouble;
+    private Double _piDouble;
+    private Double _bigDouble;
+    private Double _tinyDouble;
+    private Float _nullFloat;
+    private Float _zeroFloat;
+    private Float _posFloat;
+    private Float _negFloat;
+    private Float _piFloat;
+    private Float _bigFloat;
+    private Float _tinyFloat;
+    private Integer _nullInt;
+    private Integer _zeroInt;
+    private Integer _posInt;
+    private Integer _negInt;
     private String _nullString;
     private String _emptyString;
     private String _simpleString;
@@ -256,7 +260,7 @@ public class Literals implements java.io.Serializable {
       fudgeField = fudgeMsg.getByName (NULLSTRING_KEY);
       if (fudgeField != null)  {
         try {
-          nullString (fudgeField.getValue ().toString ());
+          nullString ((fudgeField.getValue () != null) ? fudgeField.getValue ().toString () : null);
         }
         catch (IllegalArgumentException e) {
           throw new IllegalArgumentException ("Fudge message is not a Literals - field 'nullString' is not string", e);
@@ -265,7 +269,7 @@ public class Literals implements java.io.Serializable {
       fudgeField = fudgeMsg.getByName (EMPTYSTRING_KEY);
       if (fudgeField != null)  {
         try {
-          emptyString (fudgeField.getValue ().toString ());
+          emptyString ((fudgeField.getValue () != null) ? fudgeField.getValue ().toString () : null);
         }
         catch (IllegalArgumentException e) {
           throw new IllegalArgumentException ("Fudge message is not a Literals - field 'emptyString' is not string", e);
@@ -274,7 +278,7 @@ public class Literals implements java.io.Serializable {
       fudgeField = fudgeMsg.getByName (SIMPLESTRING_KEY);
       if (fudgeField != null)  {
         try {
-          simpleString (fudgeField.getValue ().toString ());
+          simpleString ((fudgeField.getValue () != null) ? fudgeField.getValue ().toString () : null);
         }
         catch (IllegalArgumentException e) {
           throw new IllegalArgumentException ("Fudge message is not a Literals - field 'simpleString' is not string", e);
@@ -283,82 +287,82 @@ public class Literals implements java.io.Serializable {
       fudgeField = fudgeMsg.getByName (ESCAPESTRING_KEY);
       if (fudgeField != null)  {
         try {
-          escapeString (fudgeField.getValue ().toString ());
+          escapeString ((fudgeField.getValue () != null) ? fudgeField.getValue ().toString () : null);
         }
         catch (IllegalArgumentException e) {
           throw new IllegalArgumentException ("Fudge message is not a Literals - field 'escapeString' is not string", e);
         }
       }
     }
-    public Builder nullDouble (double nullDouble) {
+    public Builder nullDouble (Double nullDouble) {
       _nullDouble = nullDouble;
       return this;
     }
-    public Builder zeroDouble (double zeroDouble) {
+    public Builder zeroDouble (Double zeroDouble) {
       _zeroDouble = zeroDouble;
       return this;
     }
-    public Builder posDouble (double posDouble) {
+    public Builder posDouble (Double posDouble) {
       _posDouble = posDouble;
       return this;
     }
-    public Builder negDouble (double negDouble) {
+    public Builder negDouble (Double negDouble) {
       _negDouble = negDouble;
       return this;
     }
-    public Builder piDouble (double piDouble) {
+    public Builder piDouble (Double piDouble) {
       _piDouble = piDouble;
       return this;
     }
-    public Builder bigDouble (double bigDouble) {
+    public Builder bigDouble (Double bigDouble) {
       _bigDouble = bigDouble;
       return this;
     }
-    public Builder tinyDouble (double tinyDouble) {
+    public Builder tinyDouble (Double tinyDouble) {
       _tinyDouble = tinyDouble;
       return this;
     }
-    public Builder nullFloat (float nullFloat) {
+    public Builder nullFloat (Float nullFloat) {
       _nullFloat = nullFloat;
       return this;
     }
-    public Builder zeroFloat (float zeroFloat) {
+    public Builder zeroFloat (Float zeroFloat) {
       _zeroFloat = zeroFloat;
       return this;
     }
-    public Builder posFloat (float posFloat) {
+    public Builder posFloat (Float posFloat) {
       _posFloat = posFloat;
       return this;
     }
-    public Builder negFloat (float negFloat) {
+    public Builder negFloat (Float negFloat) {
       _negFloat = negFloat;
       return this;
     }
-    public Builder piFloat (float piFloat) {
+    public Builder piFloat (Float piFloat) {
       _piFloat = piFloat;
       return this;
     }
-    public Builder bigFloat (float bigFloat) {
+    public Builder bigFloat (Float bigFloat) {
       _bigFloat = bigFloat;
       return this;
     }
-    public Builder tinyFloat (float tinyFloat) {
+    public Builder tinyFloat (Float tinyFloat) {
       _tinyFloat = tinyFloat;
       return this;
     }
-    public Builder nullInt (int nullInt) {
+    public Builder nullInt (Integer nullInt) {
       _nullInt = nullInt;
       return this;
     }
-    public Builder zeroInt (int zeroInt) {
+    public Builder zeroInt (Integer zeroInt) {
       _zeroInt = zeroInt;
       return this;
     }
-    public Builder posInt (int posInt) {
+    public Builder posInt (Integer posInt) {
       _posInt = posInt;
       return this;
     }
-    public Builder negInt (int negInt) {
+    public Builder negInt (Integer negInt) {
       _negInt = negInt;
       return this;
     }
@@ -406,7 +410,7 @@ public class Literals implements java.io.Serializable {
     _simpleString = builder._simpleString;
     _escapeString = builder._escapeString;
   }
-  public Literals (double nullDouble, double zeroDouble, double posDouble, double negDouble, double piDouble, double bigDouble, double tinyDouble, float nullFloat, float zeroFloat, float posFloat, float negFloat, float piFloat, float bigFloat, float tinyFloat, int nullInt, int zeroInt, int posInt, int negInt, String nullString, String emptyString, String simpleString, String escapeString) {
+  public Literals (Double nullDouble, Double zeroDouble, Double posDouble, Double negDouble, Double piDouble, Double bigDouble, Double tinyDouble, Float nullFloat, Float zeroFloat, Float posFloat, Float negFloat, Float piFloat, Float bigFloat, Float tinyFloat, Integer nullInt, Integer zeroInt, Integer posInt, Integer negInt, String nullString, String emptyString, String simpleString, String escapeString) {
     _nullDouble = nullDouble;
     _zeroDouble = zeroDouble;
     _posDouble = posDouble;
@@ -462,24 +466,60 @@ public class Literals implements java.io.Serializable {
     return msg;
   }
   public void toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext, final org.fudgemsg.MutableFudgeFieldContainer msg) {
-    msg.add (NULLDOUBLE_KEY, null, _nullDouble);
-    msg.add (ZERODOUBLE_KEY, null, _zeroDouble);
-    msg.add (POSDOUBLE_KEY, null, _posDouble);
-    msg.add (NEGDOUBLE_KEY, null, _negDouble);
-    msg.add (PIDOUBLE_KEY, null, _piDouble);
-    msg.add (BIGDOUBLE_KEY, null, _bigDouble);
-    msg.add (TINYDOUBLE_KEY, null, _tinyDouble);
-    msg.add (NULLFLOAT_KEY, null, _nullFloat);
-    msg.add (ZEROFLOAT_KEY, null, _zeroFloat);
-    msg.add (POSFLOAT_KEY, null, _posFloat);
-    msg.add (NEGFLOAT_KEY, null, _negFloat);
-    msg.add (PIFLOAT_KEY, null, _piFloat);
-    msg.add (BIGFLOAT_KEY, null, _bigFloat);
-    msg.add (TINYFLOAT_KEY, null, _tinyFloat);
-    msg.add (NULLINT_KEY, null, _nullInt);
-    msg.add (ZEROINT_KEY, null, _zeroInt);
-    msg.add (POSINT_KEY, null, _posInt);
-    msg.add (NEGINT_KEY, null, _negInt);
+    if (_nullDouble != null)  {
+      msg.add (NULLDOUBLE_KEY, null, _nullDouble);
+    }
+    if (_zeroDouble != null)  {
+      msg.add (ZERODOUBLE_KEY, null, _zeroDouble);
+    }
+    if (_posDouble != null)  {
+      msg.add (POSDOUBLE_KEY, null, _posDouble);
+    }
+    if (_negDouble != null)  {
+      msg.add (NEGDOUBLE_KEY, null, _negDouble);
+    }
+    if (_piDouble != null)  {
+      msg.add (PIDOUBLE_KEY, null, _piDouble);
+    }
+    if (_bigDouble != null)  {
+      msg.add (BIGDOUBLE_KEY, null, _bigDouble);
+    }
+    if (_tinyDouble != null)  {
+      msg.add (TINYDOUBLE_KEY, null, _tinyDouble);
+    }
+    if (_nullFloat != null)  {
+      msg.add (NULLFLOAT_KEY, null, _nullFloat);
+    }
+    if (_zeroFloat != null)  {
+      msg.add (ZEROFLOAT_KEY, null, _zeroFloat);
+    }
+    if (_posFloat != null)  {
+      msg.add (POSFLOAT_KEY, null, _posFloat);
+    }
+    if (_negFloat != null)  {
+      msg.add (NEGFLOAT_KEY, null, _negFloat);
+    }
+    if (_piFloat != null)  {
+      msg.add (PIFLOAT_KEY, null, _piFloat);
+    }
+    if (_bigFloat != null)  {
+      msg.add (BIGFLOAT_KEY, null, _bigFloat);
+    }
+    if (_tinyFloat != null)  {
+      msg.add (TINYFLOAT_KEY, null, _tinyFloat);
+    }
+    if (_nullInt != null)  {
+      msg.add (NULLINT_KEY, null, _nullInt);
+    }
+    if (_zeroInt != null)  {
+      msg.add (ZEROINT_KEY, null, _zeroInt);
+    }
+    if (_posInt != null)  {
+      msg.add (POSINT_KEY, null, _posInt);
+    }
+    if (_negInt != null)  {
+      msg.add (NEGINT_KEY, null, _negInt);
+    }
     if (_nullString != null)  {
       msg.add (NULLSTRING_KEY, null, _nullString);
     }
@@ -507,58 +547,58 @@ public class Literals implements java.io.Serializable {
     }
     return new Builder (fudgeMsg).build ();
   }
-  public double getNullDouble () {
+  public Double getNullDouble () {
     return _nullDouble;
   }
-  public double getZeroDouble () {
+  public Double getZeroDouble () {
     return _zeroDouble;
   }
-  public double getPosDouble () {
+  public Double getPosDouble () {
     return _posDouble;
   }
-  public double getNegDouble () {
+  public Double getNegDouble () {
     return _negDouble;
   }
-  public double getPiDouble () {
+  public Double getPiDouble () {
     return _piDouble;
   }
-  public double getBigDouble () {
+  public Double getBigDouble () {
     return _bigDouble;
   }
-  public double getTinyDouble () {
+  public Double getTinyDouble () {
     return _tinyDouble;
   }
-  public float getNullFloat () {
+  public Float getNullFloat () {
     return _nullFloat;
   }
-  public float getZeroFloat () {
+  public Float getZeroFloat () {
     return _zeroFloat;
   }
-  public float getPosFloat () {
+  public Float getPosFloat () {
     return _posFloat;
   }
-  public float getNegFloat () {
+  public Float getNegFloat () {
     return _negFloat;
   }
-  public float getPiFloat () {
+  public Float getPiFloat () {
     return _piFloat;
   }
-  public float getBigFloat () {
+  public Float getBigFloat () {
     return _bigFloat;
   }
-  public float getTinyFloat () {
+  public Float getTinyFloat () {
     return _tinyFloat;
   }
-  public int getNullInt () {
+  public Integer getNullInt () {
     return _nullInt;
   }
-  public int getZeroInt () {
+  public Integer getZeroInt () {
     return _zeroInt;
   }
-  public int getPosInt () {
+  public Integer getPosInt () {
     return _posInt;
   }
-  public int getNegInt () {
+  public Integer getNegInt () {
     return _negInt;
   }
   public String getNullString () {
@@ -578,24 +618,132 @@ public class Literals implements java.io.Serializable {
     if (o == null) return false;
     if (!(o instanceof Literals)) return false;
     Literals msg = (Literals)o;
-    if (_nullDouble != msg._nullDouble) return false;
-    if (_zeroDouble != msg._zeroDouble) return false;
-    if (_posDouble != msg._posDouble) return false;
-    if (_negDouble != msg._negDouble) return false;
-    if (_piDouble != msg._piDouble) return false;
-    if (_bigDouble != msg._bigDouble) return false;
-    if (_tinyDouble != msg._tinyDouble) return false;
-    if (_nullFloat != msg._nullFloat) return false;
-    if (_zeroFloat != msg._zeroFloat) return false;
-    if (_posFloat != msg._posFloat) return false;
-    if (_negFloat != msg._negFloat) return false;
-    if (_piFloat != msg._piFloat) return false;
-    if (_bigFloat != msg._bigFloat) return false;
-    if (_tinyFloat != msg._tinyFloat) return false;
-    if (_nullInt != msg._nullInt) return false;
-    if (_zeroInt != msg._zeroInt) return false;
-    if (_posInt != msg._posInt) return false;
-    if (_negInt != msg._negInt) return false;
+    if (_nullDouble != null) {
+      if (msg._nullDouble != null) {
+        if (!_nullDouble.equals (msg._nullDouble)) return false;
+      }
+      else return false;
+    }
+    else if (msg._nullDouble != null) return false;
+    if (_zeroDouble != null) {
+      if (msg._zeroDouble != null) {
+        if (!_zeroDouble.equals (msg._zeroDouble)) return false;
+      }
+      else return false;
+    }
+    else if (msg._zeroDouble != null) return false;
+    if (_posDouble != null) {
+      if (msg._posDouble != null) {
+        if (!_posDouble.equals (msg._posDouble)) return false;
+      }
+      else return false;
+    }
+    else if (msg._posDouble != null) return false;
+    if (_negDouble != null) {
+      if (msg._negDouble != null) {
+        if (!_negDouble.equals (msg._negDouble)) return false;
+      }
+      else return false;
+    }
+    else if (msg._negDouble != null) return false;
+    if (_piDouble != null) {
+      if (msg._piDouble != null) {
+        if (!_piDouble.equals (msg._piDouble)) return false;
+      }
+      else return false;
+    }
+    else if (msg._piDouble != null) return false;
+    if (_bigDouble != null) {
+      if (msg._bigDouble != null) {
+        if (!_bigDouble.equals (msg._bigDouble)) return false;
+      }
+      else return false;
+    }
+    else if (msg._bigDouble != null) return false;
+    if (_tinyDouble != null) {
+      if (msg._tinyDouble != null) {
+        if (!_tinyDouble.equals (msg._tinyDouble)) return false;
+      }
+      else return false;
+    }
+    else if (msg._tinyDouble != null) return false;
+    if (_nullFloat != null) {
+      if (msg._nullFloat != null) {
+        if (!_nullFloat.equals (msg._nullFloat)) return false;
+      }
+      else return false;
+    }
+    else if (msg._nullFloat != null) return false;
+    if (_zeroFloat != null) {
+      if (msg._zeroFloat != null) {
+        if (!_zeroFloat.equals (msg._zeroFloat)) return false;
+      }
+      else return false;
+    }
+    else if (msg._zeroFloat != null) return false;
+    if (_posFloat != null) {
+      if (msg._posFloat != null) {
+        if (!_posFloat.equals (msg._posFloat)) return false;
+      }
+      else return false;
+    }
+    else if (msg._posFloat != null) return false;
+    if (_negFloat != null) {
+      if (msg._negFloat != null) {
+        if (!_negFloat.equals (msg._negFloat)) return false;
+      }
+      else return false;
+    }
+    else if (msg._negFloat != null) return false;
+    if (_piFloat != null) {
+      if (msg._piFloat != null) {
+        if (!_piFloat.equals (msg._piFloat)) return false;
+      }
+      else return false;
+    }
+    else if (msg._piFloat != null) return false;
+    if (_bigFloat != null) {
+      if (msg._bigFloat != null) {
+        if (!_bigFloat.equals (msg._bigFloat)) return false;
+      }
+      else return false;
+    }
+    else if (msg._bigFloat != null) return false;
+    if (_tinyFloat != null) {
+      if (msg._tinyFloat != null) {
+        if (!_tinyFloat.equals (msg._tinyFloat)) return false;
+      }
+      else return false;
+    }
+    else if (msg._tinyFloat != null) return false;
+    if (_nullInt != null) {
+      if (msg._nullInt != null) {
+        if (!_nullInt.equals (msg._nullInt)) return false;
+      }
+      else return false;
+    }
+    else if (msg._nullInt != null) return false;
+    if (_zeroInt != null) {
+      if (msg._zeroInt != null) {
+        if (!_zeroInt.equals (msg._zeroInt)) return false;
+      }
+      else return false;
+    }
+    else if (msg._zeroInt != null) return false;
+    if (_posInt != null) {
+      if (msg._posInt != null) {
+        if (!_posInt.equals (msg._posInt)) return false;
+      }
+      else return false;
+    }
+    else if (msg._posInt != null) return false;
+    if (_negInt != null) {
+      if (msg._negInt != null) {
+        if (!_negInt.equals (msg._negInt)) return false;
+      }
+      else return false;
+    }
+    else if (msg._negInt != null) return false;
     if (_nullString != null) {
       if (msg._nullString != null) {
         if (!_nullString.equals (msg._nullString)) return false;
@@ -628,24 +776,42 @@ public class Literals implements java.io.Serializable {
   }
   public int hashCode () {
     int hc = 1;
-    hc = (hc * 31) + (int)_nullDouble;
-    hc = (hc * 31) + (int)_zeroDouble;
-    hc = (hc * 31) + (int)_posDouble;
-    hc = (hc * 31) + (int)_negDouble;
-    hc = (hc * 31) + (int)_piDouble;
-    hc = (hc * 31) + (int)_bigDouble;
-    hc = (hc * 31) + (int)_tinyDouble;
-    hc = (hc * 31) + (int)_nullFloat;
-    hc = (hc * 31) + (int)_zeroFloat;
-    hc = (hc * 31) + (int)_posFloat;
-    hc = (hc * 31) + (int)_negFloat;
-    hc = (hc * 31) + (int)_piFloat;
-    hc = (hc * 31) + (int)_bigFloat;
-    hc = (hc * 31) + (int)_tinyFloat;
-    hc = (hc * 31) + (int)_nullInt;
-    hc = (hc * 31) + (int)_zeroInt;
-    hc = (hc * 31) + (int)_posInt;
-    hc = (hc * 31) + (int)_negInt;
+    hc *= 31;
+    if (_nullDouble != null) hc += _nullDouble.hashCode ();
+    hc *= 31;
+    if (_zeroDouble != null) hc += _zeroDouble.hashCode ();
+    hc *= 31;
+    if (_posDouble != null) hc += _posDouble.hashCode ();
+    hc *= 31;
+    if (_negDouble != null) hc += _negDouble.hashCode ();
+    hc *= 31;
+    if (_piDouble != null) hc += _piDouble.hashCode ();
+    hc *= 31;
+    if (_bigDouble != null) hc += _bigDouble.hashCode ();
+    hc *= 31;
+    if (_tinyDouble != null) hc += _tinyDouble.hashCode ();
+    hc *= 31;
+    if (_nullFloat != null) hc += _nullFloat.hashCode ();
+    hc *= 31;
+    if (_zeroFloat != null) hc += _zeroFloat.hashCode ();
+    hc *= 31;
+    if (_posFloat != null) hc += _posFloat.hashCode ();
+    hc *= 31;
+    if (_negFloat != null) hc += _negFloat.hashCode ();
+    hc *= 31;
+    if (_piFloat != null) hc += _piFloat.hashCode ();
+    hc *= 31;
+    if (_bigFloat != null) hc += _bigFloat.hashCode ();
+    hc *= 31;
+    if (_tinyFloat != null) hc += _tinyFloat.hashCode ();
+    hc *= 31;
+    if (_nullInt != null) hc += _nullInt.hashCode ();
+    hc *= 31;
+    if (_zeroInt != null) hc += _zeroInt.hashCode ();
+    hc *= 31;
+    if (_posInt != null) hc += _posInt.hashCode ();
+    hc *= 31;
+    if (_negInt != null) hc += _negInt.hashCode ();
     hc *= 31;
     if (_nullString != null) hc += _nullString.hashCode ();
     hc *= 31;
@@ -660,3 +826,7 @@ public class Literals implements java.io.Serializable {
     return org.apache.commons.lang.builder.ToStringBuilder.reflectionToString(this, org.apache.commons.lang.builder.ToStringStyle.SHORT_PREFIX_STYLE);
   }
 }
+/* filefooter.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */

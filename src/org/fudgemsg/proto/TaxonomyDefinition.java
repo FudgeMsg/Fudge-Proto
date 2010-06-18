@@ -20,7 +20,7 @@ package org.fudgemsg.proto;
  * 
  * @author Andrew
  */
-public class TaxonomyDefinition extends StringIntPairDefinition {
+public class TaxonomyDefinition extends StringValuePairDefinition<Integer> {
   
   /* package */ TaxonomyDefinition (final String identifier, final CodePosition codePosition, final boolean compilationTarget) {
     super (identifier, codePosition, null, compilationTarget);

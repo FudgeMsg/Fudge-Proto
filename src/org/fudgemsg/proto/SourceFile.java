@@ -15,27 +15,19 @@
 
 package org.fudgemsg.proto;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 /**
- * Concrete implementation of a Source that is backed by a File that can be read.
+ * Concrete implementation of a Source that is backed by a File.
  * 
  * @author Andrew
  */
-public class SourceFile implements Source {
-  
-  private final String _displayName;
+public class SourceFile extends AbstractSource {
   
   private final File _file;
-  
-  private final SourceResolver _resolver;
-  
-  private final boolean _isCompilationTarget;
   
   public SourceFile (final String displayName, final File file) {
     this (displayName, file, null, true);
@@ -45,52 +37,27 @@ public class SourceFile implements Source {
     this (displayName, file, null, isCompilationTarget);
   }
   
-  public SourceFile (final String displayName, final File file, final SourceResolver resolver) {
-    this (displayName, file, resolver, true);
-  }
-  
   public SourceFile (final String displayName, final File file, final SourceResolver resolver, final boolean isCompilationTarget) {
-    _displayName = displayName;
+    super (displayName, resolver, isCompilationTarget);
     _file = file;
-    _resolver = resolver;
-    _isCompilationTarget = isCompilationTarget;
-  }
-  
-  @Override
-  public Reader openReader () throws IOException {
-      return new InputStreamReader (new BufferedInputStream (new FileInputStream (_file)));
-  }
-  
-  @Override
-  public Source findSource (final String identifier) throws IOException {
-    if (getResolver () == null) return null;
-    return getResolver ().findSource (identifier);
   }
   
   protected File getFile () {
     return _file;
   }
   
-  protected SourceResolver getResolver () {
-    return _resolver;
-  }
-  
-  @Override
-  public boolean isCompilationTarget () {
-    return _isCompilationTarget;
-  }
-  
-  @Override
-  public String toString () {
-    return _displayName;
-  }
-  
   @Override
   public boolean equals (final Object o) {
     if (o == null) return false;
+    if (o == this) return true;
     if (!(o instanceof SourceFile)) return false;
     final SourceFile sf = (SourceFile)o;
     return sf._file.equals (_file);
+  }
+
+  @Override
+  protected InputStream openInputStream() throws FileNotFoundException {
+    return new FileInputStream (getFile ());
   }
   
 }

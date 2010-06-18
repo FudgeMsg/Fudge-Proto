@@ -18,7 +18,6 @@ package org.fudgemsg.proto.csharp;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -26,14 +25,15 @@ import java.util.Map;
 import org.fudgemsg.FudgeTypeDictionary;
 import org.fudgemsg.proto.CodeGeneratorUtil;
 import org.fudgemsg.proto.Compiler;
+import org.fudgemsg.proto.Definition;
 import org.fudgemsg.proto.EnumDefinition;
 import org.fudgemsg.proto.FieldDefinition;
-import org.fudgemsg.proto.Definition;
 import org.fudgemsg.proto.FieldType;
 import org.fudgemsg.proto.IndentWriter;
+import org.fudgemsg.proto.LiteralValue;
 import org.fudgemsg.proto.MessageDefinition;
-import org.fudgemsg.proto.c.CBlockCode;
 import org.fudgemsg.proto.TaxonomyDefinition;
+import org.fudgemsg.proto.c.CBlockCode;
 import org.fudgemsg.proto.proto.DocumentedClassCode;
 import org.fudgemsg.proto.proto.HeaderlessClassCode;
 
@@ -459,18 +459,24 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   @Override
   public void writeEnumImplementationDeclaration (final Compiler.Context context, final EnumDefinition enumDefinition, final IndentWriter writer) throws IOException {
     super.writeEnumImplementationDeclaration (context, enumDefinition, writer);
-    beginDefinition (writer, "enum", enumDefinition, "int");
-    final Iterator<Map.Entry<String,Integer>> elements = enumDefinition.getElements ();
+    final String superType;
+    switch (enumDefinition.getType ()) {
+    case DEFAULT : superType = null; break;
+    case INTEGER_ENCODED : superType = "int"; break;
+    case STRING_ENCODED : superType = "string"; break;
+    default : throw new IllegalStateException ("Unexpected value for enum type '" + enumDefinition.getType () + "'");
+    }
+    beginDefinition (writer, "enum", enumDefinition, superType);
     boolean first = true;
-    while (elements.hasNext ()) {
-      final Map.Entry<String,Integer>element = elements.next ();
+    for (Map.Entry<String,LiteralValue> element : enumDefinition.getElements ()) {
       if (first) {
         first = false;
       } else {
         writer.write (",");
         writer.newLine ();
       }
-      writer.write (element.getKey () + " = " + element.getValue ().toString ());
+      writer.write (element.getKey ());
+      if (superType != null) writer.write (" = " + getLiteral (element.getValue ()));
     }
     endStmt (writer);
     endDefinition (writer, enumDefinition);
@@ -492,9 +498,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     endBlock (writer); // Instance
     final StringBuilder sbOrdinals = new StringBuilder ();
     final StringBuilder sbStrings = new StringBuilder ();
-    final Iterator<Map.Entry<String,Integer>> elements = taxonomyDefinition.getElements ();
-    while (elements.hasNext ()) {
-      final Map.Entry<String,Integer> element = elements.next ();
+    for (Map.Entry<String,Integer> element : taxonomyDefinition.getElements ()) {
       final String name = element.getKey ();
       writer.write ("public constant string STR_" + name + " = \"" + name + "\"");
       endStmt (writer); // STR_ decl

@@ -1,11 +1,15 @@
 // Automatically created - do not modify
+/* fileheader.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */
 // Created from simple.proto:15(8)
 public class Person implements java.io.Serializable {
   private static final long serialVersionUID = -1511890345953819044l;
   // Created from simple.proto:21(7)
   public enum PhoneType {
-    HOME (1),
     MOBILE (0),
+    HOME (1),
     WORK (2);
     private final int _fudgeEncoding;
     private PhoneType (final int fudgeEncoding) {
@@ -16,10 +20,10 @@ public class Person implements java.io.Serializable {
     }
     public static PhoneType fromFudgeEncoding (final int fudgeEncoding) {
       switch (fudgeEncoding) {
-        case 1 : return HOME;
         case 0 : return MOBILE;
+        case 1 : return HOME;
         case 2 : return WORK;
-        default : throw new IllegalArgumentException ("Field is not a PhoneType - invalid value '" + fudgeEncoding + "'");
+        default : throw new IllegalArgumentException ("field is not a PhoneType - invalid value '" + fudgeEncoding + "'");
       }
     }
   }
@@ -27,9 +31,9 @@ public class Person implements java.io.Serializable {
   public static class PhoneNumber implements java.io.Serializable {
     private static final long serialVersionUID = -32551788302850l;
     private final String _number;
-    public static final String NUMBER_KEY = "number";
+    public static final int NUMBER_ORDINAL = 1;
     private final Person.PhoneType _type;
-    public static final String TYPE_KEY = "type";
+    public static final int TYPE_ORDINAL = 2;
     public static class Builder {
       private final String _number;
       private Person.PhoneType _type;
@@ -40,7 +44,7 @@ public class Person implements java.io.Serializable {
       }
       protected Builder (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
         org.fudgemsg.FudgeField fudgeField;
-        fudgeField = fudgeMsg.getByOrdinal (1);
+        fudgeField = fudgeMsg.getByOrdinal (NUMBER_ORDINAL);
         if (fudgeField == null) throw new IllegalArgumentException ("Fudge message is not a PhoneNumber - field 'number' is not present");
         try {
           _number = fudgeField.getValue ().toString ();
@@ -48,7 +52,7 @@ public class Person implements java.io.Serializable {
         catch (IllegalArgumentException e) {
           throw new IllegalArgumentException ("Fudge message is not a PhoneNumber - field 'number' is not string", e);
         }
-        fudgeField = fudgeMsg.getByOrdinal (2);
+        fudgeField = fudgeMsg.getByOrdinal (TYPE_ORDINAL);
         if (fudgeField != null)  {
           try {
             final Person.PhoneType fudge1;
@@ -90,10 +94,10 @@ public class Person implements java.io.Serializable {
     }
     public void toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext, final org.fudgemsg.MutableFudgeFieldContainer msg) {
       if (_number != null)  {
-        msg.add (NUMBER_KEY, 1, _number);
+        msg.add (null, NUMBER_ORDINAL, _number);
       }
       if (_type != null)  {
-        msg.add (TYPE_KEY, 2, _type.getFudgeEncoding ());
+        msg.add (null, TYPE_ORDINAL, _type.getFudgeEncoding ());
       }
     }
     public static PhoneNumber fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
@@ -150,13 +154,13 @@ public class Person implements java.io.Serializable {
     }
   }
   private final String _name;
-  public static final String NAME_KEY = "name";
+  public static final int NAME_ORDINAL = 1;
   private final int _id;
-  public static final String ID_KEY = "id";
+  public static final int ID_ORDINAL = 2;
   private final String _email;
-  public static final String EMAIL_KEY = "email";
+  public static final int EMAIL_ORDINAL = 3;
   private final java.util.List<Person.PhoneNumber> _phone;
-  public static final String PHONE_KEY = "phone";
+  public static final int PHONE_ORDINAL = 4;
   public static class Builder {
     private final String _name;
     private final int _id;
@@ -170,7 +174,7 @@ public class Person implements java.io.Serializable {
     protected Builder (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
       org.fudgemsg.FudgeField fudgeField;
       java.util.List<org.fudgemsg.FudgeField> fudgeFields;
-      fudgeField = fudgeMsg.getByOrdinal (1);
+      fudgeField = fudgeMsg.getByOrdinal (NAME_ORDINAL);
       if (fudgeField == null) throw new IllegalArgumentException ("Fudge message is not a Person - field 'name' is not present");
       try {
         _name = fudgeField.getValue ().toString ();
@@ -178,7 +182,7 @@ public class Person implements java.io.Serializable {
       catch (IllegalArgumentException e) {
         throw new IllegalArgumentException ("Fudge message is not a Person - field 'name' is not string", e);
       }
-      fudgeField = fudgeMsg.getByOrdinal (2);
+      fudgeField = fudgeMsg.getByOrdinal (ID_ORDINAL);
       if (fudgeField == null) throw new IllegalArgumentException ("Fudge message is not a Person - field 'id' is not present");
       try {
         _id = fudgeMsg.getFieldValue (Integer.class, fudgeField);
@@ -186,16 +190,16 @@ public class Person implements java.io.Serializable {
       catch (IllegalArgumentException e) {
         throw new IllegalArgumentException ("Fudge message is not a Person - field 'id' is not integer", e);
       }
-      fudgeField = fudgeMsg.getByOrdinal (3);
+      fudgeField = fudgeMsg.getByOrdinal (EMAIL_ORDINAL);
       if (fudgeField != null)  {
         try {
-          email (fudgeField.getValue ().toString ());
+          email ((fudgeField.getValue () != null) ? fudgeField.getValue ().toString () : null);
         }
         catch (IllegalArgumentException e) {
           throw new IllegalArgumentException ("Fudge message is not a Person - field 'email' is not string", e);
         }
       }
-      fudgeFields = fudgeMsg.getAllByOrdinal (4);
+      fudgeFields = fudgeMsg.getAllByOrdinal (PHONE_ORDINAL);
       if (fudgeFields.size () > 0)  {
         final java.util.List<Person.PhoneNumber> fudge1;
         fudge1 = new java.util.ArrayList<Person.PhoneNumber> (fudgeFields.size ());
@@ -300,11 +304,11 @@ public class Person implements java.io.Serializable {
   }
   public void toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext, final org.fudgemsg.MutableFudgeFieldContainer msg) {
     if (_name != null)  {
-      msg.add (NAME_KEY, 1, _name);
+      msg.add (null, NAME_ORDINAL, _name);
     }
-    msg.add (ID_KEY, 2, _id);
+    msg.add (null, ID_ORDINAL, _id);
     if (_email != null)  {
-      msg.add (EMAIL_KEY, 3, _email);
+      msg.add (null, EMAIL_ORDINAL, _email);
     }
     if (_phone != null)  {
       for (Person.PhoneNumber fudge1 : _phone) {
@@ -315,7 +319,7 @@ public class Person implements java.io.Serializable {
           fudge3 = fudge3.getSuperclass ();
         }
         fudge1.toFudgeMsg (fudgeContext, fudge2);
-        msg.add (PHONE_KEY, 4, fudge2);
+        msg.add (null, PHONE_ORDINAL, fudge2);
       }
     }
   }
@@ -343,7 +347,10 @@ public class Person implements java.io.Serializable {
     return _email;
   }
   public java.util.List<Person.PhoneNumber> getPhone () {
-    return java.util.Collections.unmodifiableList (_phone);
+    if (_phone != null) {
+      return java.util.Collections.unmodifiableList (_phone);
+    }
+    else return null;
   }
   public boolean equals (final Object o) {
     if (o == this) return true;
@@ -389,3 +396,7 @@ public class Person implements java.io.Serializable {
     return org.apache.commons.lang.builder.ToStringBuilder.reflectionToString(this, org.apache.commons.lang.builder.ToStringStyle.SHORT_PREFIX_STYLE);
   }
 }
+/* filefooter.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */

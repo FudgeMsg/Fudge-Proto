@@ -16,6 +16,7 @@
 package org.fudgemsg.proto;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -56,7 +57,7 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
     
     private CodePosition _importCodePosition = null;
     
-    private final Map<String,Element> _fieldsByName = new HashMap<String,Element> ();
+    private final Map<String,Element> _fieldsByName = new LinkedHashMap<String,Element> ();
     
     private final Map<Integer,String> _fieldsByOrdinal = new HashMap<Integer,String> ();
     
@@ -202,14 +203,14 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
       }
       final List<AST> element = children.get (i).getChildNodes ();
       if ((element != null) && (element.size () == 1)) {
-        final int index = Integer.decode (element.get (0).getNodeValue ());
-        if (definition.findElementByIndex (index) != null) {
-          context.error (node.getCodePosition (), "enum index '" + index + "' has already been used in '" + identifier + "'");
+        final LiteralValue value = LiteralValue.parse (element.get (0));
+        if (definition.findElementByValue (value) != null) {
+          context.error (node.getCodePosition (), "enum encoded value '" + value + "' has already been used in '" + identifier + "'");
           continue;
         }
-        definition.addElement (name, index);
+        definition.addElement (name, value);
       } else {
-        definition.addElement (name);
+        definition.addElement (name, LiteralValue.nullValue (node.getCodePosition ()));
       }
     }
   }

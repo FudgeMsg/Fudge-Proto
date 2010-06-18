@@ -1,9 +1,13 @@
 // Automatically created - do not modify
+/* fileheader.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */
 // Created from inheritance.proto:5(9)
 package org.fudgemsg.proto.tests.inheritance;
 public class BaseClassA implements java.io.Serializable {
-  private static final long serialVersionUID = 2576311616048591640l;
-  private final int _bcA_o;
+  private static final long serialVersionUID = 1979584059580781831l;
+  private final Integer _bcA_o;
   public static final String BCA_O_KEY = "bcA_o";
   private final java.util.List<Integer> _bcA_r;
   public static final String BCA_R_KEY = "bcA_r";
@@ -12,7 +16,7 @@ public class BaseClassA implements java.io.Serializable {
   private final java.util.List<Integer> _bcA_rq;
   public static final String BCA_RQ_KEY = "bcA_rq";
   public static class Builder {
-    private int _bcA_o;
+    private Integer _bcA_o;
     private java.util.List<Integer> _bcA_r;
     private final int _bcA_q;
     private final java.util.List<Integer> _bcA_rq;
@@ -75,7 +79,7 @@ public class BaseClassA implements java.io.Serializable {
         bcA_r (fudge1);
       }
     }
-    public Builder bcA_o (int bcA_o) {
+    public Builder bcA_o (Integer bcA_o) {
       _bcA_o = bcA_o;
       return this;
     }
@@ -121,7 +125,7 @@ public class BaseClassA implements java.io.Serializable {
       _bcA_rq = new java.util.ArrayList<Integer> (builder._bcA_rq);
     }
   }
-  public BaseClassA (int bcA_o, java.util.Collection<? extends Integer> bcA_r, int bcA_q, java.util.Collection<? extends Integer> bcA_rq) {
+  public BaseClassA (Integer bcA_o, java.util.Collection<? extends Integer> bcA_r, int bcA_q, java.util.Collection<? extends Integer> bcA_rq) {
     _bcA_o = bcA_o;
     if (bcA_r == null) _bcA_r = null;
     else {
@@ -164,7 +168,9 @@ public class BaseClassA implements java.io.Serializable {
     return msg;
   }
   public void toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext, final org.fudgemsg.MutableFudgeFieldContainer msg) {
-    msg.add (BCA_O_KEY, null, _bcA_o);
+    if (_bcA_o != null)  {
+      msg.add (BCA_O_KEY, null, _bcA_o);
+    }
     if (_bcA_r != null)  {
       for (Integer fudge1 : _bcA_r) {
         msg.add (BCA_R_KEY, null, fudge1);
@@ -191,11 +197,14 @@ public class BaseClassA implements java.io.Serializable {
     }
     return new Builder (fudgeMsg).build ();
   }
-  public int getBcA_o () {
+  public Integer getBcA_o () {
     return _bcA_o;
   }
   public java.util.List<Integer> getBcA_r () {
-    return java.util.Collections.unmodifiableList (_bcA_r);
+    if (_bcA_r != null) {
+      return java.util.Collections.unmodifiableList (_bcA_r);
+    }
+    else return null;
   }
   public int getBcA_q () {
     return _bcA_q;
@@ -208,7 +217,13 @@ public class BaseClassA implements java.io.Serializable {
     if (o == null) return false;
     if (!(o instanceof BaseClassA)) return false;
     BaseClassA msg = (BaseClassA)o;
-    if (_bcA_o != msg._bcA_o) return false;
+    if (_bcA_o != null) {
+      if (msg._bcA_o != null) {
+        if (!_bcA_o.equals (msg._bcA_o)) return false;
+      }
+      else return false;
+    }
+    else if (msg._bcA_o != null) return false;
     if (_bcA_r != null) {
       if (msg._bcA_r != null) {
         if (!_bcA_r.equals (msg._bcA_r)) return false;
@@ -228,7 +243,8 @@ public class BaseClassA implements java.io.Serializable {
   }
   public int hashCode () {
     int hc = 1;
-    hc = (hc * 31) + (int)_bcA_o;
+    hc *= 31;
+    if (_bcA_o != null) hc += _bcA_o.hashCode ();
     hc *= 31;
     if (_bcA_r != null) hc += _bcA_r.hashCode ();
     hc = (hc * 31) + (int)_bcA_q;
@@ -240,3 +256,7 @@ public class BaseClassA implements java.io.Serializable {
     return org.apache.commons.lang.builder.ToStringBuilder.reflectionToString(this, org.apache.commons.lang.builder.ToStringStyle.SHORT_PREFIX_STYLE);
   }
 }
+/* filefooter.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */

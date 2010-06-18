@@ -1,4 +1,8 @@
 // Automatically created - do not modify
+/* fileheader.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */
 // Created from binding.proto:5(9)
 package org.fudgemsg.proto.tests.binding;
 public class DomainSpecificIdentifier implements java.io.Serializable {
@@ -119,3 +123,7 @@ public class DomainSpecificIdentifier implements java.io.Serializable {
     return org.apache.commons.lang.builder.ToStringBuilder.reflectionToString(this, org.apache.commons.lang.builder.ToStringStyle.SHORT_PREFIX_STYLE);
   }
 }
+/* filefooter.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */

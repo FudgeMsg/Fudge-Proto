@@ -1,4 +1,8 @@
 // Automatically created - do not modify
+/* fileheader.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */
 // Created from polymorphism.proto:13(10)
 package org.fudgemsg.proto.tests.polymorphism;
 public class M3 extends org.fudgemsg.proto.tests.polymorphism.M1 implements java.io.Serializable {
@@ -13,7 +17,7 @@ public class M3 extends org.fudgemsg.proto.tests.polymorphism.M1 implements java
     fudgeField = fudgeMsg.getByName (BAR_KEY);
     if (fudgeField != null)  {
       try {
-        setBar (fudgeField.getValue ().toString ());
+        setBar ((fudgeField.getValue () != null) ? fudgeField.getValue ().toString () : null);
       }
       catch (IllegalArgumentException e) {
         throw new IllegalArgumentException ("Fudge message is not a M3 - field 'bar' is not string", e);
@@ -88,3 +92,7 @@ public class M3 extends org.fudgemsg.proto.tests.polymorphism.M1 implements java
     return org.apache.commons.lang.builder.ToStringBuilder.reflectionToString(this, org.apache.commons.lang.builder.ToStringStyle.SHORT_PREFIX_STYLE);
   }
 }
+/* filefooter.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */

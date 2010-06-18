@@ -16,6 +16,7 @@
 package org.fudgemsg.proto;
 
 import org.fudgemsg.FudgeTypeDictionary;
+import org.fudgemsg.proto.Compiler.Context;
 import org.fudgemsg.proto.antlr.ProtoLexer;
 
 /**
@@ -29,7 +30,7 @@ public abstract class LiteralValue {
   
   public static abstract class NumericValue extends LiteralValue {
     
-    protected NumericValue (final CodePosition codePosition) {
+    private NumericValue (final CodePosition codePosition) {
       super (codePosition);
     }
     
@@ -75,6 +76,11 @@ public abstract class LiteralValue {
         context.error (getCodePosition (), "invalid default value for type '" + fieldType + "'");
         return null;
       }
+    }
+    
+    @Override
+    protected Object getInternalValue () {
+      return getNumber ();
     }
     
   }
@@ -247,6 +253,11 @@ public abstract class LiteralValue {
       return this;
     }
     
+    @Override
+    protected Object getInternalValue () {
+      return get ();
+    }
+    
   }
   
   public static class EnumValue extends LiteralValue {
@@ -295,6 +306,44 @@ public abstract class LiteralValue {
       }
     }
     
+    @Override
+    protected Object getInternalValue () {
+      return get ();
+    }
+    
+  }
+  
+  public static class NullValue extends LiteralValue {
+    
+    private static final Object s_internal = new Object () {
+      @Override
+      public String toString () {
+        return "<null>";
+      }
+    };
+    
+    private NullValue (final CodePosition codePosition) {
+      super (codePosition);
+    }
+
+    @Override
+    public LiteralValue assignmentTo(Context context, FieldType fieldType) {
+      return this;
+    }
+    
+    @Override
+    protected Object getInternalValue () {
+      return s_internal;
+    }
+    
+    public IntegerValue inferInteger (final int value) {
+      return new IntegerValue (getCodePosition (), value);
+    }
+    
+    public StringValue inferString (final String value) {
+      return new StringValue (getCodePosition (), value);
+    }
+    
   }
   
   private LiteralValue (final CodePosition codePosition) {
@@ -316,6 +365,10 @@ public abstract class LiteralValue {
     }
   }
   
+  public static LiteralValue nullValue (final CodePosition codePosition) {
+    return new NullValue (codePosition);
+  }
+  
   /**
    * Returns this object (or a replacement) that can be assigned to the requested field type. Returns NULL
    * if the assignment is not valid and generates compiler warnings/errors.
@@ -326,4 +379,24 @@ public abstract class LiteralValue {
     return _codePosition;
   }
   
+  @Override
+  public boolean equals (final Object o) {
+    if (o == null) return false;
+    if (o == this) return true;
+    if (o.getClass () == getClass ()) return true;
+    return getInternalValue ().equals (((LiteralValue)o).getInternalValue ());
+  }
+  
+  @Override
+  public int hashCode () {
+    return getInternalValue ().hashCode ();
+  }
+  
+  protected abstract Object getInternalValue ();
+  
+  @Override
+  public String toString () {
+    return getInternalValue ().toString ();
+  }
+ 
 }

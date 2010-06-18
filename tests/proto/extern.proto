@@ -10,5 +10,9 @@ namespace org.fudgemsg.proto.tests.extern {
     org.fudgemsg.proto.tests.ExternalMessage foo;
     org.fudgemsg.proto.tests.ExternalEnum bar;
   }
+  
+  message UsesExternArray {
+    org.fudgemsg.proto.tests.ExternalMessage[] foo;
+  }
 
 }

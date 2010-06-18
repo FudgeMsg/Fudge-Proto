@@ -2,7 +2,7 @@ build/
 classes/
 dist/
 docs/
-ivy/
+bootstrap/
 lib/
 tests/build/
 tests/classes/
@@ -13,3 +13,5 @@ tests/out_C++/
 tests/out_default/
 tests/out_proto/
 tests/output/
+/.fudge-proto-gitignore
+/MANIFEST.MF

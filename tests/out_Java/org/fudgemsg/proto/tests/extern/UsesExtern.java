@@ -1,4 +1,8 @@
 // Automatically created - do not modify
+/* fileheader.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */
 // Created from extern.proto:9(10)
 package org.fudgemsg.proto.tests.extern;
 public class UsesExtern implements java.io.Serializable {
@@ -18,7 +22,7 @@ public class UsesExtern implements java.io.Serializable {
       if (fudgeField != null)  {
         try {
           final org.fudgemsg.proto.tests.ExternalMessage fudge1;
-          fudge1 = fudgeContext.fudgeMsgToObject (org.fudgemsg.proto.tests.ExternalMessage.class, fudgeMsg.getFieldValue (org.fudgemsg.FudgeFieldContainer.class, fudgeField));
+          fudge1 = fudgeContext.fieldValueToObject (org.fudgemsg.proto.tests.ExternalMessage.class, fudgeField);
           foo (fudge1);
         }
         catch (IllegalArgumentException e) {
@@ -29,7 +33,7 @@ public class UsesExtern implements java.io.Serializable {
       if (fudgeField != null)  {
         try {
           final org.fudgemsg.proto.tests.ExternalEnum fudge1;
-          fudge1 = org.fudgemsg.proto.tests.ExternalEnum.fromFudgeEncoding (fudgeMsg.getFieldValue (Integer.class, fudgeField));
+          fudge1 = fudgeMsg.getFieldValue (org.fudgemsg.proto.tests.ExternalEnum.class, fudgeField);
           bar (fudge1);
         }
         catch (IllegalArgumentException e) {
@@ -82,10 +86,10 @@ public class UsesExtern implements java.io.Serializable {
   }
   public void toFudgeMsg (final org.fudgemsg.mapping.FudgeSerializationContext fudgeContext, final org.fudgemsg.MutableFudgeFieldContainer msg) {
     if (_foo != null)  {
-      msg.add (FOO_KEY, null, fudgeContext.objectToFudgeMsg (_foo));
+      fudgeContext.objectToFudgeMsg (msg, FOO_KEY, null, _foo);
     }
     if (_bar != null)  {
-      msg.add (BAR_KEY, null, _bar.getFudgeEncoding ());
+      msg.add (BAR_KEY, null, _bar.name ());
     }
   }
   public static UsesExtern fromFudgeMsg (final org.fudgemsg.mapping.FudgeDeserializationContext fudgeContext, final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
@@ -141,3 +145,7 @@ public class UsesExtern implements java.io.Serializable {
     return org.apache.commons.lang.builder.ToStringBuilder.reflectionToString(this, org.apache.commons.lang.builder.ToStringStyle.SHORT_PREFIX_STYLE);
   }
 }
+/* filefooter.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */

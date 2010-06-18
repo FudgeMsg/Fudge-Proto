@@ -16,15 +16,19 @@
 
 package org.fudgemsg.proto.proto;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.fudgemsg.FudgeRuntimeIOException;
 import org.fudgemsg.proto.CodeGenerator;
 import org.fudgemsg.proto.Compiler;
 import org.fudgemsg.proto.Definition;
@@ -51,9 +55,26 @@ public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerato
   private boolean _generateHash = false;
   private boolean _generateString = false;
   private boolean _writeGitIgnore = false;
+  private String[] _fileHeader = null;
+  private String[] _fileFooter = null;
   
   protected ClassCodeGenerator (final ClassCode delegate) {
     super (delegate);
+  }
+  
+  private String[] fileGetContents (final String fileName) throws FudgeRuntimeIOException {
+    try {
+      final ArrayList<String> content = new ArrayList<String> ();
+      final BufferedReader r = new BufferedReader (new FileReader (fileName));
+      String line;
+      while ((line = r.readLine ()) != null) {
+        content.add (line);
+      }
+      r.close ();
+      return content.toArray (new String[content.size ()]);
+    } catch (IOException e) {
+      throw new FudgeRuntimeIOException (e);
+    }
   }
   
   private Set<File> getHeaderFilesOpen (final Compiler.Context context) {
@@ -108,8 +129,38 @@ public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerato
     }
   }
   
-  private IndentWriter createFile (final File file) throws IOException {
-    return createIndentWriter (new BufferedWriter (new FileWriter (file, false)));
+  @Override
+  public File getHeaderFile (final Compiler.Context context, final Definition definition, final File targetPath) throws IOException {
+    if (definition instanceof EnumDefinition) {
+      if (definition.getOuterDefinition () != null) {
+        // the outer definition will define it
+        return null;
+      } else {
+        return super.getHeaderFile (context, definition, targetPath);
+      }
+    } else {
+      return super.getHeaderFile (context, definition, targetPath);
+    }
+  }
+  
+  @Override
+  public File getImplementationFile (final Compiler.Context context, final Definition definition, final File targetPath) throws IOException {
+    if (definition instanceof EnumDefinition) {
+      if (definition.getOuterDefinition () != null) {
+        // the outer definition will define it
+        return null;
+      } else {
+        return super.getImplementationFile (context, definition, targetPath);
+      }
+    } else {
+      return super.getImplementationFile (context, definition, targetPath);
+    }
+  }
+  
+  private IndentWriter createFile (final Compiler.Context context, final File file) throws IOException {
+    IndentWriter iw = createIndentWriter (new BufferedWriter (new FileWriter (file, false)));
+    if (context.getVerbosity () >= 2) context.verboseMessage ("Writing " + file);
+    return iw;
   }
   
   private IndentWriter appendFile (final File file) throws IOException {
@@ -126,9 +177,11 @@ public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerato
       return appendFile (header);
     } else {
       // Create the file and write out the header
-      final IndentWriter writer = createFile (header);
+      final IndentWriter writer = createFile (context, header);
       filesOpen.add (header);
       writeHeaderFileHeader (context, header, writer);
+      // User file headers must go after the initial file header in case there is some special setup/formatting needed for the language format
+      writeFileText (_fileHeader, writer);
       return writer;
     }
   }
@@ -143,33 +196,54 @@ public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerato
       return appendFile (implementation);
     } else {
       // Create the file and write out the header
-      final IndentWriter writer = createFile (implementation);
+      final IndentWriter writer = createFile (context, implementation);
       filesOpen.add (implementation);
       writeImplementationFileHeader (context, implementation, writer);
+      // User file headers must go after the initial file header in case there is some special setup/formatting needed for the target language
+      writeFileText (_fileHeader, writer);
       return writer;
     }
   }
   
-  private void writeImplementationFileFooters (final Compiler.Context context) throws IOException {
-    for (File file : getImplementationFilesOpen (context)) {
-      final IndentWriter writer = appendFile (file);
-      try {
-        writeImplementationFileFooter (context, file, writer);
-      } finally {
-        writer.close ();
+  private void writeFileText (final String[] text, final IndentWriter writer) throws IOException {
+    if (text != null) {
+      for (String line : text) {
+        writer.write (line);
+        writer.newLine ();
       }
     }
   }
   
-  private void writeHeaderFileFooters (final Compiler.Context context) throws IOException {
-    for (File file : getHeaderFilesOpen (context)) {
+  private int writeImplementationFileFooters (final Compiler.Context context) throws IOException {
+    int count = 0;
+    for (File file : getImplementationFilesOpen (context)) {
       final IndentWriter writer = appendFile (file);
       try {
-        writeHeaderFileFooter (context, file, writer);
+        // User file footers must come before the system footer in case there is some special setup/formatting needed for the target language
+        writeFileText (_fileFooter, writer);
+        writeImplementationFileFooter (context, file, writer);
+        count++;
       } finally {
         writer.close ();
       }
     }
+    return count;
+  }
+  
+  private int writeHeaderFileFooters (final Compiler.Context context) throws IOException {
+    int count = 0;
+    for (File file : getHeaderFilesOpen (context)) {
+      final IndentWriter writer = appendFile (file);
+      try {
+        // User file footers must come before the system footer in case there is some special setup/formatting needed for the target language
+        writeFileText (_fileFooter, writer);
+        writeHeaderFileFooter (context, file, writer);
+        count++;
+      } finally {
+        writer.close ();
+      }
+    }
+    return count;
   }
   
   private void addToGitIgnore (final File file, final Map<File,Set<String>> folders) {
@@ -180,7 +254,8 @@ public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerato
     files.add (file.getName ());
   }
   
-  private void writeGitIgnore (final Compiler.Context context) throws IOException {
+  private int writeGitIgnore (final Compiler.Context context) throws IOException {
+    int count = 0;
     final Map<File,Set<String>> folders = new HashMap<File,Set<String>> ();
     for (File file : getImplementationFilesOpen (context)) {
       addToGitIgnore (file, folders);
@@ -193,17 +268,21 @@ public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerato
       if (gitIgnore.exists ()) {
         context.warning (null, ".gitignore already exists in " + entry.getKey ());
       } else {
+        if (context.getVerbosity () >= 2) context.verboseMessage ("Writing " + gitIgnore);
         final BufferedWriter out = new BufferedWriter (new FileWriter (gitIgnore));
         try {
+          out.write (".gitignore\n");
           for (String filename : entry.getValue ()) {
             out.write (filename);
             out.write ("\n");
           }
+          count++;
         } finally {
           out.close ();
         }
       }
     }
+    return count;
   }
   
   protected boolean flagGenerateEquality (final Definition message) {
@@ -334,10 +413,12 @@ public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerato
   
   @Override
   public void generationComplete (final Compiler.Context context, final File targetPath) {
+    int count = 0;
     try {
-      writeImplementationFileFooters (context);
-      writeHeaderFileFooters (context);
-      if (_writeGitIgnore) writeGitIgnore (context);
+      count += writeImplementationFileFooters (context);
+      count += writeHeaderFileFooters (context);
+      if (_writeGitIgnore) count += writeGitIgnore (context);
+      if (context.getVerbosity () >= 1) context.verboseMessage (count + " file(s) written");
     } catch (IOException e) {
       context.error (null, e.getMessage ());
     }
@@ -366,6 +447,22 @@ public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerato
   
   @Override
   public void setOption (final String option, final String value) {
+    if (option.equals ("fileHeader")) {
+      _fileHeader = new String[] { value };
+      return;
+    }
+    if (option.equals ("fileHeaderFile")) {
+      _fileHeader = fileGetContents (value);
+      return;
+    }
+    if (option.equals ("fileFooter")) {
+      _fileFooter = new String[] { value };
+      return;
+    }
+    if (option.equals ("fileFooterFile")) {
+      _fileFooter = fileGetContents (value);
+      return;
+    }
     throw new IllegalArgumentException ("unknown option '" + option + "'");
   }
   

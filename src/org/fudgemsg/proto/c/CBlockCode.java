@@ -54,6 +54,7 @@ public class CBlockCode extends BlockCodeAdapter {
   
   @Override
   public void endStmt (final IndentWriter writer) throws IOException {
+    writer.uncacheNewLine ();
     writer.write (';');
     writer.newLine ();
   }

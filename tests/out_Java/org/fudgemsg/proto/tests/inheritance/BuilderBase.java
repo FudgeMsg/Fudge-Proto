@@ -1,12 +1,16 @@
 // Automatically created - do not modify
+/* fileheader.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */
 // Created from inheritance.proto:43(9)
 package org.fudgemsg.proto.tests.inheritance;
 public class BuilderBase implements java.io.Serializable {
-  private static final long serialVersionUID = 108430l;
-  private final int _b;
+  private static final long serialVersionUID = -672257859l;
+  private final Integer _b;
   public static final String B_KEY = "b";
   public static class Builder {
-    private int _b;
+    private Integer _b;
     public Builder () {
     }
     protected Builder (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
@@ -21,7 +25,7 @@ public class BuilderBase implements java.io.Serializable {
         }
       }
     }
-    public Builder b (int b) {
+    public Builder b (Integer b) {
       _b = b;
       return this;
     }
@@ -32,7 +36,7 @@ public class BuilderBase implements java.io.Serializable {
   protected BuilderBase (final Builder builder) {
     _b = builder._b;
   }
-  public BuilderBase (int b) {
+  public BuilderBase (Integer b) {
     _b = b;
   }
   protected BuilderBase (final BuilderBase source) {
@@ -46,7 +50,9 @@ public class BuilderBase implements java.io.Serializable {
     return msg;
   }
   public void toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext, final org.fudgemsg.MutableFudgeFieldContainer msg) {
-    msg.add (B_KEY, null, _b);
+    if (_b != null)  {
+      msg.add (B_KEY, null, _b);
+    }
   }
   public static BuilderBase fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
     final java.util.List<org.fudgemsg.FudgeField> types = fudgeMsg.getAllByOrdinal (0);
@@ -62,7 +68,7 @@ public class BuilderBase implements java.io.Serializable {
     }
     return new Builder (fudgeMsg).build ();
   }
-  public int getB () {
+  public Integer getB () {
     return _b;
   }
   public boolean equals (final Object o) {
@@ -70,15 +76,26 @@ public class BuilderBase implements java.io.Serializable {
     if (o == null) return false;
     if (!(o instanceof BuilderBase)) return false;
     BuilderBase msg = (BuilderBase)o;
-    if (_b != msg._b) return false;
+    if (_b != null) {
+      if (msg._b != null) {
+        if (!_b.equals (msg._b)) return false;
+      }
+      else return false;
+    }
+    else if (msg._b != null) return false;
     return true;
   }
   public int hashCode () {
     int hc = 1;
-    hc = (hc * 31) + (int)_b;
+    hc *= 31;
+    if (_b != null) hc += _b.hashCode ();
     return hc;
   }
   public String toString () {
     return org.apache.commons.lang.builder.ToStringBuilder.reflectionToString(this, org.apache.commons.lang.builder.ToStringStyle.SHORT_PREFIX_STYLE);
   }
 }
+/* filefooter.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */

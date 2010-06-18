@@ -1,4 +1,8 @@
 // Automatically created - do not modify
+/* fileheader.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */
 // Created from polymorphism.proto:5(10)
 package org.fudgemsg.proto.tests.polymorphism;
 public class M1 implements java.io.Serializable {
@@ -12,7 +16,7 @@ public class M1 implements java.io.Serializable {
     fudgeField = fudgeMsg.getByName (ID_KEY);
     if (fudgeField != null)  {
       try {
-        setId (fudgeField.getValue ().toString ());
+        setId ((fudgeField.getValue () != null) ? fudgeField.getValue ().toString () : null);
       }
       catch (IllegalArgumentException e) {
         throw new IllegalArgumentException ("Fudge message is not a M1 - field 'id' is not string", e);
@@ -84,3 +88,7 @@ public class M1 implements java.io.Serializable {
     return org.apache.commons.lang.builder.ToStringBuilder.reflectionToString(this, org.apache.commons.lang.builder.ToStringStyle.SHORT_PREFIX_STYLE);
   }
 }
+/* filefooter.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */

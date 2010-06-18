@@ -43,7 +43,7 @@ import java.util.Map;
   }
 
   private void checkEnumDefinition (final Compiler.Context context, final EnumDefinition enumDefinition) {
-    // TODO 2009-12-29 Andrew -- is there anything outstanding to check at this point ?
+    enumDefinition.determineType (context);
   }
   
   private void checkFieldDefinition (final Compiler.Context context, final FieldDefinition fieldDefinition) {

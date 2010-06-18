@@ -1,23 +1,27 @@
 // Automatically created - do not modify
+/* fileheader.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */
 // Created from types.proto:207(10)
 package org.fudgemsg.proto.tests.types;
-public class MutableSTypes_Optional implements java.io.Serializable, TypesBase {
-  private static final long serialVersionUID = 2511807829388664249l;
-  private boolean __Bool;
-  public static final String _BOOL_KEY = "_Bool";
-  private byte __Byte;
+public class MutableSTypes_Optional implements java.io.Serializable, TypesBase_Optional {
+  private static final long serialVersionUID = -6972983003430872947l;
+  private Boolean __Boolean;
+  public static final String _BOOLEAN_KEY = "_Boolean";
+  private Byte __Byte;
   public static final String _BYTE_KEY = "_Byte";
-  private double __Double;
+  private Double __Double;
   public static final String _DOUBLE_KEY = "_Double";
-  private float __Float;
+  private Float __Float;
   public static final String _FLOAT_KEY = "_Float";
-  private boolean __Indicator;
+  private Boolean __Indicator;
   public static final String _INDICATOR_KEY = "_Indicator";
-  private int __Int;
+  private Integer __Int;
   public static final String _INT_KEY = "_Int";
-  private long __Long;
+  private Long __Long;
   public static final String _LONG_KEY = "_Long";
-  private short __Short;
+  private Short __Short;
   public static final String _SHORT_KEY = "_Short";
   private String __String;
   public static final String _STRING_KEY = "_String";
@@ -27,23 +31,23 @@ public class MutableSTypes_Optional implements java.io.Serializable, TypesBase {
   public static final String _CUSTOMENUM_KEY = "_CustomEnum";
   private org.fudgemsg.FudgeFieldContainer __Message;
   public static final String _MESSAGE_KEY = "_Message";
-  private org.fudgemsg.types.FudgeDate __Date;
+  private javax.time.calendar.DateProvider __Date;
   public static final String _DATE_KEY = "_Date";
-  private java.util.Date __DateTime;
+  private javax.time.calendar.DateTimeProvider __DateTime;
   public static final String _DATETIME_KEY = "_DateTime";
-  private org.fudgemsg.types.FudgeTime __Time;
+  private javax.time.calendar.TimeProvider __Time;
   public static final String _TIME_KEY = "_Time";
   public MutableSTypes_Optional () {
   }
   protected MutableSTypes_Optional (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
     org.fudgemsg.FudgeField fudgeField;
-    fudgeField = fudgeMsg.getByName (_BOOL_KEY);
+    fudgeField = fudgeMsg.getByName (_BOOLEAN_KEY);
     if (fudgeField != null)  {
       try {
-        set_Bool (fudgeMsg.getFieldValue (Boolean.class, fudgeField));
+        set_Boolean (fudgeMsg.getFieldValue (Boolean.class, fudgeField));
       }
       catch (IllegalArgumentException e) {
-        throw new IllegalArgumentException ("Fudge message is not a MutableSTypes_Optional - field '_Bool' is not boolean", e);
+        throw new IllegalArgumentException ("Fudge message is not a MutableSTypes_Optional - field '_Boolean' is not boolean", e);
       }
     }
     fudgeField = fudgeMsg.getByName (_BYTE_KEY);
@@ -107,7 +111,7 @@ public class MutableSTypes_Optional implements java.io.Serializable, TypesBase {
     fudgeField = fudgeMsg.getByName (_STRING_KEY);
     if (fudgeField != null)  {
       try {
-        set_String (fudgeField.getValue ().toString ());
+        set_String ((fudgeField.getValue () != null) ? fudgeField.getValue ().toString () : null);
       }
       catch (IllegalArgumentException e) {
         throw new IllegalArgumentException ("Fudge message is not a MutableSTypes_Optional - field '_String' is not string", e);
@@ -128,7 +132,7 @@ public class MutableSTypes_Optional implements java.io.Serializable, TypesBase {
     if (fudgeField != null)  {
       try {
         final org.fudgemsg.proto.tests.types.CustomEnum fudge1;
-        fudge1 = org.fudgemsg.proto.tests.types.CustomEnum.fromFudgeEncoding (fudgeMsg.getFieldValue (Integer.class, fudgeField));
+        fudge1 = fudgeMsg.getFieldValue (org.fudgemsg.proto.tests.types.CustomEnum.class, fudgeField);
         set_CustomEnum (fudge1);
       }
       catch (IllegalArgumentException e) {
@@ -149,7 +153,7 @@ public class MutableSTypes_Optional implements java.io.Serializable, TypesBase {
     fudgeField = fudgeMsg.getByName (_DATE_KEY);
     if (fudgeField != null)  {
       try {
-        set_Date (fudgeMsg.getFieldValue (org.fudgemsg.types.FudgeDate.class, fudgeField));
+        set_Date (fudgeMsg.getFieldValue (javax.time.calendar.DateProvider.class, fudgeField));
       }
       catch (IllegalArgumentException e) {
         throw new IllegalArgumentException ("Fudge message is not a MutableSTypes_Optional - field '_Date' is not date", e);
@@ -158,7 +162,7 @@ public class MutableSTypes_Optional implements java.io.Serializable, TypesBase {
     fudgeField = fudgeMsg.getByName (_DATETIME_KEY);
     if (fudgeField != null)  {
       try {
-        set_DateTime (fudgeMsg.getFieldValue (java.util.Date.class, fudgeField));
+        set_DateTime (fudgeMsg.getFieldValue (javax.time.calendar.DateTimeProvider.class, fudgeField));
       }
       catch (IllegalArgumentException e) {
         throw new IllegalArgumentException ("Fudge message is not a MutableSTypes_Optional - field '_DateTime' is not datetime", e);
@@ -167,15 +171,15 @@ public class MutableSTypes_Optional implements java.io.Serializable, TypesBase {
     fudgeField = fudgeMsg.getByName (_TIME_KEY);
     if (fudgeField != null)  {
       try {
-        set_Time (fudgeMsg.getFieldValue (org.fudgemsg.types.FudgeTime.class, fudgeField));
+        set_Time (fudgeMsg.getFieldValue (javax.time.calendar.TimeProvider.class, fudgeField));
       }
       catch (IllegalArgumentException e) {
         throw new IllegalArgumentException ("Fudge message is not a MutableSTypes_Optional - field '_Time' is not time", e);
       }
     }
   }
-  public MutableSTypes_Optional (boolean _Bool, byte _Byte, double _Double, float _Float, boolean _Indicator, int _Int, long _Long, short _Short, String _String, org.fudgemsg.proto.tests.types.SubMessage _SubMessage, org.fudgemsg.proto.tests.types.CustomEnum _CustomEnum, org.fudgemsg.FudgeFieldContainer _Message, org.fudgemsg.types.FudgeDate _Date, java.util.Date _DateTime, org.fudgemsg.types.FudgeTime _Time) {
-    __Bool = _Bool;
+  public MutableSTypes_Optional (Boolean _Boolean, Byte _Byte, Double _Double, Float _Float, Boolean _Indicator, Integer _Int, Long _Long, Short _Short, String _String, org.fudgemsg.proto.tests.types.SubMessage _SubMessage, org.fudgemsg.proto.tests.types.CustomEnum _CustomEnum, org.fudgemsg.FudgeFieldContainer _Message, javax.time.calendar.DateProvider _Date, javax.time.calendar.DateTimeProvider _DateTime, javax.time.calendar.TimeProvider _Time) {
+    __Boolean = _Boolean;
     __Byte = _Byte;
     __Double = _Double;
     __Float = _Float;
@@ -196,7 +200,7 @@ public class MutableSTypes_Optional implements java.io.Serializable, TypesBase {
   }
   protected MutableSTypes_Optional (final MutableSTypes_Optional source) {
     if (source == null) throw new NullPointerException ("'source' must not be null");
-    __Bool = source.__Bool;
+    __Boolean = source.__Boolean;
     __Byte = source.__Byte;
     __Double = source.__Double;
     __Float = source.__Float;
@@ -225,14 +229,30 @@ public class MutableSTypes_Optional implements java.io.Serializable, TypesBase {
     return msg;
   }
   public void toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext, final org.fudgemsg.MutableFudgeFieldContainer msg) {
-    msg.add (_BOOL_KEY, null, __Bool);
-    msg.add (_BYTE_KEY, null, __Byte);
-    msg.add (_DOUBLE_KEY, null, __Double);
-    msg.add (_FLOAT_KEY, null, __Float);
-    if (__Indicator) msg.add (_INDICATOR_KEY, null, org.fudgemsg.types.IndicatorType.INSTANCE);
-    msg.add (_INT_KEY, null, __Int);
-    msg.add (_LONG_KEY, null, __Long);
-    msg.add (_SHORT_KEY, null, __Short);
+    if (__Boolean != null)  {
+      msg.add (_BOOLEAN_KEY, null, __Boolean);
+    }
+    if (__Byte != null)  {
+      msg.add (_BYTE_KEY, null, __Byte);
+    }
+    if (__Double != null)  {
+      msg.add (_DOUBLE_KEY, null, __Double);
+    }
+    if (__Float != null)  {
+      msg.add (_FLOAT_KEY, null, __Float);
+    }
+    if (__Indicator != null)  {
+      if (__Indicator) msg.add (_INDICATOR_KEY, null, org.fudgemsg.types.IndicatorType.INSTANCE);
+    }
+    if (__Int != null)  {
+      msg.add (_INT_KEY, null, __Int);
+    }
+    if (__Long != null)  {
+      msg.add (_LONG_KEY, null, __Long);
+    }
+    if (__Short != null)  {
+      msg.add (_SHORT_KEY, null, __Short);
+    }
     if (__String != null)  {
       msg.add (_STRING_KEY, null, __String);
     }
@@ -247,7 +267,7 @@ public class MutableSTypes_Optional implements java.io.Serializable, TypesBase {
       msg.add (_SUBMESSAGE_KEY, null, fudge1);
     }
     if (__CustomEnum != null)  {
-      msg.add (_CUSTOMENUM_KEY, null, __CustomEnum.getFudgeEncoding ());
+      msg.add (_CUSTOMENUM_KEY, null, __CustomEnum.name ());
     }
     if (__Message != null)  {
       msg.add (_MESSAGE_KEY, null, fudgeContext.newMessage (__Message));
@@ -276,52 +296,52 @@ public class MutableSTypes_Optional implements java.io.Serializable, TypesBase {
     }
     return new MutableSTypes_Optional (fudgeMsg);
   }
-  public boolean get_Bool () {
-    return __Bool;
+  public Boolean get_Boolean () {
+    return __Boolean;
   }
-  public void set_Bool (boolean _Bool) {
-    __Bool = _Bool;
+  public void set_Boolean (Boolean _Boolean) {
+    __Boolean = _Boolean;
   }
-  public byte get_Byte () {
+  public Byte get_Byte () {
     return __Byte;
   }
-  public void set_Byte (byte _Byte) {
+  public void set_Byte (Byte _Byte) {
     __Byte = _Byte;
   }
-  public double get_Double () {
+  public Double get_Double () {
     return __Double;
   }
-  public void set_Double (double _Double) {
+  public void set_Double (Double _Double) {
     __Double = _Double;
   }
-  public float get_Float () {
+  public Float get_Float () {
     return __Float;
   }
-  public void set_Float (float _Float) {
+  public void set_Float (Float _Float) {
     __Float = _Float;
   }
-  public boolean get_Indicator () {
+  public Boolean get_Indicator () {
     return __Indicator;
   }
-  public void set_Indicator (boolean _Indicator) {
+  public void set_Indicator (Boolean _Indicator) {
     __Indicator = _Indicator;
   }
-  public int get_Int () {
+  public Integer get_Int () {
     return __Int;
   }
-  public void set_Int (int _Int) {
+  public void set_Int (Integer _Int) {
     __Int = _Int;
   }
-  public long get_Long () {
+  public Long get_Long () {
     return __Long;
   }
-  public void set_Long (long _Long) {
+  public void set_Long (Long _Long) {
     __Long = _Long;
   }
-  public short get_Short () {
+  public Short get_Short () {
     return __Short;
   }
-  public void set_Short (short _Short) {
+  public void set_Short (Short _Short) {
     __Short = _Short;
   }
   public String get_String () {
@@ -351,22 +371,22 @@ public class MutableSTypes_Optional implements java.io.Serializable, TypesBase {
   public void set_Message (org.fudgemsg.FudgeFieldContainer _Message) {
     __Message = _Message;
   }
-  public org.fudgemsg.types.FudgeDate get_Date () {
+  public javax.time.calendar.DateProvider get_Date () {
     return __Date;
   }
-  public void set_Date (org.fudgemsg.types.FudgeDate _Date) {
+  public void set_Date (javax.time.calendar.DateProvider _Date) {
     __Date = _Date;
   }
-  public java.util.Date get_DateTime () {
+  public javax.time.calendar.DateTimeProvider get_DateTime () {
     return __DateTime;
   }
-  public void set_DateTime (java.util.Date _DateTime) {
+  public void set_DateTime (javax.time.calendar.DateTimeProvider _DateTime) {
     __DateTime = _DateTime;
   }
-  public org.fudgemsg.types.FudgeTime get_Time () {
+  public javax.time.calendar.TimeProvider get_Time () {
     return __Time;
   }
-  public void set_Time (org.fudgemsg.types.FudgeTime _Time) {
+  public void set_Time (javax.time.calendar.TimeProvider _Time) {
     __Time = _Time;
   }
   public boolean equals (final Object o) {
@@ -374,14 +394,62 @@ public class MutableSTypes_Optional implements java.io.Serializable, TypesBase {
     if (o == null) return false;
     if (!(o instanceof MutableSTypes_Optional)) return false;
     MutableSTypes_Optional msg = (MutableSTypes_Optional)o;
-    if (__Bool != msg.__Bool) return false;
-    if (__Byte != msg.__Byte) return false;
-    if (__Double != msg.__Double) return false;
-    if (__Float != msg.__Float) return false;
-    if (__Indicator != msg.__Indicator) return false;
-    if (__Int != msg.__Int) return false;
-    if (__Long != msg.__Long) return false;
-    if (__Short != msg.__Short) return false;
+    if (__Boolean != null) {
+      if (msg.__Boolean != null) {
+        if (!__Boolean.equals (msg.__Boolean)) return false;
+      }
+      else return false;
+    }
+    else if (msg.__Boolean != null) return false;
+    if (__Byte != null) {
+      if (msg.__Byte != null) {
+        if (!__Byte.equals (msg.__Byte)) return false;
+      }
+      else return false;
+    }
+    else if (msg.__Byte != null) return false;
+    if (__Double != null) {
+      if (msg.__Double != null) {
+        if (!__Double.equals (msg.__Double)) return false;
+      }
+      else return false;
+    }
+    else if (msg.__Double != null) return false;
+    if (__Float != null) {
+      if (msg.__Float != null) {
+        if (!__Float.equals (msg.__Float)) return false;
+      }
+      else return false;
+    }
+    else if (msg.__Float != null) return false;
+    if (__Indicator != null) {
+      if (msg.__Indicator != null) {
+        if (!__Indicator.equals (msg.__Indicator)) return false;
+      }
+      else return false;
+    }
+    else if (msg.__Indicator != null) return false;
+    if (__Int != null) {
+      if (msg.__Int != null) {
+        if (!__Int.equals (msg.__Int)) return false;
+      }
+      else return false;
+    }
+    else if (msg.__Int != null) return false;
+    if (__Long != null) {
+      if (msg.__Long != null) {
+        if (!__Long.equals (msg.__Long)) return false;
+      }
+      else return false;
+    }
+    else if (msg.__Long != null) return false;
+    if (__Short != null) {
+      if (msg.__Short != null) {
+        if (!__Short.equals (msg.__Short)) return false;
+      }
+      else return false;
+    }
+    else if (msg.__Short != null) return false;
     if (__String != null) {
       if (msg.__String != null) {
         if (!__String.equals (msg.__String)) return false;
@@ -436,15 +504,21 @@ public class MutableSTypes_Optional implements java.io.Serializable, TypesBase {
   public int hashCode () {
     int hc = 1;
     hc *= 31;
-    if (__Bool) hc++;
-    hc = (hc * 31) + (int)__Byte;
-    hc = (hc * 31) + (int)__Double;
-    hc = (hc * 31) + (int)__Float;
+    if (__Boolean != null) hc += __Boolean.hashCode ();
     hc *= 31;
-    if (__Indicator) hc++;
-    hc = (hc * 31) + (int)__Int;
-    hc = (hc * 31) + (int)__Long;
-    hc = (hc * 31) + (int)__Short;
+    if (__Byte != null) hc += __Byte.hashCode ();
+    hc *= 31;
+    if (__Double != null) hc += __Double.hashCode ();
+    hc *= 31;
+    if (__Float != null) hc += __Float.hashCode ();
+    hc *= 31;
+    if (__Indicator != null) hc += __Indicator.hashCode ();
+    hc *= 31;
+    if (__Int != null) hc += __Int.hashCode ();
+    hc *= 31;
+    if (__Long != null) hc += __Long.hashCode ();
+    hc *= 31;
+    if (__Short != null) hc += __Short.hashCode ();
     hc *= 31;
     if (__String != null) hc += __String.hashCode ();
     hc *= 31;
@@ -465,3 +539,7 @@ public class MutableSTypes_Optional implements java.io.Serializable, TypesBase {
     return org.apache.commons.lang.builder.ToStringBuilder.reflectionToString(this, org.apache.commons.lang.builder.ToStringStyle.SHORT_PREFIX_STYLE);
   }
 }
+/* filefooter.java.include
+ *
+ * This file is part of the Java unit test generated output.
+ */

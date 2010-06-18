@@ -20,9 +20,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
+
+import javax.time.calendar.Clock;
+import javax.time.calendar.DateProvider;
+import javax.time.calendar.DateTimeProvider;
+import javax.time.calendar.TimeProvider;
 
 import org.fudgemsg.FudgeContext;
 import org.fudgemsg.FudgeFieldContainer;
@@ -53,10 +57,8 @@ import org.fudgemsg.proto.tests.types.RSTypes_Required;
 import org.fudgemsg.proto.tests.types.STypes_Optional;
 import org.fudgemsg.proto.tests.types.STypes_Required;
 import org.fudgemsg.proto.tests.types.SubMessage;
-import org.fudgemsg.proto.tests.types.TypesBase;
-import org.fudgemsg.types.DateTimeAccuracy;
-import org.fudgemsg.types.FudgeDate;
-import org.fudgemsg.types.FudgeTime;
+import org.fudgemsg.proto.tests.types.TypesBase_Optional;
+import org.fudgemsg.proto.tests.types.TypesBase_Required;
 import org.junit.Test;
 
 public class TypesTest {
@@ -73,11 +75,33 @@ public class TypesTest {
     assertEquals (object1, object2);
   }
   
-  private void compareTypes (final TypesBase object1, final TypesBase object2) {
+  private void compareTypes (final TypesBase_Optional object1, final TypesBase_Optional object2) {
     if ((object1 == null) && (object2 == null)) return;
     assertNotNull (object1);
     assertNotNull (object2);
-    assertEquals (object1.get_Bool (), object2.get_Bool ());
+    assertEquals (object1.get_Boolean (), object2.get_Boolean ());
+    assertEquals (object1.get_Byte (), object2.get_Byte ());
+    assertEquals (object1.get_Double (), object2.get_Double (), 0);
+    assertEquals (object1.get_Float (), object2.get_Float (), 0);
+    assertEquals (object1.get_Indicator (), object2.get_Indicator ());
+    assertEquals (object1.get_Int (), object2.get_Int ());
+    assertEquals (object1.get_Long (), object2.get_Long ());
+    assertEquals (object1.get_Short (), object2.get_Short ());
+    assertEquals (object1.get_String (), object2.get_String ());
+    compareSubMessage (object1.get_SubMessage (), object2.get_SubMessage ());
+    assertEquals (object1.get_CustomEnum (), object2.get_CustomEnum ());
+    assertEquals (object1.get_Message (), object2.get_Message ());
+    assertEquals (object1.get_Date (), object2.get_Date ());
+    assertEquals (object1.get_DateTime (), object2.get_DateTime ());
+    assertEquals (object1.get_Time (), object2.get_Time ());
+    assertEquals (object1, object2);
+  }
+  
+  private void compareTypes (final TypesBase_Required object1, final TypesBase_Required object2) {
+    if ((object1 == null) && (object2 == null)) return;
+    assertNotNull (object1);
+    assertNotNull (object2);
+    assertEquals (object1.get_Boolean (), object2.get_Boolean ());
     assertEquals (object1.get_Byte (), object2.get_Byte ());
     assertEquals (object1.get_Double (), object2.get_Double (), 0);
     assertEquals (object1.get_Float (), object2.get_Float (), 0);
@@ -99,7 +123,7 @@ public class TypesTest {
     if ((object1 == null) && (object2 == null)) return;
     assertNotNull (object1);
     assertNotNull (object2);
-    assertEquals (Arrays.equals (object1.get_Bool (), object2.get_Bool ()), true);
+    assertEquals (Arrays.equals (object1.get_Boolean (), object2.get_Boolean ()), true);
     assertArrayEquals (object1.get_Byte (), object2.get_Byte ());
     assertEquals (Arrays.equals (object1.get_Double (), object2.get_Double ()), true);
     assertEquals (Arrays.equals (object1.get_Float (), object2.get_Float ()), true);
@@ -133,7 +157,7 @@ public class TypesTest {
     assertNotNull (object1);
     assertNotNull (object2);
     int n, i;
-    boolean[][] aaBool1 = object1.get_Bool (), aaBool2 = object2.get_Bool ();
+    boolean[][] aaBool1 = object1.get_Boolean (), aaBool2 = object2.get_Boolean ();
     if ((aaBool1 != null) || (aaBool2 != null)) {
       assertNotNull (aaBool1);
       assertNotNull (aaBool2);
@@ -235,7 +259,7 @@ public class TypesTest {
     if ((object1 == null) && (object2 == null)) return;
     assertNotNull (object1);
     assertNotNull (object2);
-    assertListEquals (object1.get_Bool (), object2.get_Bool ());
+    assertListEquals (object1.get_Boolean (), object2.get_Boolean ());
     assertListEquals (object1.get_Byte (), object2.get_Byte ());
     assertListEquals (object1.get_Double (), object2.get_Double ());
     assertListEquals (object1.get_Float (), object2.get_Float ());
@@ -254,7 +278,7 @@ public class TypesTest {
     assertNotNull (object1);
     assertNotNull (object2);
     int n, i;
-    List<boolean[]> raBool1 = object1.get_Bool (), raBool2 = object2.get_Bool ();
+    List<boolean[]> raBool1 = object1.get_Boolean (), raBool2 = object2.get_Boolean ();
     assertEquals (n = raBool1.size (), raBool2.size ());
     for (i = 0; i < n; i++) {
       assertEquals (true, Arrays.equals (raBool1.get (i), raBool2.get (i)));
@@ -530,7 +554,13 @@ public class TypesTest {
   }
   
   private CustomEnum scustomenum () {
-    return CustomEnum.fromFudgeEncoding (_random.nextInt (3) + 1);
+    switch (_random.nextInt (3)) {
+      case 0 : return CustomEnum.FIRST;
+      case 1 : return CustomEnum.SECOND;
+      case 2 : return CustomEnum.THIRD;
+      case 3 : return CustomEnum.FOURTH;
+      default : return null;
+    }
   }
   
   private CustomEnum[] acustomenum () {
@@ -575,66 +605,66 @@ public class TypesTest {
     return r;
   }
   
-  private FudgeDate sdate () {
-    return new FudgeDate (sint ());
+  private DateProvider sdate () {
+    return Clock.systemDefaultZone ().dateTime ();
   }
   
-  private FudgeDate[] adate () {
+  private DateProvider[] adate () {
     final int n = arraySize ();
-    final FudgeDate[] r = new FudgeDate[n];
+    final DateProvider[] r = new DateProvider[n];
     for (int i = 0; i < n; i++) {
       r[i] = sdate ();
     }
     return r;
   }
   
-  private FudgeDate[][] aadate () {
+  private DateProvider[][] aadate () {
     final int n = arraySize ();
-    final FudgeDate[][] r = new FudgeDate[n][];
+    final DateProvider[][] r = new DateProvider[n][];
     for (int i = 0; i < n; i++) {
       r[i] = adate ();
     }
     return r;
   }
   
-  private Date sdatetime () {
-    return new Date (slong ());
+  private DateTimeProvider sdatetime () {
+    return Clock.systemDefaultZone ().dateTime ();
   }
   
-  private Date[] adatetime () {
+  private DateTimeProvider[] adatetime () {
     final int n = arraySize ();
-    final Date[] r = new Date[n];
+    final DateTimeProvider[] r = new DateTimeProvider[n];
     for (int i = 0; i < n; i++) {
       r[i] = sdatetime ();
     }
     return r;
   }
   
-  private Date[][] aadatetime () {
+  private DateTimeProvider[][] aadatetime () {
     final int n = arraySize ();
-    final Date[][] r = new Date[n][];
+    final DateTimeProvider[][] r = new DateTimeProvider[n][];
     for (int i = 0; i < n; i++) {
       r[i] = adatetime ();
     }
     return r;
   }
   
-  private FudgeTime stime () {
-    return new FudgeTime (DateTimeAccuracy.MILLISECOND, slong ());
+  private TimeProvider stime () {
+    return Clock.systemDefaultZone ().dateTime ();
   }
   
-  private FudgeTime[] atime () {
+  private TimeProvider[] atime () {
     final int n = arraySize ();
-    final FudgeTime[] r = new FudgeTime[n];
+    final TimeProvider[] r = new TimeProvider[n];
     for (int i = 0; i < n; i++) {
       r[i] = stime ();
     }
     return r;
   }
   
-  private FudgeTime[][] aatime () {
+  private TimeProvider[][] aatime () {
     final int n = arraySize ();
-    final FudgeTime[][] r = new FudgeTime[n][];
+    final TimeProvider[][] r = new TimeProvider[n][];
     for (int i = 0; i < n; i++) {
       r[i] = atime ();
     }
@@ -644,7 +674,7 @@ public class TypesTest {
   @Test
   public void aa_optional () {
     AATypes_Optional.Builder builder = new AATypes_Optional.Builder ();
-    builder._Bool (aabool ());
+    builder._Boolean (aabool ());
     builder._Byte (aabyte ());
     builder._Double (aadouble ());
     builder._Float (aafloat ());
@@ -674,7 +704,7 @@ public class TypesTest {
   @Test
   public void a_optional () {
     ATypes_Optional.Builder builder = new ATypes_Optional.Builder ();
-    builder._Bool (abool ());
+    builder._Boolean (abool ());
     builder._Byte (abyte ());
     builder._Double (adouble ());
     builder._Float (afloat ());
@@ -704,7 +734,7 @@ public class TypesTest {
   @Test
   public void ra_optional () {
     RATypes_Optional.Builder builder = new RATypes_Optional.Builder ();
-    builder._Bool (Arrays.asList (aabool ()));
+    builder._Boolean (Arrays.asList (aabool ()));
     builder._Byte (Arrays.asList (aabyte ()));
     builder._Double (Arrays.asList (aadouble ()));
     builder._Float (Arrays.asList (aafloat ()));
@@ -734,7 +764,7 @@ public class TypesTest {
   @Test
   public void rs_optional () {
     RSTypes_Optional.Builder builder = new RSTypes_Optional.Builder ();
-    builder._Bool (Arrays.asList (sbool ()));
+    builder._Boolean (Arrays.asList (sbool ()));
     builder._Byte (Arrays.asList (sbyte ()));
     builder._Double (Arrays.asList (sdouble ()));
     builder._Float (Arrays.asList (sfloat ()));
@@ -764,7 +794,7 @@ public class TypesTest {
   @Test
   public void s_optional () {
     STypes_Optional.Builder builder = new STypes_Optional.Builder ();
-    builder._Bool (sbool ());
+    builder._Boolean (sbool ());
     builder._Byte (sbyte ());
     builder._Double (sdouble ());
     builder._Float (sfloat ());
@@ -794,7 +824,7 @@ public class TypesTest {
   @Test
   public void maa_optional () {
     MutableAATypes_Optional in = new MutableAATypes_Optional ();
-    in.set_Bool (aabool ());
+    in.set_Boolean (aabool ());
     in.set_Byte (aabyte ());
     in.set_Double (aadouble ());
     in.set_Float (aafloat ());
@@ -823,7 +853,7 @@ public class TypesTest {
   @Test
   public void ma_optional () {
     MutableATypes_Optional in = new MutableATypes_Optional ();
-    in.set_Bool (abool ());
+    in.set_Boolean (abool ());
     in.set_Byte (abyte ());
     in.set_Double (adouble ());
     in.set_Float (afloat ());
@@ -852,7 +882,7 @@ public class TypesTest {
   @Test
   public void mra_optional () {
     MutableRATypes_Optional in = new MutableRATypes_Optional ();
-    in.set_Bool (Arrays.asList (aabool ()));
+    in.set_Boolean (Arrays.asList (aabool ()));
     in.set_Byte (Arrays.asList (aabyte ()));
     in.set_Double (Arrays.asList (aadouble ()));
     in.set_Float (Arrays.asList (aafloat ()));
@@ -881,7 +911,7 @@ public class TypesTest {
   @Test
   public void mrs_optional () {
     MutableRSTypes_Optional in = new MutableRSTypes_Optional ();
-    in.set_Bool (Arrays.asList (sbool ()));
+    in.set_Boolean (Arrays.asList (sbool ()));
     in.set_Byte (Arrays.asList (sbyte ()));
     in.set_Double (Arrays.asList (sdouble ()));
     in.set_Float (Arrays.asList (sfloat ()));
@@ -910,7 +940,7 @@ public class TypesTest {
   @Test
   public void ms_optional () {
     MutableSTypes_Optional in = new MutableSTypes_Optional ();
-    in.set_Bool (sbool ());
+    in.set_Boolean (sbool ());
     in.set_Byte (sbyte ());
     in.set_Double (sdouble ());
     in.set_Float (sfloat ());
@@ -936,79 +966,4 @@ public class TypesTest {
     compareTypes (in, out);
   }
   
-  // TODO 2010-02-08 Andrew -- speed test ?
-  // TODO 2010-02-08 Andrew -- FixedArray 
-  
-  /*
-  @Test
-  public void builderDefaultValues () {
-    final FudgeContext context = new FudgeContext ();
-    final Types object = new Types.Builder ().build ();
-    final FudgeFieldContainer message = object.toFudgeMsg (context);
-    final Types object2 = Types.fromFudgeMsg (message);
-    compareTypes (object, object2);
-  }
-  
-  @Test
-  public void builderSingleValues () {
-    final FudgeContext context = new FudgeContext ();
-    final Types object = new Types.Builder ().sBool (true).sByte ((byte)1).sDouble (2).sFloat (3).sIndicator (true).sInt (4).sLong (5).sShort ((short)6).sString ("7").sSubMessage (new SubMessage (8, "9")).sCustomEnum (CustomEnum.SECOND).build ();
-    final FudgeFieldContainer message = object.toFudgeMsg (context);
-    final Types object2 = Types.fromFudgeMsg (message);
-    compareTypes (object, object2);
-  }
-  
-  private Types createTypesObject () {
-    final Types.Builder builder = new Types.Builder ();
-    final boolean[] aBool = new boolean[32];
-    final byte[] aByte = new byte[32];
-    final double[] aDouble = new double[32];
-    final float[] aFloat = new float[32];
-    final int[] aInt = new int[32];
-    final short[] aShort = new short[32];
-    final String[] aString = new String[32];
-    final SubMessage[] aSubMessage = new SubMessage[32];
-    final CustomEnum[] aCustomEnum = new CustomEnum[32];
-    for (int i = 0; i < 32; i++) {
-      aBool[i] = ((i % 3) == 0) || ((i % 7) == 0);
-      aByte[i] = (byte)i;
-      aDouble[i] = (double)i * 3.1415;
-      aFloat[i] = (float)i * 3.1415f;
-      aInt[i] = i;
-      aShort[i] = (short)i;
-      aString[i] = Integer.toString (i);
-      aSubMessage[i] = new SubMessage (i, Integer.toString (i));
-      aCustomEnum[i] = CustomEnum.fromFudgeEncoding ((i & 3) + 1);
-    }
-    return builder.aBool(aBool).aByte (aByte).aDouble (aDouble).aFloat (aFloat).aInt (aInt).aShort (aShort).aString (aString).aSubMessage (aSubMessage).aCustomEnum (aCustomEnum).build ();
-  }
-  
-  @Test
-  public void builderArrayValues () {
-    final FudgeContext context = new FudgeContext ();
-    final Types object = createTypesObject ();
-    final FudgeFieldContainer message = object.toFudgeMsg (context);
-    final Types object2 = Types.fromFudgeMsg (message);
-    compareTypes (object, object2);
-  }
-  
-  @Test
-  public void speedTest100000ToFudgeMsg () {
-    final FudgeContext context = new FudgeContext ();
-    final Types object = createTypesObject ();
-    for (int i = 0; i < 100000; i++) {
-      object.toFudgeMsg (context);
-    }
-  }
-  
-  @Test
-  public void speedTest100000FromFudgeMsg () {
-    final FudgeContext context = new FudgeContext ();
-    final Types object = createTypesObject ();
-    final FudgeFieldContainer message = object.toFudgeMsg (context);
-    for (int i = 0; i < 100000; i++) {
-      Types.fromFudgeMsg (message);
-    }
-  }
-  */
 }
