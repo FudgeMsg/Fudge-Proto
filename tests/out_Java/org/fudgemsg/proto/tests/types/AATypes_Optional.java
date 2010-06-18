@@ -245,7 +245,7 @@ public class AATypes_Optional implements java.io.Serializable, AATypesBase {
               final java.util.List<String> fudge5 = new java.util.ArrayList<String> ();
               for (org.fudgemsg.FudgeField fudge6 : fudge4) {
                 try {
-                  fudge5.add (fudge6.getValue ().toString ());
+                  fudge5.add ((fudge6.getValue () != null) ? fudge6.getValue ().toString () : null);
                 }
                 catch (IllegalArgumentException e) {
                   throw new IllegalArgumentException ("Fudge message is not a AATypes_Optional - field '_String[][]' is not string", e);

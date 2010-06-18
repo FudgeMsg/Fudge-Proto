@@ -127,7 +127,7 @@ public class STypes_Optional implements java.io.Serializable, TypesBase_Optional
       fudgeField = fudgeMsg.getByName (_STRING_KEY);
       if (fudgeField != null)  {
         try {
-          _String (fudgeField.getValue ().toString ());
+          _String ((fudgeField.getValue () != null) ? fudgeField.getValue ().toString () : null);
         }
         catch (IllegalArgumentException e) {
           throw new IllegalArgumentException ("Fudge message is not a STypes_Optional - field '_String' is not string", e);

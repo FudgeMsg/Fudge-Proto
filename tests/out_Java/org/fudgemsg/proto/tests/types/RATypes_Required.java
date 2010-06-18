@@ -331,7 +331,7 @@ public class RATypes_Required implements java.io.Serializable, RATypesBase {
         final java.util.List<String> fudge11 = new java.util.ArrayList<String> ();
         for (org.fudgemsg.FudgeField fudge12 : fudge10) {
           try {
-            fudge11.add (fudge12.getValue ().toString ());
+            fudge11.add ((fudge12.getValue () != null) ? fudge12.getValue ().toString () : null);
           }
           catch (IllegalArgumentException e) {
             throw new IllegalArgumentException ("Fudge message is not a RATypes_Required - field '_String[]' is not string", e);

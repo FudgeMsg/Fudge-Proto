@@ -161,7 +161,7 @@ public class ATypes_Optional implements java.io.Serializable, ATypesBase {
           final java.util.List<String> fudge2 = new java.util.ArrayList<String> ();
           for (org.fudgemsg.FudgeField fudge3 : fudge1) {
             try {
-              fudge2.add (fudge3.getValue ().toString ());
+              fudge2.add ((fudge3.getValue () != null) ? fudge3.getValue ().toString () : null);
             }
             catch (IllegalArgumentException e) {
               throw new IllegalArgumentException ("Fudge message is not a ATypes_Optional - field '_String[]' is not string", e);

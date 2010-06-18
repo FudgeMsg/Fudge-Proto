@@ -188,7 +188,7 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
           final java.util.List<String> fudge4 = new java.util.ArrayList<String> ();
           for (org.fudgemsg.FudgeField fudge5 : fudge3) {
             try {
-              fudge4.add (fudge5.getValue ().toString ());
+              fudge4.add ((fudge5.getValue () != null) ? fudge5.getValue ().toString () : null);
             }
             catch (IllegalArgumentException e) {
               throw new IllegalArgumentException ("Fudge message is not a MutableRATypes_Optional - field '_String[]' is not string", e);

@@ -111,7 +111,7 @@ public class MutableSTypes_Optional implements java.io.Serializable, TypesBase_O
     fudgeField = fudgeMsg.getByName (_STRING_KEY);
     if (fudgeField != null)  {
       try {
-        set_String (fudgeField.getValue ().toString ());
+        set_String ((fudgeField.getValue () != null) ? fudgeField.getValue ().toString () : null);
       }
       catch (IllegalArgumentException e) {
         throw new IllegalArgumentException ("Fudge message is not a MutableSTypes_Optional - field '_String' is not string", e);

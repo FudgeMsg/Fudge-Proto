@@ -260,7 +260,7 @@ public class Literals implements java.io.Serializable {
       fudgeField = fudgeMsg.getByName (NULLSTRING_KEY);
       if (fudgeField != null)  {
         try {
-          nullString (fudgeField.getValue ().toString ());
+          nullString ((fudgeField.getValue () != null) ? fudgeField.getValue ().toString () : null);
         }
         catch (IllegalArgumentException e) {
           throw new IllegalArgumentException ("Fudge message is not a Literals - field 'nullString' is not string", e);
@@ -269,7 +269,7 @@ public class Literals implements java.io.Serializable {
       fudgeField = fudgeMsg.getByName (EMPTYSTRING_KEY);
       if (fudgeField != null)  {
         try {
-          emptyString (fudgeField.getValue ().toString ());
+          emptyString ((fudgeField.getValue () != null) ? fudgeField.getValue ().toString () : null);
         }
         catch (IllegalArgumentException e) {
           throw new IllegalArgumentException ("Fudge message is not a Literals - field 'emptyString' is not string", e);
@@ -278,7 +278,7 @@ public class Literals implements java.io.Serializable {
       fudgeField = fudgeMsg.getByName (SIMPLESTRING_KEY);
       if (fudgeField != null)  {
         try {
-          simpleString (fudgeField.getValue ().toString ());
+          simpleString ((fudgeField.getValue () != null) ? fudgeField.getValue ().toString () : null);
         }
         catch (IllegalArgumentException e) {
           throw new IllegalArgumentException ("Fudge message is not a Literals - field 'simpleString' is not string", e);
@@ -287,7 +287,7 @@ public class Literals implements java.io.Serializable {
       fudgeField = fudgeMsg.getByName (ESCAPESTRING_KEY);
       if (fudgeField != null)  {
         try {
-          escapeString (fudgeField.getValue ().toString ());
+          escapeString ((fudgeField.getValue () != null) ? fudgeField.getValue ().toString () : null);
         }
         catch (IllegalArgumentException e) {
           throw new IllegalArgumentException ("Fudge message is not a Literals - field 'escapeString' is not string", e);

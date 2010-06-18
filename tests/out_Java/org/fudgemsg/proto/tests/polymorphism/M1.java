@@ -16,7 +16,7 @@ public class M1 implements java.io.Serializable {
     fudgeField = fudgeMsg.getByName (ID_KEY);
     if (fudgeField != null)  {
       try {
-        setId (fudgeField.getValue ().toString ());
+        setId ((fudgeField.getValue () != null) ? fudgeField.getValue ().toString () : null);
       }
       catch (IllegalArgumentException e) {
         throw new IllegalArgumentException ("Fudge message is not a M1 - field 'id' is not string", e);

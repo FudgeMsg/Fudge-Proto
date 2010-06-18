@@ -17,7 +17,7 @@ public class M3 extends org.fudgemsg.proto.tests.polymorphism.M1 implements java
     fudgeField = fudgeMsg.getByName (BAR_KEY);
     if (fudgeField != null)  {
       try {
-        setBar (fudgeField.getValue ().toString ());
+        setBar ((fudgeField.getValue () != null) ? fudgeField.getValue ().toString () : null);
       }
       catch (IllegalArgumentException e) {
         throw new IllegalArgumentException ("Fudge message is not a M3 - field 'bar' is not string", e);

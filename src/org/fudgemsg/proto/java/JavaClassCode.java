@@ -855,7 +855,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     }
   }
   
-  private void writeDecodeFudgeField (JavaWriter writer, final FieldType type, final MessageDefinition message, final String fieldData, final String fieldRef, final String fieldContainer, String assignTo, final String appendTo) throws IOException {
+  private void writeDecodeFudgeField (JavaWriter writer, final FieldType type, final MessageDefinition message, final String fieldData, final String fieldRef, final String fieldContainer, String assignTo, final String appendTo, final boolean allowNull) throws IOException {
     if (type.getFudgeFieldType () != FudgeTypeDictionary.INDICATOR_TYPE_ID) {
       writer.guard ();
       writer = beginBlock (writer); // try
@@ -914,13 +914,12 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         // arbitrary array
         final String subMessage = writer.localVariable (CLASS_FUDGEFIELDCONTAINER, true, fudgeFieldValueExpression (fieldContainer, CLASS_FUDGEFIELDCONTAINER, fieldData));
         endStmt (writer);
-        if (appendTo != null) { }
         // TODO 2010-01-06 Andrew -- we could call getNumFields on the subMessage and allocate a proper array once, but might that be slower if we have a FudgeMsg implementation that makes data available as soon as its received & decoded - i.e. a big array submessage would have to be decoded in its entirety to get the length
         final String slaveList = writer.localVariable (listTypeString (baseType, false), true, "new " + listTypeString (baseType, true) + " ()");
         endStmt (writer);
         final String msgElement = writer.forEach (CLASS_FUDGEFIELD, subMessage);
         writer = beginBlock (writer); // iteration
-        writeDecodeFudgeField (writer, baseType, message, msgElement, fieldRef + "[]", subMessage, null, slaveList + ".add");
+        writeDecodeFudgeField (writer, baseType, message, msgElement, fieldRef + "[]", subMessage, null, slaveList + ".add", true);
         writer = endBlock (writer); // iteration
         if (appendTo != null) {
           if (checkLength) {
@@ -1013,11 +1012,17 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         assignTo = writeDecodeSimpleFudgeField (writer, "double", "Double", fieldData, fieldRef, fieldContainer, assignTo, appendTo);
         break;
       case FudgeTypeDictionary.STRING_TYPE_ID : {
-        final String value = fieldData + ".getValue ().toString ()";
-        if (appendTo != null) {
-          assignTo = value;
+        final String value = fieldData + ".getValue ()";
+        final String valueString;
+        if (allowNull) {
+          valueString = "(" + value + " != null) ? " + value + ".toString () : null";
         } else {
-          writer.assignment (assignTo, value);
+          valueString = value + ".toString ()";
+        }
+        if (appendTo != null) {
+          assignTo = valueString;
+        } else {
+          writer.assignment (assignTo, valueString);
           endStmt (writer);
         }
         break;
@@ -1054,7 +1059,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     endStmt (writer); // list construction
     final String fieldData = writer.forEach (CLASS_FUDGEFIELD, "fudgeFields");
     beginBlock (writer.getWriter ()); // iteration
-    writeDecodeFudgeField (writer, field.getType (), field.getOuterMessage (), fieldData, field.getName (), "fudgeMsg", null, localName + ".add");
+    writeDecodeFudgeField (writer, field.getType (), field.getOuterMessage (), fieldData, field.getName (), "fudgeMsg", null, localName + ".add", false);
     endBlock (writer.getWriter ()); // iteration
   }
   
@@ -1083,7 +1088,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         if (field.isRepeated ()) {
           writeDecodeFudgeFieldsToList (jWriter, field, privateFieldName (field));
         } else {
-          writeDecodeFudgeField (jWriter, field.getType (), field.getOuterMessage (), "fudgeField", field.getName (), "fudgeMsg", privateFieldName (field), null);
+          writeDecodeFudgeField (jWriter, field.getType (), field.getOuterMessage (), "fudgeField", field.getName (), "fudgeMsg", privateFieldName (field), null, false);
         }
       } else {
         final String method = fieldMethodName (field, builder ? null : "set");
@@ -1098,7 +1103,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         } else {
           jWriter.ifNotNull ("fudgeField");
           jWriter = beginBlock (jWriter); // if guard
-          writeDecodeFudgeField (jWriter, field.getType (), field.getOuterMessage (), "fudgeField", field.getName (), "fudgeMsg", null, method);
+          writeDecodeFudgeField (jWriter, field.getType (), field.getOuterMessage (), "fudgeField", field.getName (), "fudgeMsg", null, method, true);
         }
         jWriter = endBlock (jWriter); // if guard
       }

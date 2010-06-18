@@ -193,7 +193,7 @@ public class Person implements java.io.Serializable {
       fudgeField = fudgeMsg.getByOrdinal (EMAIL_ORDINAL);
       if (fudgeField != null)  {
         try {
-          email (fudgeField.getValue ().toString ());
+          email ((fudgeField.getValue () != null) ? fudgeField.getValue ().toString () : null);
         }
         catch (IllegalArgumentException e) {
           throw new IllegalArgumentException ("Fudge message is not a Person - field 'email' is not string", e);
