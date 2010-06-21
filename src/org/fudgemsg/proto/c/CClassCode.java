@@ -71,16 +71,17 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
     writer.newLine();
     super.writeHeaderFileFooter(context, targetFile, writer);
   }
-  
+
   @Override
-  public void writeImplementationFileHeader (final Compiler.Context context, final File targetFile, final IndentWriter writer) throws IOException {
-    super.writeImplementationFileHeader (context, targetFile, writer);
-    writer.write ("#define FUDGE_INTERNAL");
-    writer.newLine ();
-    writer.write ("#include <fudge/message.h>");
-    writer.newLine ();
-    writer.write ("#include <malloc.h>");
-    writer.newLine ();
+  public void writeImplementationFileHeader(final Compiler.Context context, final File targetFile,
+      final IndentWriter writer) throws IOException {
+    super.writeImplementationFileHeader(context, targetFile, writer);
+    writer.write("#define FUDGE_INTERNAL");
+    writer.newLine();
+    writer.write("#include <fudge/message.h>");
+    writer.newLine();
+    writer.write("#include <malloc.h>");
+    writer.newLine();
   }
 
   @Override
@@ -122,11 +123,13 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
       }
       writer.write(")");
       endStmt(writer);
-      if (field.getType ().getFudgeFieldType () == FudgeTypeDictionary.FUDGE_MSG_TYPE_ID) {
-        writer.write ("FudgeStatus " + getIdentifier (message) + "_getFudgeMsg" + camelCaseFieldName (field) + " (FudgeMsg msg, FudgeMsg *subMsg)");
-        endStmt (writer);
-        writer.write ("FudgeStatus " + getIdentifier (message) + "_setFudgeMsg" + camelCaseFieldName (field) + " (FudgeMsg msg, FudgeMsg subMsg)");
-        endStmt (writer);
+      if (field.getType().getFudgeFieldType() == FudgeTypeDictionary.FUDGE_MSG_TYPE_ID) {
+        writer.write("FudgeStatus " + getIdentifier(message) + "_getFudgeMsg" + camelCaseFieldName(field)
+            + " (FudgeMsg msg, FudgeMsg *subMsg)");
+        endStmt(writer);
+        writer.write("FudgeStatus " + getIdentifier(message) + "_setFudgeMsg" + camelCaseFieldName(field)
+            + " (FudgeMsg msg, FudgeMsg subMsg)");
+        endStmt(writer);
       }
     }
     // Message struct operators
@@ -138,8 +141,8 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
     writer.write("FudgeStatus " + getIdentifier(message) + "_toFudgeMsg (struct _" + getIdentifier(message)
         + " *ptr, FudgeMsg *msg)");
     endStmt(writer);
-    writer.write ("#ifdef FUDGE_INTERNAL");
-    writer.newLine ();
+    writer.write("#ifdef FUDGE_INTERNAL");
+    writer.newLine();
     writer.write("void " + getIdentifier(message) + "_freeImpl (struct _" + getIdentifier(message) + " *ptr)");
     endStmt(writer);
     writer.write("FudgeStatus " + getIdentifier(message) + "_fromFudgeMsgImpl (FudgeMsg msg, struct _"
@@ -148,8 +151,8 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
     writer.write("FudgeStatus " + getIdentifier(message) + "_toFudgeMsgImpl (struct _" + getIdentifier(message)
         + " *ptr, FudgeMsg msg)");
     endStmt(writer);
-    writer.write ("#endif /* ifdef FUDGE_INTERNAL */");
-    writer.newLine ();
+    writer.write("#endif /* ifdef FUDGE_INTERNAL */");
+    writer.newLine();
     // Short name defines
     if (message.getNamespace() != null) {
       writer.write("#ifdef FUDGE_NO_NAMESPACE");
@@ -166,15 +169,19 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
           writer.write("_Key \"" + field.getName() + "\"");
         }
         writer.newLine();
-        writer.write("#define " + message.getName() + "_get" + camelCaseFieldName(field) + " " + getIdentifier(message) + "_get" + camelCaseFieldName(field));
+        writer.write("#define " + message.getName() + "_get" + camelCaseFieldName(field) + " " + getIdentifier(message)
+            + "_get" + camelCaseFieldName(field));
         writer.newLine();
-        writer.write("#define " + message.getName() + "_set" + camelCaseFieldName(field) + " " + getIdentifier(message) + "_set" + camelCaseFieldName(field));
+        writer.write("#define " + message.getName() + "_set" + camelCaseFieldName(field) + " " + getIdentifier(message)
+            + "_set" + camelCaseFieldName(field));
         writer.newLine();
-        if (field.getType ().getFudgeFieldType() == FudgeTypeDictionary.FUDGE_MSG_TYPE_ID) {
-          writer.write ("#define " + message.getName () + "_getFudgeMsg" + camelCaseFieldName (field) + " " + getIdentifier (message) + "_getFudgeMsg" + camelCaseFieldName (field));
-          writer.newLine ();
-          writer.write ("#define " + message.getName () + "_setFudgeMsg" + camelCaseFieldName (field) + " " + getIdentifier (message) + "_setFudgeMsg" + camelCaseFieldName (field));
-          writer.newLine ();
+        if (field.getType().getFudgeFieldType() == FudgeTypeDictionary.FUDGE_MSG_TYPE_ID) {
+          writer.write("#define " + message.getName() + "_getFudgeMsg" + camelCaseFieldName(field) + " "
+              + getIdentifier(message) + "_getFudgeMsg" + camelCaseFieldName(field));
+          writer.newLine();
+          writer.write("#define " + message.getName() + "_setFudgeMsg" + camelCaseFieldName(field) + " "
+              + getIdentifier(message) + "_setFudgeMsg" + camelCaseFieldName(field));
+          writer.newLine();
         }
       }
       writer.write("#define " + message.getName() + "_free " + getIdentifier(message) + "_free");
@@ -319,113 +326,256 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
       final IndentWriter writer) throws IOException {
     // Nothing required
   }
-  
-  private void unwindStmts (final IndentWriter writer, final Stack<String> unwind) throws IOException {
+
+  private void unwindStmts(final IndentWriter writer, final Stack<String> unwind) throws IOException {
     for (String stmt : unwind) {
-      writer.write (stmt);
-      endStmt (writer);
+      writer.write(stmt);
+      endStmt(writer);
     }
   }
-  
-  private void returnAndUnwindStmt (final IndentWriter writer, final Stack<String> unwind, final String returnValue) throws IOException {
-    if (!unwind.isEmpty ()) {
-      beginBlock (writer);
-      unwindStmts (writer, unwind);
+
+  private void returnAndUnwindStmt(final IndentWriter writer, final Stack<String> unwind, final String returnValue)
+      throws IOException {
+    if (!unwind.isEmpty()) {
+      beginBlock(writer);
+      unwindStmts(writer, unwind);
     }
-    writer.write ("return " + returnValue);
-    endStmt (writer);
-    if (!unwind.isEmpty ()) endBlock (writer);
+    writer.write("return " + returnValue);
+    endStmt(writer);
+    if (!unwind.isEmpty())
+      endBlock(writer);
   }
-  
-  private void fieldValueToString (final IndentWriter writer, final String source, final String target, final Stack<String> unwind) throws IOException {
-    writer.write ("if (" + source + ".type != FUDGE_TYPE_STRING)");
-    returnAndUnwindStmt (writer, unwind, "FUDGE_INVALID_TYPE_COERCION");
+
+  private void fieldValueToString(final IndentWriter writer, final String source, final String target,
+      final Stack<String> unwind, boolean allowNull) throws IOException {
+    if (allowNull) {
+      // If we're allowing nulls, we're in an array and the memory is already zero'd out
+      writer.write("if (" + source + ".type != FUDGE_TYPE_INDICATOR)");
+      beginBlock(writer);
+    }
+    writer.write("if (" + source + ".type != FUDGE_TYPE_STRING)");
+    returnAndUnwindStmt(writer, unwind, "FUDGE_INVALID_TYPE_COERCION");
     // TODO: proper UTF-8 decoding needs to be done
-    writer.write (target + " = (char*)malloc (" + source + ".numbytes + 1)");
-    endStmt (writer);
-    writer.write ("if (!" + target + ")");
-    returnAndUnwindStmt (writer, unwind, "FUDGE_OUT_OF_MEMORY");
-    writer.write ("memcpy (" + target + ", " + source + ".data.bytes, " + source + ".numbytes)");
-    endStmt (writer);
-    writer.write (target + "[" + source + ".numbytes] = 0");
-    endStmt (writer);
+    writer.write(target + " = (char*)malloc (" + source + ".numbytes + 1)");
+    endStmt(writer);
+    writer.write("if (!" + target + ")");
+    returnAndUnwindStmt(writer, unwind, "FUDGE_OUT_OF_MEMORY");
+    writer.write("memcpy (" + target + ", " + source + ".data.bytes, " + source + ".numbytes)");
+    endStmt(writer);
+    writer.write(target + "[" + source + ".numbytes] = 0");
+    endStmt(writer);
+    if (allowNull) {
+      endBlock(writer);
+    }
   }
-  
-  private void decodeFieldValue(final IndentWriter writer, final FieldType type, final String source, final String target, final Stack<String> unwind) throws IOException {
+
+  private void decodeFieldValue(final IndentWriter writer, final FieldType type, final String source,
+      final String target, final Stack<String> unwind, final boolean allowNull) throws IOException {
     if (type instanceof FieldType.MessageType) {
-      writer.write("if (((" + source + ".type != FUDGE_TYPE_FUDGE_MSG) && (status = FUDGE_INVALID_TYPE_COERCION)) || ((status = " + getIdentifier(((FieldType.MessageType) type).getMessageDefinition()) + "_fromFudgeMsg (" + source + ".data.message, " + target + ")) != FUDGE_OK))");
-      returnAndUnwindStmt (writer, unwind, "status");
+      writer.write("if (((" + source
+          + ".type != FUDGE_TYPE_FUDGE_MSG) && (status = FUDGE_INVALID_TYPE_COERCION)) || ((status = "
+          + getIdentifier(((FieldType.MessageType) type).getMessageDefinition()) + "_fromFudgeMsg (" + source
+          + ".data.message, " + target + ")) != FUDGE_OK))");
+      returnAndUnwindStmt(writer, unwind, "status");
     } else if (type instanceof FieldType.ArrayType) {
-      final FieldType.ArrayType arrayType = (FieldType.ArrayType)type;
-      final String cType = typeString (arrayType.getBaseType ());
-      final String varI = "i" + unwind.size ();
-      final String varN = "n" + unwind.size ();
-      final String varFields = "fields" + unwind.size ();
-      writer.write ("int " + varI + ", " + varN);
-      endStmt (writer);
-      writer.write ("if (" + source + ".type != FUDGE_TYPE_FUDGE_MSG)");
-      returnAndUnwindStmt (writer, unwind, "FUDGE_INVALID_TYPE_COERCION");
-      writer.write (varN + " = FudgeMsg_numFields (" + source + ".data.message)");
-      endStmt (writer);
-      writer.write ("if (" + varN + " > 0)");
-      beginBlock (writer); // if
-      writer.write ("FudgeField *" + varFields);
-      endStmt (writer);
-      writer.write ("if ((" + varFields + " = (FudgeField*)malloc (sizeof (FudgeField) * " + varN + ")) == 0)");
-      returnAndUnwindStmt (writer, unwind, "FUDGE_OUT_OF_MEMORY");
-      unwind.push ("free (" + varFields + ")");
-      writer.write ("if (FudgeMsg_getFields (" + varFields + ", " + varN + ", " + source + ".data.message) <= 0)");
-      returnAndUnwindStmt (writer, unwind, "FUDGE_INVALID_TYPE_COERCION");
-      writer.write ("if ((*" + target + " = (" + cType + "*)malloc (sizeof (" + cType + ") * (" + varN + " + 1))) == 0)");
-      returnAndUnwindStmt (writer, unwind, "FUDGE_OUT_OF_MEMORY");
-      writer.write ("memset (*" + target + ", 0, sizeof (" + cType + ") * (" + varN + " + 1))");
-      endStmt (writer);
-      if (unwind.size () == 1) {
-        final StringBuilder sb = new StringBuilder ();
-        if (isPointerType (arrayType.getBaseType ())) {
-          sb.append ("do ");
-          sb.append (getFreeFieldValueStmt (arrayType.getBaseType (), "*(*" + target + " + " + varI + ")"));
-          sb.append ("; while (--" + varI + " >= 0); ");
-        }
-        sb.append ("free (*" + target + ")");
-        unwind.push (sb.toString ());
+      final FieldType.ArrayType arrayType = (FieldType.ArrayType) type;
+      switch (arrayType.getFudgeFieldType()) {
+        case FudgeTypeDictionary.BYTE_ARRAY_TYPE_ID:
+          writer.write("if (((" + source
+              + ".type != FUDGE_TYPE_BYTE_ARRAY) && (status = FUDGE_INVALID_TYPE_COERCION)) || (!(*" + target
+              + " = (fudge_byte*)malloc (" + source + ".numbytes)) && (status = FUDGE_OUT_OF_MEMORY)))");
+          returnAndUnwindStmt(writer, unwind, "status");
+          writer.write("memcpy (*" + target + ", " + source + ".data.bytes, " + source + ".numbytes)");
+          endStmt(writer);
+          break;
+        case FudgeTypeDictionary.BYTE_ARR_4_TYPE_ID:
+          writer.write("if (((" + source
+              + ".type != FUDGE_TYPE_BYTE_ARRAY_4) && (status = FUDGE_INVALID_TYPE_COERCION)) || (!(*" + target
+              + " = (fudge_byte*)malloc (" + source + ".numbytes)) && (status = FUDGE_OUT_OF_MEMORY)))");
+          returnAndUnwindStmt(writer, unwind, "status");
+          writer.write("memcpy (*" + target + ", " + source + ".data.bytes, " + source + ".numbytes)");
+          endStmt(writer);
+          break;
+        case FudgeTypeDictionary.BYTE_ARR_8_TYPE_ID:
+          writer.write("if (((" + source
+              + ".type != FUDGE_TYPE_BYTE_ARRAY_8) && (status = FUDGE_INVALID_TYPE_COERCION)) || (!(*" + target
+              + " = (fudge_byte*)malloc (" + source + ".numbytes)) && (status = FUDGE_OUT_OF_MEMORY)))");
+          returnAndUnwindStmt(writer, unwind, "status");
+          writer.write("memcpy (*" + target + ", " + source + ".data.bytes, " + source + ".numbytes)");
+          endStmt(writer);
+          break;
+        case FudgeTypeDictionary.BYTE_ARR_16_TYPE_ID:
+          writer.write("if (((" + source
+              + ".type != FUDGE_TYPE_BYTE_ARRAY_16) && (status = FUDGE_INVALID_TYPE_COERCION)) || (!(*" + target
+              + " = (fudge_byte*)malloc (" + source + ".numbytes)) && (status = FUDGE_OUT_OF_MEMORY)))");
+          returnAndUnwindStmt(writer, unwind, "status");
+          writer.write("memcpy (*" + target + ", " + source + ".data.bytes, " + source + ".numbytes)");
+          endStmt(writer);
+          break;
+        case FudgeTypeDictionary.BYTE_ARR_20_TYPE_ID:
+          writer.write("if (((" + source
+              + ".type != FUDGE_TYPE_BYTE_ARRAY_20) && (status = FUDGE_INVALID_TYPE_COERCION)) || (!(*" + target
+              + " = (fudge_byte*)malloc (" + source + ".numbytes)) && (status = FUDGE_OUT_OF_MEMORY)))");
+          returnAndUnwindStmt(writer, unwind, "status");
+          writer.write("memcpy (*" + target + ", " + source + ".data.bytes, " + source + ".numbytes)");
+          endStmt(writer);
+          break;
+        case FudgeTypeDictionary.BYTE_ARR_32_TYPE_ID:
+          writer.write("if (((" + source
+              + ".type != FUDGE_TYPE_BYTE_ARRAY_32) && (status = FUDGE_INVALID_TYPE_COERCION)) || (!(*" + target
+              + " = (fudge_byte*)malloc (" + source + ".numbytes)) && (status = FUDGE_OUT_OF_MEMORY)))");
+          returnAndUnwindStmt(writer, unwind, "status");
+          writer.write("memcpy (*" + target + ", " + source + ".data.bytes, " + source + ".numbytes)");
+          endStmt(writer);
+          break;
+        case FudgeTypeDictionary.BYTE_ARR_64_TYPE_ID:
+          writer.write("if (((" + source
+              + ".type != FUDGE_TYPE_BYTE_ARRAY_64) && (status = FUDGE_INVALID_TYPE_COERCION)) || (!(*" + target
+              + " = (fudge_byte*)malloc (" + source + ".numbytes)) && (status = FUDGE_OUT_OF_MEMORY)))");
+          returnAndUnwindStmt(writer, unwind, "status");
+          writer.write("memcpy (*" + target + ", " + source + ".data.bytes, " + source + ".numbytes)");
+          endStmt(writer);
+          break;
+        case FudgeTypeDictionary.BYTE_ARR_128_TYPE_ID:
+          writer.write("if (((" + source
+              + ".type != FUDGE_TYPE_BYTE_ARRAY_128) && (status = FUDGE_INVALID_TYPE_COERCION)) || (!(*" + target
+              + " = (fudge_byte*)malloc (" + source + ".numbytes)) && (status = FUDGE_OUT_OF_MEMORY)))");
+          returnAndUnwindStmt(writer, unwind, "status");
+          writer.write("memcpy (*" + target + ", " + source + ".data.bytes, " + source + ".numbytes)");
+          endStmt(writer);
+          break;
+        case FudgeTypeDictionary.BYTE_ARR_256_TYPE_ID:
+          writer.write("if (((" + source
+              + ".type != FUDGE_TYPE_BYTE_ARRAY_256) && (status = FUDGE_INVALID_TYPE_COERCION)) || (!(*" + target
+              + " = (fudge_byte*)malloc (" + source + ".numbytes)) && (status = FUDGE_OUT_OF_MEMORY)))");
+          returnAndUnwindStmt(writer, unwind, "status");
+          writer.write("memcpy (*" + target + ", " + source + ".data.bytes, " + source + ".numbytes)");
+          endStmt(writer);
+          break;
+        case FudgeTypeDictionary.BYTE_ARR_512_TYPE_ID:
+          writer.write("if (((" + source
+              + ".type != FUDGE_TYPE_BYTE_ARRAY_512) && (status = FUDGE_INVALID_TYPE_COERCION)) || (!(*" + target
+              + " = (fudge_byte*)malloc (" + source + ".numbytes)) && (status = FUDGE_OUT_OF_MEMORY)))");
+          returnAndUnwindStmt(writer, unwind, "status");
+          writer.write("memcpy (*" + target + ", " + source + ".data.bytes, " + source + ".numbytes)");
+          endStmt(writer);
+          break;
+        case FudgeTypeDictionary.INT_ARRAY_TYPE_ID:
+          writer.write("if (((" + source
+              + ".type != FUDGE_TYPE_INT_ARRAY) && (status = FUDGE_INVALID_TYPE_COERCION)) || (!(*" + target
+              + " = (fudge_i32*)malloc (" + source + ".numbytes)) && (status = FUDGE_OUT_OF_MEMORY)))");
+          returnAndUnwindStmt(writer, unwind, "status");
+          writer.write("memcpy (*" + target + ", " + source + ".data.bytes, " + source + ".numbytes)");
+          endStmt(writer);
+          break;
+        case FudgeTypeDictionary.LONG_ARRAY_TYPE_ID:
+          writer.write("if (((" + source
+              + ".type != FUDGE_TYPE_LONG_ARRAY) && (status = FUDGE_INVALID_TYPE_COERCION)) || (!(*" + target
+              + " = (fudge_i64*)malloc (" + source + ".numbytes)) && (status = FUDGE_OUT_OF_MEMORY)))");
+          returnAndUnwindStmt(writer, unwind, "status");
+          writer.write("memcpy (*" + target + ", " + source + ".data.bytes, " + source + ".numbytes)");
+          endStmt(writer);
+          break;
+        case FudgeTypeDictionary.SHORT_ARRAY_TYPE_ID:
+          writer.write("if (((" + source
+              + ".type != FUDGE_TYPE_SHORT_ARRAY) && (status = FUDGE_INVALID_TYPE_COERCION)) || (!(*" + target
+              + " = (fudge_i16*)malloc (" + source + ".numbytes)) && (status = FUDGE_OUT_OF_MEMORY)))");
+          returnAndUnwindStmt(writer, unwind, "status");
+          writer.write("memcpy (*" + target + ", " + source + ".data.bytes, " + source + ".numbytes)");
+          endStmt(writer);
+          break;
+        case FudgeTypeDictionary.FLOAT_ARRAY_TYPE_ID:
+          writer.write("if (((" + source
+              + ".type != FUDGE_TYPE_FLOAT_ARRAY) && (status = FUDGE_INVALID_TYPE_COERCION)) || (!(*" + target
+              + " = (fudge_f32*)malloc (" + source + ".numbytes)) && (status = FUDGE_OUT_OF_MEMORY)))");
+          returnAndUnwindStmt(writer, unwind, "status");
+          writer.write("memcpy (*" + target + ", " + source + ".data.bytes, " + source + ".numbytes)");
+          endStmt(writer);
+          break;
+        case FudgeTypeDictionary.DOUBLE_ARRAY_TYPE_ID:
+          writer.write("if (((" + source
+              + ".type != FUDGE_TYPE_DOUBLE_ARRAY) && (status = FUDGE_INVALID_TYPE_COERCION)) || (!(*" + target
+              + " = (fudge_f64*)malloc (" + source + ".numbytes)) && (status = FUDGE_OUT_OF_MEMORY)))");
+          returnAndUnwindStmt(writer, unwind, "status");
+          writer.write("memcpy (*" + target + ", " + source + ".data.bytes, " + source + ".numbytes)");
+          endStmt(writer);
+          break;
+        case FudgeTypeDictionary.FUDGE_MSG_TYPE_ID:
+          final String cType = typeString(arrayType.getBaseType());
+          final String varI = "i" + unwind.size();
+          final String varN = "n" + unwind.size();
+          final String varFields = "fields" + unwind.size();
+          writer.write("int " + varI + ", " + varN);
+          endStmt(writer);
+          writer.write("if (" + source + ".type != FUDGE_TYPE_FUDGE_MSG)");
+          returnAndUnwindStmt(writer, unwind, "FUDGE_INVALID_TYPE_COERCION");
+          writer.write(varN + " = FudgeMsg_numFields (" + source + ".data.message)");
+          endStmt(writer);
+          writer.write("if (" + varN + " > 0)");
+          beginBlock(writer); // if
+          writer.write("FudgeField *" + varFields);
+          endStmt(writer);
+          writer.write("if ((" + varFields + " = (FudgeField*)malloc (sizeof (FudgeField) * " + varN + ")) == 0)");
+          returnAndUnwindStmt(writer, unwind, "FUDGE_OUT_OF_MEMORY");
+          unwind.push("free (" + varFields + ")");
+          writer.write("if (FudgeMsg_getFields (" + varFields + ", " + varN + ", " + source + ".data.message) <= 0)");
+          returnAndUnwindStmt(writer, unwind, "FUDGE_INVALID_TYPE_COERCION");
+          writer.write("if ((*" + target + " = (" + cType + "*)malloc (sizeof (" + cType + ") * (" + varN
+              + " + 1))) == 0)");
+          returnAndUnwindStmt(writer, unwind, "FUDGE_OUT_OF_MEMORY");
+          writer.write("memset (*" + target + ", 0, sizeof (" + cType + ") * (" + varN + " + 1))");
+          endStmt(writer);
+          if (unwind.size() == 1) {
+            final StringBuilder sb = new StringBuilder();
+            if (isPointerType(arrayType.getBaseType())) {
+              sb.append("do ");
+              sb.append(getFreeFieldValueStmt(arrayType.getBaseType(), "*(*" + target + " + " + varI + ")"));
+              sb.append("; while (--" + varI + " >= 0); ");
+            }
+            sb.append("free (*" + target + ")");
+            unwind.push(sb.toString());
+          }
+          writer.write("for (" + varI + " = 0; " + varI + " < " + varN + "; " + varI + "++)");
+          beginBlock(writer); // for
+          decodeFieldValue(writer, arrayType.getBaseType(), varFields + "[" + varI + "]", "(*" + target + " + " + varI
+              + ")", unwind, true);
+          endBlock(writer); // for
+          if (unwind.size() == 2) {
+            unwind.pop(); // memory allocation release
+          }
+          writer.write(unwind.pop());
+          endStmt(writer);
+          endBlock(writer); // if
+          writer.write("else");
+          beginBlock(writer); // else
+          writer.write("if ((*" + target + " = (" + cType + "*)malloc (sizeof (" + cType + "))) == 0)");
+          returnAndUnwindStmt(writer, unwind, "FUDGE_OUT_OF_MEMORY");
+          writer.write("memset (*" + target + ", 0, sizeof (" + cType + "))");
+          endStmt(writer);
+          endBlock(writer); // else
+          break;
+        default:
+          throw new IllegalStateException("Type " + arrayType + " is not expected type");
       }
-      writer.write ("for (" + varI + " = 0; " + varI + " < " + varN + "; " + varI + "++)");
-      beginBlock (writer); // for
-      decodeFieldValue (writer, arrayType.getBaseType (), varFields + "[" + varI + "]", "(*" + target + " + " + varI + ")", unwind);
-      endBlock (writer); // for
-      if (unwind.size () == 2) {
-        unwind.pop (); // memory allocation release
-      }
-      writer.write (unwind.pop ());
-      endStmt (writer);
-      endBlock (writer); // if
-      writer.write ("else");
-      beginBlock (writer); // else
-      writer.write ("if ((*" + target + " = (" + cType + "*)malloc (sizeof (" + cType + "))) == 0)");
-      returnAndUnwindStmt (writer, unwind, "FUDGE_OUT_OF_MEMORY");
-      writer.write ("memset (*" + target + ", 0, sizeof (" + cType + "))");
-      endStmt (writer);
-      endBlock (writer); // else
     } else if (type instanceof FieldType.EnumType) {
-      final EnumDefinition enumDefinition = ((FieldType.EnumType)type).getEnumDefinition ();
+      final EnumDefinition enumDefinition = ((FieldType.EnumType) type).getEnumDefinition();
       if (enumDefinition.getType() == EnumDefinition.Type.INTEGER_ENCODED) {
-        final String varI = "i" + unwind.size ();
-        writer.write ("int " + varI);
-        endStmt (writer);
-        writer.write ("if ((status = FudgeMsg_getFieldAsI32 (&" + source + ", &" + varI + ")) != FUDGE_OK)");
-        returnAndUnwindStmt (writer, unwind, "status");
-        writer.write ("*" + target + " = " + getIdentifier (enumDefinition) + "_fromFudgeEncoding (" + varI + ")");
-        endStmt (writer);
+        final String varI = "i" + unwind.size();
+        writer.write("int " + varI);
+        endStmt(writer);
+        writer.write("if ((status = FudgeMsg_getFieldAsI32 (&" + source + ", &" + varI + ")) != FUDGE_OK)");
+        returnAndUnwindStmt(writer, unwind, "status");
+        writer.write("*" + target + " = " + getIdentifier(enumDefinition) + "_fromFudgeEncoding (" + varI + ")");
+        endStmt(writer);
       } else {
-        final String varSTR = "str" + unwind.size ();
-        writer.write ("char *" + varSTR);
-        endStmt (writer);
-        fieldValueToString (writer, source, varSTR, unwind);
-        writer.write ("*" + target + " = " + getIdentifier (enumDefinition) + "_fromFudgeEncoding (" + varSTR + ")");
-        endStmt (writer);
-        writer.write ("free (" + varSTR + ")");
-        endStmt (writer);
+        final String varSTR = "str" + unwind.size();
+        writer.write("char *" + varSTR);
+        endStmt(writer);
+        fieldValueToString(writer, source, varSTR, unwind, allowNull);
+        writer.write("*" + target + " = " + getIdentifier(enumDefinition) + "_fromFudgeEncoding (" + varSTR + ")");
+        endStmt(writer);
+        writer.write("free (" + varSTR + ")");
+        endStmt(writer);
       }
     } else {
       switch (type.getFudgeFieldType()) {
@@ -434,34 +584,34 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
           break;
         case FudgeTypeDictionary.BOOLEAN_TYPE_ID:
           writer.write("if ((status = FudgeMsg_getFieldAsBoolean (&" + source + ", " + target + ")) != FUDGE_OK)");
-          returnAndUnwindStmt (writer, unwind, "status");
+          returnAndUnwindStmt(writer, unwind, "status");
           break;
         case FudgeTypeDictionary.BYTE_TYPE_ID:
           writer.write("if ((status = FudgeMsg_getFieldAsByte (&" + source + ", " + target + ")) != FUDGE_OK)");
-          returnAndUnwindStmt (writer, unwind, "status");
+          returnAndUnwindStmt(writer, unwind, "status");
           break;
         case FudgeTypeDictionary.SHORT_TYPE_ID:
           writer.write("if ((status = FudgeMsg_getFieldAsI16 (&" + source + ", " + target + ")) != FUDGE_OK)");
-          returnAndUnwindStmt (writer, unwind, "status");
+          returnAndUnwindStmt(writer, unwind, "status");
           break;
         case FudgeTypeDictionary.INT_TYPE_ID:
           writer.write("if ((status = FudgeMsg_getFieldAsI32 (&" + source + ", " + target + ")) != FUDGE_OK)");
-          returnAndUnwindStmt (writer, unwind, "status");
+          returnAndUnwindStmt(writer, unwind, "status");
           break;
         case FudgeTypeDictionary.LONG_TYPE_ID:
           writer.write("if ((status = FudgeMsg_getFieldAsI64 (&" + source + ", " + target + ")) != FUDGE_OK)");
-          returnAndUnwindStmt (writer, unwind, "status");
+          returnAndUnwindStmt(writer, unwind, "status");
           break;
         case FudgeTypeDictionary.FLOAT_TYPE_ID:
           writer.write("if ((status = FudgeMsg_getFieldAsF32 (&" + source + ", " + target + ")) != FUDGE_OK)");
-          returnAndUnwindStmt (writer, unwind, "status");
+          returnAndUnwindStmt(writer, unwind, "status");
           break;
         case FudgeTypeDictionary.DOUBLE_TYPE_ID:
           writer.write("if ((status = FudgeMsg_getFieldAsF64 (&" + source + ", " + target + ")) != FUDGE_OK)");
-          returnAndUnwindStmt (writer, unwind, "status");
+          returnAndUnwindStmt(writer, unwind, "status");
           break;
         case FudgeTypeDictionary.STRING_TYPE_ID:
-          fieldValueToString (writer, source, "(*" + target + ")", unwind);
+          fieldValueToString(writer, source, "(*" + target + ")", unwind, allowNull);
           break;
         case FudgeTypeDictionary.DATE_TYPE_ID:
           comment(writer, "TODO date type");
@@ -479,6 +629,16 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
     }
   }
 
+  private void writeIfFieldMatches(final IndentWriter writer, final FieldDefinition field, final String fieldRef)
+      throws IOException {
+    if (field.getOrdinal() != null) {
+      writer.write("if (" + fieldRef + ".ordinal == " + getIdentifier(field.getOuterMessage()) + "_" + field.getName()
+          + "_Ordinal)");
+    } else {
+      writer.write("if (0 /* TODO: test field name */)");
+    }
+  }
+
   @Override
   public void writeClassImplementationAccessor(final Compiler.Context context, final FieldDefinition field,
       final IndentWriter writer) throws IOException {
@@ -492,20 +652,89 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
     }
     writer.write(")");
     beginBlock(writer); // method
-    writer.write("FudgeField field");
-    endStmt(writer);
+    if (!field.isRepeated()) {
+      writer.write("FudgeField field");
+      endStmt(writer);
+    }
     writer.write("FudgeStatus status");
     endStmt(writer);
+    if (field.isRepeated()) {
+      writer.write("int numFields");
+      endStmt(writer);
+    }
     writer.write("if (!msg || !value");
-    if (field.isRepeated()) writer.write(" || !repeatCount");
+    if (field.isRepeated())
+      writer.write(" || !repeatCount");
     writer.write(") return FUDGE_NULL_POINTER");
     endStmt(writer);
     if (field.isRepeated()) {
-      comment(writer, "TODO: count number of times field " + field.getName() + " occurs");
-      comment(writer, "TODO: handle the zero case - default value if available, error if required");
-      comment(writer, "TODO: allocate memory block");
-      // TODO: build an unwind statement that will deallocate the memory block
-      comment(writer, "TODO: decode each field to memory block");
+      writer.write("if ((numFields = FudgeMsg_numFields (msg)) > 0)");
+      beginBlock(writer); // if total > 0
+      writer.write("FudgeField *fields = (FudgeField*)malloc (sizeof (FudgeField) * numFields)");
+      endStmt(writer);
+      writer.write("int i, j");
+      endStmt(writer);
+      writer.write("if (!fields) return FUDGE_OUT_OF_MEMORY");
+      endStmt(writer);
+      final Stack<String> unwind = new Stack<String>();
+      unwind.push("free (fields)");
+      writer.write("if (FudgeMsg_getFields (fields, numFields, msg) <= 0)");
+      returnAndUnwindStmt(writer, unwind, "FUDGE_INVALID_TYPE_COERCION");
+      writer.write("j = 0");
+      endStmt(writer);
+      writer.write("for (i = 0; i < numFields; i++)");
+      beginBlock(writer); // for
+      writeIfFieldMatches(writer, field, "fields[i]");
+      writer.write("j++");
+      endStmt(writer);
+      endBlock(writer); // for
+      writer.write("if (j > 0)");
+      beginBlock(writer); // if count > 0
+      writer.write("if (!(*value = (" + typeString(field.getType()) + "*)malloc (sizeof ("
+          + typeString(field.getType()) + ") * j)))");
+      returnAndUnwindStmt(writer, unwind, "FUDGE_OUT_OF_MEMORY");
+      writer.write("memset (*value, 0, sizeof (" + typeString(field.getType()) + ") * j)");
+      endStmt(writer);
+      writer.write("j = 0");
+      endStmt(writer);
+      final StringBuilder sb = new StringBuilder();
+      if (isPointerType(field.getType())) {
+        sb.append("do ");
+        sb.append(getFreeFieldValueStmt(field.getType(), "*(*value + j)"));
+        sb.append("; while (--j >= 0); ");
+      }
+      sb.append("free (*value)");
+      unwind.push(sb.toString());
+      writer.write("for (i = 0; i < numFields; i++)");
+      beginBlock(writer); // for
+      writeIfFieldMatches(writer, field, "fields[i]");
+      beginBlock(writer); // if
+      decodeFieldValue(writer, field.getType(), "fields[i]", "(*value + j)", unwind, false);
+      writer.write("j++");
+      endStmt(writer);
+      endBlock(writer); // if
+      assert (unwind.size() == 2);
+      endBlock(writer); // for
+      writer.write("*repeatCount = j");
+      endStmt(writer);
+      unwind.pop(); // free (*value)
+      unwind.pop(); // free (fields)
+      writer.write("free (fields)");
+      endStmt(writer);
+      writer.write("return FUDGE_OK");
+      endStmt(writer);
+      endBlock(writer); // if count > 0
+      writer.write("free (fields)");
+      endStmt(writer);
+      endBlock(writer); // if total > 0
+      if (field.getDefaultValue() != null) {
+        comment(writer, "TODO: load default value");
+      } else {
+        writer.write("*repeatCount = 0");
+        endStmt(writer);
+        writer.write("*value = 0");
+        endStmt(writer);
+      }
     } else {
       if (field.getType().getFudgeFieldType() == FudgeTypeDictionary.INDICATOR_TYPE_ID) {
         writer.write("*value = (");
@@ -517,8 +746,8 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
         writer.write("Ordinal (&field, msg, " + getIdentifier(field.getOuterMessage()) + "_" + field.getName()
             + "_Ordinal");
       } else {
-        writer.write("Name (&field, msg, (fudge_byte*)" + getIdentifier(field.getOuterMessage()) + "_" + field.getName() + "_Key, "
-            + field.getName().length());
+        writer.write("Name (&field, msg, (fudge_byte*)" + getIdentifier(field.getOuterMessage()) + "_"
+            + field.getName() + "_Key, " + field.getName().length());
       }
       writer.write(")");
       if (field.getType().getFudgeFieldType() == FudgeTypeDictionary.INDICATOR_TYPE_ID) {
@@ -527,9 +756,9 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
       } else {
         writer.write(") == FUDGE_OK)");
         beginBlock(writer); // if
-        final Stack<String> unwind = new Stack<String> ();
-        decodeFieldValue(writer, field.getType (), "field", "value", unwind);
-        assert (unwind.isEmpty ());
+        final Stack<String> unwind = new Stack<String>();
+        decodeFieldValue(writer, field.getType(), "field", "value", unwind, false);
+        assert (unwind.isEmpty());
         endBlock(writer); // if
         writer.write("else ");
         if (field.getDefaultValue() != null) {
@@ -544,31 +773,35 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
     endStmt(writer);
     endBlock(writer); // method
     // Sub-message accessor
-    if (field.getType ().getFudgeFieldType () == FudgeTypeDictionary.FUDGE_MSG_TYPE_ID) {
-      writer.write("FudgeStatus " + getIdentifier(field.getOuterMessage()) + "_getFudgeMsg" + camelCaseFieldName(field) + " (FudgeMsg msg, FudgeMsg *subMsg)");
-      beginBlock (writer); // method
-      writer.write ("FudgeStatus status");
-      endStmt (writer);
-      writer.write ("FudgeField field");
-      endStmt (writer);
-      writer.write ("if (!msg || !subMsg) return FUDGE_NULL_POINTER");
-      endStmt (writer);
-      writer.write ("if ((status = FudgeMsg_getFieldBy");
-      if (field.getOrdinal () == null) {
-        writer.write ("Name (&field, msg, (fudge_byte*)" + getIdentifier (field.getOuterMessage ()) + "_" + field.getName () + "_Key, " + field.getName ().length ());
+    if (field.getType().getFudgeFieldType() == FudgeTypeDictionary.FUDGE_MSG_TYPE_ID) {
+      writer.write("FudgeStatus " + getIdentifier(field.getOuterMessage()) + "_getFudgeMsg" + camelCaseFieldName(field)
+          + " (FudgeMsg msg, FudgeMsg *subMsg)");
+      beginBlock(writer); // method
+      writer.write("FudgeStatus status");
+      endStmt(writer);
+      writer.write("FudgeField field");
+      endStmt(writer);
+      writer.write("if (!msg || !subMsg) return FUDGE_NULL_POINTER");
+      endStmt(writer);
+      writer.write("if ((status = FudgeMsg_getFieldBy");
+      if (field.getOrdinal() == null) {
+        writer.write("Name (&field, msg, (fudge_byte*)" + getIdentifier(field.getOuterMessage()) + "_"
+            + field.getName() + "_Key, " + field.getName().length());
       } else {
-        writer.write ("Ordinal (&field, msg, " + getIdentifier (field.getOuterMessage ()) + "_" + field.getName () + "_Ordinal");
+        writer.write("Ordinal (&field, msg, " + getIdentifier(field.getOuterMessage()) + "_" + field.getName()
+            + "_Ordinal");
       }
-      writer.write (")) != FUDGE_OK) return status");
-      endStmt (writer);
-      writer.write ("if (field.type != FUDGE_TYPE_FUDGE_MSG) return FUDGE_INVALID_TYPE_COERCION");
-      endStmt (writer);
-      writer.write ("return FudgeMsg_retain (*subMsg = field.data.message)");
-      endStmt (writer);
-      endBlock (writer); // method
+      writer.write(")) != FUDGE_OK) return status");
+      endStmt(writer);
+      writer.write("if (field.type != FUDGE_TYPE_FUDGE_MSG) return FUDGE_INVALID_TYPE_COERCION");
+      endStmt(writer);
+      writer.write("return FudgeMsg_retain (*subMsg = field.data.message)");
+      endStmt(writer);
+      endBlock(writer); // method
     }
     // Mutator
-    writer.write("FudgeStatus " + getIdentifier(field.getOuterMessage()) + "_set" + camelCaseFieldName(field) + " (FudgeMsg msg, ");
+    writer.write("FudgeStatus " + getIdentifier(field.getOuterMessage()) + "_set" + camelCaseFieldName(field)
+        + " (FudgeMsg msg, ");
     if (field.isRepeated()) {
       writer.write(typeString(field.getType()) + "* value, int repeatCount");
     } else {
@@ -577,8 +810,8 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
     writer.write(")");
     beginBlock(writer); // method
     if (field.getOrdinal() != null) {
-      writer.write("fudge_i16 ordinal = " + getIdentifier(field.getOuterMessage()) + "_" + field.getName()
-          + "_Ordinal");
+      writer
+          .write("fudge_i16 ordinal = " + getIdentifier(field.getOuterMessage()) + "_" + field.getName() + "_Ordinal");
       endStmt(writer);
     }
     writer.write("FudgeStatus status");
@@ -586,37 +819,37 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
     if (field.getType() instanceof FieldType.MessageType) {
       writer.write("FudgeMsg subMsg");
       endStmt(writer);
-    } else if (field.getType () instanceof FieldType.EnumType) {
-      final EnumDefinition enumDefinition = ((FieldType.EnumType)field.getType ()).getEnumDefinition ();
-      if (enumDefinition.getType () == EnumDefinition.Type.INTEGER_ENCODED) {
-        writer.write ("int i");
+    } else if (field.getType() instanceof FieldType.EnumType) {
+      final EnumDefinition enumDefinition = ((FieldType.EnumType) field.getType()).getEnumDefinition();
+      if (enumDefinition.getType() == EnumDefinition.Type.INTEGER_ENCODED) {
+        writer.write("int i");
       } else {
-        writer.write ("const char *str");
+        writer.write("const char *str");
       }
-      endStmt (writer);
+      endStmt(writer);
     }
     writer.write("if (!msg");
-    if (field.isRepeated ()) {
-      writer.write (" || ((repeatCount > 0) && !value)");
-      if (field.isRequired ()) {
-        writer.write (" || (repeatCount == 0)");
+    if (field.isRepeated()) {
+      writer.write(" || ((repeatCount > 0) && !value)");
+      if (field.isRequired()) {
+        writer.write(" || (repeatCount == 0)");
       }
     } else {
-      if (field.isRequired () && isPointerType (field.getType ())) {
+      if (field.isRequired() && isPointerType(field.getType())) {
         writer.write(" || !value");
       }
     }
     writer.write(") return FUDGE_NULL_POINTER");
     endStmt(writer);
     // TODO: clear any previously set fields
-    if (!field.isRequired ()) {
-      if (field.isRepeated ()) {
-        writer.write ("if (repeatCount == 0) return FUDGE_OK");
-        endStmt (writer);
+    if (!field.isRequired()) {
+      if (field.isRepeated()) {
+        writer.write("if (repeatCount == 0) return FUDGE_OK");
+        endStmt(writer);
       } else {
-        if (isPointerType (field.getType ())) {
-          writer.write ("if (!value) return FUDGE_OK");
-          endStmt (writer);
+        if (isPointerType(field.getType())) {
+          writer.write("if (!value) return FUDGE_OK");
+          endStmt(writer);
         }
       }
     }
@@ -638,16 +871,16 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
     } else if (field.getType() instanceof FieldType.ArrayType) {
       comment(writer, "TODO array type");
     } else if (field.getType() instanceof FieldType.EnumType) {
-      final EnumDefinition enumDefinition = ((FieldType.EnumType)field.getType ()).getEnumDefinition ();
-      if (enumDefinition.getType () == EnumDefinition.Type.INTEGER_ENCODED) {
-        writer.write ("i = " + getIdentifier (enumDefinition) + "_toFudgeEncoding (" + value + ")");
-        endStmt (writer);
+      final EnumDefinition enumDefinition = ((FieldType.EnumType) field.getType()).getEnumDefinition();
+      if (enumDefinition.getType() == EnumDefinition.Type.INTEGER_ENCODED) {
+        writer.write("i = " + getIdentifier(enumDefinition) + "_toFudgeEncoding (" + value + ")");
+        endStmt(writer);
         type = "I32";
         value = "i";
       } else {
         // TODO: proper UTF-8 handling
-        writer.write ("str = " + getIdentifier (enumDefinition) + "_toFudgeEncoding (" + value + ")");
-        endStmt (writer);
+        writer.write("str = " + getIdentifier(enumDefinition) + "_toFudgeEncoding (" + value + ")");
+        endStmt(writer);
         type = "String";
         value = "(fudge_byte*)str, strlen (str)";
       }
@@ -720,28 +953,30 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
     endStmt(writer);
     endBlock(writer); // method
     // Sub-message mutator
-    if (field.getType ().getFudgeFieldType () == FudgeTypeDictionary.FUDGE_MSG_TYPE_ID) {
-      writer.write("FudgeStatus " + getIdentifier(field.getOuterMessage()) + "_setFudgeMsg" + camelCaseFieldName(field) + " (FudgeMsg msg, FudgeMsg subMsg)");
-      beginBlock (writer); // method
-      if (field.getOrdinal () != null) {
-        writer.write ("fudge_i16 ordinal = " + field.getOrdinal ());
-        endStmt (writer);
+    if (field.getType().getFudgeFieldType() == FudgeTypeDictionary.FUDGE_MSG_TYPE_ID) {
+      writer.write("FudgeStatus " + getIdentifier(field.getOuterMessage()) + "_setFudgeMsg" + camelCaseFieldName(field)
+          + " (FudgeMsg msg, FudgeMsg subMsg)");
+      beginBlock(writer); // method
+      if (field.getOrdinal() != null) {
+        writer.write("fudge_i16 ordinal = " + field.getOrdinal());
+        endStmt(writer);
       }
-      writer.write ("if (!msg || !subMsg) return FUDGE_NULL_POINTER");
-      endStmt (writer);
-      writer.write ("return FudgeMsg_addFieldMsg (msg, ");
-      if (field.getOrdinal () == null) {
-        writer.write ("(fudge_byte*)" + getIdentifier (field.getOuterMessage ()) + "_" + field.getName () + "_Key, " + field.getName ().length () + ", 0"); 
-      } else {
-        writer.write ("0, 0, &ordinal");
-      }
-      writer.write (", subMsg)");
+      writer.write("if (!msg || !subMsg) return FUDGE_NULL_POINTER");
       endStmt(writer);
-      endBlock (writer); // method
+      writer.write("return FudgeMsg_addFieldMsg (msg, ");
+      if (field.getOrdinal() == null) {
+        writer.write("(fudge_byte*)" + getIdentifier(field.getOuterMessage()) + "_" + field.getName() + "_Key, "
+            + field.getName().length() + ", 0");
+      } else {
+        writer.write("0, 0, &ordinal");
+      }
+      writer.write(", subMsg)");
+      endStmt(writer);
+      endBlock(writer); // method
     }
   }
-    
-  private boolean isPointerType (final FieldType type) {
+
+  private boolean isPointerType(final FieldType type) {
     if (type instanceof FieldType.ArrayType) {
       return true;
     } else if (type instanceof FieldType.EnumType) {
@@ -749,7 +984,7 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
     } else if (type instanceof FieldType.MessageType) {
       return true;
     } else {
-      switch (type.getFudgeFieldType ()) {
+      switch (type.getFudgeFieldType()) {
         case FudgeTypeDictionary.INDICATOR_TYPE_ID:
         case FudgeTypeDictionary.BOOLEAN_TYPE_ID:
         case FudgeTypeDictionary.BYTE_TYPE_ID:
@@ -775,91 +1010,92 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
       }
     }
   }
-  
-  private String getFreeFieldValueStmt (final FieldType type, final String value) {
-    final StringBuilder sb = new StringBuilder ();
-    sb.append ("if (").append (value).append (") ");
+
+  private String getFreeFieldValueStmt(final FieldType type, final String value) {
+    final StringBuilder sb = new StringBuilder();
+    sb.append("if (").append(value).append(") ");
     if (type instanceof FieldType.ArrayType) {
-      final FieldType elementType = ((FieldType.ArrayType)type).getBaseType ();
+      final FieldType elementType = ((FieldType.ArrayType) type).getBaseType();
       if (isPointerType(elementType)) {
         // TODO: free the elements within the array
       }
-      sb.append ("free (").append (value).append (")");
+      sb.append("free (").append(value).append(")");
     } else if (type instanceof FieldType.MessageType) {
-      sb.append (getIdentifier (((FieldType.MessageType)type).getMessageDefinition())).append ("_free (").append (value).append (")");
+      sb.append(getIdentifier(((FieldType.MessageType) type).getMessageDefinition())).append("_free (").append(value)
+          .append(")");
     } else {
       switch (type.getFudgeFieldType()) {
         case FudgeTypeDictionary.STRING_TYPE_ID:
-          sb.append ("free (").append (value).append (")");
+          sb.append("free (").append(value).append(")");
           break;
         case FudgeTypeDictionary.DATE_TYPE_ID:
-          sb.append ("/* TODO: free date type */");
+          sb.append("/* TODO: free date type */");
           break;
         case FudgeTypeDictionary.DATETIME_TYPE_ID:
-          sb.append ("/* TODO: free datetime type */");
+          sb.append("/* TODO: free datetime type */");
           break;
         case FudgeTypeDictionary.TIME_TYPE_ID:
-          sb.append ("/* TODO: free time type */");
+          sb.append("/* TODO: free time type */");
           break;
         default:
           throw new IllegalStateException("type '" + type + "' is not an expected type (fudge field type "
               + type.getFudgeFieldType() + ")");
       }
     }
-    return sb.toString ();
+    return sb.toString();
   }
-  
-  private void writeMessageFree (final IndentWriter writer, final MessageDefinition message) throws IOException {
+
+  private void writeMessageFree(final IndentWriter writer, final MessageDefinition message) throws IOException {
     // Public free function
     writer.write("void " + getIdentifier(message) + "_free (struct _" + getIdentifier(message) + " *ptr)");
     beginBlock(writer); // free
     writer.write("if (!ptr) return");
     endStmt(writer);
-    writer.write (getIdentifier (message) + "_freeImpl (ptr)");
-    endStmt (writer);
+    writer.write(getIdentifier(message) + "_freeImpl (ptr)");
+    endStmt(writer);
     writer.write("free (ptr)");
     endStmt(writer);
     endBlock(writer); // free
     // Private free function
     writer.write("void " + getIdentifier(message) + "_freeImpl (struct _" + getIdentifier(message) + " *ptr)");
     beginBlock(writer); // free
-    if (message.getExtends () != null) {
-      writer.write (getIdentifier (message.getExtends ()) + "_freeImpl (&ptr->fudgeParent)");
-      endStmt (writer);
+    if (message.getExtends() != null) {
+      writer.write(getIdentifier(message.getExtends()) + "_freeImpl (&ptr->fudgeParent)");
+      endStmt(writer);
     }
-    for (FieldDefinition field : message.getFieldDefinitions ()) {
-      if (field.isRepeated ()) {
-        writer.write ("if (ptr->fudgeCount" + camelCaseFieldName (field) + ")");
-        beginBlock (writer); // if
-        if (isPointerType (field.getType ())) {
-          writer.write ("int i");
-          endStmt (writer);
-          writer.write ("for (i = 0; i < ptr->fudgeCount" + camelCaseFieldName (field) + "; i++)");
-          beginBlock (writer); // for
-          writer.write (getFreeFieldValueStmt (field.getType (), "ptr->" + privateFieldName (field) + "[i]"));
-          endStmt (writer);
-          endBlock (writer); // for
+    for (FieldDefinition field : message.getFieldDefinitions()) {
+      if (field.isRepeated()) {
+        writer.write("if (ptr->fudgeCount" + camelCaseFieldName(field) + ")");
+        beginBlock(writer); // if
+        if (isPointerType(field.getType())) {
+          writer.write("int i");
+          endStmt(writer);
+          writer.write("for (i = 0; i < ptr->fudgeCount" + camelCaseFieldName(field) + "; i++)");
+          beginBlock(writer); // for
+          writer.write(getFreeFieldValueStmt(field.getType(), "ptr->" + privateFieldName(field) + "[i]"));
+          endStmt(writer);
+          endBlock(writer); // for
         }
-        writer.write ("free (ptr->" + privateFieldName (field) + ")");
-        endStmt (writer);
-        endBlock (writer); // if
+        writer.write("free (ptr->" + privateFieldName(field) + ")");
+        endStmt(writer);
+        endBlock(writer); // if
       } else {
-        if (isPointerType (field.getType ())) {
-          writer.write (getFreeFieldValueStmt (field.getType (), "ptr->" + privateFieldName (field)));
-          endStmt (writer);
+        if (isPointerType(field.getType())) {
+          writer.write(getFreeFieldValueStmt(field.getType(), "ptr->" + privateFieldName(field)));
+          endStmt(writer);
         }
       }
     }
     endBlock(writer); // free
   }
-  
-  private void writeMessageFromFudgeMsg (final IndentWriter writer, final MessageDefinition message) throws IOException {
+
+  private void writeMessageFromFudgeMsg(final IndentWriter writer, final MessageDefinition message) throws IOException {
     // Public fromFudgeMsg function
     writer.write("FudgeStatus " + getIdentifier(message) + "_fromFudgeMsg (FudgeMsg msg, struct _"
         + getIdentifier(message) + " **ptr)");
     beginBlock(writer); // fromFudgeMsg
-    writer.write ("FudgeStatus status");
-    endStmt (writer);
+    writer.write("FudgeStatus status");
+    endStmt(writer);
     writer.write("if (!msg || !ptr) return FUDGE_NULL_POINTER");
     endStmt(writer);
     writer.write("*ptr = (struct _" + getIdentifier(message) + "*)malloc (sizeof (struct _" + getIdentifier(message)
@@ -870,52 +1106,57 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
     writer.write("memset (*ptr, 0, sizeof (struct _" + getIdentifier(message) + "))");
     endStmt(writer);
     writer.write("(*ptr)->");
-    MessageDefinition parent = message.getExtends ();
+    MessageDefinition parent = message.getExtends();
     while (parent != null) {
-      writer.write ("fudgeParent.");
-      parent = parent.getExtends ();
+      writer.write("fudgeParent.");
+      parent = parent.getExtends();
     }
-    writer.write ("fudgeStructSize = sizeof (struct _" + getIdentifier (message) + ")");
-    endStmt (writer);
-    writer.write ("if ((status = " + getIdentifier (message) + "_fromFudgeMsgImpl (msg, *ptr)) != FUDGE_OK)");
-    beginBlock (writer); // if
-    writer.write (getIdentifier (message) + "_free (*ptr)");
-    endStmt (writer);
-    writer.write ("*ptr = 0");
-    endStmt (writer);
-    endBlock (writer); // if
-    writer.write ("return status");
-    endStmt (writer);
-    endBlock (writer); // fromFudgeMsg
+    writer.write("fudgeStructSize = sizeof (struct _" + getIdentifier(message) + ")");
+    endStmt(writer);
+    writer.write("if ((status = " + getIdentifier(message) + "_fromFudgeMsgImpl (msg, *ptr)) != FUDGE_OK)");
+    beginBlock(writer); // if
+    writer.write(getIdentifier(message) + "_free (*ptr)");
+    endStmt(writer);
+    writer.write("*ptr = 0");
+    endStmt(writer);
+    endBlock(writer); // if
+    writer.write("return status");
+    endStmt(writer);
+    endBlock(writer); // fromFudgeMsg
     // Private fromFudgeMsg function
-    writer.write ("FudgeStatus " + getIdentifier (message) + "_fromFudgeMsgImpl (FudgeMsg msg, struct _" + getIdentifier (message) + " *ptr)");
-    beginBlock (writer); // fromFudgeMsgImpl
-    writer.write ("FudgeStatus status");
-    endStmt (writer);
-    if (message.getExtends () != null) {
-      writer.write ("if ((status = " + getIdentifier (message.getExtends ()) + "_fromFudgeMsgImpl (msg, &ptr->fudgeParent)) != FUDGE_OK) return status");
-      endStmt (writer);
+    writer.write("FudgeStatus " + getIdentifier(message) + "_fromFudgeMsgImpl (FudgeMsg msg, struct _"
+        + getIdentifier(message) + " *ptr)");
+    beginBlock(writer); // fromFudgeMsgImpl
+    if ((message.getExtends() != null) || !message.getFieldDefinitions().isEmpty()) {
+      writer.write("FudgeStatus status");
+      endStmt(writer);
     }
-    for (FieldDefinition field : message.getFieldDefinitions ()) {
-      if (field.isRequired ()) {
-        writer.write ("if ((status = ");
+    if (message.getExtends() != null) {
+      writer.write("if ((status = " + getIdentifier(message.getExtends())
+          + "_fromFudgeMsgImpl (msg, &ptr->fudgeParent)) != FUDGE_OK) return status");
+      endStmt(writer);
+    }
+    for (FieldDefinition field : message.getFieldDefinitions()) {
+      if (field.isRequired()) {
+        writer.write("if ((status = ");
       }
-      writer.write (getIdentifier (message) + "_get" + camelCaseFieldName (field) + " (msg, &ptr->" + privateFieldName (field));
-      if (field.isRepeated ()) {
-        writer.write (", &ptr->fudgeCount" + camelCaseFieldName (field));
+      writer.write(getIdentifier(message) + "_get" + camelCaseFieldName(field) + " (msg, &ptr->"
+          + privateFieldName(field));
+      if (field.isRepeated()) {
+        writer.write(", &ptr->fudgeCount" + camelCaseFieldName(field));
       }
-      writer.write (")");
-      if (field.isRequired ()) {
-        writer.write (") != FUDGE_OK) return status");
+      writer.write(")");
+      if (field.isRequired()) {
+        writer.write(") != FUDGE_OK) return status");
       }
-      endStmt (writer);
+      endStmt(writer);
     }
     writer.write("return FUDGE_OK");
     endStmt(writer);
     endBlock(writer); // fromFudgeMsgImpl
   }
-  
-  private void writeMessageToFudgeMsg (final IndentWriter writer, final MessageDefinition message) throws IOException {
+
+  private void writeMessageToFudgeMsg(final IndentWriter writer, final MessageDefinition message) throws IOException {
     // Public toFudgeMsg function
     writer.write("FudgeStatus " + getIdentifier(message) + "_toFudgeMsg (struct _" + getIdentifier(message)
         + " *ptr, FudgeMsg *msg)");
@@ -926,43 +1167,49 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
     endStmt(writer);
     writer.write("if ((status = FudgeMsg_create (msg)) != FUDGE_OK) return status");
     endStmt(writer);
-    writer.write ("if ((status = " + getIdentifier (message) + "_toFudgeMsgImpl (ptr, *msg)) != FUDGE_OK) FudgeMsg_release (*msg)");
-    endStmt (writer);
-    writer.write ("return status");
+    writer.write("if ((status = " + getIdentifier(message)
+        + "_toFudgeMsgImpl (ptr, *msg)) != FUDGE_OK) FudgeMsg_release (*msg)");
+    endStmt(writer);
+    writer.write("return status");
     endStmt(writer);
     endBlock(writer); // toFudgeMsg
     // Private toFudgeMsg function
-    writer.write ("FudgeStatus " + getIdentifier (message) + "_toFudgeMsgImpl (struct _" + getIdentifier (message) + " *ptr, FudgeMsg msg)");
-    beginBlock (writer); // toFudgeMsg
-    writer.write ("FudgeStatus status");
-    endStmt (writer);
-    writer.write ("fudge_i16 ordinal = 0");
-    endStmt (writer);
+    writer.write("FudgeStatus " + getIdentifier(message) + "_toFudgeMsgImpl (struct _" + getIdentifier(message)
+        + " *ptr, FudgeMsg msg)");
+    beginBlock(writer); // toFudgeMsg
+    writer.write("FudgeStatus status");
+    endStmt(writer);
+    writer.write("fudge_i16 ordinal = 0");
+    endStmt(writer);
     // TODO: proper UTF-8 on the class name
-    writer.write ("if ((status = FudgeMsg_addFieldString (msg, 0, 0, &ordinal, (fudge_byte*)" + getIdentifier (message) + "_Class, " + message.getIdentifier ().length () + ")) != FUDGE_OK) return status");
-    endStmt (writer);
-    if (message.getExtends () != null) {
-      writer.write ("if ((status = " + getIdentifier (message.getExtends ()) + "_toFudgeMsgImpl (&ptr->fudgeParent, msg)) != FUDGE_OK) return status");
-      endStmt (writer);
+    writer.write("if ((status = FudgeMsg_addFieldString (msg, 0, 0, &ordinal, (fudge_byte*)" + getIdentifier(message)
+        + "_Class, " + message.getIdentifier().length() + ")) != FUDGE_OK) return status");
+    endStmt(writer);
+    if (message.getExtends() != null) {
+      writer.write("if ((status = " + getIdentifier(message.getExtends())
+          + "_toFudgeMsgImpl (&ptr->fudgeParent, msg)) != FUDGE_OK) return status");
+      endStmt(writer);
     }
-    for (FieldDefinition field : message.getFieldDefinitions ()) {
-      writer.write ("if ((status = " + getIdentifier (message) + "_set" + camelCaseFieldName (field) + " (msg, ptr->" + privateFieldName (field));
-      if (field.isRepeated ()) {
-        writer.write (", ptr->fudgeCount" + camelCaseFieldName (field));
-      } 
-      writer.write (")) != FUDGE_OK) return status");
-      endStmt (writer);
+    for (FieldDefinition field : message.getFieldDefinitions()) {
+      writer.write("if ((status = " + getIdentifier(message) + "_set" + camelCaseFieldName(field) + " (msg, ptr->"
+          + privateFieldName(field));
+      if (field.isRepeated()) {
+        writer.write(", ptr->fudgeCount" + camelCaseFieldName(field));
+      }
+      writer.write(")) != FUDGE_OK) return status");
+      endStmt(writer);
     }
-    writer.write ("return FUDGE_OK");
-    endStmt (writer);
-    endBlock (writer); // toFudgeMsg
+    writer.write("return FUDGE_OK");
+    endStmt(writer);
+    endBlock(writer); // toFudgeMsg
   }
 
   @Override
-  public void writeClassImplementationConstructor(final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
-    writeMessageFree (writer, message);
-    writeMessageFromFudgeMsg (writer, message);
-    writeMessageToFudgeMsg (writer, message);
+  public void writeClassImplementationConstructor(final Compiler.Context context, final MessageDefinition message,
+      final IndentWriter writer) throws IOException {
+    writeMessageFree(writer, message);
+    writeMessageFromFudgeMsg(writer, message);
+    writeMessageToFudgeMsg(writer, message);
   }
 
   @Override
