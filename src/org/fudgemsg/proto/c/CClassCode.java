@@ -18,6 +18,7 @@ package org.fudgemsg.proto.c;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
@@ -218,7 +219,10 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
       endStmt(writer);
       writer.write(typeString(field.getType()) + "* " + privateFieldName(field));
     } else {
-      writer.write(typeString(field.getType()) + " " + privateFieldName(field));
+      writer.write(typeString(field.getType()));
+      if (!field.isRequired() && !isPointerType(field.getType()))
+        writer.write("*");
+      writer.write(" " + privateFieldName(field));
     }
     endStmt(writer);
   }
@@ -1017,7 +1021,7 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
     if (type instanceof FieldType.ArrayType) {
       final FieldType elementType = ((FieldType.ArrayType) type).getBaseType();
       if (isPointerType(elementType)) {
-        // TODO: free the elements within the array
+        sb.append("/* TODO: free the elements within the array */ ");
       }
       sb.append("free (").append(value).append(")");
     } else if (type instanceof FieldType.MessageType) {
@@ -1079,11 +1083,12 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
         writer.write("free (ptr->" + privateFieldName(field) + ")");
         endStmt(writer);
         endBlock(writer); // if
-      } else {
-        if (isPointerType(field.getType())) {
-          writer.write(getFreeFieldValueStmt(field.getType(), "ptr->" + privateFieldName(field)));
-          endStmt(writer);
-        }
+      } else if (isPointerType(field.getType())) {
+        writer.write(getFreeFieldValueStmt(field.getType(), "ptr->" + privateFieldName(field)));
+        endStmt(writer);
+      } else if (!field.isRequired ()) {
+        writer.write("if (ptr->" + privateFieldName(field) + ") free (ptr->" + privateFieldName(field) + ")");
+        endStmt(writer);
       }
     }
     endBlock(writer); // free
@@ -1131,25 +1136,48 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
       writer.write("FudgeStatus status");
       endStmt(writer);
     }
+    final Map<FieldType, String> typesDeclared = new HashMap<FieldType, String>();
+    for (FieldDefinition field : message.getFieldDefinitions()) {
+      if (!field.isRequired() && !isPointerType(field.getType())) {
+        if (!typesDeclared.containsKey(field.getType())) {
+          final String name = "val" + typesDeclared.size();
+          typesDeclared.put(field.getType(), name);
+          writer.write(typeString(field.getType()) + " " + name);
+          endStmt(writer);
+        }
+      }
+    }
     if (message.getExtends() != null) {
       writer.write("if ((status = " + getIdentifier(message.getExtends())
           + "_fromFudgeMsgImpl (msg, &ptr->fudgeParent)) != FUDGE_OK) return status");
       endStmt(writer);
     }
     for (FieldDefinition field : message.getFieldDefinitions()) {
-      if (field.isRequired()) {
-        writer.write("if ((status = ");
+      if (field.isRepeated() || field.isRequired() || isPointerType(field.getType())) {
+        if (field.isRequired())
+          writer.write("if ((status = ");
+        writer.write(getIdentifier(message) + "_get" + camelCaseFieldName(field) + " (msg, &ptr->"
+            + privateFieldName(field));
+        if (field.isRepeated()) {
+          writer.write(", &ptr->fudgeCount" + camelCaseFieldName(field));
+        }
+        writer.write(")");
+        if (field.isRequired()) {
+          writer.write(") != FUDGE_OK) return status");
+        }
+        endStmt(writer);
+      } else {
+        final String tmp = typesDeclared.get(field.getType());
+        writer.write("if ((status = " + getIdentifier(message) + "_get" + camelCaseFieldName(field) + " (msg, &" + tmp
+            + ")) == FUDGE_OK)");
+        beginBlock(writer);
+        writer.write("if (!(ptr->" + privateFieldName(field) + " = (" + typeString(field.getType())
+            + "*)malloc (sizeof (" + typeString(field.getType()) + ")))) return FUDGE_OUT_OF_MEMORY");
+        endStmt(writer);
+        writer.write("*ptr->" + privateFieldName(field) + " = " + tmp);
+        endStmt(writer);
+        endBlock(writer);
       }
-      writer.write(getIdentifier(message) + "_get" + camelCaseFieldName(field) + " (msg, &ptr->"
-          + privateFieldName(field));
-      if (field.isRepeated()) {
-        writer.write(", &ptr->fudgeCount" + camelCaseFieldName(field));
-      }
-      writer.write(")");
-      if (field.isRequired()) {
-        writer.write(") != FUDGE_OK) return status");
-      }
-      endStmt(writer);
     }
     writer.write("return FUDGE_OK");
     endStmt(writer);
@@ -1191,8 +1219,14 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
       endStmt(writer);
     }
     for (FieldDefinition field : message.getFieldDefinitions()) {
-      writer.write("if ((status = " + getIdentifier(message) + "_set" + camelCaseFieldName(field) + " (msg, ptr->"
-          + privateFieldName(field));
+      writer.write("if (");
+      if (!field.isRequired()) {
+        writer.write("ptr->" + privateFieldName(field) + " && ");
+      }
+      writer.write("(status = " + getIdentifier(message) + "_set" + camelCaseFieldName(field) + " (msg, ");
+      if (!field.isRepeated() && !field.isRequired() && !isPointerType(field.getType()))
+        writer.write("*");
+      writer.write("ptr->" + privateFieldName(field));
       if (field.isRepeated()) {
         writer.write(", ptr->fudgeCount" + camelCaseFieldName(field));
       }
