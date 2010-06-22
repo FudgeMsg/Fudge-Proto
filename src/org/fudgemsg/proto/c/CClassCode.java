@@ -373,6 +373,18 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
     }
   }
 
+  private void decodeArrayValue(final IndentWriter writer, final String source, final String target,
+      final String fudgeType, final String cType, final Stack<String> unwind) throws IOException {
+    writer.write("if (((" + source + ".type != " + fudgeType + ") && (status = FUDGE_INVALID_TYPE_COERCION)) || (!(*"
+        + target + " = (" + cType + "*)malloc (" + source + ".numbytes + sizeof (" + cType
+        + "))) && (status = FUDGE_OUT_OF_MEMORY)))");
+    returnAndUnwindStmt(writer, unwind, "status");
+    writer.write("memcpy (*" + target + ", " + source + ".data.bytes, " + source + ".numbytes)");
+    endStmt(writer);
+    writer.write("(*" + target + ")[" + source + ".numbytes / sizeof (" + cType + ")] = 0");
+    endStmt(writer);
+  }
+
   private void decodeFieldValue(final IndentWriter writer, final FieldType type, final String source,
       final String target, final Stack<String> unwind, final boolean allowNull) throws IOException {
     if (type instanceof FieldType.MessageType) {
@@ -385,124 +397,49 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
       final FieldType.ArrayType arrayType = (FieldType.ArrayType) type;
       switch (arrayType.getFudgeFieldType()) {
         case FudgeTypeDictionary.BYTE_ARRAY_TYPE_ID:
-          writer.write("if (((" + source
-              + ".type != FUDGE_TYPE_BYTE_ARRAY) && (status = FUDGE_INVALID_TYPE_COERCION)) || (!(*" + target
-              + " = (fudge_byte*)malloc (" + source + ".numbytes)) && (status = FUDGE_OUT_OF_MEMORY)))");
-          returnAndUnwindStmt(writer, unwind, "status");
-          writer.write("memcpy (*" + target + ", " + source + ".data.bytes, " + source + ".numbytes)");
-          endStmt(writer);
+          decodeArrayValue(writer, source, target, "FUDGE_TYPE_BYTE_ARRAY", "fudge_byte", unwind);
           break;
         case FudgeTypeDictionary.BYTE_ARR_4_TYPE_ID:
-          writer.write("if (((" + source
-              + ".type != FUDGE_TYPE_BYTE_ARRAY_4) && (status = FUDGE_INVALID_TYPE_COERCION)) || (!(*" + target
-              + " = (fudge_byte*)malloc (" + source + ".numbytes)) && (status = FUDGE_OUT_OF_MEMORY)))");
-          returnAndUnwindStmt(writer, unwind, "status");
-          writer.write("memcpy (*" + target + ", " + source + ".data.bytes, " + source + ".numbytes)");
-          endStmt(writer);
+          decodeArrayValue(writer, source, target, "FUDGE_TYPE_BYTE_ARRAY_4", "fudge_byte", unwind);
           break;
         case FudgeTypeDictionary.BYTE_ARR_8_TYPE_ID:
-          writer.write("if (((" + source
-              + ".type != FUDGE_TYPE_BYTE_ARRAY_8) && (status = FUDGE_INVALID_TYPE_COERCION)) || (!(*" + target
-              + " = (fudge_byte*)malloc (" + source + ".numbytes)) && (status = FUDGE_OUT_OF_MEMORY)))");
-          returnAndUnwindStmt(writer, unwind, "status");
-          writer.write("memcpy (*" + target + ", " + source + ".data.bytes, " + source + ".numbytes)");
-          endStmt(writer);
+          decodeArrayValue(writer, source, target, "FUDGE_TYPE_BYTE_ARRAY_8", "fudge_byte", unwind);
           break;
         case FudgeTypeDictionary.BYTE_ARR_16_TYPE_ID:
-          writer.write("if (((" + source
-              + ".type != FUDGE_TYPE_BYTE_ARRAY_16) && (status = FUDGE_INVALID_TYPE_COERCION)) || (!(*" + target
-              + " = (fudge_byte*)malloc (" + source + ".numbytes)) && (status = FUDGE_OUT_OF_MEMORY)))");
-          returnAndUnwindStmt(writer, unwind, "status");
-          writer.write("memcpy (*" + target + ", " + source + ".data.bytes, " + source + ".numbytes)");
-          endStmt(writer);
+          decodeArrayValue(writer, source, target, "FUDGE_TYPE_BYTE_ARRAY_16", "fudge_byte", unwind);
           break;
         case FudgeTypeDictionary.BYTE_ARR_20_TYPE_ID:
-          writer.write("if (((" + source
-              + ".type != FUDGE_TYPE_BYTE_ARRAY_20) && (status = FUDGE_INVALID_TYPE_COERCION)) || (!(*" + target
-              + " = (fudge_byte*)malloc (" + source + ".numbytes)) && (status = FUDGE_OUT_OF_MEMORY)))");
-          returnAndUnwindStmt(writer, unwind, "status");
-          writer.write("memcpy (*" + target + ", " + source + ".data.bytes, " + source + ".numbytes)");
-          endStmt(writer);
+          decodeArrayValue(writer, source, target, "FUDGE_TYPE_BYTE_ARRAY_20", "fudge_byte", unwind);
           break;
         case FudgeTypeDictionary.BYTE_ARR_32_TYPE_ID:
-          writer.write("if (((" + source
-              + ".type != FUDGE_TYPE_BYTE_ARRAY_32) && (status = FUDGE_INVALID_TYPE_COERCION)) || (!(*" + target
-              + " = (fudge_byte*)malloc (" + source + ".numbytes)) && (status = FUDGE_OUT_OF_MEMORY)))");
-          returnAndUnwindStmt(writer, unwind, "status");
-          writer.write("memcpy (*" + target + ", " + source + ".data.bytes, " + source + ".numbytes)");
-          endStmt(writer);
+          decodeArrayValue(writer, source, target, "FUDGE_TYPE_BYTE_ARRAY_32", "fudge_byte", unwind);
           break;
         case FudgeTypeDictionary.BYTE_ARR_64_TYPE_ID:
-          writer.write("if (((" + source
-              + ".type != FUDGE_TYPE_BYTE_ARRAY_64) && (status = FUDGE_INVALID_TYPE_COERCION)) || (!(*" + target
-              + " = (fudge_byte*)malloc (" + source + ".numbytes)) && (status = FUDGE_OUT_OF_MEMORY)))");
-          returnAndUnwindStmt(writer, unwind, "status");
-          writer.write("memcpy (*" + target + ", " + source + ".data.bytes, " + source + ".numbytes)");
-          endStmt(writer);
+          decodeArrayValue(writer, source, target, "FUDGE_TYPE_BYTE_ARRAY_64", "fudge_byte", unwind);
           break;
         case FudgeTypeDictionary.BYTE_ARR_128_TYPE_ID:
-          writer.write("if (((" + source
-              + ".type != FUDGE_TYPE_BYTE_ARRAY_128) && (status = FUDGE_INVALID_TYPE_COERCION)) || (!(*" + target
-              + " = (fudge_byte*)malloc (" + source + ".numbytes)) && (status = FUDGE_OUT_OF_MEMORY)))");
-          returnAndUnwindStmt(writer, unwind, "status");
-          writer.write("memcpy (*" + target + ", " + source + ".data.bytes, " + source + ".numbytes)");
-          endStmt(writer);
+          decodeArrayValue(writer, source, target, "FUDGE_TYPE_BYTE_ARRAY_128", "fudge_byte", unwind);
           break;
         case FudgeTypeDictionary.BYTE_ARR_256_TYPE_ID:
-          writer.write("if (((" + source
-              + ".type != FUDGE_TYPE_BYTE_ARRAY_256) && (status = FUDGE_INVALID_TYPE_COERCION)) || (!(*" + target
-              + " = (fudge_byte*)malloc (" + source + ".numbytes)) && (status = FUDGE_OUT_OF_MEMORY)))");
-          returnAndUnwindStmt(writer, unwind, "status");
-          writer.write("memcpy (*" + target + ", " + source + ".data.bytes, " + source + ".numbytes)");
-          endStmt(writer);
+          decodeArrayValue(writer, source, target, "FUDGE_TYPE_BYTE_ARRAY_256", "fudge_byte", unwind);
           break;
         case FudgeTypeDictionary.BYTE_ARR_512_TYPE_ID:
-          writer.write("if (((" + source
-              + ".type != FUDGE_TYPE_BYTE_ARRAY_512) && (status = FUDGE_INVALID_TYPE_COERCION)) || (!(*" + target
-              + " = (fudge_byte*)malloc (" + source + ".numbytes)) && (status = FUDGE_OUT_OF_MEMORY)))");
-          returnAndUnwindStmt(writer, unwind, "status");
-          writer.write("memcpy (*" + target + ", " + source + ".data.bytes, " + source + ".numbytes)");
-          endStmt(writer);
+          decodeArrayValue(writer, source, target, "FUDGE_TYPE_BYTE_ARRAY_512", "fudge_byte", unwind);
           break;
         case FudgeTypeDictionary.INT_ARRAY_TYPE_ID:
-          writer.write("if (((" + source
-              + ".type != FUDGE_TYPE_INT_ARRAY) && (status = FUDGE_INVALID_TYPE_COERCION)) || (!(*" + target
-              + " = (fudge_i32*)malloc (" + source + ".numbytes)) && (status = FUDGE_OUT_OF_MEMORY)))");
-          returnAndUnwindStmt(writer, unwind, "status");
-          writer.write("memcpy (*" + target + ", " + source + ".data.bytes, " + source + ".numbytes)");
-          endStmt(writer);
+          decodeArrayValue(writer, source, target, "FUDGE_TYPE_INT_ARRAY", "fudge_i32", unwind);
           break;
         case FudgeTypeDictionary.LONG_ARRAY_TYPE_ID:
-          writer.write("if (((" + source
-              + ".type != FUDGE_TYPE_LONG_ARRAY) && (status = FUDGE_INVALID_TYPE_COERCION)) || (!(*" + target
-              + " = (fudge_i64*)malloc (" + source + ".numbytes)) && (status = FUDGE_OUT_OF_MEMORY)))");
-          returnAndUnwindStmt(writer, unwind, "status");
-          writer.write("memcpy (*" + target + ", " + source + ".data.bytes, " + source + ".numbytes)");
-          endStmt(writer);
+          decodeArrayValue(writer, source, target, "FUDGE_TYPE_LONG_ARRAY", "fudge_i64", unwind);
           break;
         case FudgeTypeDictionary.SHORT_ARRAY_TYPE_ID:
-          writer.write("if (((" + source
-              + ".type != FUDGE_TYPE_SHORT_ARRAY) && (status = FUDGE_INVALID_TYPE_COERCION)) || (!(*" + target
-              + " = (fudge_i16*)malloc (" + source + ".numbytes)) && (status = FUDGE_OUT_OF_MEMORY)))");
-          returnAndUnwindStmt(writer, unwind, "status");
-          writer.write("memcpy (*" + target + ", " + source + ".data.bytes, " + source + ".numbytes)");
-          endStmt(writer);
+          decodeArrayValue(writer, source, target, "FUDGE_TYPE_SHORT_ARRAY", "fudge_i16", unwind);
           break;
         case FudgeTypeDictionary.FLOAT_ARRAY_TYPE_ID:
-          writer.write("if (((" + source
-              + ".type != FUDGE_TYPE_FLOAT_ARRAY) && (status = FUDGE_INVALID_TYPE_COERCION)) || (!(*" + target
-              + " = (fudge_f32*)malloc (" + source + ".numbytes)) && (status = FUDGE_OUT_OF_MEMORY)))");
-          returnAndUnwindStmt(writer, unwind, "status");
-          writer.write("memcpy (*" + target + ", " + source + ".data.bytes, " + source + ".numbytes)");
-          endStmt(writer);
+          decodeArrayValue(writer, source, target, "FUDGE_TYPE_FLOAT_ARRAY", "fudge_f32", unwind);
           break;
         case FudgeTypeDictionary.DOUBLE_ARRAY_TYPE_ID:
-          writer.write("if (((" + source
-              + ".type != FUDGE_TYPE_DOUBLE_ARRAY) && (status = FUDGE_INVALID_TYPE_COERCION)) || (!(*" + target
-              + " = (fudge_f64*)malloc (" + source + ".numbytes)) && (status = FUDGE_OUT_OF_MEMORY)))");
-          returnAndUnwindStmt(writer, unwind, "status");
-          writer.write("memcpy (*" + target + ", " + source + ".data.bytes, " + source + ".numbytes)");
-          endStmt(writer);
+          decodeArrayValue(writer, source, target, "FUDGE_TYPE_DOUBLE_ARRAY", "fudge_f64", unwind);
           break;
         case FudgeTypeDictionary.FUDGE_MSG_TYPE_ID:
           final String cType = typeString(arrayType.getBaseType());
