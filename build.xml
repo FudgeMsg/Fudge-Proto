@@ -72,7 +72,7 @@
 		depends="tests"
 		description="--> compile the output of the C code generator">
 		<taskdef resource="cpptasks.tasks"/>
-		<cc objdir="${tests.dir}/out_C">
+		<cc objdir="${tests.dir}/out_C" warnings="diagnostic">
 			<includepath path="${tests.dir}/unit_C" />
 			<fileset dir="${tests.dir}/out_C" includes="*.c" />
 		</cc>

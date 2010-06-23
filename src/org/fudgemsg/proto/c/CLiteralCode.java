@@ -42,4 +42,9 @@ public class CLiteralCode extends CStyleLiteralCode {
     return sb.toString ();*/
   }
   
+  @Override
+  protected String getLiteral (final LiteralValue.StringValue value) {
+    return "TEXT(" + super.getLiteral(value) + ")";
+  }
+
 }

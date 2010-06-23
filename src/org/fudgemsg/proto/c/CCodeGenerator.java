@@ -16,6 +16,11 @@
 
 package org.fudgemsg.proto.c;
 
+import java.io.File;
+import java.io.IOException;
+
+import org.fudgemsg.proto.Compiler;
+import org.fudgemsg.proto.IndentWriter;
 import org.fudgemsg.proto.proto.ClassCodeGenerator;
 
 /**
@@ -24,11 +29,154 @@ import org.fudgemsg.proto.proto.ClassCodeGenerator;
  * @author Andrew
  */
 public class CCodeGenerator extends ClassCodeGenerator {
-  
+
   public static final String LANG_ID = "C";
-  
-  public CCodeGenerator () {
-    super (CClassCode.INSTANCE);
+
+  private String _include = null;
+  private String _cType = "char";
+  private String _cSuffix = "ASCII";
+  private String _cLength = "strlen";
+  private String _cCompare = "strcmp";
+
+  public CCodeGenerator() {
+    super(CClassCode.INSTANCE);
+  }
+
+  protected void setInclude(final String include) {
+    _include = include;
+  }
+
+  protected String getInclude() {
+    return _include;
+  }
+
+  protected void setCType(final String cType) {
+    _cType = cType;
+  }
+
+  protected String getCType() {
+    return _cType;
+  }
+
+  protected void setCSuffix(final String cSuffix) {
+    _cSuffix = cSuffix;
+  }
+
+  protected String getCSuffix() {
+    return _cSuffix;
+  }
+
+  protected void setCLength(final String cLength) {
+    _cLength = cLength;
+  }
+
+  protected String getCLength() {
+    return _cLength;
+  }
+
+  protected void setCCompare(final String cCompare) {
+    _cCompare = cCompare;
+  }
+
+  protected String getCCompare() {
+    return _cCompare;
+  }
+
+  private void writeDefineIfNDef(final IndentWriter writer, final String macro, final String definition)
+      throws IOException {
+    writer.write("#ifndef " + macro);
+    writer.newLine();
+    writer.write("#define " + macro + definition);
+    writer.newLine();
+    writer.write("#endif /* ifndef " + macro + " */");
+    writer.newLine();
+  }
+
+  private void writeInclude(final IndentWriter writer) throws IOException {
+    if (getInclude() != null) {
+      final String include = getInclude();
+      if (include.charAt(0) == '<') {
+        writer.write("#include " + getInclude());
+      } else {
+        writer.write("#include \"" + getInclude() + "\"");
+      }
+      writer.newLine();
+    }
+  }
+
+  private void writeTCharDefs(final IndentWriter writer) throws IOException {
+    writer.write("#ifndef _TCHAR_DEFINED");
+    writer.newLine();
+    writer.write("typedef " + getCType() + " TCHAR");
+    endStmt(writer);
+    writer.write("#define _TCHAR_DEFINED");
+    writer.newLine();
+    writer.write("#endif /* ifndef _TCHAR_DEFINED */");
+    writer.newLine();
+    writeDefineIfNDef(writer, "TEXT", "(_str_) _str_");
+  }
+
+  @Override
+  public void writeHeaderFileHeader(final Compiler.Context context, final File header, final IndentWriter writer)
+      throws IOException {
+    writeInclude(writer);
+    super.writeHeaderFileHeader(context, header, writer);
+    writeTCharDefs(writer);
+  }
+
+  @Override
+  public void writeImplementationFileHeader(final Compiler.Context context, final File file, final IndentWriter writer)
+      throws IOException {
+    writeInclude(writer);
+    super.writeImplementationFileHeader(context, file, writer);
+    writeTCharDefs(writer);
+    writeDefineIfNDef(writer, "FUDGE_STRING_TYPE", " " + getCSuffix());
+    writeDefineIfNDef(writer, "FUDGE_STRING_TYPE_CAST", getCSuffix().equals("ASCII") ? "" : " (fudge_byte*)");
+    writer.write("#ifndef FudgeString_createFrom");
+    writer.newLine();
+    writer
+        .write("#define __FudgeString_createFrom(_suffix_,_pstr_,_str_,_strlen_) FudgeString_createFrom##_suffix_(_pstr_,FUDGE_STRING_TYPE_CAST _str_,_strlen_)");
+    writer.newLine();
+    writer
+        .write("#define _FudgeString_createFrom(_suffix_,_pstr_,_str_,_strlen_) __FudgeString_createFrom(_suffix_,_pstr_,_str_,_strlen_)");
+    writer.newLine();
+    writer
+        .write("#define FudgeString_createFrom(_pstr_,_str_,_strlen_) _FudgeString_createFrom(FUDGE_STRING_TYPE,_pstr_,_str_,_strlen_)");
+    writer.newLine();
+    writer.write("#endif /* ifndef FudgeString_createFrom */");
+    writer.newLine();
+    writer.write("#ifndef FudgeString_copyTo");
+    writer.newLine();
+    writer
+        .write("#define __FudgeString_copyTo(_suffix_,_buffer_,_buflen_,_str_) FudgeString_copyTo##_suffix_(FUDGE_STRING_TYPE_CAST _buffer_,_buflen_,_str_)");
+    writer.newLine();
+    writer
+        .write("#define _FudgeString_copyTo(_suffix_,_buffer_,_buflen_,_str_) __FudgeString_copyTo(_suffix_,_buffer_,_buflen_,_str_)");
+    writer.newLine();
+    writer
+        .write("#define FudgeString_copyTo(_buffer_,_buflen_,_str_) _FudgeString_copyTo(FUDGE_STRING_TYPE,_buffer_,_buflen_,_str_)");
+    writer.newLine();
+    writer.write("#endif /* ifndef FudgeString_copyTo */");
+    writer.newLine();
+    writeDefineIfNDef(writer, "FUDGE_STRING_LENGTH", " " + getCLength());
+    writeDefineIfNDef(writer, "FUDGE_STRING_COMPARE", " " + getCCompare());
+  }
+
+  @Override
+  public void setOption(String option, String value) {
+    if (option.equals("cCompare")) {
+      setCCompare(value);
+    } else if (option.equals("cLength")) {
+      setCLength(value);
+    } else if (option.equals("cSuffix")) {
+      setCSuffix(value);
+    } else if (option.equals("cType")) {
+      setCType(value);
+    } else if (option.equals("include")) {
+      setInclude(value);
+    } else {
+      super.setOption(option, value);
+    }
   }
 
 }
