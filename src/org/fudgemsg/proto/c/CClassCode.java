@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Stack;
 
 import org.fudgemsg.FudgeTypeDictionary;
+import org.fudgemsg.UTF8;
 import org.fudgemsg.proto.Compiler;
 import org.fudgemsg.proto.EnumDefinition;
 import org.fudgemsg.proto.FieldDefinition;
@@ -252,15 +253,6 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
     return value;
   }
 
-  private String getEnumValueLiteral(final Compiler.Context context, final String name, LiteralValue value) {
-    if (value instanceof LiteralValue.NullValue) {
-      value = ((LiteralValue.NullValue) value).inferString(name);
-    } else {
-      value = value.assignmentTo(context, FieldType.STRING_TYPE);
-    }
-    return getLiteral(value);
-  }
-
   @Override
   public void writeEnumHeaderDeclaration(final Compiler.Context context, final EnumDefinition enumDefinition,
       final IndentWriter writer) throws IOException {
@@ -291,11 +283,11 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
           + getIdentifier(enumDefinition) + ")(_v_))");
       writer.newLine();
     } else {
-      writer.write("const TCHAR *" + getIdentifier(enumDefinition) + "_toFudgeEncoding ("
+      writer.write("FudgeString " + getIdentifier(enumDefinition) + "_toFudgeEncoding ("
           + getIdentifier(enumDefinition) + " value)");
       endStmt(writer);
       writer.write(getIdentifier(enumDefinition) + " " + getIdentifier(enumDefinition)
-          + "_fromFudgeEncoding (const TCHAR *value)");
+          + "_fromFudgeEncoding (FudgeString value)");
       endStmt(writer);
     }
     if (enumDefinition.getNamespace() != null) {
@@ -372,8 +364,7 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
     endStmt(writer);
     writer.write("if (!" + target + ")");
     returnAndUnwindStmt(writer, unwind, "FUDGE_OUT_OF_MEMORY");
-    writer.write("FudgeString_copyTo (" + target + ", " + varLength + " * sizeof (TCHAR), " + source
-        + ".data.string)");
+    writer.write("FudgeString_copyTo (" + target + ", " + varLength + " * sizeof (TCHAR), " + source + ".data.string)");
     endStmt(writer);
     writer.write("(" + target + ")[" + varLength + "] = 0");
     endStmt(writer);
@@ -523,17 +514,15 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
         writer.write("*" + target + " = " + getIdentifier(enumDefinition) + "_fromFudgeEncoding (" + varI + ")");
         endStmt(writer);
       } else {
-        final String varLen = "len" + unwind.size();
-        writer.write("int " + varLen);
+        writer.write("if (" + source + ".type == FUDGE_TYPE_STRING) *" + target + " = " + getIdentifier(enumDefinition)
+            + "_fromFudgeEncoding (" + source + ".data.string)");
         endStmt(writer);
-        final String varSTR = "str" + unwind.size();
-        writer.write("TCHAR *" + varSTR);
-        endStmt(writer);
-        fieldValueToString(writer, source, varSTR, unwind, allowNull, varLen);
-        writer.write("*" + target + " = " + getIdentifier(enumDefinition) + "_fromFudgeEncoding (" + varSTR + ")");
-        endStmt(writer);
-        writer.write("free (" + varSTR + ")");
-        endStmt(writer);
+        if (allowNull) {
+          writer.write("if (" + source + ".type == FUDGE_TYPE_INDICATOR) *" + target + " = 0");
+          endStmt(writer);
+        }
+        writer.write("else ");
+        returnAndUnwindStmt(writer, unwind, "FUDGE_INVALID_TYPE_COERCION");
       }
     } else {
       switch (type.getFudgeFieldType()) {
@@ -593,8 +582,8 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
   private void writeIfFieldMatches(final IndentWriter writer, final FieldDefinition field, final String fieldRef)
       throws IOException {
     if (field.getOrdinal() != null) {
-      writer.write("if (" + fieldRef + ".ordinal == " + getIdentifier(field.getOuterMessage()) + "_" + field.getName()
-          + "_Ordinal)");
+      writer.write("if ((" + fieldRef + ".flags & FUDGE_FIELD_HAS_ORDINAL) && (" + fieldRef + ".ordinal == "
+          + getIdentifier(field.getOuterMessage()) + "_" + field.getName() + "_Ordinal))");
     } else {
       writer.write("if (0 /* TODO: test field name */)");
     }
@@ -803,7 +792,8 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
         writer.write("FudgeMsg subMsg");
         endStmt(writer);
       }
-    } else if (field.getType().getFudgeFieldType() == FudgeTypeDictionary.STRING_TYPE_ID) {
+    } else if (!(field.getType() instanceof FieldType.EnumType)
+        && (field.getType().getFudgeFieldType() == FudgeTypeDictionary.STRING_TYPE_ID)) {
       writer.write("FudgeString str");
       endStmt(writer);
     }
@@ -859,16 +849,11 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
       comment(writer, "TODO array type");
     } else if (field.getType() instanceof FieldType.EnumType) {
       final EnumDefinition enumDefinition = ((FieldType.EnumType) field.getType()).getEnumDefinition();
+      value = getIdentifier(enumDefinition) + "_toFudgeEncoding (" + value + ")";
       if (enumDefinition.getType() == EnumDefinition.Type.INTEGER_ENCODED) {
         type = "I32";
-        value = getIdentifier(enumDefinition) + "_toFudgeEncoding (" + value + ")";
       } else {
-        writer.write("if ((status = FudgeString_createFrom (&str, " + getIdentifier(enumDefinition)
-            + "_toFudgeEncoding (" + value + "), /* TODO: length */ 0)) != FUDGE_OK)");
-        returnAndUnwindStmt(writer, unwind, "status");
-        unwind.push("FudgeString_release (str)");
         type = "String";
-        value = "str";
       }
     } else {
       switch (field.getType().getFudgeFieldType()) {
@@ -1207,10 +1192,10 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
     writer.write("if (FudgeString_createFrom (&className, " + getIdentifier(message) + "_Class, "
         + message.getIdentifier().length() + " * sizeof (TCHAR)) == FUDGE_OK)");
     beginBlock(writer); // createFrom-if
-    writer.write ("if (FudgeMsg_getFields (fields, n, msg) > 0)");
-    beginBlock (writer); // getFields-if
-    writer.write ("for (i = 0; i < n; i++)");
-    beginBlock (writer); // for
+    writer.write("if (FudgeMsg_getFields (fields, n, msg) > 0)");
+    beginBlock(writer); // getFields-if
+    writer.write("for (i = 0; i < n; i++)");
+    beginBlock(writer); // for
     writer
         .write("if ((fields[i].flags & FUDGE_FIELD_HAS_ORDINAL) && (fields[i].ordinal == 0) && (fields[i].type == FUDGE_TYPE_STRING) && !FudgeString_compare (className, fields[i].data.string))");
     beginBlock(writer); // if
@@ -1219,8 +1204,8 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
     writer.write("break");
     endStmt(writer);
     endBlock(writer); // if
-    endBlock (writer); // for
-    endBlock (writer); // getFields-if
+    endBlock(writer); // for
+    endBlock(writer); // getFields-if
     writer.write("FudgeString_release (className)");
     endStmt(writer);
     endBlock(writer); // createFrom-if
@@ -1319,29 +1304,52 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
     super.writeEnumImplementationDeclaration(context, enumDefinition, writer);
     if (enumDefinition.getType() == Type.INTEGER_ENCODED)
       return; // no conversion functions (macros)
-    writer.write("const TCHAR *" + getIdentifier(enumDefinition) + "_toFudgeEncoding (" + getIdentifier(enumDefinition)
+    // String constants
+    for (Map.Entry<String, LiteralValue> entry : enumDefinition.getElements()) {
+      LiteralValue value = entry.getValue();
+      if (value instanceof LiteralValue.NullValue) {
+        value = ((LiteralValue.NullValue) value).inferString(entry.getKey());
+      } else {
+        value = value.assignmentTo(context, FieldType.STRING_TYPE);
+      }
+      final byte[] utf8 = UTF8.encode(((LiteralValue.StringValue) value).get());
+      writer.write("static FudgeStringStatic _" + getIdentifier(enumDefinition) + "_" + entry.getKey() + " = { 0, \"");
+      for (int i = 0; i < utf8.length; i++) {
+        if (utf8[i] < 0) {
+          writer.write("\\" + Integer.toOctalString(256 + utf8[i]));
+        } else if (utf8[i] < 8) {
+          writer.write("\\00" + Integer.toOctalString(256 + utf8[i]));
+        } else if (utf8[i] < 32) {
+          writer.write("\\0" + Integer.toOctalString(256 + utf8[i]));
+        } else {
+          writer.write((char) utf8[i]);
+        }
+      }
+      writer.write("\", " + utf8.length + " }");
+      endStmt(writer);
+    }
+    writer.write("FudgeString " + getIdentifier(enumDefinition) + "_toFudgeEncoding (" + getIdentifier(enumDefinition)
         + " value)");
     beginBlock(writer); // toFudgeEncoding
     writer.write("switch (value)");
     beginBlock(writer); // switch
     for (Map.Entry<String, LiteralValue> entry : enumDefinition.getElements()) {
-      writer.write("case " + getEnumValueIdentifier(enumDefinition, entry.getKey()) + " : return "
-          + getEnumValueLiteral(context, entry.getKey(), entry.getValue()));
+      writer.write("case " + getEnumValueIdentifier(enumDefinition, entry.getKey())
+          + " : return FudgeString_fromStatic (&_" + getIdentifier(enumDefinition) + "_" + entry.getKey() + ")");
       endStmt(writer);
     }
-    writer.write("default : return TEXT(\"\")");
+    writer.write("default : return 0");
     endStmt(writer);
     endBlock(writer); // switch
     endBlock(writer); // toFudgeEncoding
     writer.write(getIdentifier(enumDefinition) + " " + getIdentifier(enumDefinition)
-        + "_fromFudgeEncoding (const TCHAR *value)");
+        + "_fromFudgeEncoding (FudgeString value)");
     beginBlock(writer); // fromFudgeEncoding
     writer.write("if (!value) return (" + getIdentifier(enumDefinition) + ")-1");
     endStmt(writer);
     for (Map.Entry<String, LiteralValue> entry : enumDefinition.getElements()) {
-      writer.write("if (!FUDGE_STRING_COMPARE (value, "
-          + getEnumValueLiteral(context, entry.getKey(), entry.getValue()) + ")) return "
-          + getEnumValueIdentifier(enumDefinition, entry.getKey()));
+      writer.write("if (!FudgeString_compare (FudgeString_fromStatic (&_" + getIdentifier(enumDefinition) + "_"
+          + entry.getKey() + "), value)) return " + getEnumValueIdentifier(enumDefinition, entry.getKey()));
       endStmt(writer);
     }
     writer.write("return (" + getIdentifier(enumDefinition) + ")-1");

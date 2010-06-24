@@ -36,7 +36,6 @@ public class CCodeGenerator extends ClassCodeGenerator {
   private String _cType = "char";
   private String _cSuffix = "ASCII";
   private String _cLength = "strlen";
-  private String _cCompare = "strcmp";
 
   public CCodeGenerator() {
     super(CClassCode.INSTANCE);
@@ -72,14 +71,6 @@ public class CCodeGenerator extends ClassCodeGenerator {
 
   protected String getCLength() {
     return _cLength;
-  }
-
-  protected void setCCompare(final String cCompare) {
-    _cCompare = cCompare;
-  }
-
-  protected String getCCompare() {
-    return _cCompare;
   }
 
   private void writeDefineIfNDef(final IndentWriter writer, final String macro, final String definition)
@@ -159,14 +150,11 @@ public class CCodeGenerator extends ClassCodeGenerator {
     writer.write("#endif /* ifndef FudgeString_copyTo */");
     writer.newLine();
     writeDefineIfNDef(writer, "FUDGE_STRING_LENGTH", " " + getCLength());
-    writeDefineIfNDef(writer, "FUDGE_STRING_COMPARE", " " + getCCompare());
   }
 
   @Override
   public void setOption(String option, String value) {
-    if (option.equals("cCompare")) {
-      setCCompare(value);
-    } else if (option.equals("cLength")) {
+    if (option.equals("cLength")) {
       setCLength(value);
     } else if (option.equals("cSuffix")) {
       setCSuffix(value);
