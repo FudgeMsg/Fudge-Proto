@@ -72,7 +72,7 @@ public class EnumDefinition extends StringValuePairDefinition<LiteralValue> {
     }
     if (stringPresent || intPresent) {
       if (nullPresent) {
-        int nextAutoValue = 0;
+        int nextAutoValue = 1;
         for (Map.Entry<String,LiteralValue> element : getElements ()) {
           if (element.getValue () instanceof LiteralValue.NullValue) {
             LiteralValue.NullValue value = (LiteralValue.NullValue)element.getValue ();
