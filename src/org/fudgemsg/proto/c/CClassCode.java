@@ -391,7 +391,7 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
       writer.write("if (((" + source
           + ".type != FUDGE_TYPE_FUDGE_MSG) && (status = FUDGE_INVALID_TYPE_COERCION)) || ((status = ");
       if (type instanceof FieldType.AnonMessageType) {
-        writer.write("FudgeMsg_retain (" + source + ".data.message");
+        writer.write("FudgeMsg_retain (*" + target + " = " + source + ".data.message");
       } else {
         writer.write(getIdentifier(((FieldType.MessageType) type).getMessageDefinition()) + "_fromFudgeMsg (" + source
             + ".data.message, " + target);
