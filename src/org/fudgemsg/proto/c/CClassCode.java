@@ -165,7 +165,7 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
       writer.newLine();
       writer.write("#define " + message.getName() + " " + getIdentifier(message));
       writer.newLine();
-      writer.write("#define " + message.getName() + "_Class \"" + message.getIdentifier() + "\"");
+      writer.write("#define " + message.getName() + "_Class TEXT(\"" + message.getIdentifier() + "\")");
       writer.newLine();
       for (FieldDefinition field : message.getFieldDefinitions()) {
         writer.write("#define " + message.getName() + "_" + field.getName());
