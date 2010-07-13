@@ -110,8 +110,10 @@ public class FixedArrays_Optional implements java.io.Serializable {
       else {
         fixedArray2 = java.util.Arrays.copyOf (fixedArray2, fixedArray2.length);
         for (int fudge0 = 0; fudge0 < fixedArray2.length; fudge0++) {
-          fixedArray2[fudge0] = java.util.Arrays.copyOf (fixedArray2[fudge0], fixedArray2[fudge0].length);
-          if (fixedArray2[fudge0].length != 42) throw new IllegalArgumentException ("'fixedArray2[]' is not the expected length (42)");
+          if (fixedArray2[fudge0] != null) {
+            fixedArray2[fudge0] = java.util.Arrays.copyOf (fixedArray2[fudge0], fixedArray2[fudge0].length);
+            if (fixedArray2[fudge0].length != 42) throw new IllegalArgumentException ("'fixedArray2[]' is not the expected length (42)");
+          }
         }
         for (int[] fudge0 : fixedArray2) {
           if (fudge0.length != 42) throw new IllegalArgumentException ("'fixedArray2[]' is not the expected length (42)");
@@ -125,7 +127,9 @@ public class FixedArrays_Optional implements java.io.Serializable {
       else {
         fixedArray3 = java.util.Arrays.copyOf (fixedArray3, fixedArray3.length);
         for (int fudge0 = 0; fudge0 < fixedArray3.length; fudge0++) {
-          fixedArray3[fudge0] = java.util.Arrays.copyOf (fixedArray3[fudge0], fixedArray3[fudge0].length);
+          if (fixedArray3[fudge0] != null) {
+            fixedArray3[fudge0] = java.util.Arrays.copyOf (fixedArray3[fudge0], fixedArray3[fudge0].length);
+          }
         }
         if (fixedArray3.length != 42) throw new IllegalArgumentException ("'fixedArray3' is not the expected length (42)");
         _fixedArray3 = fixedArray3;
@@ -137,8 +141,10 @@ public class FixedArrays_Optional implements java.io.Serializable {
       else {
         fixedArray4 = java.util.Arrays.copyOf (fixedArray4, fixedArray4.length);
         for (int fudge0 = 0; fudge0 < fixedArray4.length; fudge0++) {
-          fixedArray4[fudge0] = java.util.Arrays.copyOf (fixedArray4[fudge0], fixedArray4[fudge0].length);
-          if (fixedArray4[fudge0].length != 42) throw new IllegalArgumentException ("'fixedArray4[]' is not the expected length (42)");
+          if (fixedArray4[fudge0] != null) {
+            fixedArray4[fudge0] = java.util.Arrays.copyOf (fixedArray4[fudge0], fixedArray4[fudge0].length);
+            if (fixedArray4[fudge0].length != 42) throw new IllegalArgumentException ("'fixedArray4[]' is not the expected length (42)");
+          }
         }
         if (fixedArray4.length != 42) throw new IllegalArgumentException ("'fixedArray4' is not the expected length (42)");
         for (int[] fudge0 : fixedArray4) {
@@ -161,7 +167,9 @@ public class FixedArrays_Optional implements java.io.Serializable {
     else {
       final int[][] fudge0 = java.util.Arrays.copyOf (builder._fixedArray2, builder._fixedArray2.length);
       for (int fudge1 = 0; fudge1 < fudge0.length; fudge1++) {
-        fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        if (fudge0[fudge1] != null) {
+          fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        }
       }
       _fixedArray2 = fudge0;
     }
@@ -169,7 +177,9 @@ public class FixedArrays_Optional implements java.io.Serializable {
     else {
       final int[][] fudge0 = java.util.Arrays.copyOf (builder._fixedArray3, builder._fixedArray3.length);
       for (int fudge1 = 0; fudge1 < fudge0.length; fudge1++) {
-        fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        if (fudge0[fudge1] != null) {
+          fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        }
       }
       _fixedArray3 = fudge0;
     }
@@ -177,7 +187,9 @@ public class FixedArrays_Optional implements java.io.Serializable {
     else {
       final int[][] fudge0 = java.util.Arrays.copyOf (builder._fixedArray4, builder._fixedArray4.length);
       for (int fudge1 = 0; fudge1 < fudge0.length; fudge1++) {
-        fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        if (fudge0[fudge1] != null) {
+          fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        }
       }
       _fixedArray4 = fudge0;
     }
@@ -193,8 +205,10 @@ public class FixedArrays_Optional implements java.io.Serializable {
     else {
       fixedArray2 = java.util.Arrays.copyOf (fixedArray2, fixedArray2.length);
       for (int fudge0 = 0; fudge0 < fixedArray2.length; fudge0++) {
-        fixedArray2[fudge0] = java.util.Arrays.copyOf (fixedArray2[fudge0], fixedArray2[fudge0].length);
-        if (fixedArray2[fudge0].length != 42) throw new IllegalArgumentException ("'fixedArray2[]' is not the expected length (42)");
+        if (fixedArray2[fudge0] != null) {
+          fixedArray2[fudge0] = java.util.Arrays.copyOf (fixedArray2[fudge0], fixedArray2[fudge0].length);
+          if (fixedArray2[fudge0].length != 42) throw new IllegalArgumentException ("'fixedArray2[]' is not the expected length (42)");
+        }
       }
       for (int[] fudge0 : fixedArray2) {
         if (fudge0.length != 42) throw new IllegalArgumentException ("'fixedArray2[]' is not the expected length (42)");
@@ -205,7 +219,9 @@ public class FixedArrays_Optional implements java.io.Serializable {
     else {
       fixedArray3 = java.util.Arrays.copyOf (fixedArray3, fixedArray3.length);
       for (int fudge0 = 0; fudge0 < fixedArray3.length; fudge0++) {
-        fixedArray3[fudge0] = java.util.Arrays.copyOf (fixedArray3[fudge0], fixedArray3[fudge0].length);
+        if (fixedArray3[fudge0] != null) {
+          fixedArray3[fudge0] = java.util.Arrays.copyOf (fixedArray3[fudge0], fixedArray3[fudge0].length);
+        }
       }
       if (fixedArray3.length != 42) throw new IllegalArgumentException ("'fixedArray3' is not the expected length (42)");
       _fixedArray3 = fixedArray3;
@@ -214,8 +230,10 @@ public class FixedArrays_Optional implements java.io.Serializable {
     else {
       fixedArray4 = java.util.Arrays.copyOf (fixedArray4, fixedArray4.length);
       for (int fudge0 = 0; fudge0 < fixedArray4.length; fudge0++) {
-        fixedArray4[fudge0] = java.util.Arrays.copyOf (fixedArray4[fudge0], fixedArray4[fudge0].length);
-        if (fixedArray4[fudge0].length != 42) throw new IllegalArgumentException ("'fixedArray4[]' is not the expected length (42)");
+        if (fixedArray4[fudge0] != null) {
+          fixedArray4[fudge0] = java.util.Arrays.copyOf (fixedArray4[fudge0], fixedArray4[fudge0].length);
+          if (fixedArray4[fudge0].length != 42) throw new IllegalArgumentException ("'fixedArray4[]' is not the expected length (42)");
+        }
       }
       if (fixedArray4.length != 42) throw new IllegalArgumentException ("'fixedArray4' is not the expected length (42)");
       for (int[] fudge0 : fixedArray4) {
@@ -234,7 +252,9 @@ public class FixedArrays_Optional implements java.io.Serializable {
     else {
       final int[][] fudge0 = java.util.Arrays.copyOf (source._fixedArray2, source._fixedArray2.length);
       for (int fudge1 = 0; fudge1 < fudge0.length; fudge1++) {
-        fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        if (fudge0[fudge1] != null) {
+          fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        }
       }
       _fixedArray2 = fudge0;
     }
@@ -242,7 +262,9 @@ public class FixedArrays_Optional implements java.io.Serializable {
     else {
       final int[][] fudge0 = java.util.Arrays.copyOf (source._fixedArray3, source._fixedArray3.length);
       for (int fudge1 = 0; fudge1 < fudge0.length; fudge1++) {
-        fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        if (fudge0[fudge1] != null) {
+          fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        }
       }
       _fixedArray3 = fudge0;
     }
@@ -250,7 +272,9 @@ public class FixedArrays_Optional implements java.io.Serializable {
     else {
       final int[][] fudge0 = java.util.Arrays.copyOf (source._fixedArray4, source._fixedArray4.length);
       for (int fudge1 = 0; fudge1 < fudge0.length; fudge1++) {
-        fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        if (fudge0[fudge1] != null) {
+          fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        }
       }
       _fixedArray4 = fudge0;
     }
@@ -268,21 +292,36 @@ public class FixedArrays_Optional implements java.io.Serializable {
     if (_fixedArray2 != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
       for (int[] fudge2 : _fixedArray2) {
-        fudge1.add (null, null, fudge2);
+        if (fudge2 != null)  {
+          fudge1.add (null, null, fudge2);
+        }
+        else {
+          fudge1.add (null, null, org.fudgemsg.types.IndicatorType.INSTANCE);
+        }
       }
       msg.add (FIXEDARRAY2_KEY, null, fudge1);
     }
     if (_fixedArray3 != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
       for (int[] fudge2 : _fixedArray3) {
-        fudge1.add (null, null, fudge2);
+        if (fudge2 != null)  {
+          fudge1.add (null, null, fudge2);
+        }
+        else {
+          fudge1.add (null, null, org.fudgemsg.types.IndicatorType.INSTANCE);
+        }
       }
       msg.add (FIXEDARRAY3_KEY, null, fudge1);
     }
     if (_fixedArray4 != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
       for (int[] fudge2 : _fixedArray4) {
-        fudge1.add (null, null, fudge2);
+        if (fudge2 != null)  {
+          fudge1.add (null, null, fudge2);
+        }
+        else {
+          fudge1.add (null, null, org.fudgemsg.types.IndicatorType.INSTANCE);
+        }
       }
       msg.add (FIXEDARRAY4_KEY, null, fudge1);
     }

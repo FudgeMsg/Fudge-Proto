@@ -42,6 +42,8 @@ public class UsesExternArray implements java.io.Serializable {
       else {
         foo = java.util.Arrays.copyOf (foo, foo.length);
         for (int fudge0 = 0; fudge0 < foo.length; fudge0++) {
+          if (foo[fudge0] != null) {
+          }
         }
         _foo = foo;
       }
@@ -56,6 +58,8 @@ public class UsesExternArray implements java.io.Serializable {
     else {
       final org.fudgemsg.proto.tests.ExternalMessage[] fudge0 = java.util.Arrays.copyOf (builder._foo, builder._foo.length);
       for (int fudge1 = 0; fudge1 < fudge0.length; fudge1++) {
+        if (fudge0[fudge1] != null) {
+        }
       }
       _foo = fudge0;
     }
@@ -65,6 +69,8 @@ public class UsesExternArray implements java.io.Serializable {
     else {
       foo = java.util.Arrays.copyOf (foo, foo.length);
       for (int fudge0 = 0; fudge0 < foo.length; fudge0++) {
+        if (foo[fudge0] != null) {
+        }
       }
       _foo = foo;
     }
@@ -75,6 +81,8 @@ public class UsesExternArray implements java.io.Serializable {
     else {
       final org.fudgemsg.proto.tests.ExternalMessage[] fudge0 = java.util.Arrays.copyOf (source._foo, source._foo.length);
       for (int fudge1 = 0; fudge1 < fudge0.length; fudge1++) {
+        if (fudge0[fudge1] != null) {
+        }
       }
       _foo = fudge0;
     }
@@ -89,7 +97,12 @@ public class UsesExternArray implements java.io.Serializable {
     if (_foo != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
       for (org.fudgemsg.proto.tests.ExternalMessage fudge2 : _foo) {
-        fudgeContext.objectToFudgeMsg (fudge1, null, null, fudge2);
+        if (fudge2 != null)  {
+          fudgeContext.objectToFudgeMsg (fudge1, null, null, fudge2);
+        }
+        else {
+          fudge1.add (null, null, org.fudgemsg.types.IndicatorType.INSTANCE);
+        }
       }
       msg.add (FOO_KEY, null, fudge1);
     }

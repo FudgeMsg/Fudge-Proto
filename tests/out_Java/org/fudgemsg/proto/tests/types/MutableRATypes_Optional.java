@@ -452,6 +452,8 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
         if (fudge2 == null) throw new NullPointerException ("List element of '_SubMessage' cannot be null");
         fudge2 = java.util.Arrays.copyOf (fudge2, fudge2.length);
         for (int fudge3 = 0; fudge3 < fudge2.length; fudge3++) {
+          if (fudge2[fudge3] != null) {
+          }
         }
         fudge1.set (fudge2);
       }
@@ -598,6 +600,8 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
         org.fudgemsg.proto.tests.types.SubMessage[] fudge2 = fudge1.next ();
         fudge2 = java.util.Arrays.copyOf (fudge2, fudge2.length);
         for (int fudge3 = 0; fudge3 < fudge2.length; fudge3++) {
+          if (fudge2[fudge3] != null) {
+          }
         }
         fudge1.set (fudge2);
       }
@@ -720,14 +724,19 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
       for (org.fudgemsg.proto.tests.types.SubMessage[] fudge1 : __SubMessage) {
         final org.fudgemsg.MutableFudgeFieldContainer fudge2 = fudgeContext.newMessage ();
         for (org.fudgemsg.proto.tests.types.SubMessage fudge3 : fudge1) {
-          final org.fudgemsg.MutableFudgeFieldContainer fudge4 = fudgeContext.newMessage ();
-          Class<?> fudge5 = fudge3.getClass ();
-          while (!org.fudgemsg.proto.tests.types.SubMessage.class.equals (fudge5)) {
-            fudge4.add (null, 0, org.fudgemsg.types.StringFieldType.INSTANCE, fudge5.getName ());
-            fudge5 = fudge5.getSuperclass ();
+          if (fudge3 != null)  {
+            final org.fudgemsg.MutableFudgeFieldContainer fudge4 = fudgeContext.newMessage ();
+            Class<?> fudge5 = fudge3.getClass ();
+            while (!org.fudgemsg.proto.tests.types.SubMessage.class.equals (fudge5)) {
+              fudge4.add (null, 0, org.fudgemsg.types.StringFieldType.INSTANCE, fudge5.getName ());
+              fudge5 = fudge5.getSuperclass ();
+            }
+            fudge3.toFudgeMsg (fudgeContext, fudge4);
+            fudge2.add (null, null, fudge4);
           }
-          fudge3.toFudgeMsg (fudgeContext, fudge4);
-          fudge2.add (null, null, fudge4);
+          else {
+            fudge2.add (null, null, org.fudgemsg.types.IndicatorType.INSTANCE);
+          }
         }
         msg.add (_SUBMESSAGE_KEY, null, fudge2);
       }
@@ -1084,6 +1093,8 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
         if (fudge2 == null) throw new NullPointerException ("List element of '_SubMessage' cannot be null");
         fudge2 = java.util.Arrays.copyOf (fudge2, fudge2.length);
         for (int fudge3 = 0; fudge3 < fudge2.length; fudge3++) {
+          if (fudge2[fudge3] != null) {
+          }
         }
         fudge1.set (fudge2);
       }
@@ -1095,6 +1106,8 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
     if (__SubMessage == null) __SubMessage = new java.util.ArrayList<org.fudgemsg.proto.tests.types.SubMessage[]> ();
     _SubMessage = java.util.Arrays.copyOf (_SubMessage, _SubMessage.length);
     for (int fudge0 = 0; fudge0 < _SubMessage.length; fudge0++) {
+      if (_SubMessage[fudge0] != null) {
+      }
     }
     __SubMessage.add (_SubMessage);
   }

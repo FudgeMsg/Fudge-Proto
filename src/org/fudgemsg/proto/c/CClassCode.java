@@ -388,16 +388,24 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
   private void decodeFieldValue(final IndentWriter writer, final FieldType type, final String source,
       final String target, final Stack<String> unwind, final boolean allowNull) throws IOException {
     if (type instanceof FieldType.MessageType) {
-      writer.write("if (((" + source
-          + ".type != FUDGE_TYPE_FUDGE_MSG) && (status = FUDGE_INVALID_TYPE_COERCION)) || ((status = ");
+      writer.write("if (" + source + ".type == FUDGE_TYPE_FUDGE_MSG)");
+      beginBlock(writer);
+      writer.write("if ((status = ");
       if (type instanceof FieldType.AnonMessageType) {
         writer.write("FudgeMsg_retain (*" + target + " = " + source + ".data.message");
       } else {
         writer.write(getIdentifier(((FieldType.MessageType) type).getMessageDefinition()) + "_fromFudgeMsg (" + source
             + ".data.message, " + target);
       }
-      writer.write(")) != FUDGE_OK))");
+      writer.write(")) != FUDGE_OK)");
       returnAndUnwindStmt(writer, unwind, "status");
+      endBlock(writer);
+      if (allowNull) {
+        writer.write("else if (" + source + ".type == FUDGE_TYPE_INDICATOR) *" + target + " = 0");
+        endStmt(writer);
+      }
+      writer.write("else");
+      returnAndUnwindStmt(writer, unwind, "FUDGE_INVALID_TYPE_COERCION");
     } else if (type instanceof FieldType.ArrayType) {
       final FieldType.ArrayType arrayType = (FieldType.ArrayType) type;
       switch (arrayType.getFudgeFieldType()) {
@@ -481,7 +489,7 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
               }
               sb.append(" while (--" + varI + " >= 0); ");
             }
-            sb.append("free (*" + target + ")");
+            sb.append("free (*" + target + "); *" + target + " = 0");
             unwind.push(sb.toString());
           }
           writer.write("for (" + varI + " = 0; " + varI + " < " + varN + "; " + varI + "++)");
@@ -521,7 +529,7 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
             + "_fromFudgeEncoding (" + source + ".data.string)");
         endStmt(writer);
         if (allowNull) {
-          writer.write("if (" + source + ".type == FUDGE_TYPE_INDICATOR) *" + target + " = 0");
+          writer.write("else if (" + source + ".type == FUDGE_TYPE_INDICATOR) *" + target + " = 0");
           endStmt(writer);
         }
         writer.write("else ");

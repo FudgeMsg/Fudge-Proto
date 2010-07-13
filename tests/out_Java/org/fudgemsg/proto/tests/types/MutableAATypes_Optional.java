@@ -433,7 +433,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       _Boolean = java.util.Arrays.copyOf (_Boolean, _Boolean.length);
       for (int fudge0 = 0; fudge0 < _Boolean.length; fudge0++) {
-        _Boolean[fudge0] = java.util.Arrays.copyOf (_Boolean[fudge0], _Boolean[fudge0].length);
+        if (_Boolean[fudge0] != null) {
+          _Boolean[fudge0] = java.util.Arrays.copyOf (_Boolean[fudge0], _Boolean[fudge0].length);
+        }
       }
       __Boolean = _Boolean;
     }
@@ -441,7 +443,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       _Byte = java.util.Arrays.copyOf (_Byte, _Byte.length);
       for (int fudge0 = 0; fudge0 < _Byte.length; fudge0++) {
-        _Byte[fudge0] = java.util.Arrays.copyOf (_Byte[fudge0], _Byte[fudge0].length);
+        if (_Byte[fudge0] != null) {
+          _Byte[fudge0] = java.util.Arrays.copyOf (_Byte[fudge0], _Byte[fudge0].length);
+        }
       }
       __Byte = _Byte;
     }
@@ -449,7 +453,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       _Double = java.util.Arrays.copyOf (_Double, _Double.length);
       for (int fudge0 = 0; fudge0 < _Double.length; fudge0++) {
-        _Double[fudge0] = java.util.Arrays.copyOf (_Double[fudge0], _Double[fudge0].length);
+        if (_Double[fudge0] != null) {
+          _Double[fudge0] = java.util.Arrays.copyOf (_Double[fudge0], _Double[fudge0].length);
+        }
       }
       __Double = _Double;
     }
@@ -457,7 +463,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       _Float = java.util.Arrays.copyOf (_Float, _Float.length);
       for (int fudge0 = 0; fudge0 < _Float.length; fudge0++) {
-        _Float[fudge0] = java.util.Arrays.copyOf (_Float[fudge0], _Float[fudge0].length);
+        if (_Float[fudge0] != null) {
+          _Float[fudge0] = java.util.Arrays.copyOf (_Float[fudge0], _Float[fudge0].length);
+        }
       }
       __Float = _Float;
     }
@@ -465,7 +473,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       _Indicator = java.util.Arrays.copyOf (_Indicator, _Indicator.length);
       for (int fudge0 = 0; fudge0 < _Indicator.length; fudge0++) {
-        _Indicator[fudge0] = java.util.Arrays.copyOf (_Indicator[fudge0], _Indicator[fudge0].length);
+        if (_Indicator[fudge0] != null) {
+          _Indicator[fudge0] = java.util.Arrays.copyOf (_Indicator[fudge0], _Indicator[fudge0].length);
+        }
       }
       __Indicator = _Indicator;
     }
@@ -473,7 +483,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       _Int = java.util.Arrays.copyOf (_Int, _Int.length);
       for (int fudge0 = 0; fudge0 < _Int.length; fudge0++) {
-        _Int[fudge0] = java.util.Arrays.copyOf (_Int[fudge0], _Int[fudge0].length);
+        if (_Int[fudge0] != null) {
+          _Int[fudge0] = java.util.Arrays.copyOf (_Int[fudge0], _Int[fudge0].length);
+        }
       }
       __Int = _Int;
     }
@@ -481,7 +493,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       _Long = java.util.Arrays.copyOf (_Long, _Long.length);
       for (int fudge0 = 0; fudge0 < _Long.length; fudge0++) {
-        _Long[fudge0] = java.util.Arrays.copyOf (_Long[fudge0], _Long[fudge0].length);
+        if (_Long[fudge0] != null) {
+          _Long[fudge0] = java.util.Arrays.copyOf (_Long[fudge0], _Long[fudge0].length);
+        }
       }
       __Long = _Long;
     }
@@ -489,7 +503,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       _Short = java.util.Arrays.copyOf (_Short, _Short.length);
       for (int fudge0 = 0; fudge0 < _Short.length; fudge0++) {
-        _Short[fudge0] = java.util.Arrays.copyOf (_Short[fudge0], _Short[fudge0].length);
+        if (_Short[fudge0] != null) {
+          _Short[fudge0] = java.util.Arrays.copyOf (_Short[fudge0], _Short[fudge0].length);
+        }
       }
       __Short = _Short;
     }
@@ -497,7 +513,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       _String = java.util.Arrays.copyOf (_String, _String.length);
       for (int fudge0 = 0; fudge0 < _String.length; fudge0++) {
-        _String[fudge0] = java.util.Arrays.copyOf (_String[fudge0], _String[fudge0].length);
+        if (_String[fudge0] != null) {
+          _String[fudge0] = java.util.Arrays.copyOf (_String[fudge0], _String[fudge0].length);
+        }
       }
       __String = _String;
     }
@@ -505,8 +523,12 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       _SubMessage = java.util.Arrays.copyOf (_SubMessage, _SubMessage.length);
       for (int fudge0 = 0; fudge0 < _SubMessage.length; fudge0++) {
-        _SubMessage[fudge0] = java.util.Arrays.copyOf (_SubMessage[fudge0], _SubMessage[fudge0].length);
-        for (int fudge1 = 0; fudge1 < _SubMessage[fudge0].length; fudge1++) {
+        if (_SubMessage[fudge0] != null) {
+          _SubMessage[fudge0] = java.util.Arrays.copyOf (_SubMessage[fudge0], _SubMessage[fudge0].length);
+          for (int fudge1 = 0; fudge1 < _SubMessage[fudge0].length; fudge1++) {
+            if (_SubMessage[fudge0][fudge1] != null) {
+            }
+          }
         }
       }
       __SubMessage = _SubMessage;
@@ -515,7 +537,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       _CustomEnum = java.util.Arrays.copyOf (_CustomEnum, _CustomEnum.length);
       for (int fudge0 = 0; fudge0 < _CustomEnum.length; fudge0++) {
-        _CustomEnum[fudge0] = java.util.Arrays.copyOf (_CustomEnum[fudge0], _CustomEnum[fudge0].length);
+        if (_CustomEnum[fudge0] != null) {
+          _CustomEnum[fudge0] = java.util.Arrays.copyOf (_CustomEnum[fudge0], _CustomEnum[fudge0].length);
+        }
       }
       __CustomEnum = _CustomEnum;
     }
@@ -523,7 +547,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       _Message = java.util.Arrays.copyOf (_Message, _Message.length);
       for (int fudge0 = 0; fudge0 < _Message.length; fudge0++) {
-        _Message[fudge0] = java.util.Arrays.copyOf (_Message[fudge0], _Message[fudge0].length);
+        if (_Message[fudge0] != null) {
+          _Message[fudge0] = java.util.Arrays.copyOf (_Message[fudge0], _Message[fudge0].length);
+        }
       }
       __Message = _Message;
     }
@@ -531,7 +557,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       _Date = java.util.Arrays.copyOf (_Date, _Date.length);
       for (int fudge0 = 0; fudge0 < _Date.length; fudge0++) {
-        _Date[fudge0] = java.util.Arrays.copyOf (_Date[fudge0], _Date[fudge0].length);
+        if (_Date[fudge0] != null) {
+          _Date[fudge0] = java.util.Arrays.copyOf (_Date[fudge0], _Date[fudge0].length);
+        }
       }
       __Date = _Date;
     }
@@ -539,7 +567,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       _DateTime = java.util.Arrays.copyOf (_DateTime, _DateTime.length);
       for (int fudge0 = 0; fudge0 < _DateTime.length; fudge0++) {
-        _DateTime[fudge0] = java.util.Arrays.copyOf (_DateTime[fudge0], _DateTime[fudge0].length);
+        if (_DateTime[fudge0] != null) {
+          _DateTime[fudge0] = java.util.Arrays.copyOf (_DateTime[fudge0], _DateTime[fudge0].length);
+        }
       }
       __DateTime = _DateTime;
     }
@@ -547,7 +577,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       _Time = java.util.Arrays.copyOf (_Time, _Time.length);
       for (int fudge0 = 0; fudge0 < _Time.length; fudge0++) {
-        _Time[fudge0] = java.util.Arrays.copyOf (_Time[fudge0], _Time[fudge0].length);
+        if (_Time[fudge0] != null) {
+          _Time[fudge0] = java.util.Arrays.copyOf (_Time[fudge0], _Time[fudge0].length);
+        }
       }
       __Time = _Time;
     }
@@ -558,7 +590,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       final boolean[][] fudge0 = java.util.Arrays.copyOf (source.__Boolean, source.__Boolean.length);
       for (int fudge1 = 0; fudge1 < fudge0.length; fudge1++) {
-        fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        if (fudge0[fudge1] != null) {
+          fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        }
       }
       __Boolean = fudge0;
     }
@@ -566,7 +600,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       final byte[][] fudge0 = java.util.Arrays.copyOf (source.__Byte, source.__Byte.length);
       for (int fudge1 = 0; fudge1 < fudge0.length; fudge1++) {
-        fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        if (fudge0[fudge1] != null) {
+          fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        }
       }
       __Byte = fudge0;
     }
@@ -574,7 +610,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       final double[][] fudge0 = java.util.Arrays.copyOf (source.__Double, source.__Double.length);
       for (int fudge1 = 0; fudge1 < fudge0.length; fudge1++) {
-        fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        if (fudge0[fudge1] != null) {
+          fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        }
       }
       __Double = fudge0;
     }
@@ -582,7 +620,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       final float[][] fudge0 = java.util.Arrays.copyOf (source.__Float, source.__Float.length);
       for (int fudge1 = 0; fudge1 < fudge0.length; fudge1++) {
-        fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        if (fudge0[fudge1] != null) {
+          fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        }
       }
       __Float = fudge0;
     }
@@ -590,7 +630,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       final boolean[][] fudge0 = java.util.Arrays.copyOf (source.__Indicator, source.__Indicator.length);
       for (int fudge1 = 0; fudge1 < fudge0.length; fudge1++) {
-        fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        if (fudge0[fudge1] != null) {
+          fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        }
       }
       __Indicator = fudge0;
     }
@@ -598,7 +640,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       final int[][] fudge0 = java.util.Arrays.copyOf (source.__Int, source.__Int.length);
       for (int fudge1 = 0; fudge1 < fudge0.length; fudge1++) {
-        fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        if (fudge0[fudge1] != null) {
+          fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        }
       }
       __Int = fudge0;
     }
@@ -606,7 +650,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       final long[][] fudge0 = java.util.Arrays.copyOf (source.__Long, source.__Long.length);
       for (int fudge1 = 0; fudge1 < fudge0.length; fudge1++) {
-        fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        if (fudge0[fudge1] != null) {
+          fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        }
       }
       __Long = fudge0;
     }
@@ -614,7 +660,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       final short[][] fudge0 = java.util.Arrays.copyOf (source.__Short, source.__Short.length);
       for (int fudge1 = 0; fudge1 < fudge0.length; fudge1++) {
-        fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        if (fudge0[fudge1] != null) {
+          fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        }
       }
       __Short = fudge0;
     }
@@ -622,7 +670,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       final String[][] fudge0 = java.util.Arrays.copyOf (source.__String, source.__String.length);
       for (int fudge1 = 0; fudge1 < fudge0.length; fudge1++) {
-        fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        if (fudge0[fudge1] != null) {
+          fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        }
       }
       __String = fudge0;
     }
@@ -630,8 +680,12 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       final org.fudgemsg.proto.tests.types.SubMessage[][] fudge0 = java.util.Arrays.copyOf (source.__SubMessage, source.__SubMessage.length);
       for (int fudge1 = 0; fudge1 < fudge0.length; fudge1++) {
-        fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
-        for (int fudge2 = 0; fudge2 < fudge0[fudge1].length; fudge2++) {
+        if (fudge0[fudge1] != null) {
+          fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+          for (int fudge2 = 0; fudge2 < fudge0[fudge1].length; fudge2++) {
+            if (fudge0[fudge1][fudge2] != null) {
+            }
+          }
         }
       }
       __SubMessage = fudge0;
@@ -640,7 +694,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       final org.fudgemsg.proto.tests.types.CustomEnum[][] fudge0 = java.util.Arrays.copyOf (source.__CustomEnum, source.__CustomEnum.length);
       for (int fudge1 = 0; fudge1 < fudge0.length; fudge1++) {
-        fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        if (fudge0[fudge1] != null) {
+          fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        }
       }
       __CustomEnum = fudge0;
     }
@@ -648,7 +704,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       final org.fudgemsg.FudgeFieldContainer[][] fudge0 = java.util.Arrays.copyOf (source.__Message, source.__Message.length);
       for (int fudge1 = 0; fudge1 < fudge0.length; fudge1++) {
-        fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        if (fudge0[fudge1] != null) {
+          fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        }
       }
       __Message = fudge0;
     }
@@ -656,7 +714,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       final javax.time.calendar.DateProvider[][] fudge0 = java.util.Arrays.copyOf (source.__Date, source.__Date.length);
       for (int fudge1 = 0; fudge1 < fudge0.length; fudge1++) {
-        fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        if (fudge0[fudge1] != null) {
+          fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        }
       }
       __Date = fudge0;
     }
@@ -664,7 +724,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       final javax.time.calendar.DateTimeProvider[][] fudge0 = java.util.Arrays.copyOf (source.__DateTime, source.__DateTime.length);
       for (int fudge1 = 0; fudge1 < fudge0.length; fudge1++) {
-        fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        if (fudge0[fudge1] != null) {
+          fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        }
       }
       __DateTime = fudge0;
     }
@@ -672,7 +734,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       final javax.time.calendar.TimeProvider[][] fudge0 = java.util.Arrays.copyOf (source.__Time, source.__Time.length);
       for (int fudge1 = 0; fudge1 < fudge0.length; fudge1++) {
-        fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        if (fudge0[fudge1] != null) {
+          fudge0[fudge1] = java.util.Arrays.copyOf (fudge0[fudge1], fudge0[fudge1].length);
+        }
       }
       __Time = fudge0;
     }
@@ -690,148 +754,228 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     if (__Boolean != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
       for (boolean[] fudge2 : __Boolean) {
-        final org.fudgemsg.MutableFudgeFieldContainer fudge3 = fudgeContext.newMessage ();
-        for (boolean fudge4 : fudge2) {
-          fudge3.add (null, null, fudge4);
+        if (fudge2 != null)  {
+          final org.fudgemsg.MutableFudgeFieldContainer fudge3 = fudgeContext.newMessage ();
+          for (boolean fudge4 : fudge2) {
+            fudge3.add (null, null, fudge4);
+          }
+          fudge1.add (null, null, fudge3);
         }
-        fudge1.add (null, null, fudge3);
+        else {
+          fudge1.add (null, null, org.fudgemsg.types.IndicatorType.INSTANCE);
+        }
       }
       msg.add (_BOOLEAN_KEY, null, fudge1);
     }
     if (__Byte != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
       for (byte[] fudge2 : __Byte) {
-        fudge1.add (null, null, fudge2);
+        if (fudge2 != null)  {
+          fudge1.add (null, null, fudge2);
+        }
+        else {
+          fudge1.add (null, null, org.fudgemsg.types.IndicatorType.INSTANCE);
+        }
       }
       msg.add (_BYTE_KEY, null, fudge1);
     }
     if (__Double != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
       for (double[] fudge2 : __Double) {
-        fudge1.add (null, null, fudge2);
+        if (fudge2 != null)  {
+          fudge1.add (null, null, fudge2);
+        }
+        else {
+          fudge1.add (null, null, org.fudgemsg.types.IndicatorType.INSTANCE);
+        }
       }
       msg.add (_DOUBLE_KEY, null, fudge1);
     }
     if (__Float != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
       for (float[] fudge2 : __Float) {
-        fudge1.add (null, null, fudge2);
+        if (fudge2 != null)  {
+          fudge1.add (null, null, fudge2);
+        }
+        else {
+          fudge1.add (null, null, org.fudgemsg.types.IndicatorType.INSTANCE);
+        }
       }
       msg.add (_FLOAT_KEY, null, fudge1);
     }
     if (__Indicator != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
       for (boolean[] fudge2 : __Indicator) {
-        final org.fudgemsg.MutableFudgeFieldContainer fudge3 = fudgeContext.newMessage ();
-        for (boolean fudge4 : fudge2) {
-          if (fudge4) fudge3.add (null, null, org.fudgemsg.types.IndicatorType.INSTANCE);
+        if (fudge2 != null)  {
+          final org.fudgemsg.MutableFudgeFieldContainer fudge3 = fudgeContext.newMessage ();
+          for (boolean fudge4 : fudge2) {
+            if (fudge4) fudge3.add (null, null, org.fudgemsg.types.IndicatorType.INSTANCE);
+          }
+          fudge1.add (null, null, fudge3);
         }
-        fudge1.add (null, null, fudge3);
+        else {
+          fudge1.add (null, null, org.fudgemsg.types.IndicatorType.INSTANCE);
+        }
       }
       msg.add (_INDICATOR_KEY, null, fudge1);
     }
     if (__Int != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
       for (int[] fudge2 : __Int) {
-        fudge1.add (null, null, fudge2);
+        if (fudge2 != null)  {
+          fudge1.add (null, null, fudge2);
+        }
+        else {
+          fudge1.add (null, null, org.fudgemsg.types.IndicatorType.INSTANCE);
+        }
       }
       msg.add (_INT_KEY, null, fudge1);
     }
     if (__Long != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
       for (long[] fudge2 : __Long) {
-        fudge1.add (null, null, fudge2);
+        if (fudge2 != null)  {
+          fudge1.add (null, null, fudge2);
+        }
+        else {
+          fudge1.add (null, null, org.fudgemsg.types.IndicatorType.INSTANCE);
+        }
       }
       msg.add (_LONG_KEY, null, fudge1);
     }
     if (__Short != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
       for (short[] fudge2 : __Short) {
-        fudge1.add (null, null, fudge2);
+        if (fudge2 != null)  {
+          fudge1.add (null, null, fudge2);
+        }
+        else {
+          fudge1.add (null, null, org.fudgemsg.types.IndicatorType.INSTANCE);
+        }
       }
       msg.add (_SHORT_KEY, null, fudge1);
     }
     if (__String != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
       for (String[] fudge2 : __String) {
-        final org.fudgemsg.MutableFudgeFieldContainer fudge3 = fudgeContext.newMessage ();
-        for (String fudge4 : fudge2) {
-          fudge3.add (null, null, fudge4);
+        if (fudge2 != null)  {
+          final org.fudgemsg.MutableFudgeFieldContainer fudge3 = fudgeContext.newMessage ();
+          for (String fudge4 : fudge2) {
+            fudge3.add (null, null, fudge4);
+          }
+          fudge1.add (null, null, fudge3);
         }
-        fudge1.add (null, null, fudge3);
+        else {
+          fudge1.add (null, null, org.fudgemsg.types.IndicatorType.INSTANCE);
+        }
       }
       msg.add (_STRING_KEY, null, fudge1);
     }
     if (__SubMessage != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
       for (org.fudgemsg.proto.tests.types.SubMessage[] fudge2 : __SubMessage) {
-        final org.fudgemsg.MutableFudgeFieldContainer fudge3 = fudgeContext.newMessage ();
-        for (org.fudgemsg.proto.tests.types.SubMessage fudge4 : fudge2) {
-          final org.fudgemsg.MutableFudgeFieldContainer fudge5 = fudgeContext.newMessage ();
-          Class<?> fudge6 = fudge4.getClass ();
-          while (!org.fudgemsg.proto.tests.types.SubMessage.class.equals (fudge6)) {
-            fudge5.add (null, 0, org.fudgemsg.types.StringFieldType.INSTANCE, fudge6.getName ());
-            fudge6 = fudge6.getSuperclass ();
+        if (fudge2 != null)  {
+          final org.fudgemsg.MutableFudgeFieldContainer fudge3 = fudgeContext.newMessage ();
+          for (org.fudgemsg.proto.tests.types.SubMessage fudge4 : fudge2) {
+            if (fudge4 != null)  {
+              final org.fudgemsg.MutableFudgeFieldContainer fudge5 = fudgeContext.newMessage ();
+              Class<?> fudge6 = fudge4.getClass ();
+              while (!org.fudgemsg.proto.tests.types.SubMessage.class.equals (fudge6)) {
+                fudge5.add (null, 0, org.fudgemsg.types.StringFieldType.INSTANCE, fudge6.getName ());
+                fudge6 = fudge6.getSuperclass ();
+              }
+              fudge4.toFudgeMsg (fudgeContext, fudge5);
+              fudge3.add (null, null, fudge5);
+            }
+            else {
+              fudge3.add (null, null, org.fudgemsg.types.IndicatorType.INSTANCE);
+            }
           }
-          fudge4.toFudgeMsg (fudgeContext, fudge5);
-          fudge3.add (null, null, fudge5);
+          fudge1.add (null, null, fudge3);
         }
-        fudge1.add (null, null, fudge3);
+        else {
+          fudge1.add (null, null, org.fudgemsg.types.IndicatorType.INSTANCE);
+        }
       }
       msg.add (_SUBMESSAGE_KEY, null, fudge1);
     }
     if (__CustomEnum != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
       for (org.fudgemsg.proto.tests.types.CustomEnum[] fudge2 : __CustomEnum) {
-        final org.fudgemsg.MutableFudgeFieldContainer fudge3 = fudgeContext.newMessage ();
-        for (org.fudgemsg.proto.tests.types.CustomEnum fudge4 : fudge2) {
-          fudge3.add (null, null, fudge4.name ());
+        if (fudge2 != null)  {
+          final org.fudgemsg.MutableFudgeFieldContainer fudge3 = fudgeContext.newMessage ();
+          for (org.fudgemsg.proto.tests.types.CustomEnum fudge4 : fudge2) {
+            fudge3.add (null, null, fudge4.name ());
+          }
+          fudge1.add (null, null, fudge3);
         }
-        fudge1.add (null, null, fudge3);
+        else {
+          fudge1.add (null, null, org.fudgemsg.types.IndicatorType.INSTANCE);
+        }
       }
       msg.add (_CUSTOMENUM_KEY, null, fudge1);
     }
     if (__Message != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
       for (org.fudgemsg.FudgeFieldContainer[] fudge2 : __Message) {
-        final org.fudgemsg.MutableFudgeFieldContainer fudge3 = fudgeContext.newMessage ();
-        for (org.fudgemsg.FudgeFieldContainer fudge4 : fudge2) {
-          fudge3.add (null, null, fudgeContext.newMessage (fudge4));
+        if (fudge2 != null)  {
+          final org.fudgemsg.MutableFudgeFieldContainer fudge3 = fudgeContext.newMessage ();
+          for (org.fudgemsg.FudgeFieldContainer fudge4 : fudge2) {
+            fudge3.add (null, null, fudgeContext.newMessage (fudge4));
+          }
+          fudge1.add (null, null, fudge3);
         }
-        fudge1.add (null, null, fudge3);
+        else {
+          fudge1.add (null, null, org.fudgemsg.types.IndicatorType.INSTANCE);
+        }
       }
       msg.add (_MESSAGE_KEY, null, fudge1);
     }
     if (__Date != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
       for (javax.time.calendar.DateProvider[] fudge2 : __Date) {
-        final org.fudgemsg.MutableFudgeFieldContainer fudge3 = fudgeContext.newMessage ();
-        for (javax.time.calendar.DateProvider fudge4 : fudge2) {
-          fudge3.add (null, null, fudge4);
+        if (fudge2 != null)  {
+          final org.fudgemsg.MutableFudgeFieldContainer fudge3 = fudgeContext.newMessage ();
+          for (javax.time.calendar.DateProvider fudge4 : fudge2) {
+            fudge3.add (null, null, fudge4);
+          }
+          fudge1.add (null, null, fudge3);
         }
-        fudge1.add (null, null, fudge3);
+        else {
+          fudge1.add (null, null, org.fudgemsg.types.IndicatorType.INSTANCE);
+        }
       }
       msg.add (_DATE_KEY, null, fudge1);
     }
     if (__DateTime != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
       for (javax.time.calendar.DateTimeProvider[] fudge2 : __DateTime) {
-        final org.fudgemsg.MutableFudgeFieldContainer fudge3 = fudgeContext.newMessage ();
-        for (javax.time.calendar.DateTimeProvider fudge4 : fudge2) {
-          fudge3.add (null, null, fudge4);
+        if (fudge2 != null)  {
+          final org.fudgemsg.MutableFudgeFieldContainer fudge3 = fudgeContext.newMessage ();
+          for (javax.time.calendar.DateTimeProvider fudge4 : fudge2) {
+            fudge3.add (null, null, fudge4);
+          }
+          fudge1.add (null, null, fudge3);
         }
-        fudge1.add (null, null, fudge3);
+        else {
+          fudge1.add (null, null, org.fudgemsg.types.IndicatorType.INSTANCE);
+        }
       }
       msg.add (_DATETIME_KEY, null, fudge1);
     }
     if (__Time != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
       for (javax.time.calendar.TimeProvider[] fudge2 : __Time) {
-        final org.fudgemsg.MutableFudgeFieldContainer fudge3 = fudgeContext.newMessage ();
-        for (javax.time.calendar.TimeProvider fudge4 : fudge2) {
-          fudge3.add (null, null, fudge4);
+        if (fudge2 != null)  {
+          final org.fudgemsg.MutableFudgeFieldContainer fudge3 = fudgeContext.newMessage ();
+          for (javax.time.calendar.TimeProvider fudge4 : fudge2) {
+            fudge3.add (null, null, fudge4);
+          }
+          fudge1.add (null, null, fudge3);
         }
-        fudge1.add (null, null, fudge3);
+        else {
+          fudge1.add (null, null, org.fudgemsg.types.IndicatorType.INSTANCE);
+        }
       }
       msg.add (_TIME_KEY, null, fudge1);
     }
@@ -858,7 +1002,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       _Boolean = java.util.Arrays.copyOf (_Boolean, _Boolean.length);
       for (int fudge0 = 0; fudge0 < _Boolean.length; fudge0++) {
-        _Boolean[fudge0] = java.util.Arrays.copyOf (_Boolean[fudge0], _Boolean[fudge0].length);
+        if (_Boolean[fudge0] != null) {
+          _Boolean[fudge0] = java.util.Arrays.copyOf (_Boolean[fudge0], _Boolean[fudge0].length);
+        }
       }
       __Boolean = _Boolean;
     }
@@ -871,7 +1017,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       _Byte = java.util.Arrays.copyOf (_Byte, _Byte.length);
       for (int fudge0 = 0; fudge0 < _Byte.length; fudge0++) {
-        _Byte[fudge0] = java.util.Arrays.copyOf (_Byte[fudge0], _Byte[fudge0].length);
+        if (_Byte[fudge0] != null) {
+          _Byte[fudge0] = java.util.Arrays.copyOf (_Byte[fudge0], _Byte[fudge0].length);
+        }
       }
       __Byte = _Byte;
     }
@@ -884,7 +1032,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       _Double = java.util.Arrays.copyOf (_Double, _Double.length);
       for (int fudge0 = 0; fudge0 < _Double.length; fudge0++) {
-        _Double[fudge0] = java.util.Arrays.copyOf (_Double[fudge0], _Double[fudge0].length);
+        if (_Double[fudge0] != null) {
+          _Double[fudge0] = java.util.Arrays.copyOf (_Double[fudge0], _Double[fudge0].length);
+        }
       }
       __Double = _Double;
     }
@@ -897,7 +1047,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       _Float = java.util.Arrays.copyOf (_Float, _Float.length);
       for (int fudge0 = 0; fudge0 < _Float.length; fudge0++) {
-        _Float[fudge0] = java.util.Arrays.copyOf (_Float[fudge0], _Float[fudge0].length);
+        if (_Float[fudge0] != null) {
+          _Float[fudge0] = java.util.Arrays.copyOf (_Float[fudge0], _Float[fudge0].length);
+        }
       }
       __Float = _Float;
     }
@@ -910,7 +1062,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       _Indicator = java.util.Arrays.copyOf (_Indicator, _Indicator.length);
       for (int fudge0 = 0; fudge0 < _Indicator.length; fudge0++) {
-        _Indicator[fudge0] = java.util.Arrays.copyOf (_Indicator[fudge0], _Indicator[fudge0].length);
+        if (_Indicator[fudge0] != null) {
+          _Indicator[fudge0] = java.util.Arrays.copyOf (_Indicator[fudge0], _Indicator[fudge0].length);
+        }
       }
       __Indicator = _Indicator;
     }
@@ -923,7 +1077,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       _Int = java.util.Arrays.copyOf (_Int, _Int.length);
       for (int fudge0 = 0; fudge0 < _Int.length; fudge0++) {
-        _Int[fudge0] = java.util.Arrays.copyOf (_Int[fudge0], _Int[fudge0].length);
+        if (_Int[fudge0] != null) {
+          _Int[fudge0] = java.util.Arrays.copyOf (_Int[fudge0], _Int[fudge0].length);
+        }
       }
       __Int = _Int;
     }
@@ -936,7 +1092,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       _Long = java.util.Arrays.copyOf (_Long, _Long.length);
       for (int fudge0 = 0; fudge0 < _Long.length; fudge0++) {
-        _Long[fudge0] = java.util.Arrays.copyOf (_Long[fudge0], _Long[fudge0].length);
+        if (_Long[fudge0] != null) {
+          _Long[fudge0] = java.util.Arrays.copyOf (_Long[fudge0], _Long[fudge0].length);
+        }
       }
       __Long = _Long;
     }
@@ -949,7 +1107,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       _Short = java.util.Arrays.copyOf (_Short, _Short.length);
       for (int fudge0 = 0; fudge0 < _Short.length; fudge0++) {
-        _Short[fudge0] = java.util.Arrays.copyOf (_Short[fudge0], _Short[fudge0].length);
+        if (_Short[fudge0] != null) {
+          _Short[fudge0] = java.util.Arrays.copyOf (_Short[fudge0], _Short[fudge0].length);
+        }
       }
       __Short = _Short;
     }
@@ -962,7 +1122,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       _String = java.util.Arrays.copyOf (_String, _String.length);
       for (int fudge0 = 0; fudge0 < _String.length; fudge0++) {
-        _String[fudge0] = java.util.Arrays.copyOf (_String[fudge0], _String[fudge0].length);
+        if (_String[fudge0] != null) {
+          _String[fudge0] = java.util.Arrays.copyOf (_String[fudge0], _String[fudge0].length);
+        }
       }
       __String = _String;
     }
@@ -975,8 +1137,12 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       _SubMessage = java.util.Arrays.copyOf (_SubMessage, _SubMessage.length);
       for (int fudge0 = 0; fudge0 < _SubMessage.length; fudge0++) {
-        _SubMessage[fudge0] = java.util.Arrays.copyOf (_SubMessage[fudge0], _SubMessage[fudge0].length);
-        for (int fudge1 = 0; fudge1 < _SubMessage[fudge0].length; fudge1++) {
+        if (_SubMessage[fudge0] != null) {
+          _SubMessage[fudge0] = java.util.Arrays.copyOf (_SubMessage[fudge0], _SubMessage[fudge0].length);
+          for (int fudge1 = 0; fudge1 < _SubMessage[fudge0].length; fudge1++) {
+            if (_SubMessage[fudge0][fudge1] != null) {
+            }
+          }
         }
       }
       __SubMessage = _SubMessage;
@@ -990,7 +1156,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       _CustomEnum = java.util.Arrays.copyOf (_CustomEnum, _CustomEnum.length);
       for (int fudge0 = 0; fudge0 < _CustomEnum.length; fudge0++) {
-        _CustomEnum[fudge0] = java.util.Arrays.copyOf (_CustomEnum[fudge0], _CustomEnum[fudge0].length);
+        if (_CustomEnum[fudge0] != null) {
+          _CustomEnum[fudge0] = java.util.Arrays.copyOf (_CustomEnum[fudge0], _CustomEnum[fudge0].length);
+        }
       }
       __CustomEnum = _CustomEnum;
     }
@@ -1003,7 +1171,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       _Message = java.util.Arrays.copyOf (_Message, _Message.length);
       for (int fudge0 = 0; fudge0 < _Message.length; fudge0++) {
-        _Message[fudge0] = java.util.Arrays.copyOf (_Message[fudge0], _Message[fudge0].length);
+        if (_Message[fudge0] != null) {
+          _Message[fudge0] = java.util.Arrays.copyOf (_Message[fudge0], _Message[fudge0].length);
+        }
       }
       __Message = _Message;
     }
@@ -1016,7 +1186,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       _Date = java.util.Arrays.copyOf (_Date, _Date.length);
       for (int fudge0 = 0; fudge0 < _Date.length; fudge0++) {
-        _Date[fudge0] = java.util.Arrays.copyOf (_Date[fudge0], _Date[fudge0].length);
+        if (_Date[fudge0] != null) {
+          _Date[fudge0] = java.util.Arrays.copyOf (_Date[fudge0], _Date[fudge0].length);
+        }
       }
       __Date = _Date;
     }
@@ -1029,7 +1201,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       _DateTime = java.util.Arrays.copyOf (_DateTime, _DateTime.length);
       for (int fudge0 = 0; fudge0 < _DateTime.length; fudge0++) {
-        _DateTime[fudge0] = java.util.Arrays.copyOf (_DateTime[fudge0], _DateTime[fudge0].length);
+        if (_DateTime[fudge0] != null) {
+          _DateTime[fudge0] = java.util.Arrays.copyOf (_DateTime[fudge0], _DateTime[fudge0].length);
+        }
       }
       __DateTime = _DateTime;
     }
@@ -1042,7 +1216,9 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
     else {
       _Time = java.util.Arrays.copyOf (_Time, _Time.length);
       for (int fudge0 = 0; fudge0 < _Time.length; fudge0++) {
-        _Time[fudge0] = java.util.Arrays.copyOf (_Time[fudge0], _Time[fudge0].length);
+        if (_Time[fudge0] != null) {
+          _Time[fudge0] = java.util.Arrays.copyOf (_Time[fudge0], _Time[fudge0].length);
+        }
       }
       __Time = _Time;
     }

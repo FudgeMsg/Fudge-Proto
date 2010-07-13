@@ -78,6 +78,8 @@ public class MutableATypes_Required implements java.io.Serializable, ATypesBase 
     else {
       _SubMessage = java.util.Arrays.copyOf (_SubMessage, _SubMessage.length);
       for (int fudge0 = 0; fudge0 < _SubMessage.length; fudge0++) {
+        if (_SubMessage[fudge0] != null) {
+        }
       }
       __SubMessage = _SubMessage;
     }
@@ -368,6 +370,8 @@ public class MutableATypes_Required implements java.io.Serializable, ATypesBase 
     else {
       final org.fudgemsg.proto.tests.types.SubMessage[] fudge0 = java.util.Arrays.copyOf (source.__SubMessage, source.__SubMessage.length);
       for (int fudge1 = 0; fudge1 < fudge0.length; fudge1++) {
+        if (fudge0[fudge1] != null) {
+        }
       }
       __SubMessage = fudge0;
     }
@@ -444,14 +448,19 @@ public class MutableATypes_Required implements java.io.Serializable, ATypesBase 
     if (__SubMessage != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
       for (org.fudgemsg.proto.tests.types.SubMessage fudge2 : __SubMessage) {
-        final org.fudgemsg.MutableFudgeFieldContainer fudge3 = fudgeContext.newMessage ();
-        Class<?> fudge4 = fudge2.getClass ();
-        while (!org.fudgemsg.proto.tests.types.SubMessage.class.equals (fudge4)) {
-          fudge3.add (null, 0, org.fudgemsg.types.StringFieldType.INSTANCE, fudge4.getName ());
-          fudge4 = fudge4.getSuperclass ();
+        if (fudge2 != null)  {
+          final org.fudgemsg.MutableFudgeFieldContainer fudge3 = fudgeContext.newMessage ();
+          Class<?> fudge4 = fudge2.getClass ();
+          while (!org.fudgemsg.proto.tests.types.SubMessage.class.equals (fudge4)) {
+            fudge3.add (null, 0, org.fudgemsg.types.StringFieldType.INSTANCE, fudge4.getName ());
+            fudge4 = fudge4.getSuperclass ();
+          }
+          fudge2.toFudgeMsg (fudgeContext, fudge3);
+          fudge1.add (null, null, fudge3);
         }
-        fudge2.toFudgeMsg (fudgeContext, fudge3);
-        fudge1.add (null, null, fudge3);
+        else {
+          fudge1.add (null, null, org.fudgemsg.types.IndicatorType.INSTANCE);
+        }
       }
       msg.add (_SUBMESSAGE_KEY, null, fudge1);
     }
@@ -594,6 +603,8 @@ public class MutableATypes_Required implements java.io.Serializable, ATypesBase 
     else {
       _SubMessage = java.util.Arrays.copyOf (_SubMessage, _SubMessage.length);
       for (int fudge0 = 0; fudge0 < _SubMessage.length; fudge0++) {
+        if (_SubMessage[fudge0] != null) {
+        }
       }
       __SubMessage = _SubMessage;
     }

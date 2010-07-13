@@ -379,11 +379,15 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         writer.write ("for (int " + lv + " = 0; " + lv + " < " + source + ".length; " + lv + "++)");
         beginBlock (writer); // for
         final String sourceElement = source + "[" + lv + "]";
+        writer.write("if (" + sourceElement + " != null)");
+        beginBlock(writer); // if
         final String newSourceElement = writeDefensiveCopy (writer, baseType, sourceElement, false, displayName + "[]", lvCount + 1, includeChecks);
         if (!sourceElement.equals (newSourceElement)) {
+          // TODO: if this has happened then our whole loop will be empty, so we should detect the conditions which cause this immediately after the "isBigObject" check
           writer.write (sourceElement + " = " + newSourceElement);
           endStmt (writer);
         }
+        endBlock(writer); // if
         endBlock (writer); // for
       }
       if (includeChecks) {
@@ -642,46 +646,60 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         value = value + ".name ()";
       }
       break;
-    case FudgeTypeDictionary.FUDGE_MSG_TYPE_ID :
-      if (type instanceof FieldType.ArrayType) {
-        final String temp1 = writer.localVariable (CLASS_MUTABLEFUDGEFIELDCONTAINER, true, "fudgeContext.newMessage ()");
-        endStmt (writer);
-        final FieldType baseType = ((FieldType.ArrayType)type).getBaseType ();
-        final String temp2 = writer.forEach (typeString (baseType, false), value);
-        writer = beginBlock (writer);
-        writeAddToFudgeMsg (writer, temp1, "null", "null", temp2, baseType);
-        writer = endBlock (writer);
-        value = temp1;
-      } else if (type instanceof FieldType.MessageType) {
-        if (type instanceof FieldType.AnonMessageType) {
-          value = "fudgeContext.newMessage (" + value + ")";
-        } else {
-          final MessageDefinition messageDefinition = ((FieldType.MessageType)type).getMessageDefinition ();
-          if (messageDefinition.isExternal ()) {
-            writer.invoke ("fudgeContext", "objectToFudgeMsg", msg + ", " + name + ", " + ordinal + ", " + value);
-            endStmt (writer);
-            return;
-          } else {
-            final String temp1 = writer.localVariable (CLASS_MUTABLEFUDGEFIELDCONTAINER, true, "fudgeContext.newMessage ()");
-            endStmt (writer);
-            final String temp2 = writer.localVariable ("Class<?>", false, value + ".getClass ()");
-            endStmt (writer);
-            writer.whileBool ("!" + messageDefinition.getIdentifier () + ".class.equals (" + temp2 + ")");
-            writer = beginBlock (writer); // while
-            writer.invoke (temp1, "add", "null, 0, " + CLASS_FUDGESTRINGTYPE + ".INSTANCE, " + temp2 + ".getName ()");
-            endStmt (writer);
-            writer.assignment (temp2, temp2 + ".getSuperclass ()");
-            endStmt (writer);
-            writer = endBlock (writer); // while
-            writer.invoke (value, "toFudgeMsg", "fudgeContext, " + temp1);
-            endStmt (writer);
-            value = temp1;
+      case FudgeTypeDictionary.FUDGE_MSG_TYPE_ID:
+        if (type instanceof FieldType.ArrayType) {
+          final String temp1 = writer.localVariable(CLASS_MUTABLEFUDGEFIELDCONTAINER, true,
+              "fudgeContext.newMessage ()");
+          endStmt(writer);
+          final FieldType baseType = ((FieldType.ArrayType) type).getBaseType();
+          final String temp2 = writer.forEach(typeString(baseType, false), value);
+          writer = beginBlock(writer); // foreach
+          if (isBigObject(baseType)) {
+            writer.ifNotNull(temp2);
+            writer = beginBlock(writer); // if
           }
+          writeAddToFudgeMsg(writer, temp1, "null", "null", temp2, baseType);
+          if (isBigObject(baseType)) {
+            writer = endBlock(writer); // if
+            writer.getWriter().write("else");
+            writer = beginBlock(writer); // else
+            writer.invoke(temp1, "add", "null, null, " + VALUE_INDICATOR);
+            endStmt(writer);
+            writer = endBlock(writer); // else
+          }
+          writer = endBlock(writer); // foreach
+          value = temp1;
+        } else if (type instanceof FieldType.MessageType) {
+          if (type instanceof FieldType.AnonMessageType) {
+            value = "fudgeContext.newMessage (" + value + ")";
+          } else {
+            final MessageDefinition messageDefinition = ((FieldType.MessageType) type).getMessageDefinition();
+            if (messageDefinition.isExternal()) {
+              writer.invoke("fudgeContext", "objectToFudgeMsg", msg + ", " + name + ", " + ordinal + ", " + value);
+              endStmt(writer);
+              return;
+            } else {
+              final String temp1 = writer.localVariable(CLASS_MUTABLEFUDGEFIELDCONTAINER, true,
+                  "fudgeContext.newMessage ()");
+              endStmt(writer);
+              final String temp2 = writer.localVariable("Class<?>", false, value + ".getClass ()");
+              endStmt(writer);
+              writer.whileBool("!" + messageDefinition.getIdentifier() + ".class.equals (" + temp2 + ")");
+              writer = beginBlock(writer); // while
+              writer.invoke(temp1, "add", "null, 0, " + CLASS_FUDGESTRINGTYPE + ".INSTANCE, " + temp2 + ".getName ()");
+              endStmt(writer);
+              writer.assignment(temp2, temp2 + ".getSuperclass ()");
+              endStmt(writer);
+              writer = endBlock(writer); // while
+              writer.invoke(value, "toFudgeMsg", "fudgeContext, " + temp1);
+              endStmt(writer);
+              value = temp1;
+            }
+          }
+        } else {
+          throw new IllegalStateException("type '" + type + "' is not an expected submessage type");
         }
-      } else {
-        throw new IllegalStateException ("type '" + type + "' is not an expected submessage type");
-      }
-      break;
+        break;
     }
     writer.invoke (msg, "add", name + ", " + ordinal + ", " + value);
     endStmt (writer);
