@@ -402,28 +402,31 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
   
   private void walkMessageNode (final Compiler.Context context, final AST node) {
     final List<AST> children = node.getChildNodes ();
-    final String identifier = children.get (0).getNodeValue ();
+    final String identifier = children.get(0).getNodeValue();
     final MessageDefinition definition = (MessageDefinition)context.getDefinition (identifier);
-    for (int i = 1; i < children.size (); i++) {
+    for (int i = 1; i < children.size(); i++) {
       final AST element = children.get (i);
       switch (element.getNodeLabel ()) {
-      case ProtoLexer.ENUM:
-        walkEnumNode (context, element);
-        break;
-      case ProtoLexer.EXTENDS :
-        walkExtendsNode (context, definition, element);
-        break;
-      case ProtoLexer.FIELD:
-        walkFieldNode (context, definition, element);
-        break;
-      case ProtoLexer.MESSAGE:
-        walkMessageNode (context, element);
-        break;
-      case ProtoLexer.USES :
-        walkUsesNode (context, definition, element);
-        break;
-      default:
-        throw new IllegalStateException("invalid element type '" + element.getNodeLabel() + "'");
+        case ProtoLexer.ABSTRACT:
+          definition.setAbstract();
+          break;
+        case ProtoLexer.ENUM:
+          walkEnumNode(context, element);
+          break;
+        case ProtoLexer.EXTENDS:
+          walkExtendsNode(context, definition, element);
+          break;
+        case ProtoLexer.FIELD:
+          walkFieldNode(context, definition, element);
+          break;
+        case ProtoLexer.MESSAGE:
+          walkMessageNode(context, element);
+          break;
+        case ProtoLexer.USES:
+          walkUsesNode(context, definition, element);
+          break;
+        default:
+          throw new IllegalStateException("invalid element type '" + element.getNodeLabel() + "'");
       }
     }
   }

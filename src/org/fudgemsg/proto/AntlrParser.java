@@ -17,6 +17,7 @@ package org.fudgemsg.proto;
 
 import java.io.IOException;
 import java.util.List;
+
 import org.antlr.runtime.ANTLRReaderStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
@@ -67,7 +68,7 @@ import org.fudgemsg.proto.antlr.ProtoParser;
       final AST root = (AST)parser.root ().getTree ();
 
       //System.out.println (source);
-      //debug_print_tree (root, "");
+      //debug_print_tree(root, "");
 
       // Extract all top level entries (root_object) for the next compilation phase
       final List<AST> root_objects = root.getChildNodes ();

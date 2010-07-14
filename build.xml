@@ -22,30 +22,26 @@
 	<target name="clean-tests-cs" description="--> delete the output from C# test scripts"><delete dir="${tests.dir}/out_C#" /></target>
 	<target name="clean-tests-cpp" description="--> delete the output from C++ test scripts"><delete dir="${tests.dir}/out_C++" /></target>
 	<target name="clean-tests-default" description="--> delete the output from default test scripts"><delete dir="${tests.dir}/out_default" /></target>
-	<target name="clean-tests-java" description="--> delete the output from Java test scripts"><delete dir="${tests.dir}/out_Java/*" /></target>
+	<target name="clean-tests-java" description="--> delete the output from Java test scripts"><delete dir="${tests.dir}/out_Java" /></target>
 	<target name="clean-tests-proto" description="--> delete the output from .proto test scripts"><delete dir="${tests.dir}/out_proto" /></target>
 
 	<target name="compile-proto-java"
 		depends="tests"
 		description="--> compile the output of the Java code generator">
-		<javac	srcdir="${tests.dir}/out_Java"
-			destdir="${tests.dir}/out_Java"
-			classpathref="lib.path.id"
-			debug="${build.debug}"
-			optimize="${build.optimize}"
-			verbose="${build.verbose}"
-			listfiles="${build.listfiles}" />
-	</target>
-
-	<target name="test-proto-java" depends="compile-proto-java"
-		description="--> test the output of the Java code generator">
 		<javac	srcdir="${tests.dir}/unit_Java"
 			destdir="${tests.dir}/out_Java"
 			classpathref="lib.path.id"
 			debug="${build.debug}"
 			optimize="${build.optimize}"
 			verbose="${build.verbose}"
-			listfiles="${build.listfiles}" />
+			listfiles="${build.listfiles}">
+			<src path="${tests.dir}/unit_Java" />
+			<src path="${tests.dir}/out_Java" />
+		</javac>
+	</target>
+
+	<target name="test-proto-java" depends="compile-proto-java"
+		description="--> test the output of the Java code generator">
 		<mkdir dir="${tests.dir}/out_Java/xml" />
 		<junit printSummary="true" fork="true" forkmode="once">
 			<classpath>

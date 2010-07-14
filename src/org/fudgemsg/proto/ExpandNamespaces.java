@@ -93,15 +93,24 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
   private AST walkMessageNode (final Compiler.Context context, final AST node, final String namespace, final MessageDefinition outerMessage) {
     final List<AST> children = node.getChildNodes ();
     final String localNamespace;
-    final AST identifier = children.get (0);
+    AST identifier = children.get(0);
+    boolean isAbstract = false;
+    if (identifier.getNodeLabel() == ProtoLexer.ABSTRACT) {
+      isAbstract = true;
+      children.remove(0);
+      identifier = children.get(0);
+    }
     if (namespace.length () != 0) {
-      children.set (0, new ASTNode (identifier, localNamespace = namespace + "." + identifier.getNodeValue ()));
+      children.set(0, new ASTNode(identifier, localNamespace = namespace + "." + identifier.getNodeValue()));
     } else {
       localNamespace = identifier.getNodeValue ();
     }
     final MessageDefinition messageDefinition = outerMessage.createMessageDefinition (localNamespace, identifier.getCodePosition (), identifier.getCodePosition ().getSource ().isCompilationTarget ()); 
     context.addDefinition (messageDefinition);
-    for (int i = 1; i < children.size (); i++) {
+    if (isAbstract) {
+      messageDefinition.setAbstract();
+    }
+    for (int i = 1; i < children.size(); i++) {
       final AST element = children.get (i);
       switch (element.getNodeLabel ()) {
       case ProtoLexer.BINDING :

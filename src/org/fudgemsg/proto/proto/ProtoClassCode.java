@@ -116,6 +116,9 @@ class ProtoClassCode extends ImplementationlessClassCode {
       writeExternalReferences (writer, message, processed);
     }
     beginNSDeclaration (writer, message);
+    if (message.isAbstract()) {
+      writer.write("abstract ");
+    }
     writer.write ("message " + message.getName ());
     if (message.getExtends () != null) {
       writer.write (" extends " + message.getExtends ().getIdentifier ());

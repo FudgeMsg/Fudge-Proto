@@ -21,6 +21,7 @@ options {
 }
 
 tokens {
+  ABSTRACT    = 'abstract';
 	ARRAY;
 	BINDING			= 'binding';
 	DEFAULT			= 'default';
@@ -119,7 +120,8 @@ STRING : '"' ( options { greedy = false; } : ('\\'.|.) )* '"' ;
 WHITESPACE : (' '|'\t'|'\r'|'\n')+ { skip (); } ;
 
 anyword
-  : BINDING
+  : ABSTRACT
+  | BINDING
   | DEFAULT
   | ENUM
   | EXTENDS
@@ -244,7 +246,7 @@ literal
 	| STRING
 	;
 
-message : MESSAGE^ IDENTIFIER message_uses? message_extends? '{'! message_element* '}'! ;
+message : ABSTRACT? MESSAGE^ IDENTIFIER message_uses? message_extends? '{'! message_element* '}'! ;
 
 message_element
 	: message_enum
@@ -261,7 +263,7 @@ message_field
   | field_modifier+ MESSAGE dimension+ IDENTIFIER field_ordinal? field_constraints? ';' -> ^(FIELD ^(ARRAY MESSAGE dimension+) IDENTIFIER field_modifier* field_ordinal? field_constraints?)
   ;
 
-message_submsg : MESSAGE^ IDENTIFIER '{'! message_element* '}'! ;
+message_submsg : ABSTRACT? MESSAGE^ IDENTIFIER '{'! message_element* '}'! ;
 
 // This hasn't been tested and isn't supported within the compiler; it's for warning if a message uses fields that aren't in given taxonomies
 message_uses : USES^ fullidentifier (','! fullidentifier)* ;

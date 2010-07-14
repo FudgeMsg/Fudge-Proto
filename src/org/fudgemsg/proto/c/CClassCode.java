@@ -135,14 +135,16 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
       }
     }
     // Message struct operators
-    writer.write("void " + getIdentifier(message) + "_free (struct _" + getIdentifier(message) + " *ptr)");
-    endStmt(writer);
-    writer.write("FudgeStatus " + getIdentifier(message) + "_fromFudgeMsg (FudgeMsg msg, struct _"
-        + getIdentifier(message) + " **ptr)");
-    endStmt(writer);
-    writer.write("FudgeStatus " + getIdentifier(message) + "_toFudgeMsg (struct _" + getIdentifier(message)
-        + " *ptr, FudgeMsg *msg)");
-    endStmt(writer);
+    if (!message.isAbstract()) {
+      writer.write("void " + getIdentifier(message) + "_free (struct _" + getIdentifier(message) + " *ptr)");
+      endStmt(writer);
+      writer.write("FudgeStatus " + getIdentifier(message) + "_fromFudgeMsg (FudgeMsg msg, struct _"
+          + getIdentifier(message) + " **ptr)");
+      endStmt(writer);
+      writer.write("FudgeStatus " + getIdentifier(message) + "_toFudgeMsg (struct _" + getIdentifier(message)
+          + " *ptr, FudgeMsg *msg)");
+      endStmt(writer);
+    }
     writer.write("FudgeStatus " + getIdentifier(message) + "_addClass (FudgeMsg msg)");
     endStmt(writer);
     writer.write("fudge_bool " + getIdentifier(message) + "_isClass (FudgeMsg msg)");
@@ -190,12 +192,14 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
           writer.newLine();
         }
       }
-      writer.write("#define " + message.getName() + "_free " + getIdentifier(message) + "_free");
-      writer.newLine();
-      writer.write("#define " + message.getName() + "_fromFudgeMsg " + getIdentifier(message) + "_fromFudgeMsg");
-      writer.newLine();
-      writer.write("#define " + message.getName() + "_toFudgeMsg " + getIdentifier(message) + "_toFudgeMsg");
-      writer.newLine();
+      if (!message.isAbstract()) {
+        writer.write("#define " + message.getName() + "_free " + getIdentifier(message) + "_free");
+        writer.newLine();
+        writer.write("#define " + message.getName() + "_fromFudgeMsg " + getIdentifier(message) + "_fromFudgeMsg");
+        writer.newLine();
+        writer.write("#define " + message.getName() + "_toFudgeMsg " + getIdentifier(message) + "_toFudgeMsg");
+        writer.newLine();
+      }
       writer.write("#define " + message.getName() + "_addClass " + getIdentifier(message) + "_addClass");
       writer.newLine();
       writer.write("#define " + message.getName() + "_isClass " + getIdentifier(message) + "_isClass");
@@ -1226,16 +1230,18 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
   }
 
   private void writeMessageFree(final IndentWriter writer, final MessageDefinition message) throws IOException {
-    // Public free function
-    writer.write("void " + getIdentifier(message) + "_free (struct _" + getIdentifier(message) + " *ptr)");
-    beginBlock(writer); // free
-    writer.write("if (!ptr) return");
-    endStmt(writer);
-    writer.write(getIdentifier(message) + "_freeImpl (ptr)");
-    endStmt(writer);
-    writer.write("free (ptr)");
-    endStmt(writer);
-    endBlock(writer); // free
+    if (!message.isAbstract()) {
+      // Public free function
+      writer.write("void " + getIdentifier(message) + "_free (struct _" + getIdentifier(message) + " *ptr)");
+      beginBlock(writer); // free
+      writer.write("if (!ptr) return");
+      endStmt(writer);
+      writer.write(getIdentifier(message) + "_freeImpl (ptr)");
+      endStmt(writer);
+      writer.write("free (ptr)");
+      endStmt(writer);
+      endBlock(writer); // free
+    }
     // Private free function
     writer.write("void " + getIdentifier(message) + "_freeImpl (struct _" + getIdentifier(message) + " *ptr)");
     beginBlock(writer); // free
@@ -1271,39 +1277,41 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
   }
 
   private void writeMessageFromFudgeMsg(final IndentWriter writer, final MessageDefinition message) throws IOException {
-    // Public fromFudgeMsg function
-    writer.write("FudgeStatus " + getIdentifier(message) + "_fromFudgeMsg (FudgeMsg msg, struct _"
-        + getIdentifier(message) + " **ptr)");
-    beginBlock(writer); // fromFudgeMsg
-    writer.write("FudgeStatus status");
-    endStmt(writer);
-    writer.write("if (!msg || !ptr) return FUDGE_NULL_POINTER");
-    endStmt(writer);
-    writer.write("*ptr = (struct _" + getIdentifier(message) + "*)malloc (sizeof (struct _" + getIdentifier(message)
-        + "))");
-    endStmt(writer);
-    writer.write("if (!*ptr) return FUDGE_OUT_OF_MEMORY");
-    endStmt(writer);
-    writer.write("memset (*ptr, 0, sizeof (struct _" + getIdentifier(message) + "))");
-    endStmt(writer);
-    writer.write("(*ptr)->");
-    MessageDefinition parent = message.getExtends();
-    while (parent != null) {
-      writer.write("fudgeParent.");
-      parent = parent.getExtends();
+    if (!message.isAbstract()) {
+      // Public fromFudgeMsg function
+      writer.write("FudgeStatus " + getIdentifier(message) + "_fromFudgeMsg (FudgeMsg msg, struct _"
+          + getIdentifier(message) + " **ptr)");
+      beginBlock(writer); // fromFudgeMsg
+      writer.write("FudgeStatus status");
+      endStmt(writer);
+      writer.write("if (!msg || !ptr) return FUDGE_NULL_POINTER");
+      endStmt(writer);
+      writer.write("*ptr = (struct _" + getIdentifier(message) + "*)malloc (sizeof (struct _" + getIdentifier(message)
+          + "))");
+      endStmt(writer);
+      writer.write("if (!*ptr) return FUDGE_OUT_OF_MEMORY");
+      endStmt(writer);
+      writer.write("memset (*ptr, 0, sizeof (struct _" + getIdentifier(message) + "))");
+      endStmt(writer);
+      writer.write("(*ptr)->");
+      MessageDefinition parent = message.getExtends();
+      while (parent != null) {
+        writer.write("fudgeParent.");
+        parent = parent.getExtends();
+      }
+      writer.write("fudgeStructSize = sizeof (struct _" + getIdentifier(message) + ")");
+      endStmt(writer);
+      writer.write("if ((status = " + getIdentifier(message) + "_fromFudgeMsgImpl (msg, *ptr)) != FUDGE_OK)");
+      beginBlock(writer); // if
+      writer.write(getIdentifier(message) + "_free (*ptr)");
+      endStmt(writer);
+      writer.write("*ptr = 0");
+      endStmt(writer);
+      endBlock(writer); // if
+      writer.write("return status");
+      endStmt(writer);
+      endBlock(writer); // fromFudgeMsg
     }
-    writer.write("fudgeStructSize = sizeof (struct _" + getIdentifier(message) + ")");
-    endStmt(writer);
-    writer.write("if ((status = " + getIdentifier(message) + "_fromFudgeMsgImpl (msg, *ptr)) != FUDGE_OK)");
-    beginBlock(writer); // if
-    writer.write(getIdentifier(message) + "_free (*ptr)");
-    endStmt(writer);
-    writer.write("*ptr = 0");
-    endStmt(writer);
-    endBlock(writer); // if
-    writer.write("return status");
-    endStmt(writer);
-    endBlock(writer); // fromFudgeMsg
     // Private fromFudgeMsg function
     writer.write("FudgeStatus " + getIdentifier(message) + "_fromFudgeMsgImpl (FudgeMsg msg, struct _"
         + getIdentifier(message) + " *ptr)");
@@ -1415,22 +1423,24 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
   }
 
   private void writeMessageToFudgeMsg(final IndentWriter writer, final MessageDefinition message) throws IOException {
-    // Public toFudgeMsg function
-    writer.write("FudgeStatus " + getIdentifier(message) + "_toFudgeMsg (struct _" + getIdentifier(message)
-        + " *ptr, FudgeMsg *msg)");
-    beginBlock(writer); // toFudgeMsg
-    writer.write("FudgeStatus status");
-    endStmt(writer);
-    writer.write("if (!ptr || !msg) return FUDGE_NULL_POINTER");
-    endStmt(writer);
-    writer.write("if ((status = FudgeMsg_create (msg)) != FUDGE_OK) return status");
-    endStmt(writer);
-    writer.write("if ((status = " + getIdentifier(message)
-        + "_toFudgeMsgImpl (ptr, *msg)) != FUDGE_OK) FudgeMsg_release (*msg)");
-    endStmt(writer);
-    writer.write("return status");
-    endStmt(writer);
-    endBlock(writer); // toFudgeMsg
+    if (!message.isAbstract()) {
+      // Public toFudgeMsg function
+      writer.write("FudgeStatus " + getIdentifier(message) + "_toFudgeMsg (struct _" + getIdentifier(message)
+          + " *ptr, FudgeMsg *msg)");
+      beginBlock(writer); // toFudgeMsg
+      writer.write("FudgeStatus status");
+      endStmt(writer);
+      writer.write("if (!ptr || !msg) return FUDGE_NULL_POINTER");
+      endStmt(writer);
+      writer.write("if ((status = FudgeMsg_create (msg)) != FUDGE_OK) return status");
+      endStmt(writer);
+      writer.write("if ((status = " + getIdentifier(message)
+          + "_toFudgeMsgImpl (ptr, *msg)) != FUDGE_OK) FudgeMsg_release (*msg)");
+      endStmt(writer);
+      writer.write("return status");
+      endStmt(writer);
+      endBlock(writer); // toFudgeMsg
+    }
     // Private toFudgeMsg function
     writer.write("FudgeStatus " + getIdentifier(message) + "_toFudgeMsgImpl (struct _" + getIdentifier(message)
         + " *ptr, FudgeMsg msg)");

@@ -118,6 +118,7 @@ public abstract class MessageDefinition extends Definition {
   
   private MessageDefinition _baseMessage;
   
+  private boolean _abstract;
   private boolean _external;
   
   private MessageDefinition (final String identifier, final CodePosition codePosition, final MessageDefinition outerMessage, final boolean compilationTarget) {
@@ -223,6 +224,14 @@ public abstract class MessageDefinition extends Definition {
     _external = true;
   }
   
+  public boolean isAbstract() {
+    return _abstract;
+  }
+
+  /* package */void setAbstract() {
+    _abstract = true;
+  }
+
   protected boolean hasExternalMessageReferences (final FieldType type, final Set<MessageDefinition> considered) {
     if (type instanceof FieldType.MessageType) {
       return ((FieldType.MessageType)type).getMessageDefinition ().hasExternalMessageReferences (considered);

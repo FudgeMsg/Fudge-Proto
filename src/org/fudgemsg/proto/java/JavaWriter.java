@@ -195,11 +195,10 @@ import org.fudgemsg.proto.MessageDefinition;
     _writer.write(')');
   }
 
-  /* package */void method(final boolean isStatic, final String returnType,
+  /* package */void method(final String modifier, final String returnType,
       final String name, final String params) throws IOException {
-    _writer.write("public ");
-    if (isStatic)
-      _writer.write("static ");
+    _writer.write(modifier);
+    _writer.write(' ');
     _writer.write(returnType);
     _writer.write(' ');
     _writer.write(name);
@@ -287,12 +286,14 @@ import org.fudgemsg.proto.MessageDefinition;
     _writer.write("catch (IllegalArgumentException e)");
   }
   
-  /* package */void classDef(final boolean isStatic, final String clazz,
+  /* package */void classDef(final boolean isAbstract, final boolean isStatic, final String clazz,
       final String extendsClass, final String interfaceClass)
       throws IOException {
     _writer.write("public ");
     if (isStatic)
       _writer.write("static ");
+    if (isAbstract)
+      _writer.write("abstract ");
     _writer.write("class ");
     _writer.write(clazz);
     if (extendsClass != null) {

@@ -108,7 +108,8 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         interfaceClass = interfaceClass + ", " + extraImplements;
       }
     }
-    writer.classDef (definition.getOuterDefinition () != null, definition.getName (), extendsClass, interfaceClass);
+    writer.classDef((definition instanceof MessageDefinition) && ((MessageDefinition) definition).isAbstract(),
+        definition.getOuterDefinition() != null, definition.getName(), extendsClass, interfaceClass);
     writer = beginBlock (writer); // class definition
     final String bodyCode = ProtoBinding.BODY.get (definition);
     if (bodyCode != null) {
@@ -160,7 +161,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   public void writeClassImplementationAccessor(final Compiler.Context context, final FieldDefinition field, final IndentWriter writer) throws IOException {
     JavaWriter jWriter = new JavaWriter (writer);
     final String attribute = privateFieldName (field);
-    jWriter.method (false, realTypeString (field, false), fieldMethodName (field, "get"), null);
+    jWriter.method("public", realTypeString(field, false), fieldMethodName(field, "get"), null);
     jWriter = beginBlock (jWriter); // accessor
     if (field.isRepeated ()) {
       // repeated fields, return an immutable list
@@ -289,6 +290,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       if (builder && !useBuilderPattern (superMessage)) {
         if (superFields != null) {
           // we are a builder that doesn't have a superclass - store a template object locally
+          // TODO: this won't work if the super class is abstract
           writer.write ("_fudgeRoot = new " + superMessage.getIdentifier () + " (" + fieldsToList (superFields, false) + ")");
         } else {
           // we are a builder that doesn't have a superclass - no template object needed
@@ -564,13 +566,16 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   private void writeBuilderClass (final IndentWriter writer, MessageDefinition message) throws IOException {
     final MessageDefinition ext = message.getExtends ();
     JavaWriter jWriter = new JavaWriter (writer);
-    jWriter.classDef (true, "Builder", ((ext != null) && useBuilderPattern (ext)) ? ext.getIdentifier () + ".Builder" : null, null);
+    jWriter.classDef(false, true, "Builder", ((ext != null) && useBuilderPattern(ext)) ? ext.getIdentifier()
+        + ".Builder" : null, null);
     jWriter = beginBlock (jWriter); // builder class
     writeBuilderClassFields (jWriter, message);
     writePublicConstructor (writer, true, message);
     writeProtectedFudgeMsgConstructor (writer, true, message);
     writeBuilderClassMethods (writer, message);
-    writeBuilderClassBuildMethod (writer, message);
+    if (!message.isAbstract()) {
+      writeBuilderClassBuildMethod(writer, message);
+    }
     endBlock (writer); // builder class
   }
   
@@ -707,20 +712,22 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   
   private void writeToFudgeMsg (JavaWriter writer, final MessageDefinition message) throws IOException {
     final String contextClass = message.hasExternalMessageReferences () ? CLASS_FUDGESERIALISATIONCONTEXT : CLASS_FUDGEMESSAGEFACTORY;
-    writer.method (false, CLASS_FUDGEFIELDCONTAINER, "toFudgeMsg", "final " + contextClass + " fudgeContext");
-    writer = beginBlock (writer); // toFudgeMsg
-    writer.ifNull ("fudgeContext");
-    writer.throwNullParameterException ("fudgeContext");
-    endStmt (writer);
-    writer.namedLocalVariable (CLASS_MUTABLEFUDGEFIELDCONTAINER, "msg", "fudgeContext.newMessage ()");
-    endStmt (writer);
-    writer.invoke ("toFudgeMsg", "fudgeContext, msg");
-    endStmt (writer);
-    writer.returnVariable ("msg");
-    endStmt (writer);
-    writer = endBlock (writer); // toFudgeMsg
-    // TODO 2010-01-18 Andrew -- this should probably be protected; it's just here for our subclasses to use
-    writer.method (false, "void", "toFudgeMsg", "final " + contextClass + " fudgeContext, final " + CLASS_MUTABLEFUDGEFIELDCONTAINER + " msg");
+    if (!message.isAbstract()) {
+      writer.method("public", CLASS_FUDGEFIELDCONTAINER, "toFudgeMsg", "final " + contextClass + " fudgeContext");
+      writer = beginBlock(writer); // toFudgeMsg
+      writer.ifNull("fudgeContext");
+      writer.throwNullParameterException("fudgeContext");
+      endStmt(writer);
+      writer.namedLocalVariable(CLASS_MUTABLEFUDGEFIELDCONTAINER, "msg", "fudgeContext.newMessage ()");
+      endStmt(writer);
+      writer.invoke("toFudgeMsg", "fudgeContext, msg");
+      endStmt(writer);
+      writer.returnVariable("msg");
+      endStmt(writer);
+      writer = endBlock(writer); // toFudgeMsg
+    }
+    writer.method("public", "void", "toFudgeMsg", "final " + contextClass + " fudgeContext, final "
+        + CLASS_MUTABLEFUDGEFIELDCONTAINER + " msg");
     writer = beginBlock (writer); // toFudgeMsg
     if (message.getExtends () != null) {
       writer.invoke ("super", "toFudgeMsg", "fudgeContext, msg");
@@ -1222,7 +1229,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       }
     }
     endBlock (writer); // constructor
-    if (useCopyConstructor (message)) {
+    if (!message.isAbstract() && useCopyConstructor(message)) {
       writer.write ("public " + message.getName () + " clone ()");
       beginBlock (writer); // clone
       writer.write ("return new " + message.getName () + " (this)");
@@ -1272,11 +1279,15 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     comment (writer, "no-action");
     endBlock (writer);
     endBlock (writer); // for
-    writer.write ("return new ");
-    if (useBuilder) {
-      writer.write ("Builder (" + params + ").build ()");
+    if (message.isAbstract()) {
+      writer.write("throw new UnsupportedOperationException (\"" + message.getName() + " is an abstract message\")");
     } else {
-      writer.write (messageDelegateName (message) + " (" + params + ")");
+      writer.write("return new ");
+      if (useBuilder) {
+        writer.write("Builder (" + params + ").build ()");
+      } else {
+        writer.write(messageDelegateName(message) + " (" + params + ")");
+      }
     }
     endStmt (writer);
     endBlock (writer); // fromFudgeMsg
@@ -1439,7 +1450,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     writeFullPublicConstructor (writer, useBuilder, message);
     writeProtectedCopyConstructor (writer, message);
     writeToFudgeMsg (jWriter, message);
-    writeFromFudgeMsg (context, writer, message, useBuilder);
+    writeFromFudgeMsg(context, writer, message, useBuilder);
   }
 
   @Override
