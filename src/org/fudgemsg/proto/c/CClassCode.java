@@ -404,7 +404,7 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
         writer.write("else if (" + source + ".type == FUDGE_TYPE_INDICATOR) *" + target + " = 0");
         endStmt(writer);
       }
-      writer.write("else");
+      writer.write("else ");
       returnAndUnwindStmt(writer, unwind, "FUDGE_INVALID_TYPE_COERCION");
     } else if (type instanceof FieldType.ArrayType) {
       final FieldType.ArrayType arrayType = (FieldType.ArrayType) type;
