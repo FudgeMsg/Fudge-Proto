@@ -20,12 +20,4 @@ namespace org.fudgemsg.proto.tests.polymorphism {
     mutable M1 other;
   }
   
-  abstract message M5 {
-    mutable string foo;
-  }
-  
-  message M6 extends M5 {
-    mutable string bar;
-  }
-
 }

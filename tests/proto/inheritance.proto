@@ -60,4 +60,36 @@ namespace org.fudgemsg.proto.tests.inheritance {
 	  optional int c;
 	}
 	
+	abstract message AbstractNonBuilderFromBuilder extends NonBuilderFromBuilder {
+	  required int d;
+	}
+
+  abstract message AbstractBuilderFromBuilder extends BuilderFromBuilder {
+    required int d;
+  }
+
+  abstract message AbstractNonBuilderFromNonBuilder extends NonBuilderFromNonBuilder {
+    required int d;
+  }
+
+  abstract message AbstractBuilderFromNonBuilder extends BuilderFromNonBuilder {
+    required int d;
+  }
+  
+  message ConcreteNonBuilderFromBuilder extends AbstractNonBuilderFromBuilder {
+    required int e;
+  }
+  
+  message ConcreteBuilderFromBuilder extends AbstractBuilderFromBuilder {
+    required int e;
+  }
+  
+  message ConcreteNonBuilderFromNonBuilder extends AbstractNonBuilderFromBuilder {
+    required int e;
+  }
+  
+  message ConcreteBuilderFromNonBuilder extends AbstractBuilderFromNonBuilder {
+    required int e;
+  }
+  
 }

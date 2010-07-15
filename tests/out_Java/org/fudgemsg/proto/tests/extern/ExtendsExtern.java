@@ -10,13 +10,20 @@ public class ExtendsExtern extends org.fudgemsg.proto.tests.ExternalMessage impl
   private final Integer _a;
   public static final String A_KEY = "a";
   public static class Builder {
-    private final org.fudgemsg.proto.tests.ExternalMessage _fudgeRoot;
+    private org.fudgemsg.mapping.FudgeDeserializationContext _fudgeContext;
+    protected org.fudgemsg.mapping.FudgeDeserializationContext getFudgeContext () {
+      return _fudgeContext;
+    }
+    private org.fudgemsg.FudgeFieldContainer _fudgeRoot;
+    protected org.fudgemsg.FudgeFieldContainer getFudgeRoot () {
+      return _fudgeRoot;
+    }
     private Integer _a;
     public Builder () {
-      _fudgeRoot = null;
     }
     protected Builder (final org.fudgemsg.mapping.FudgeDeserializationContext fudgeContext, final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
-      _fudgeRoot = new org.fudgemsg.proto.tests.ExternalMessage (fudgeContext, fudgeMsg);
+      _fudgeRoot = fudgeMsg;
+      _fudgeContext = fudgeContext;
       org.fudgemsg.FudgeField fudgeField;
       fudgeField = fudgeMsg.getByName (A_KEY);
       if (fudgeField != null)  {
@@ -33,11 +40,15 @@ public class ExtendsExtern extends org.fudgemsg.proto.tests.ExternalMessage impl
       return this;
     }
     public ExtendsExtern build () {
-      return new ExtendsExtern (this);
+      return (getFudgeRoot () != null) ? new ExtendsExtern (getFudgeContext (), getFudgeRoot (), this) : new ExtendsExtern (this);
     }
   }
   protected ExtendsExtern (final Builder builder) {
-    super (builder._fudgeRoot);
+    super ();
+    _a = builder._a;
+  }
+  protected ExtendsExtern (final org.fudgemsg.mapping.FudgeDeserializationContext fudgeContext, final org.fudgemsg.FudgeFieldContainer fudgeMsg, final Builder builder) {
+    super (fudgeContext, fudgeMsg);
     _a = builder._a;
   }
   public ExtendsExtern (Integer a) {

@@ -10,13 +10,17 @@ public class BuilderFromNonBuilder extends org.fudgemsg.proto.tests.inheritance.
   private final Integer _c;
   public static final String C_KEY = "c";
   public static class Builder {
-    private final org.fudgemsg.proto.tests.inheritance.NonBuilderBase _fudgeRoot;
+    private int _a;
+    private org.fudgemsg.FudgeFieldContainer _fudgeRoot;
+    protected org.fudgemsg.FudgeFieldContainer getFudgeRoot () {
+      return _fudgeRoot;
+    }
     private Integer _c;
     public Builder (int a) {
-      _fudgeRoot = new org.fudgemsg.proto.tests.inheritance.NonBuilderBase (a);
+      _a = a;
     }
     protected Builder (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
-      _fudgeRoot = org.fudgemsg.proto.tests.inheritance.NonBuilderBase.fromFudgeMsg (fudgeMsg);
+      _fudgeRoot = fudgeMsg;
       org.fudgemsg.FudgeField fudgeField;
       fudgeField = fudgeMsg.getByName (C_KEY);
       if (fudgeField != null)  {
@@ -33,11 +37,15 @@ public class BuilderFromNonBuilder extends org.fudgemsg.proto.tests.inheritance.
       return this;
     }
     public BuilderFromNonBuilder build () {
-      return new BuilderFromNonBuilder (this);
+      return (getFudgeRoot () != null) ? new BuilderFromNonBuilder (getFudgeRoot (), this) : new BuilderFromNonBuilder (this);
     }
   }
   protected BuilderFromNonBuilder (final Builder builder) {
-    super (builder._fudgeRoot);
+    super (builder._a);
+    _c = builder._c;
+  }
+  protected BuilderFromNonBuilder (final org.fudgemsg.FudgeFieldContainer fudgeMsg, final Builder builder) {
+    super (fudgeMsg);
     _c = builder._c;
   }
   public BuilderFromNonBuilder (int a, Integer c) {
