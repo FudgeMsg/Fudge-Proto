@@ -86,6 +86,8 @@ public abstract class CStyleLiteralCode implements LiteralCode {
       return getLiteral ((LiteralValue.NumericValue)value);
     } else if (value instanceof LiteralValue.StringValue) {
       return getLiteral ((LiteralValue.StringValue)value);
+    } else if (value instanceof LiteralValue.MessageValue) {
+      return getLiteral((LiteralValue.MessageValue) value);
     } else {
       throw new IllegalStateException ("LiteralValue '" + value + "' is not an expected type");
     }
@@ -102,6 +104,8 @@ public abstract class CStyleLiteralCode implements LiteralCode {
    * This is a bit too language specific things normally descended from C - must be implemented specifically for each one.
    */
   protected abstract String getLiteral (final LiteralValue.EnumValue value);
+
+  protected abstract String getLiteral(final LiteralValue.MessageValue value);
 
   protected String getLiteral (final LiteralValue.FloatValue value) {
     final StringBuilder sb = new StringBuilder (value.getNumber ().toString ()).append ('f');

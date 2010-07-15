@@ -51,8 +51,16 @@ public class ImportTest extends org.fudgemsg.taxon.MapFudgeTaxonomy {
   public static final short VAL_simpleString = 21;
   public static final String STR_escapeString = "escapeString";
   public static final short VAL_escapeString = 22;
+  public static final String STR_nullPerson = "nullPerson";
+  public static final short VAL_nullPerson = 23;
+  public static final String STR_simplePerson = "simplePerson";
+  public static final short VAL_simplePerson = 24;
+  public static final String STR_foo = "foo";
+  public static final short VAL_foo = 25;
+  public static final String STR_bar = "bar";
+  public static final short VAL_bar = 26;
   private ImportTest () {
-    super (new int[] { VAL_nullDouble, VAL_zeroDouble, VAL_posDouble, VAL_negDouble, VAL_piDouble, VAL_bigDouble, VAL_tinyDouble, VAL_nullFloat, VAL_zeroFloat, VAL_posFloat, VAL_negFloat, VAL_piFloat, VAL_bigFloat, VAL_tinyFloat, VAL_nullInt, VAL_zeroInt, VAL_posInt, VAL_negInt, VAL_nullString, VAL_emptyString, VAL_simpleString, VAL_escapeString }, new String[] { STR_nullDouble, STR_zeroDouble, STR_posDouble, STR_negDouble, STR_piDouble, STR_bigDouble, STR_tinyDouble, STR_nullFloat, STR_zeroFloat, STR_posFloat, STR_negFloat, STR_piFloat, STR_bigFloat, STR_tinyFloat, STR_nullInt, STR_zeroInt, STR_posInt, STR_negInt, STR_nullString, STR_emptyString, STR_simpleString, STR_escapeString });
+    super (new int[] { VAL_nullDouble, VAL_zeroDouble, VAL_posDouble, VAL_negDouble, VAL_piDouble, VAL_bigDouble, VAL_tinyDouble, VAL_nullFloat, VAL_zeroFloat, VAL_posFloat, VAL_negFloat, VAL_piFloat, VAL_bigFloat, VAL_tinyFloat, VAL_nullInt, VAL_zeroInt, VAL_posInt, VAL_negInt, VAL_nullString, VAL_emptyString, VAL_simpleString, VAL_escapeString, VAL_nullPerson, VAL_simplePerson, VAL_foo, VAL_bar }, new String[] { STR_nullDouble, STR_zeroDouble, STR_posDouble, STR_negDouble, STR_piDouble, STR_bigDouble, STR_tinyDouble, STR_nullFloat, STR_zeroFloat, STR_posFloat, STR_negFloat, STR_piFloat, STR_bigFloat, STR_tinyFloat, STR_nullInt, STR_zeroInt, STR_posInt, STR_negInt, STR_nullString, STR_emptyString, STR_simpleString, STR_escapeString, STR_nullPerson, STR_simplePerson, STR_foo, STR_bar });
   }
 }
 /* filefooter.java.include

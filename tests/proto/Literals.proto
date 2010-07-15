@@ -28,4 +28,12 @@ message Literals {
 	string simpleString [default = "abc123"];
 	string escapeString [default = "\"\\\r\n\"\0\377"];
 	
+	message Simple {
+	  string foo;
+	  int bar;
+	}
+	
+	Simple nullPerson;
+	Simple simplePerson [default = ("Foo", 42)];
+	
 }

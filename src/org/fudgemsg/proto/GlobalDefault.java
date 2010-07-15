@@ -23,7 +23,7 @@ public class GlobalDefault {
   // Compiler
   private static boolean s_compilerFieldsMutable = getProperty (Compiler.class, "fieldsMutable", true);
   private static boolean s_compilerFieldsRequired = getProperty (Compiler.class, "fieldsRequired", false);
-  private static boolean s_compilerRethrowExceptions = getProperty (Compiler.class, "rethrowExceptions", false);
+  private static boolean s_compilerRethrowExceptions = getProperty(Compiler.class, "rethrowExceptions", false);
   
   private GlobalDefault () {
   }

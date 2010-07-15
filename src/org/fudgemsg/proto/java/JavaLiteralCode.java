@@ -40,4 +40,21 @@ public class JavaLiteralCode extends CStyleLiteralCode {
     return sb.toString ();
   }
   
+  @Override
+  protected String getLiteral(final LiteralValue.MessageValue value) {
+    final StringBuilder sb = new StringBuilder("new ");
+    sb.append(value.getMessageDefinition().getIdentifier());
+    sb.append(" (");
+    boolean first = true;
+    for (LiteralValue literal : value.getParameters()) {
+      if (first) {
+        first = false;
+      } else {
+        sb.append(", ");
+      }
+      sb.append(getLiteral(literal));
+    }
+    sb.append(")");
+    return sb.toString();
+  }
 }

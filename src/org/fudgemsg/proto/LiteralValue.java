@@ -15,6 +15,10 @@
 
 package org.fudgemsg.proto;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.fudgemsg.FudgeTypeDictionary;
 import org.fudgemsg.proto.Compiler.Context;
 import org.fudgemsg.proto.antlr.ProtoLexer;
@@ -313,6 +317,114 @@ public abstract class LiteralValue {
     
   }
   
+  public static class MessageValue extends LiteralValue {
+
+    private final List<LiteralValue> _parameters;
+    private final MessageDefinition _message;
+
+    private MessageValue(final AST node) {
+      super(node.getCodePosition());
+      List<AST> children = node.getChildNodes();
+      if (children != null) {
+        _parameters = new ArrayList<LiteralValue>(children.size());
+        for (AST child : children) {
+          _parameters.add(LiteralValue.parse(child));
+        }
+      } else {
+        _parameters = Collections.emptyList();
+      }
+      _message = null;
+    }
+    
+    private MessageValue(final CodePosition codePosition, final List<LiteralValue> parameters,
+        final MessageDefinition message) {
+      super(codePosition);
+      _parameters = parameters;
+      _message = message;
+    }
+
+    public MessageDefinition getMessageDefinition() {
+      return _message;
+    }
+
+    public List<LiteralValue> getParameters() {
+      return _parameters;
+    }
+
+    private int assignParameters(final Context context, final MessageDefinition message,
+        final List<LiteralValue> target, final boolean allFields, int i) {
+      if (message.getExtends() != null) {
+        i = assignParameters(context, message.getExtends(), target, allFields, i);
+        if (i < 0) {
+          return -1;
+        }
+      }
+      for (FieldDefinition field : message.getFieldDefinitions()) {
+        if (allFields || field.isRequired()) {
+          final LiteralValue literal = _parameters.get(i++).assignmentTo(context, field.getType());
+          if (literal != null) {
+            target.add(literal);
+          } else {
+            return -1;
+          }
+        }
+      }
+      return i;
+    }
+
+    @Override
+    public LiteralValue assignmentTo(Context context, FieldType fieldType) {
+      if (!(fieldType instanceof FieldType.MessageType)) {
+        context.error(getCodePosition(), "invalid default value for type '" + fieldType + "'");
+        return null;
+      }
+      final MessageDefinition message = ((FieldType.MessageType) fieldType).getMessageDefinition();
+      if (message.isExternal()) {
+        // External message - can't coerce or validate the types
+        return new MessageValue(getCodePosition(), _parameters, message);
+      }
+      int allFields = 0, requiredFields = 0;
+      MessageDefinition msg = message;
+      do {
+        for (FieldDefinition field : msg.getFieldDefinitions ()) {
+          allFields ++;
+          if (field.isRequired ()) requiredFields ++;
+        }
+        msg = msg.getExtends ();
+      } while (msg != null);
+      final List<LiteralValue> parameters = new ArrayList<LiteralValue>(_parameters.size());
+      if (_parameters.size () == allFields) {
+        if (assignParameters(context, message, parameters, true, 0) < 0) {
+          return null;
+        }
+      } else if (_parameters.size () == requiredFields) {
+        if (assignParameters(context, message, parameters, false, 0) < 0) {
+          return null;
+        }
+      } else {
+        if (allFields != requiredFields) {
+          context.error (getCodePosition (), "invalid number of parameters - expected " + requiredFields + " required values or " + allFields + " values for " + message.getName ());
+        } else {
+          context.error (getCodePosition (), "invalid number of parameters - expected " + allFields + " required values for " + message.getName ());
+        }
+        context.warning(message.getCodePosition (), "location of constructor definition");
+        return null;
+      }
+      return new MessageValue(getCodePosition(), parameters, message);
+    }
+
+    @Override
+    protected Object getInternalValue() {
+      return _parameters;
+    }
+
+    @Override
+    public String toString() {
+      return _message.getIdentifier() + _parameters.toString();
+    }
+
+  }
+  
   public static class NullValue extends LiteralValue {
     
     private static final Object s_internal = new Object () {
@@ -360,6 +472,8 @@ public abstract class LiteralValue {
       return new StringValue (node);
     case ProtoLexer.IDENTIFIER :
       return new EnumValue (node);
+    case ProtoLexer.MESSAGE :
+      return new MessageValue (node);
     default :
       throw new IllegalStateException ("invalid literal node type '" + node.getNodeLabel () + "'"); 
     }

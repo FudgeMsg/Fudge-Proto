@@ -43,6 +43,11 @@ public class CLiteralCode extends CStyleLiteralCode {
   }
   
   @Override
+  protected String getLiteral(final LiteralValue.MessageValue value) {
+    return "/* TODO: instantiate " + value.toString() + " */ 0";
+  }
+
+  @Override
   protected String getLiteral (final LiteralValue.StringValue value) {
     return "TEXT(" + super.getLiteral(value) + ")";
   }

@@ -1,4 +1,4 @@
-// $ANTLR 3.2 Fedora release 12 (Constantine) Thu Mar 11 20:28:57 UTC 2010 org/fudgemsg/proto/antlr/Proto.g 2010-07-14 16:50:30
+// $ANTLR 3.2 Fedora release 12 (Constantine) Thu Mar 11 20:28:57 UTC 2010 org/fudgemsg/proto/antlr/Proto.g 2010-07-15 11:12:27
 
   package org.fudgemsg.proto.antlr;
   import org.fudgemsg.proto.Compiler;
@@ -16,7 +16,7 @@ import org.antlr.runtime.tree.*;
 
 public class ProtoParser extends Parser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "ABSTRACT", "ARRAY", "BINDING", "DEFAULT", "DIM_FIXED", "DIM_VARIANT", "ENUM", "EXTENDS", "EXTERN", "FIELD", "IMPORT", "MESSAGE", "MUTABLE", "NAMESPACE", "OPTIONAL", "ORDINAL", "READONLY", "REPEATED", "REQUIRED", "ROOT", "T_BOOL", "T_BYTE", "T_DOUBLE", "T_DATE", "T_DATETIME", "T_FLOAT", "T_INDICATOR", "T_INT", "T_LONG", "T_SHORT", "T_STRING", "T_TIME", "TAXONOMY", "USES", "COMMENT", "IDENTIFIER", "INTEGER", "FLOAT", "ML_COMMENT", "ML_STRING", "STRING", "WHITESPACE", "'{'", "'}'", "';'", "'='", "'['", "']'", "','", "'boolean'", "'int8'", "'int16'", "'int32'", "'uint32'", "'sint32'", "'fixed32'", "'sfixed32'", "'integer'", "'int64'", "'uint64'", "'sint64'", "'fixed64'", "'sfixed64'", "'float32'", "'float64'", "'.'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "ABSTRACT", "ARRAY", "BINDING", "DEFAULT", "DIM_FIXED", "DIM_VARIANT", "ENUM", "EXTENDS", "EXTERN", "FIELD", "IMPORT", "MESSAGE", "MUTABLE", "NAMESPACE", "OPTIONAL", "ORDINAL", "READONLY", "REPEATED", "REQUIRED", "ROOT", "T_BOOL", "T_BYTE", "T_DOUBLE", "T_DATE", "T_DATETIME", "T_FLOAT", "T_INDICATOR", "T_INT", "T_LONG", "T_SHORT", "T_STRING", "T_TIME", "TAXONOMY", "USES", "COMMENT", "IDENTIFIER", "INTEGER", "FLOAT", "ML_COMMENT", "ML_STRING", "STRING", "WHITESPACE", "'{'", "'}'", "';'", "'='", "'['", "']'", "','", "'boolean'", "'int8'", "'int16'", "'int32'", "'uint32'", "'sint32'", "'fixed32'", "'sfixed32'", "'integer'", "'int64'", "'uint64'", "'sint64'", "'fixed64'", "'sfixed64'", "'float32'", "'float64'", "'.'", "'('", "')'"
     };
     public static final int T__68=68;
     public static final int T__69=69;
@@ -64,8 +64,8 @@ public class ProtoParser extends Parser {
     public static final int T__48=48;
     public static final int T__49=49;
     public static final int DIM_FIXED=8;
-    public static final int DEFAULT=7;
     public static final int ORDINAL=19;
+    public static final int DEFAULT=7;
     public static final int T_FLOAT=29;
     public static final int REPEATED=21;
     public static final int WHITESPACE=45;
@@ -75,8 +75,10 @@ public class ProtoParser extends Parser {
     public static final int T_DATETIME=28;
     public static final int NAMESPACE=17;
     public static final int OPTIONAL=18;
+    public static final int T__71=71;
     public static final int DIM_VARIANT=9;
     public static final int ENUM=10;
+    public static final int T__70=70;
     public static final int USES=37;
     public static final int T_DATE=27;
     public static final int FIELD=13;
@@ -2543,37 +2545,223 @@ public class ProtoParser extends Parser {
     };
 
     // $ANTLR start "literal"
-    // org/fudgemsg/proto/antlr/Proto.g:242:1: literal : ( IDENTIFIER | INTEGER | FLOAT | STRING );
+    // org/fudgemsg/proto/antlr/Proto.g:242:1: literal : ( IDENTIFIER | INTEGER | FLOAT | STRING | '(' ( literal )? ( ',' literal )* ')' -> ^( MESSAGE ( literal )* ) );
     public final ProtoParser.literal_return literal() throws RecognitionException {
         ProtoParser.literal_return retval = new ProtoParser.literal_return();
         retval.start = input.LT(1);
 
         ProtoTree root_0 = null;
 
-        Token set77=null;
+        Token IDENTIFIER77=null;
+        Token INTEGER78=null;
+        Token FLOAT79=null;
+        Token STRING80=null;
+        Token char_literal81=null;
+        Token char_literal83=null;
+        Token char_literal85=null;
+        ProtoParser.literal_return literal82 = null;
 
-        ProtoTree set77_tree=null;
+        ProtoParser.literal_return literal84 = null;
 
+
+        ProtoTree IDENTIFIER77_tree=null;
+        ProtoTree INTEGER78_tree=null;
+        ProtoTree FLOAT79_tree=null;
+        ProtoTree STRING80_tree=null;
+        ProtoTree char_literal81_tree=null;
+        ProtoTree char_literal83_tree=null;
+        ProtoTree char_literal85_tree=null;
+        RewriteRuleTokenStream stream_52=new RewriteRuleTokenStream(adaptor,"token 52");
+        RewriteRuleTokenStream stream_70=new RewriteRuleTokenStream(adaptor,"token 70");
+        RewriteRuleTokenStream stream_71=new RewriteRuleTokenStream(adaptor,"token 71");
+        RewriteRuleSubtreeStream stream_literal=new RewriteRuleSubtreeStream(adaptor,"rule literal");
         try {
-            // org/fudgemsg/proto/antlr/Proto.g:243:2: ( IDENTIFIER | INTEGER | FLOAT | STRING )
-            // org/fudgemsg/proto/antlr/Proto.g:
-            {
-            root_0 = (ProtoTree)adaptor.nil();
+            // org/fudgemsg/proto/antlr/Proto.g:243:2: ( IDENTIFIER | INTEGER | FLOAT | STRING | '(' ( literal )? ( ',' literal )* ')' -> ^( MESSAGE ( literal )* ) )
+            int alt16=5;
+            switch ( input.LA(1) ) {
+            case IDENTIFIER:
+                {
+                alt16=1;
+                }
+                break;
+            case INTEGER:
+                {
+                alt16=2;
+                }
+                break;
+            case FLOAT:
+                {
+                alt16=3;
+                }
+                break;
+            case STRING:
+                {
+                alt16=4;
+                }
+                break;
+            case 70:
+                {
+                alt16=5;
+                }
+                break;
+            default:
+                NoViableAltException nvae =
+                    new NoViableAltException("", 16, 0, input);
 
-            set77=(Token)input.LT(1);
-            if ( (input.LA(1)>=IDENTIFIER && input.LA(1)<=FLOAT)||input.LA(1)==STRING ) {
-                input.consume();
-                adaptor.addChild(root_0, (ProtoTree)adaptor.create(set77));
-                state.errorRecovery=false;
+                throw nvae;
             }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                throw mse;
+
+            switch (alt16) {
+                case 1 :
+                    // org/fudgemsg/proto/antlr/Proto.g:243:4: IDENTIFIER
+                    {
+                    root_0 = (ProtoTree)adaptor.nil();
+
+                    IDENTIFIER77=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_literal1436); 
+                    IDENTIFIER77_tree = (ProtoTree)adaptor.create(IDENTIFIER77);
+                    adaptor.addChild(root_0, IDENTIFIER77_tree);
+
+
+                    }
+                    break;
+                case 2 :
+                    // org/fudgemsg/proto/antlr/Proto.g:244:4: INTEGER
+                    {
+                    root_0 = (ProtoTree)adaptor.nil();
+
+                    INTEGER78=(Token)match(input,INTEGER,FOLLOW_INTEGER_in_literal1441); 
+                    INTEGER78_tree = (ProtoTree)adaptor.create(INTEGER78);
+                    adaptor.addChild(root_0, INTEGER78_tree);
+
+
+                    }
+                    break;
+                case 3 :
+                    // org/fudgemsg/proto/antlr/Proto.g:245:4: FLOAT
+                    {
+                    root_0 = (ProtoTree)adaptor.nil();
+
+                    FLOAT79=(Token)match(input,FLOAT,FOLLOW_FLOAT_in_literal1446); 
+                    FLOAT79_tree = (ProtoTree)adaptor.create(FLOAT79);
+                    adaptor.addChild(root_0, FLOAT79_tree);
+
+
+                    }
+                    break;
+                case 4 :
+                    // org/fudgemsg/proto/antlr/Proto.g:246:4: STRING
+                    {
+                    root_0 = (ProtoTree)adaptor.nil();
+
+                    STRING80=(Token)match(input,STRING,FOLLOW_STRING_in_literal1451); 
+                    STRING80_tree = (ProtoTree)adaptor.create(STRING80);
+                    adaptor.addChild(root_0, STRING80_tree);
+
+
+                    }
+                    break;
+                case 5 :
+                    // org/fudgemsg/proto/antlr/Proto.g:247:4: '(' ( literal )? ( ',' literal )* ')'
+                    {
+                    char_literal81=(Token)match(input,70,FOLLOW_70_in_literal1456);  
+                    stream_70.add(char_literal81);
+
+                    // org/fudgemsg/proto/antlr/Proto.g:247:8: ( literal )?
+                    int alt14=2;
+                    int LA14_0 = input.LA(1);
+
+                    if ( ((LA14_0>=IDENTIFIER && LA14_0<=FLOAT)||LA14_0==STRING||LA14_0==70) ) {
+                        alt14=1;
+                    }
+                    switch (alt14) {
+                        case 1 :
+                            // org/fudgemsg/proto/antlr/Proto.g:247:8: literal
+                            {
+                            pushFollow(FOLLOW_literal_in_literal1458);
+                            literal82=literal();
+
+                            state._fsp--;
+
+                            stream_literal.add(literal82.getTree());
+
+                            }
+                            break;
+
+                    }
+
+                    // org/fudgemsg/proto/antlr/Proto.g:247:17: ( ',' literal )*
+                    loop15:
+                    do {
+                        int alt15=2;
+                        int LA15_0 = input.LA(1);
+
+                        if ( (LA15_0==52) ) {
+                            alt15=1;
+                        }
+
+
+                        switch (alt15) {
+                    	case 1 :
+                    	    // org/fudgemsg/proto/antlr/Proto.g:247:18: ',' literal
+                    	    {
+                    	    char_literal83=(Token)match(input,52,FOLLOW_52_in_literal1462);  
+                    	    stream_52.add(char_literal83);
+
+                    	    pushFollow(FOLLOW_literal_in_literal1464);
+                    	    literal84=literal();
+
+                    	    state._fsp--;
+
+                    	    stream_literal.add(literal84.getTree());
+
+                    	    }
+                    	    break;
+
+                    	default :
+                    	    break loop15;
+                        }
+                    } while (true);
+
+                    char_literal85=(Token)match(input,71,FOLLOW_71_in_literal1468);  
+                    stream_71.add(char_literal85);
+
+
+
+                    // AST REWRITE
+                    // elements: literal
+                    // token labels: 
+                    // rule labels: retval
+                    // token list labels: 
+                    // rule list labels: 
+                    // wildcard labels: 
+                    retval.tree = root_0;
+                    RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
+
+                    root_0 = (ProtoTree)adaptor.nil();
+                    // 247:36: -> ^( MESSAGE ( literal )* )
+                    {
+                        // org/fudgemsg/proto/antlr/Proto.g:247:39: ^( MESSAGE ( literal )* )
+                        {
+                        ProtoTree root_1 = (ProtoTree)adaptor.nil();
+                        root_1 = (ProtoTree)adaptor.becomeRoot((ProtoTree)adaptor.create(MESSAGE, "MESSAGE"), root_1);
+
+                        // org/fudgemsg/proto/antlr/Proto.g:247:49: ( literal )*
+                        while ( stream_literal.hasNext() ) {
+                            adaptor.addChild(root_1, stream_literal.nextTree());
+
+                        }
+                        stream_literal.reset();
+
+                        adaptor.addChild(root_0, root_1);
+                        }
+
+                    }
+
+                    retval.tree = root_0;
+                    }
+                    break;
+
             }
-
-
-            }
-
             retval.stop = input.LT(-1);
 
             retval.tree = (ProtoTree)adaptor.rulePostProcessing(root_0);
@@ -2598,51 +2786,51 @@ public class ProtoParser extends Parser {
     };
 
     // $ANTLR start "message"
-    // org/fudgemsg/proto/antlr/Proto.g:249:1: message : ( ABSTRACT )? MESSAGE IDENTIFIER ( message_uses )? ( message_extends )? '{' ( message_element )* '}' ;
+    // org/fudgemsg/proto/antlr/Proto.g:250:1: message : ( ABSTRACT )? MESSAGE IDENTIFIER ( message_uses )? ( message_extends )? '{' ( message_element )* '}' ;
     public final ProtoParser.message_return message() throws RecognitionException {
         ProtoParser.message_return retval = new ProtoParser.message_return();
         retval.start = input.LT(1);
 
         ProtoTree root_0 = null;
 
-        Token ABSTRACT78=null;
-        Token MESSAGE79=null;
-        Token IDENTIFIER80=null;
-        Token char_literal83=null;
-        Token char_literal85=null;
-        ProtoParser.message_uses_return message_uses81 = null;
+        Token ABSTRACT86=null;
+        Token MESSAGE87=null;
+        Token IDENTIFIER88=null;
+        Token char_literal91=null;
+        Token char_literal93=null;
+        ProtoParser.message_uses_return message_uses89 = null;
 
-        ProtoParser.message_extends_return message_extends82 = null;
+        ProtoParser.message_extends_return message_extends90 = null;
 
-        ProtoParser.message_element_return message_element84 = null;
+        ProtoParser.message_element_return message_element92 = null;
 
 
-        ProtoTree ABSTRACT78_tree=null;
-        ProtoTree MESSAGE79_tree=null;
-        ProtoTree IDENTIFIER80_tree=null;
-        ProtoTree char_literal83_tree=null;
-        ProtoTree char_literal85_tree=null;
+        ProtoTree ABSTRACT86_tree=null;
+        ProtoTree MESSAGE87_tree=null;
+        ProtoTree IDENTIFIER88_tree=null;
+        ProtoTree char_literal91_tree=null;
+        ProtoTree char_literal93_tree=null;
 
         try {
-            // org/fudgemsg/proto/antlr/Proto.g:249:9: ( ( ABSTRACT )? MESSAGE IDENTIFIER ( message_uses )? ( message_extends )? '{' ( message_element )* '}' )
-            // org/fudgemsg/proto/antlr/Proto.g:249:11: ( ABSTRACT )? MESSAGE IDENTIFIER ( message_uses )? ( message_extends )? '{' ( message_element )* '}'
+            // org/fudgemsg/proto/antlr/Proto.g:250:9: ( ( ABSTRACT )? MESSAGE IDENTIFIER ( message_uses )? ( message_extends )? '{' ( message_element )* '}' )
+            // org/fudgemsg/proto/antlr/Proto.g:250:11: ( ABSTRACT )? MESSAGE IDENTIFIER ( message_uses )? ( message_extends )? '{' ( message_element )* '}'
             {
             root_0 = (ProtoTree)adaptor.nil();
 
-            // org/fudgemsg/proto/antlr/Proto.g:249:11: ( ABSTRACT )?
-            int alt14=2;
-            int LA14_0 = input.LA(1);
+            // org/fudgemsg/proto/antlr/Proto.g:250:11: ( ABSTRACT )?
+            int alt17=2;
+            int LA17_0 = input.LA(1);
 
-            if ( (LA14_0==ABSTRACT) ) {
-                alt14=1;
+            if ( (LA17_0==ABSTRACT) ) {
+                alt17=1;
             }
-            switch (alt14) {
+            switch (alt17) {
                 case 1 :
-                    // org/fudgemsg/proto/antlr/Proto.g:249:11: ABSTRACT
+                    // org/fudgemsg/proto/antlr/Proto.g:250:11: ABSTRACT
                     {
-                    ABSTRACT78=(Token)match(input,ABSTRACT,FOLLOW_ABSTRACT_in_message1461); 
-                    ABSTRACT78_tree = (ProtoTree)adaptor.create(ABSTRACT78);
-                    adaptor.addChild(root_0, ABSTRACT78_tree);
+                    ABSTRACT86=(Token)match(input,ABSTRACT,FOLLOW_ABSTRACT_in_message1487); 
+                    ABSTRACT86_tree = (ProtoTree)adaptor.create(ABSTRACT86);
+                    adaptor.addChild(root_0, ABSTRACT86_tree);
 
 
                     }
@@ -2650,92 +2838,92 @@ public class ProtoParser extends Parser {
 
             }
 
-            MESSAGE79=(Token)match(input,MESSAGE,FOLLOW_MESSAGE_in_message1464); 
-            MESSAGE79_tree = (ProtoTree)adaptor.create(MESSAGE79);
-            root_0 = (ProtoTree)adaptor.becomeRoot(MESSAGE79_tree, root_0);
+            MESSAGE87=(Token)match(input,MESSAGE,FOLLOW_MESSAGE_in_message1490); 
+            MESSAGE87_tree = (ProtoTree)adaptor.create(MESSAGE87);
+            root_0 = (ProtoTree)adaptor.becomeRoot(MESSAGE87_tree, root_0);
 
-            IDENTIFIER80=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_message1467); 
-            IDENTIFIER80_tree = (ProtoTree)adaptor.create(IDENTIFIER80);
-            adaptor.addChild(root_0, IDENTIFIER80_tree);
+            IDENTIFIER88=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_message1493); 
+            IDENTIFIER88_tree = (ProtoTree)adaptor.create(IDENTIFIER88);
+            adaptor.addChild(root_0, IDENTIFIER88_tree);
 
-            // org/fudgemsg/proto/antlr/Proto.g:249:41: ( message_uses )?
-            int alt15=2;
-            int LA15_0 = input.LA(1);
+            // org/fudgemsg/proto/antlr/Proto.g:250:41: ( message_uses )?
+            int alt18=2;
+            int LA18_0 = input.LA(1);
 
-            if ( (LA15_0==USES) ) {
-                alt15=1;
+            if ( (LA18_0==USES) ) {
+                alt18=1;
             }
-            switch (alt15) {
+            switch (alt18) {
                 case 1 :
-                    // org/fudgemsg/proto/antlr/Proto.g:249:41: message_uses
+                    // org/fudgemsg/proto/antlr/Proto.g:250:41: message_uses
                     {
-                    pushFollow(FOLLOW_message_uses_in_message1469);
-                    message_uses81=message_uses();
+                    pushFollow(FOLLOW_message_uses_in_message1495);
+                    message_uses89=message_uses();
 
                     state._fsp--;
 
-                    adaptor.addChild(root_0, message_uses81.getTree());
+                    adaptor.addChild(root_0, message_uses89.getTree());
 
                     }
                     break;
 
             }
 
-            // org/fudgemsg/proto/antlr/Proto.g:249:55: ( message_extends )?
-            int alt16=2;
-            int LA16_0 = input.LA(1);
+            // org/fudgemsg/proto/antlr/Proto.g:250:55: ( message_extends )?
+            int alt19=2;
+            int LA19_0 = input.LA(1);
 
-            if ( (LA16_0==EXTENDS) ) {
-                alt16=1;
+            if ( (LA19_0==EXTENDS) ) {
+                alt19=1;
             }
-            switch (alt16) {
+            switch (alt19) {
                 case 1 :
-                    // org/fudgemsg/proto/antlr/Proto.g:249:55: message_extends
+                    // org/fudgemsg/proto/antlr/Proto.g:250:55: message_extends
                     {
-                    pushFollow(FOLLOW_message_extends_in_message1472);
-                    message_extends82=message_extends();
+                    pushFollow(FOLLOW_message_extends_in_message1498);
+                    message_extends90=message_extends();
 
                     state._fsp--;
 
-                    adaptor.addChild(root_0, message_extends82.getTree());
+                    adaptor.addChild(root_0, message_extends90.getTree());
 
                     }
                     break;
 
             }
 
-            char_literal83=(Token)match(input,46,FOLLOW_46_in_message1475); 
-            // org/fudgemsg/proto/antlr/Proto.g:249:77: ( message_element )*
-            loop17:
+            char_literal91=(Token)match(input,46,FOLLOW_46_in_message1501); 
+            // org/fudgemsg/proto/antlr/Proto.g:250:77: ( message_element )*
+            loop20:
             do {
-                int alt17=2;
-                int LA17_0 = input.LA(1);
+                int alt20=2;
+                int LA20_0 = input.LA(1);
 
-                if ( (LA17_0==ABSTRACT||LA17_0==BINDING||LA17_0==ENUM||(LA17_0>=MESSAGE && LA17_0<=MUTABLE)||LA17_0==OPTIONAL||(LA17_0>=READONLY && LA17_0<=REQUIRED)||(LA17_0>=T_BOOL && LA17_0<=T_TIME)||LA17_0==IDENTIFIER||(LA17_0>=53 && LA17_0<=68)) ) {
-                    alt17=1;
+                if ( (LA20_0==ABSTRACT||LA20_0==BINDING||LA20_0==ENUM||(LA20_0>=MESSAGE && LA20_0<=MUTABLE)||LA20_0==OPTIONAL||(LA20_0>=READONLY && LA20_0<=REQUIRED)||(LA20_0>=T_BOOL && LA20_0<=T_TIME)||LA20_0==IDENTIFIER||(LA20_0>=53 && LA20_0<=68)) ) {
+                    alt20=1;
                 }
 
 
-                switch (alt17) {
+                switch (alt20) {
             	case 1 :
-            	    // org/fudgemsg/proto/antlr/Proto.g:249:77: message_element
+            	    // org/fudgemsg/proto/antlr/Proto.g:250:77: message_element
             	    {
-            	    pushFollow(FOLLOW_message_element_in_message1478);
-            	    message_element84=message_element();
+            	    pushFollow(FOLLOW_message_element_in_message1504);
+            	    message_element92=message_element();
 
             	    state._fsp--;
 
-            	    adaptor.addChild(root_0, message_element84.getTree());
+            	    adaptor.addChild(root_0, message_element92.getTree());
 
             	    }
             	    break;
 
             	default :
-            	    break loop17;
+            	    break loop20;
                 }
             } while (true);
 
-            char_literal85=(Token)match(input,47,FOLLOW_47_in_message1481); 
+            char_literal93=(Token)match(input,47,FOLLOW_47_in_message1507); 
 
             }
 
@@ -2763,30 +2951,30 @@ public class ProtoParser extends Parser {
     };
 
     // $ANTLR start "message_element"
-    // org/fudgemsg/proto/antlr/Proto.g:251:1: message_element : ( message_enum | message_field | message_submsg | binding );
+    // org/fudgemsg/proto/antlr/Proto.g:252:1: message_element : ( message_enum | message_field | message_submsg | binding );
     public final ProtoParser.message_element_return message_element() throws RecognitionException {
         ProtoParser.message_element_return retval = new ProtoParser.message_element_return();
         retval.start = input.LT(1);
 
         ProtoTree root_0 = null;
 
-        ProtoParser.message_enum_return message_enum86 = null;
+        ProtoParser.message_enum_return message_enum94 = null;
 
-        ProtoParser.message_field_return message_field87 = null;
+        ProtoParser.message_field_return message_field95 = null;
 
-        ProtoParser.message_submsg_return message_submsg88 = null;
+        ProtoParser.message_submsg_return message_submsg96 = null;
 
-        ProtoParser.binding_return binding89 = null;
+        ProtoParser.binding_return binding97 = null;
 
 
 
         try {
-            // org/fudgemsg/proto/antlr/Proto.g:252:2: ( message_enum | message_field | message_submsg | binding )
-            int alt18=4;
+            // org/fudgemsg/proto/antlr/Proto.g:253:2: ( message_enum | message_field | message_submsg | binding )
+            int alt21=4;
             switch ( input.LA(1) ) {
             case ENUM:
                 {
-                alt18=1;
+                alt21=1;
                 }
                 break;
             case MUTABLE:
@@ -2824,81 +3012,81 @@ public class ProtoParser extends Parser {
             case 67:
             case 68:
                 {
-                alt18=2;
+                alt21=2;
                 }
                 break;
             case ABSTRACT:
             case MESSAGE:
                 {
-                alt18=3;
+                alt21=3;
                 }
                 break;
             case BINDING:
                 {
-                alt18=4;
+                alt21=4;
                 }
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("", 18, 0, input);
+                    new NoViableAltException("", 21, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt18) {
+            switch (alt21) {
                 case 1 :
-                    // org/fudgemsg/proto/antlr/Proto.g:252:4: message_enum
+                    // org/fudgemsg/proto/antlr/Proto.g:253:4: message_enum
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    pushFollow(FOLLOW_message_enum_in_message_element1492);
-                    message_enum86=message_enum();
+                    pushFollow(FOLLOW_message_enum_in_message_element1518);
+                    message_enum94=message_enum();
 
                     state._fsp--;
 
-                    adaptor.addChild(root_0, message_enum86.getTree());
+                    adaptor.addChild(root_0, message_enum94.getTree());
 
                     }
                     break;
                 case 2 :
-                    // org/fudgemsg/proto/antlr/Proto.g:253:4: message_field
+                    // org/fudgemsg/proto/antlr/Proto.g:254:4: message_field
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    pushFollow(FOLLOW_message_field_in_message_element1497);
-                    message_field87=message_field();
+                    pushFollow(FOLLOW_message_field_in_message_element1523);
+                    message_field95=message_field();
 
                     state._fsp--;
 
-                    adaptor.addChild(root_0, message_field87.getTree());
+                    adaptor.addChild(root_0, message_field95.getTree());
 
                     }
                     break;
                 case 3 :
-                    // org/fudgemsg/proto/antlr/Proto.g:254:4: message_submsg
+                    // org/fudgemsg/proto/antlr/Proto.g:255:4: message_submsg
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    pushFollow(FOLLOW_message_submsg_in_message_element1502);
-                    message_submsg88=message_submsg();
+                    pushFollow(FOLLOW_message_submsg_in_message_element1528);
+                    message_submsg96=message_submsg();
 
                     state._fsp--;
 
-                    adaptor.addChild(root_0, message_submsg88.getTree());
+                    adaptor.addChild(root_0, message_submsg96.getTree());
 
                     }
                     break;
                 case 4 :
-                    // org/fudgemsg/proto/antlr/Proto.g:255:4: binding
+                    // org/fudgemsg/proto/antlr/Proto.g:256:4: binding
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    pushFollow(FOLLOW_binding_in_message_element1507);
-                    binding89=binding();
+                    pushFollow(FOLLOW_binding_in_message_element1533);
+                    binding97=binding();
 
                     state._fsp--;
 
-                    adaptor.addChild(root_0, binding89.getTree());
+                    adaptor.addChild(root_0, binding97.getTree());
 
                     }
                     break;
@@ -2928,71 +3116,71 @@ public class ProtoParser extends Parser {
     };
 
     // $ANTLR start "message_enum"
-    // org/fudgemsg/proto/antlr/Proto.g:258:1: message_enum : ENUM IDENTIFIER '{' ( enum_element )* '}' ;
+    // org/fudgemsg/proto/antlr/Proto.g:259:1: message_enum : ENUM IDENTIFIER '{' ( enum_element )* '}' ;
     public final ProtoParser.message_enum_return message_enum() throws RecognitionException {
         ProtoParser.message_enum_return retval = new ProtoParser.message_enum_return();
         retval.start = input.LT(1);
 
         ProtoTree root_0 = null;
 
-        Token ENUM90=null;
-        Token IDENTIFIER91=null;
-        Token char_literal92=null;
-        Token char_literal94=null;
-        ProtoParser.enum_element_return enum_element93 = null;
+        Token ENUM98=null;
+        Token IDENTIFIER99=null;
+        Token char_literal100=null;
+        Token char_literal102=null;
+        ProtoParser.enum_element_return enum_element101 = null;
 
 
-        ProtoTree ENUM90_tree=null;
-        ProtoTree IDENTIFIER91_tree=null;
-        ProtoTree char_literal92_tree=null;
-        ProtoTree char_literal94_tree=null;
+        ProtoTree ENUM98_tree=null;
+        ProtoTree IDENTIFIER99_tree=null;
+        ProtoTree char_literal100_tree=null;
+        ProtoTree char_literal102_tree=null;
 
         try {
-            // org/fudgemsg/proto/antlr/Proto.g:258:14: ( ENUM IDENTIFIER '{' ( enum_element )* '}' )
-            // org/fudgemsg/proto/antlr/Proto.g:258:16: ENUM IDENTIFIER '{' ( enum_element )* '}'
+            // org/fudgemsg/proto/antlr/Proto.g:259:14: ( ENUM IDENTIFIER '{' ( enum_element )* '}' )
+            // org/fudgemsg/proto/antlr/Proto.g:259:16: ENUM IDENTIFIER '{' ( enum_element )* '}'
             {
             root_0 = (ProtoTree)adaptor.nil();
 
-            ENUM90=(Token)match(input,ENUM,FOLLOW_ENUM_in_message_enum1517); 
-            ENUM90_tree = (ProtoTree)adaptor.create(ENUM90);
-            root_0 = (ProtoTree)adaptor.becomeRoot(ENUM90_tree, root_0);
+            ENUM98=(Token)match(input,ENUM,FOLLOW_ENUM_in_message_enum1543); 
+            ENUM98_tree = (ProtoTree)adaptor.create(ENUM98);
+            root_0 = (ProtoTree)adaptor.becomeRoot(ENUM98_tree, root_0);
 
-            IDENTIFIER91=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_message_enum1520); 
-            IDENTIFIER91_tree = (ProtoTree)adaptor.create(IDENTIFIER91);
-            adaptor.addChild(root_0, IDENTIFIER91_tree);
+            IDENTIFIER99=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_message_enum1546); 
+            IDENTIFIER99_tree = (ProtoTree)adaptor.create(IDENTIFIER99);
+            adaptor.addChild(root_0, IDENTIFIER99_tree);
 
-            char_literal92=(Token)match(input,46,FOLLOW_46_in_message_enum1522); 
-            // org/fudgemsg/proto/antlr/Proto.g:258:38: ( enum_element )*
-            loop19:
+            char_literal100=(Token)match(input,46,FOLLOW_46_in_message_enum1548); 
+            // org/fudgemsg/proto/antlr/Proto.g:259:38: ( enum_element )*
+            loop22:
             do {
-                int alt19=2;
-                int LA19_0 = input.LA(1);
+                int alt22=2;
+                int LA22_0 = input.LA(1);
 
-                if ( (LA19_0==BINDING||LA19_0==IDENTIFIER) ) {
-                    alt19=1;
+                if ( (LA22_0==BINDING||LA22_0==IDENTIFIER) ) {
+                    alt22=1;
                 }
 
 
-                switch (alt19) {
+                switch (alt22) {
             	case 1 :
-            	    // org/fudgemsg/proto/antlr/Proto.g:258:38: enum_element
+            	    // org/fudgemsg/proto/antlr/Proto.g:259:38: enum_element
             	    {
-            	    pushFollow(FOLLOW_enum_element_in_message_enum1525);
-            	    enum_element93=enum_element();
+            	    pushFollow(FOLLOW_enum_element_in_message_enum1551);
+            	    enum_element101=enum_element();
 
             	    state._fsp--;
 
-            	    adaptor.addChild(root_0, enum_element93.getTree());
+            	    adaptor.addChild(root_0, enum_element101.getTree());
 
             	    }
             	    break;
 
             	default :
-            	    break loop19;
+            	    break loop22;
                 }
             } while (true);
 
-            char_literal94=(Token)match(input,47,FOLLOW_47_in_message_enum1528); 
+            char_literal102=(Token)match(input,47,FOLLOW_47_in_message_enum1554); 
 
             }
 
@@ -3020,52 +3208,52 @@ public class ProtoParser extends Parser {
     };
 
     // $ANTLR start "message_field"
-    // org/fudgemsg/proto/antlr/Proto.g:260:1: message_field : ( ( field_modifier )* field_type IDENTIFIER ( field_ordinal )? ( field_constraints )? ';' -> ^( FIELD field_type IDENTIFIER ( field_modifier )* ( field_ordinal )? ( field_constraints )? ) | ( field_modifier )+ MESSAGE IDENTIFIER ( field_ordinal )? ( field_constraints )? ';' -> ^( FIELD MESSAGE IDENTIFIER ( field_modifier )* ( field_ordinal )? ( field_constraints )? ) | ( field_modifier )+ MESSAGE ( dimension )+ IDENTIFIER ( field_ordinal )? ( field_constraints )? ';' -> ^( FIELD ^( ARRAY MESSAGE ( dimension )+ ) IDENTIFIER ( field_modifier )* ( field_ordinal )? ( field_constraints )? ) );
+    // org/fudgemsg/proto/antlr/Proto.g:261:1: message_field : ( ( field_modifier )* field_type IDENTIFIER ( field_ordinal )? ( field_constraints )? ';' -> ^( FIELD field_type IDENTIFIER ( field_modifier )* ( field_ordinal )? ( field_constraints )? ) | ( field_modifier )+ MESSAGE IDENTIFIER ( field_ordinal )? ( field_constraints )? ';' -> ^( FIELD MESSAGE IDENTIFIER ( field_modifier )* ( field_ordinal )? ( field_constraints )? ) | ( field_modifier )+ MESSAGE ( dimension )+ IDENTIFIER ( field_ordinal )? ( field_constraints )? ';' -> ^( FIELD ^( ARRAY MESSAGE ( dimension )+ ) IDENTIFIER ( field_modifier )* ( field_ordinal )? ( field_constraints )? ) );
     public final ProtoParser.message_field_return message_field() throws RecognitionException {
         ProtoParser.message_field_return retval = new ProtoParser.message_field_return();
         retval.start = input.LT(1);
 
         ProtoTree root_0 = null;
 
-        Token IDENTIFIER97=null;
-        Token char_literal100=null;
-        Token MESSAGE102=null;
-        Token IDENTIFIER103=null;
-        Token char_literal106=null;
-        Token MESSAGE108=null;
-        Token IDENTIFIER110=null;
-        Token char_literal113=null;
-        ProtoParser.field_modifier_return field_modifier95 = null;
+        Token IDENTIFIER105=null;
+        Token char_literal108=null;
+        Token MESSAGE110=null;
+        Token IDENTIFIER111=null;
+        Token char_literal114=null;
+        Token MESSAGE116=null;
+        Token IDENTIFIER118=null;
+        Token char_literal121=null;
+        ProtoParser.field_modifier_return field_modifier103 = null;
 
-        ProtoParser.field_type_return field_type96 = null;
+        ProtoParser.field_type_return field_type104 = null;
 
-        ProtoParser.field_ordinal_return field_ordinal98 = null;
+        ProtoParser.field_ordinal_return field_ordinal106 = null;
 
-        ProtoParser.field_constraints_return field_constraints99 = null;
+        ProtoParser.field_constraints_return field_constraints107 = null;
 
-        ProtoParser.field_modifier_return field_modifier101 = null;
+        ProtoParser.field_modifier_return field_modifier109 = null;
 
-        ProtoParser.field_ordinal_return field_ordinal104 = null;
+        ProtoParser.field_ordinal_return field_ordinal112 = null;
 
-        ProtoParser.field_constraints_return field_constraints105 = null;
+        ProtoParser.field_constraints_return field_constraints113 = null;
 
-        ProtoParser.field_modifier_return field_modifier107 = null;
+        ProtoParser.field_modifier_return field_modifier115 = null;
 
-        ProtoParser.dimension_return dimension109 = null;
+        ProtoParser.dimension_return dimension117 = null;
 
-        ProtoParser.field_ordinal_return field_ordinal111 = null;
+        ProtoParser.field_ordinal_return field_ordinal119 = null;
 
-        ProtoParser.field_constraints_return field_constraints112 = null;
+        ProtoParser.field_constraints_return field_constraints120 = null;
 
 
-        ProtoTree IDENTIFIER97_tree=null;
-        ProtoTree char_literal100_tree=null;
-        ProtoTree MESSAGE102_tree=null;
-        ProtoTree IDENTIFIER103_tree=null;
-        ProtoTree char_literal106_tree=null;
-        ProtoTree MESSAGE108_tree=null;
-        ProtoTree IDENTIFIER110_tree=null;
-        ProtoTree char_literal113_tree=null;
+        ProtoTree IDENTIFIER105_tree=null;
+        ProtoTree char_literal108_tree=null;
+        ProtoTree MESSAGE110_tree=null;
+        ProtoTree IDENTIFIER111_tree=null;
+        ProtoTree char_literal114_tree=null;
+        ProtoTree MESSAGE116_tree=null;
+        ProtoTree IDENTIFIER118_tree=null;
+        ProtoTree char_literal121_tree=null;
         RewriteRuleTokenStream stream_48=new RewriteRuleTokenStream(adaptor,"token 48");
         RewriteRuleTokenStream stream_MESSAGE=new RewriteRuleTokenStream(adaptor,"token MESSAGE");
         RewriteRuleTokenStream stream_IDENTIFIER=new RewriteRuleTokenStream(adaptor,"token IDENTIFIER");
@@ -3075,105 +3263,105 @@ public class ProtoParser extends Parser {
         RewriteRuleSubtreeStream stream_field_constraints=new RewriteRuleSubtreeStream(adaptor,"rule field_constraints");
         RewriteRuleSubtreeStream stream_field_ordinal=new RewriteRuleSubtreeStream(adaptor,"rule field_ordinal");
         try {
-            // org/fudgemsg/proto/antlr/Proto.g:261:3: ( ( field_modifier )* field_type IDENTIFIER ( field_ordinal )? ( field_constraints )? ';' -> ^( FIELD field_type IDENTIFIER ( field_modifier )* ( field_ordinal )? ( field_constraints )? ) | ( field_modifier )+ MESSAGE IDENTIFIER ( field_ordinal )? ( field_constraints )? ';' -> ^( FIELD MESSAGE IDENTIFIER ( field_modifier )* ( field_ordinal )? ( field_constraints )? ) | ( field_modifier )+ MESSAGE ( dimension )+ IDENTIFIER ( field_ordinal )? ( field_constraints )? ';' -> ^( FIELD ^( ARRAY MESSAGE ( dimension )+ ) IDENTIFIER ( field_modifier )* ( field_ordinal )? ( field_constraints )? ) )
-            int alt30=3;
-            alt30 = dfa30.predict(input);
-            switch (alt30) {
+            // org/fudgemsg/proto/antlr/Proto.g:262:3: ( ( field_modifier )* field_type IDENTIFIER ( field_ordinal )? ( field_constraints )? ';' -> ^( FIELD field_type IDENTIFIER ( field_modifier )* ( field_ordinal )? ( field_constraints )? ) | ( field_modifier )+ MESSAGE IDENTIFIER ( field_ordinal )? ( field_constraints )? ';' -> ^( FIELD MESSAGE IDENTIFIER ( field_modifier )* ( field_ordinal )? ( field_constraints )? ) | ( field_modifier )+ MESSAGE ( dimension )+ IDENTIFIER ( field_ordinal )? ( field_constraints )? ';' -> ^( FIELD ^( ARRAY MESSAGE ( dimension )+ ) IDENTIFIER ( field_modifier )* ( field_ordinal )? ( field_constraints )? ) )
+            int alt33=3;
+            alt33 = dfa33.predict(input);
+            switch (alt33) {
                 case 1 :
-                    // org/fudgemsg/proto/antlr/Proto.g:261:5: ( field_modifier )* field_type IDENTIFIER ( field_ordinal )? ( field_constraints )? ';'
+                    // org/fudgemsg/proto/antlr/Proto.g:262:5: ( field_modifier )* field_type IDENTIFIER ( field_ordinal )? ( field_constraints )? ';'
                     {
-                    // org/fudgemsg/proto/antlr/Proto.g:261:5: ( field_modifier )*
-                    loop20:
+                    // org/fudgemsg/proto/antlr/Proto.g:262:5: ( field_modifier )*
+                    loop23:
                     do {
-                        int alt20=2;
-                        int LA20_0 = input.LA(1);
+                        int alt23=2;
+                        int LA23_0 = input.LA(1);
 
-                        if ( (LA20_0==MUTABLE||LA20_0==OPTIONAL||(LA20_0>=READONLY && LA20_0<=REQUIRED)) ) {
-                            alt20=1;
+                        if ( (LA23_0==MUTABLE||LA23_0==OPTIONAL||(LA23_0>=READONLY && LA23_0<=REQUIRED)) ) {
+                            alt23=1;
                         }
 
 
-                        switch (alt20) {
+                        switch (alt23) {
                     	case 1 :
-                    	    // org/fudgemsg/proto/antlr/Proto.g:261:5: field_modifier
+                    	    // org/fudgemsg/proto/antlr/Proto.g:262:5: field_modifier
                     	    {
-                    	    pushFollow(FOLLOW_field_modifier_in_message_field1540);
-                    	    field_modifier95=field_modifier();
+                    	    pushFollow(FOLLOW_field_modifier_in_message_field1566);
+                    	    field_modifier103=field_modifier();
 
                     	    state._fsp--;
 
-                    	    stream_field_modifier.add(field_modifier95.getTree());
+                    	    stream_field_modifier.add(field_modifier103.getTree());
 
                     	    }
                     	    break;
 
                     	default :
-                    	    break loop20;
+                    	    break loop23;
                         }
                     } while (true);
 
-                    pushFollow(FOLLOW_field_type_in_message_field1543);
-                    field_type96=field_type();
+                    pushFollow(FOLLOW_field_type_in_message_field1569);
+                    field_type104=field_type();
 
                     state._fsp--;
 
-                    stream_field_type.add(field_type96.getTree());
-                    IDENTIFIER97=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_message_field1545);  
-                    stream_IDENTIFIER.add(IDENTIFIER97);
+                    stream_field_type.add(field_type104.getTree());
+                    IDENTIFIER105=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_message_field1571);  
+                    stream_IDENTIFIER.add(IDENTIFIER105);
 
-                    // org/fudgemsg/proto/antlr/Proto.g:261:43: ( field_ordinal )?
-                    int alt21=2;
-                    int LA21_0 = input.LA(1);
+                    // org/fudgemsg/proto/antlr/Proto.g:262:43: ( field_ordinal )?
+                    int alt24=2;
+                    int LA24_0 = input.LA(1);
 
-                    if ( (LA21_0==49) ) {
-                        alt21=1;
+                    if ( (LA24_0==49) ) {
+                        alt24=1;
                     }
-                    switch (alt21) {
+                    switch (alt24) {
                         case 1 :
-                            // org/fudgemsg/proto/antlr/Proto.g:261:43: field_ordinal
+                            // org/fudgemsg/proto/antlr/Proto.g:262:43: field_ordinal
                             {
-                            pushFollow(FOLLOW_field_ordinal_in_message_field1547);
-                            field_ordinal98=field_ordinal();
+                            pushFollow(FOLLOW_field_ordinal_in_message_field1573);
+                            field_ordinal106=field_ordinal();
 
                             state._fsp--;
 
-                            stream_field_ordinal.add(field_ordinal98.getTree());
+                            stream_field_ordinal.add(field_ordinal106.getTree());
 
                             }
                             break;
 
                     }
 
-                    // org/fudgemsg/proto/antlr/Proto.g:261:58: ( field_constraints )?
-                    int alt22=2;
-                    int LA22_0 = input.LA(1);
+                    // org/fudgemsg/proto/antlr/Proto.g:262:58: ( field_constraints )?
+                    int alt25=2;
+                    int LA25_0 = input.LA(1);
 
-                    if ( (LA22_0==50) ) {
-                        alt22=1;
+                    if ( (LA25_0==50) ) {
+                        alt25=1;
                     }
-                    switch (alt22) {
+                    switch (alt25) {
                         case 1 :
-                            // org/fudgemsg/proto/antlr/Proto.g:261:58: field_constraints
+                            // org/fudgemsg/proto/antlr/Proto.g:262:58: field_constraints
                             {
-                            pushFollow(FOLLOW_field_constraints_in_message_field1550);
-                            field_constraints99=field_constraints();
+                            pushFollow(FOLLOW_field_constraints_in_message_field1576);
+                            field_constraints107=field_constraints();
 
                             state._fsp--;
 
-                            stream_field_constraints.add(field_constraints99.getTree());
+                            stream_field_constraints.add(field_constraints107.getTree());
 
                             }
                             break;
 
                     }
 
-                    char_literal100=(Token)match(input,48,FOLLOW_48_in_message_field1553);  
-                    stream_48.add(char_literal100);
+                    char_literal108=(Token)match(input,48,FOLLOW_48_in_message_field1579);  
+                    stream_48.add(char_literal108);
 
 
 
                     // AST REWRITE
-                    // elements: field_constraints, field_ordinal, field_modifier, IDENTIFIER, field_type
+                    // elements: field_ordinal, field_constraints, field_modifier, IDENTIFIER, field_type
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -3183,28 +3371,28 @@ public class ProtoParser extends Parser {
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
                     root_0 = (ProtoTree)adaptor.nil();
-                    // 261:81: -> ^( FIELD field_type IDENTIFIER ( field_modifier )* ( field_ordinal )? ( field_constraints )? )
+                    // 262:81: -> ^( FIELD field_type IDENTIFIER ( field_modifier )* ( field_ordinal )? ( field_constraints )? )
                     {
-                        // org/fudgemsg/proto/antlr/Proto.g:261:84: ^( FIELD field_type IDENTIFIER ( field_modifier )* ( field_ordinal )? ( field_constraints )? )
+                        // org/fudgemsg/proto/antlr/Proto.g:262:84: ^( FIELD field_type IDENTIFIER ( field_modifier )* ( field_ordinal )? ( field_constraints )? )
                         {
                         ProtoTree root_1 = (ProtoTree)adaptor.nil();
                         root_1 = (ProtoTree)adaptor.becomeRoot((ProtoTree)adaptor.create(FIELD, "FIELD"), root_1);
 
                         adaptor.addChild(root_1, stream_field_type.nextTree());
                         adaptor.addChild(root_1, stream_IDENTIFIER.nextNode());
-                        // org/fudgemsg/proto/antlr/Proto.g:261:114: ( field_modifier )*
+                        // org/fudgemsg/proto/antlr/Proto.g:262:114: ( field_modifier )*
                         while ( stream_field_modifier.hasNext() ) {
                             adaptor.addChild(root_1, stream_field_modifier.nextTree());
 
                         }
                         stream_field_modifier.reset();
-                        // org/fudgemsg/proto/antlr/Proto.g:261:130: ( field_ordinal )?
+                        // org/fudgemsg/proto/antlr/Proto.g:262:130: ( field_ordinal )?
                         if ( stream_field_ordinal.hasNext() ) {
                             adaptor.addChild(root_1, stream_field_ordinal.nextTree());
 
                         }
                         stream_field_ordinal.reset();
-                        // org/fudgemsg/proto/antlr/Proto.g:261:145: ( field_constraints )?
+                        // org/fudgemsg/proto/antlr/Proto.g:262:145: ( field_constraints )?
                         if ( stream_field_constraints.hasNext() ) {
                             adaptor.addChild(root_1, stream_field_constraints.nextTree());
 
@@ -3220,149 +3408,7 @@ public class ProtoParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // org/fudgemsg/proto/antlr/Proto.g:262:5: ( field_modifier )+ MESSAGE IDENTIFIER ( field_ordinal )? ( field_constraints )? ';'
-                    {
-                    // org/fudgemsg/proto/antlr/Proto.g:262:5: ( field_modifier )+
-                    int cnt23=0;
-                    loop23:
-                    do {
-                        int alt23=2;
-                        int LA23_0 = input.LA(1);
-
-                        if ( (LA23_0==MUTABLE||LA23_0==OPTIONAL||(LA23_0>=READONLY && LA23_0<=REQUIRED)) ) {
-                            alt23=1;
-                        }
-
-
-                        switch (alt23) {
-                    	case 1 :
-                    	    // org/fudgemsg/proto/antlr/Proto.g:262:5: field_modifier
-                    	    {
-                    	    pushFollow(FOLLOW_field_modifier_in_message_field1578);
-                    	    field_modifier101=field_modifier();
-
-                    	    state._fsp--;
-
-                    	    stream_field_modifier.add(field_modifier101.getTree());
-
-                    	    }
-                    	    break;
-
-                    	default :
-                    	    if ( cnt23 >= 1 ) break loop23;
-                                EarlyExitException eee =
-                                    new EarlyExitException(23, input);
-                                throw eee;
-                        }
-                        cnt23++;
-                    } while (true);
-
-                    MESSAGE102=(Token)match(input,MESSAGE,FOLLOW_MESSAGE_in_message_field1581);  
-                    stream_MESSAGE.add(MESSAGE102);
-
-                    IDENTIFIER103=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_message_field1583);  
-                    stream_IDENTIFIER.add(IDENTIFIER103);
-
-                    // org/fudgemsg/proto/antlr/Proto.g:262:40: ( field_ordinal )?
-                    int alt24=2;
-                    int LA24_0 = input.LA(1);
-
-                    if ( (LA24_0==49) ) {
-                        alt24=1;
-                    }
-                    switch (alt24) {
-                        case 1 :
-                            // org/fudgemsg/proto/antlr/Proto.g:262:40: field_ordinal
-                            {
-                            pushFollow(FOLLOW_field_ordinal_in_message_field1585);
-                            field_ordinal104=field_ordinal();
-
-                            state._fsp--;
-
-                            stream_field_ordinal.add(field_ordinal104.getTree());
-
-                            }
-                            break;
-
-                    }
-
-                    // org/fudgemsg/proto/antlr/Proto.g:262:55: ( field_constraints )?
-                    int alt25=2;
-                    int LA25_0 = input.LA(1);
-
-                    if ( (LA25_0==50) ) {
-                        alt25=1;
-                    }
-                    switch (alt25) {
-                        case 1 :
-                            // org/fudgemsg/proto/antlr/Proto.g:262:55: field_constraints
-                            {
-                            pushFollow(FOLLOW_field_constraints_in_message_field1588);
-                            field_constraints105=field_constraints();
-
-                            state._fsp--;
-
-                            stream_field_constraints.add(field_constraints105.getTree());
-
-                            }
-                            break;
-
-                    }
-
-                    char_literal106=(Token)match(input,48,FOLLOW_48_in_message_field1591);  
-                    stream_48.add(char_literal106);
-
-
-
-                    // AST REWRITE
-                    // elements: field_modifier, IDENTIFIER, field_constraints, MESSAGE, field_ordinal
-                    // token labels: 
-                    // rule labels: retval
-                    // token list labels: 
-                    // rule list labels: 
-                    // wildcard labels: 
-                    retval.tree = root_0;
-                    RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
-
-                    root_0 = (ProtoTree)adaptor.nil();
-                    // 262:78: -> ^( FIELD MESSAGE IDENTIFIER ( field_modifier )* ( field_ordinal )? ( field_constraints )? )
-                    {
-                        // org/fudgemsg/proto/antlr/Proto.g:262:81: ^( FIELD MESSAGE IDENTIFIER ( field_modifier )* ( field_ordinal )? ( field_constraints )? )
-                        {
-                        ProtoTree root_1 = (ProtoTree)adaptor.nil();
-                        root_1 = (ProtoTree)adaptor.becomeRoot((ProtoTree)adaptor.create(FIELD, "FIELD"), root_1);
-
-                        adaptor.addChild(root_1, stream_MESSAGE.nextNode());
-                        adaptor.addChild(root_1, stream_IDENTIFIER.nextNode());
-                        // org/fudgemsg/proto/antlr/Proto.g:262:108: ( field_modifier )*
-                        while ( stream_field_modifier.hasNext() ) {
-                            adaptor.addChild(root_1, stream_field_modifier.nextTree());
-
-                        }
-                        stream_field_modifier.reset();
-                        // org/fudgemsg/proto/antlr/Proto.g:262:124: ( field_ordinal )?
-                        if ( stream_field_ordinal.hasNext() ) {
-                            adaptor.addChild(root_1, stream_field_ordinal.nextTree());
-
-                        }
-                        stream_field_ordinal.reset();
-                        // org/fudgemsg/proto/antlr/Proto.g:262:139: ( field_constraints )?
-                        if ( stream_field_constraints.hasNext() ) {
-                            adaptor.addChild(root_1, stream_field_constraints.nextTree());
-
-                        }
-                        stream_field_constraints.reset();
-
-                        adaptor.addChild(root_0, root_1);
-                        }
-
-                    }
-
-                    retval.tree = root_0;
-                    }
-                    break;
-                case 3 :
-                    // org/fudgemsg/proto/antlr/Proto.g:263:5: ( field_modifier )+ MESSAGE ( dimension )+ IDENTIFIER ( field_ordinal )? ( field_constraints )? ';'
+                    // org/fudgemsg/proto/antlr/Proto.g:263:5: ( field_modifier )+ MESSAGE IDENTIFIER ( field_ordinal )? ( field_constraints )? ';'
                     {
                     // org/fudgemsg/proto/antlr/Proto.g:263:5: ( field_modifier )+
                     int cnt26=0;
@@ -3380,12 +3426,12 @@ public class ProtoParser extends Parser {
                     	case 1 :
                     	    // org/fudgemsg/proto/antlr/Proto.g:263:5: field_modifier
                     	    {
-                    	    pushFollow(FOLLOW_field_modifier_in_message_field1616);
-                    	    field_modifier107=field_modifier();
+                    	    pushFollow(FOLLOW_field_modifier_in_message_field1604);
+                    	    field_modifier109=field_modifier();
 
                     	    state._fsp--;
 
-                    	    stream_field_modifier.add(field_modifier107.getTree());
+                    	    stream_field_modifier.add(field_modifier109.getTree());
 
                     	    }
                     	    break;
@@ -3399,100 +3445,65 @@ public class ProtoParser extends Parser {
                         cnt26++;
                     } while (true);
 
-                    MESSAGE108=(Token)match(input,MESSAGE,FOLLOW_MESSAGE_in_message_field1619);  
-                    stream_MESSAGE.add(MESSAGE108);
+                    MESSAGE110=(Token)match(input,MESSAGE,FOLLOW_MESSAGE_in_message_field1607);  
+                    stream_MESSAGE.add(MESSAGE110);
 
-                    // org/fudgemsg/proto/antlr/Proto.g:263:29: ( dimension )+
-                    int cnt27=0;
-                    loop27:
-                    do {
-                        int alt27=2;
-                        int LA27_0 = input.LA(1);
+                    IDENTIFIER111=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_message_field1609);  
+                    stream_IDENTIFIER.add(IDENTIFIER111);
 
-                        if ( (LA27_0==50) ) {
-                            alt27=1;
-                        }
+                    // org/fudgemsg/proto/antlr/Proto.g:263:40: ( field_ordinal )?
+                    int alt27=2;
+                    int LA27_0 = input.LA(1);
 
+                    if ( (LA27_0==49) ) {
+                        alt27=1;
+                    }
+                    switch (alt27) {
+                        case 1 :
+                            // org/fudgemsg/proto/antlr/Proto.g:263:40: field_ordinal
+                            {
+                            pushFollow(FOLLOW_field_ordinal_in_message_field1611);
+                            field_ordinal112=field_ordinal();
 
-                        switch (alt27) {
-                    	case 1 :
-                    	    // org/fudgemsg/proto/antlr/Proto.g:263:29: dimension
-                    	    {
-                    	    pushFollow(FOLLOW_dimension_in_message_field1621);
-                    	    dimension109=dimension();
+                            state._fsp--;
 
-                    	    state._fsp--;
+                            stream_field_ordinal.add(field_ordinal112.getTree());
 
-                    	    stream_dimension.add(dimension109.getTree());
+                            }
+                            break;
 
-                    	    }
-                    	    break;
+                    }
 
-                    	default :
-                    	    if ( cnt27 >= 1 ) break loop27;
-                                EarlyExitException eee =
-                                    new EarlyExitException(27, input);
-                                throw eee;
-                        }
-                        cnt27++;
-                    } while (true);
-
-                    IDENTIFIER110=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_message_field1624);  
-                    stream_IDENTIFIER.add(IDENTIFIER110);
-
-                    // org/fudgemsg/proto/antlr/Proto.g:263:51: ( field_ordinal )?
+                    // org/fudgemsg/proto/antlr/Proto.g:263:55: ( field_constraints )?
                     int alt28=2;
                     int LA28_0 = input.LA(1);
 
-                    if ( (LA28_0==49) ) {
+                    if ( (LA28_0==50) ) {
                         alt28=1;
                     }
                     switch (alt28) {
                         case 1 :
-                            // org/fudgemsg/proto/antlr/Proto.g:263:51: field_ordinal
+                            // org/fudgemsg/proto/antlr/Proto.g:263:55: field_constraints
                             {
-                            pushFollow(FOLLOW_field_ordinal_in_message_field1626);
-                            field_ordinal111=field_ordinal();
+                            pushFollow(FOLLOW_field_constraints_in_message_field1614);
+                            field_constraints113=field_constraints();
 
                             state._fsp--;
 
-                            stream_field_ordinal.add(field_ordinal111.getTree());
+                            stream_field_constraints.add(field_constraints113.getTree());
 
                             }
                             break;
 
                     }
 
-                    // org/fudgemsg/proto/antlr/Proto.g:263:66: ( field_constraints )?
-                    int alt29=2;
-                    int LA29_0 = input.LA(1);
-
-                    if ( (LA29_0==50) ) {
-                        alt29=1;
-                    }
-                    switch (alt29) {
-                        case 1 :
-                            // org/fudgemsg/proto/antlr/Proto.g:263:66: field_constraints
-                            {
-                            pushFollow(FOLLOW_field_constraints_in_message_field1629);
-                            field_constraints112=field_constraints();
-
-                            state._fsp--;
-
-                            stream_field_constraints.add(field_constraints112.getTree());
-
-                            }
-                            break;
-
-                    }
-
-                    char_literal113=(Token)match(input,48,FOLLOW_48_in_message_field1632);  
-                    stream_48.add(char_literal113);
+                    char_literal114=(Token)match(input,48,FOLLOW_48_in_message_field1617);  
+                    stream_48.add(char_literal114);
 
 
 
                     // AST REWRITE
-                    // elements: IDENTIFIER, field_modifier, field_constraints, dimension, field_ordinal, MESSAGE
+                    // elements: field_constraints, MESSAGE, field_ordinal, field_modifier, IDENTIFIER
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -3502,14 +3513,191 @@ public class ProtoParser extends Parser {
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
                     root_0 = (ProtoTree)adaptor.nil();
-                    // 263:89: -> ^( FIELD ^( ARRAY MESSAGE ( dimension )+ ) IDENTIFIER ( field_modifier )* ( field_ordinal )? ( field_constraints )? )
+                    // 263:78: -> ^( FIELD MESSAGE IDENTIFIER ( field_modifier )* ( field_ordinal )? ( field_constraints )? )
                     {
-                        // org/fudgemsg/proto/antlr/Proto.g:263:92: ^( FIELD ^( ARRAY MESSAGE ( dimension )+ ) IDENTIFIER ( field_modifier )* ( field_ordinal )? ( field_constraints )? )
+                        // org/fudgemsg/proto/antlr/Proto.g:263:81: ^( FIELD MESSAGE IDENTIFIER ( field_modifier )* ( field_ordinal )? ( field_constraints )? )
                         {
                         ProtoTree root_1 = (ProtoTree)adaptor.nil();
                         root_1 = (ProtoTree)adaptor.becomeRoot((ProtoTree)adaptor.create(FIELD, "FIELD"), root_1);
 
-                        // org/fudgemsg/proto/antlr/Proto.g:263:100: ^( ARRAY MESSAGE ( dimension )+ )
+                        adaptor.addChild(root_1, stream_MESSAGE.nextNode());
+                        adaptor.addChild(root_1, stream_IDENTIFIER.nextNode());
+                        // org/fudgemsg/proto/antlr/Proto.g:263:108: ( field_modifier )*
+                        while ( stream_field_modifier.hasNext() ) {
+                            adaptor.addChild(root_1, stream_field_modifier.nextTree());
+
+                        }
+                        stream_field_modifier.reset();
+                        // org/fudgemsg/proto/antlr/Proto.g:263:124: ( field_ordinal )?
+                        if ( stream_field_ordinal.hasNext() ) {
+                            adaptor.addChild(root_1, stream_field_ordinal.nextTree());
+
+                        }
+                        stream_field_ordinal.reset();
+                        // org/fudgemsg/proto/antlr/Proto.g:263:139: ( field_constraints )?
+                        if ( stream_field_constraints.hasNext() ) {
+                            adaptor.addChild(root_1, stream_field_constraints.nextTree());
+
+                        }
+                        stream_field_constraints.reset();
+
+                        adaptor.addChild(root_0, root_1);
+                        }
+
+                    }
+
+                    retval.tree = root_0;
+                    }
+                    break;
+                case 3 :
+                    // org/fudgemsg/proto/antlr/Proto.g:264:5: ( field_modifier )+ MESSAGE ( dimension )+ IDENTIFIER ( field_ordinal )? ( field_constraints )? ';'
+                    {
+                    // org/fudgemsg/proto/antlr/Proto.g:264:5: ( field_modifier )+
+                    int cnt29=0;
+                    loop29:
+                    do {
+                        int alt29=2;
+                        int LA29_0 = input.LA(1);
+
+                        if ( (LA29_0==MUTABLE||LA29_0==OPTIONAL||(LA29_0>=READONLY && LA29_0<=REQUIRED)) ) {
+                            alt29=1;
+                        }
+
+
+                        switch (alt29) {
+                    	case 1 :
+                    	    // org/fudgemsg/proto/antlr/Proto.g:264:5: field_modifier
+                    	    {
+                    	    pushFollow(FOLLOW_field_modifier_in_message_field1642);
+                    	    field_modifier115=field_modifier();
+
+                    	    state._fsp--;
+
+                    	    stream_field_modifier.add(field_modifier115.getTree());
+
+                    	    }
+                    	    break;
+
+                    	default :
+                    	    if ( cnt29 >= 1 ) break loop29;
+                                EarlyExitException eee =
+                                    new EarlyExitException(29, input);
+                                throw eee;
+                        }
+                        cnt29++;
+                    } while (true);
+
+                    MESSAGE116=(Token)match(input,MESSAGE,FOLLOW_MESSAGE_in_message_field1645);  
+                    stream_MESSAGE.add(MESSAGE116);
+
+                    // org/fudgemsg/proto/antlr/Proto.g:264:29: ( dimension )+
+                    int cnt30=0;
+                    loop30:
+                    do {
+                        int alt30=2;
+                        int LA30_0 = input.LA(1);
+
+                        if ( (LA30_0==50) ) {
+                            alt30=1;
+                        }
+
+
+                        switch (alt30) {
+                    	case 1 :
+                    	    // org/fudgemsg/proto/antlr/Proto.g:264:29: dimension
+                    	    {
+                    	    pushFollow(FOLLOW_dimension_in_message_field1647);
+                    	    dimension117=dimension();
+
+                    	    state._fsp--;
+
+                    	    stream_dimension.add(dimension117.getTree());
+
+                    	    }
+                    	    break;
+
+                    	default :
+                    	    if ( cnt30 >= 1 ) break loop30;
+                                EarlyExitException eee =
+                                    new EarlyExitException(30, input);
+                                throw eee;
+                        }
+                        cnt30++;
+                    } while (true);
+
+                    IDENTIFIER118=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_message_field1650);  
+                    stream_IDENTIFIER.add(IDENTIFIER118);
+
+                    // org/fudgemsg/proto/antlr/Proto.g:264:51: ( field_ordinal )?
+                    int alt31=2;
+                    int LA31_0 = input.LA(1);
+
+                    if ( (LA31_0==49) ) {
+                        alt31=1;
+                    }
+                    switch (alt31) {
+                        case 1 :
+                            // org/fudgemsg/proto/antlr/Proto.g:264:51: field_ordinal
+                            {
+                            pushFollow(FOLLOW_field_ordinal_in_message_field1652);
+                            field_ordinal119=field_ordinal();
+
+                            state._fsp--;
+
+                            stream_field_ordinal.add(field_ordinal119.getTree());
+
+                            }
+                            break;
+
+                    }
+
+                    // org/fudgemsg/proto/antlr/Proto.g:264:66: ( field_constraints )?
+                    int alt32=2;
+                    int LA32_0 = input.LA(1);
+
+                    if ( (LA32_0==50) ) {
+                        alt32=1;
+                    }
+                    switch (alt32) {
+                        case 1 :
+                            // org/fudgemsg/proto/antlr/Proto.g:264:66: field_constraints
+                            {
+                            pushFollow(FOLLOW_field_constraints_in_message_field1655);
+                            field_constraints120=field_constraints();
+
+                            state._fsp--;
+
+                            stream_field_constraints.add(field_constraints120.getTree());
+
+                            }
+                            break;
+
+                    }
+
+                    char_literal121=(Token)match(input,48,FOLLOW_48_in_message_field1658);  
+                    stream_48.add(char_literal121);
+
+
+
+                    // AST REWRITE
+                    // elements: MESSAGE, field_ordinal, field_constraints, dimension, field_modifier, IDENTIFIER
+                    // token labels: 
+                    // rule labels: retval
+                    // token list labels: 
+                    // rule list labels: 
+                    // wildcard labels: 
+                    retval.tree = root_0;
+                    RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
+
+                    root_0 = (ProtoTree)adaptor.nil();
+                    // 264:89: -> ^( FIELD ^( ARRAY MESSAGE ( dimension )+ ) IDENTIFIER ( field_modifier )* ( field_ordinal )? ( field_constraints )? )
+                    {
+                        // org/fudgemsg/proto/antlr/Proto.g:264:92: ^( FIELD ^( ARRAY MESSAGE ( dimension )+ ) IDENTIFIER ( field_modifier )* ( field_ordinal )? ( field_constraints )? )
+                        {
+                        ProtoTree root_1 = (ProtoTree)adaptor.nil();
+                        root_1 = (ProtoTree)adaptor.becomeRoot((ProtoTree)adaptor.create(FIELD, "FIELD"), root_1);
+
+                        // org/fudgemsg/proto/antlr/Proto.g:264:100: ^( ARRAY MESSAGE ( dimension )+ )
                         {
                         ProtoTree root_2 = (ProtoTree)adaptor.nil();
                         root_2 = (ProtoTree)adaptor.becomeRoot((ProtoTree)adaptor.create(ARRAY, "ARRAY"), root_2);
@@ -3527,19 +3715,19 @@ public class ProtoParser extends Parser {
                         adaptor.addChild(root_1, root_2);
                         }
                         adaptor.addChild(root_1, stream_IDENTIFIER.nextNode());
-                        // org/fudgemsg/proto/antlr/Proto.g:263:139: ( field_modifier )*
+                        // org/fudgemsg/proto/antlr/Proto.g:264:139: ( field_modifier )*
                         while ( stream_field_modifier.hasNext() ) {
                             adaptor.addChild(root_1, stream_field_modifier.nextTree());
 
                         }
                         stream_field_modifier.reset();
-                        // org/fudgemsg/proto/antlr/Proto.g:263:155: ( field_ordinal )?
+                        // org/fudgemsg/proto/antlr/Proto.g:264:155: ( field_ordinal )?
                         if ( stream_field_ordinal.hasNext() ) {
                             adaptor.addChild(root_1, stream_field_ordinal.nextTree());
 
                         }
                         stream_field_ordinal.reset();
-                        // org/fudgemsg/proto/antlr/Proto.g:263:170: ( field_constraints )?
+                        // org/fudgemsg/proto/antlr/Proto.g:264:170: ( field_constraints )?
                         if ( stream_field_constraints.hasNext() ) {
                             adaptor.addChild(root_1, stream_field_constraints.nextTree());
 
@@ -3580,47 +3768,47 @@ public class ProtoParser extends Parser {
     };
 
     // $ANTLR start "message_submsg"
-    // org/fudgemsg/proto/antlr/Proto.g:266:1: message_submsg : ( ABSTRACT )? MESSAGE IDENTIFIER '{' ( message_element )* '}' ;
+    // org/fudgemsg/proto/antlr/Proto.g:267:1: message_submsg : ( ABSTRACT )? MESSAGE IDENTIFIER '{' ( message_element )* '}' ;
     public final ProtoParser.message_submsg_return message_submsg() throws RecognitionException {
         ProtoParser.message_submsg_return retval = new ProtoParser.message_submsg_return();
         retval.start = input.LT(1);
 
         ProtoTree root_0 = null;
 
-        Token ABSTRACT114=null;
-        Token MESSAGE115=null;
-        Token IDENTIFIER116=null;
-        Token char_literal117=null;
-        Token char_literal119=null;
-        ProtoParser.message_element_return message_element118 = null;
+        Token ABSTRACT122=null;
+        Token MESSAGE123=null;
+        Token IDENTIFIER124=null;
+        Token char_literal125=null;
+        Token char_literal127=null;
+        ProtoParser.message_element_return message_element126 = null;
 
 
-        ProtoTree ABSTRACT114_tree=null;
-        ProtoTree MESSAGE115_tree=null;
-        ProtoTree IDENTIFIER116_tree=null;
-        ProtoTree char_literal117_tree=null;
-        ProtoTree char_literal119_tree=null;
+        ProtoTree ABSTRACT122_tree=null;
+        ProtoTree MESSAGE123_tree=null;
+        ProtoTree IDENTIFIER124_tree=null;
+        ProtoTree char_literal125_tree=null;
+        ProtoTree char_literal127_tree=null;
 
         try {
-            // org/fudgemsg/proto/antlr/Proto.g:266:16: ( ( ABSTRACT )? MESSAGE IDENTIFIER '{' ( message_element )* '}' )
-            // org/fudgemsg/proto/antlr/Proto.g:266:18: ( ABSTRACT )? MESSAGE IDENTIFIER '{' ( message_element )* '}'
+            // org/fudgemsg/proto/antlr/Proto.g:267:16: ( ( ABSTRACT )? MESSAGE IDENTIFIER '{' ( message_element )* '}' )
+            // org/fudgemsg/proto/antlr/Proto.g:267:18: ( ABSTRACT )? MESSAGE IDENTIFIER '{' ( message_element )* '}'
             {
             root_0 = (ProtoTree)adaptor.nil();
 
-            // org/fudgemsg/proto/antlr/Proto.g:266:18: ( ABSTRACT )?
-            int alt31=2;
-            int LA31_0 = input.LA(1);
+            // org/fudgemsg/proto/antlr/Proto.g:267:18: ( ABSTRACT )?
+            int alt34=2;
+            int LA34_0 = input.LA(1);
 
-            if ( (LA31_0==ABSTRACT) ) {
-                alt31=1;
+            if ( (LA34_0==ABSTRACT) ) {
+                alt34=1;
             }
-            switch (alt31) {
+            switch (alt34) {
                 case 1 :
-                    // org/fudgemsg/proto/antlr/Proto.g:266:18: ABSTRACT
+                    // org/fudgemsg/proto/antlr/Proto.g:267:18: ABSTRACT
                     {
-                    ABSTRACT114=(Token)match(input,ABSTRACT,FOLLOW_ABSTRACT_in_message_submsg1669); 
-                    ABSTRACT114_tree = (ProtoTree)adaptor.create(ABSTRACT114);
-                    adaptor.addChild(root_0, ABSTRACT114_tree);
+                    ABSTRACT122=(Token)match(input,ABSTRACT,FOLLOW_ABSTRACT_in_message_submsg1695); 
+                    ABSTRACT122_tree = (ProtoTree)adaptor.create(ABSTRACT122);
+                    adaptor.addChild(root_0, ABSTRACT122_tree);
 
 
                     }
@@ -3628,46 +3816,46 @@ public class ProtoParser extends Parser {
 
             }
 
-            MESSAGE115=(Token)match(input,MESSAGE,FOLLOW_MESSAGE_in_message_submsg1672); 
-            MESSAGE115_tree = (ProtoTree)adaptor.create(MESSAGE115);
-            root_0 = (ProtoTree)adaptor.becomeRoot(MESSAGE115_tree, root_0);
+            MESSAGE123=(Token)match(input,MESSAGE,FOLLOW_MESSAGE_in_message_submsg1698); 
+            MESSAGE123_tree = (ProtoTree)adaptor.create(MESSAGE123);
+            root_0 = (ProtoTree)adaptor.becomeRoot(MESSAGE123_tree, root_0);
 
-            IDENTIFIER116=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_message_submsg1675); 
-            IDENTIFIER116_tree = (ProtoTree)adaptor.create(IDENTIFIER116);
-            adaptor.addChild(root_0, IDENTIFIER116_tree);
+            IDENTIFIER124=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_message_submsg1701); 
+            IDENTIFIER124_tree = (ProtoTree)adaptor.create(IDENTIFIER124);
+            adaptor.addChild(root_0, IDENTIFIER124_tree);
 
-            char_literal117=(Token)match(input,46,FOLLOW_46_in_message_submsg1677); 
-            // org/fudgemsg/proto/antlr/Proto.g:266:53: ( message_element )*
-            loop32:
+            char_literal125=(Token)match(input,46,FOLLOW_46_in_message_submsg1703); 
+            // org/fudgemsg/proto/antlr/Proto.g:267:53: ( message_element )*
+            loop35:
             do {
-                int alt32=2;
-                int LA32_0 = input.LA(1);
+                int alt35=2;
+                int LA35_0 = input.LA(1);
 
-                if ( (LA32_0==ABSTRACT||LA32_0==BINDING||LA32_0==ENUM||(LA32_0>=MESSAGE && LA32_0<=MUTABLE)||LA32_0==OPTIONAL||(LA32_0>=READONLY && LA32_0<=REQUIRED)||(LA32_0>=T_BOOL && LA32_0<=T_TIME)||LA32_0==IDENTIFIER||(LA32_0>=53 && LA32_0<=68)) ) {
-                    alt32=1;
+                if ( (LA35_0==ABSTRACT||LA35_0==BINDING||LA35_0==ENUM||(LA35_0>=MESSAGE && LA35_0<=MUTABLE)||LA35_0==OPTIONAL||(LA35_0>=READONLY && LA35_0<=REQUIRED)||(LA35_0>=T_BOOL && LA35_0<=T_TIME)||LA35_0==IDENTIFIER||(LA35_0>=53 && LA35_0<=68)) ) {
+                    alt35=1;
                 }
 
 
-                switch (alt32) {
+                switch (alt35) {
             	case 1 :
-            	    // org/fudgemsg/proto/antlr/Proto.g:266:53: message_element
+            	    // org/fudgemsg/proto/antlr/Proto.g:267:53: message_element
             	    {
-            	    pushFollow(FOLLOW_message_element_in_message_submsg1680);
-            	    message_element118=message_element();
+            	    pushFollow(FOLLOW_message_element_in_message_submsg1706);
+            	    message_element126=message_element();
 
             	    state._fsp--;
 
-            	    adaptor.addChild(root_0, message_element118.getTree());
+            	    adaptor.addChild(root_0, message_element126.getTree());
 
             	    }
             	    break;
 
             	default :
-            	    break loop32;
+            	    break loop35;
                 }
             } while (true);
 
-            char_literal119=(Token)match(input,47,FOLLOW_47_in_message_submsg1683); 
+            char_literal127=(Token)match(input,47,FOLLOW_47_in_message_submsg1709); 
 
             }
 
@@ -3695,67 +3883,67 @@ public class ProtoParser extends Parser {
     };
 
     // $ANTLR start "message_uses"
-    // org/fudgemsg/proto/antlr/Proto.g:269:1: message_uses : USES fullidentifier ( ',' fullidentifier )* ;
+    // org/fudgemsg/proto/antlr/Proto.g:270:1: message_uses : USES fullidentifier ( ',' fullidentifier )* ;
     public final ProtoParser.message_uses_return message_uses() throws RecognitionException {
         ProtoParser.message_uses_return retval = new ProtoParser.message_uses_return();
         retval.start = input.LT(1);
 
         ProtoTree root_0 = null;
 
-        Token USES120=null;
-        Token char_literal122=null;
-        ProtoParser.fullidentifier_return fullidentifier121 = null;
+        Token USES128=null;
+        Token char_literal130=null;
+        ProtoParser.fullidentifier_return fullidentifier129 = null;
 
-        ProtoParser.fullidentifier_return fullidentifier123 = null;
+        ProtoParser.fullidentifier_return fullidentifier131 = null;
 
 
-        ProtoTree USES120_tree=null;
-        ProtoTree char_literal122_tree=null;
+        ProtoTree USES128_tree=null;
+        ProtoTree char_literal130_tree=null;
 
         try {
-            // org/fudgemsg/proto/antlr/Proto.g:269:14: ( USES fullidentifier ( ',' fullidentifier )* )
-            // org/fudgemsg/proto/antlr/Proto.g:269:16: USES fullidentifier ( ',' fullidentifier )*
+            // org/fudgemsg/proto/antlr/Proto.g:270:14: ( USES fullidentifier ( ',' fullidentifier )* )
+            // org/fudgemsg/proto/antlr/Proto.g:270:16: USES fullidentifier ( ',' fullidentifier )*
             {
             root_0 = (ProtoTree)adaptor.nil();
 
-            USES120=(Token)match(input,USES,FOLLOW_USES_in_message_uses1694); 
-            USES120_tree = (ProtoTree)adaptor.create(USES120);
-            root_0 = (ProtoTree)adaptor.becomeRoot(USES120_tree, root_0);
+            USES128=(Token)match(input,USES,FOLLOW_USES_in_message_uses1720); 
+            USES128_tree = (ProtoTree)adaptor.create(USES128);
+            root_0 = (ProtoTree)adaptor.becomeRoot(USES128_tree, root_0);
 
-            pushFollow(FOLLOW_fullidentifier_in_message_uses1697);
-            fullidentifier121=fullidentifier();
+            pushFollow(FOLLOW_fullidentifier_in_message_uses1723);
+            fullidentifier129=fullidentifier();
 
             state._fsp--;
 
-            adaptor.addChild(root_0, fullidentifier121.getTree());
-            // org/fudgemsg/proto/antlr/Proto.g:269:37: ( ',' fullidentifier )*
-            loop33:
+            adaptor.addChild(root_0, fullidentifier129.getTree());
+            // org/fudgemsg/proto/antlr/Proto.g:270:37: ( ',' fullidentifier )*
+            loop36:
             do {
-                int alt33=2;
-                int LA33_0 = input.LA(1);
+                int alt36=2;
+                int LA36_0 = input.LA(1);
 
-                if ( (LA33_0==52) ) {
-                    alt33=1;
+                if ( (LA36_0==52) ) {
+                    alt36=1;
                 }
 
 
-                switch (alt33) {
+                switch (alt36) {
             	case 1 :
-            	    // org/fudgemsg/proto/antlr/Proto.g:269:38: ',' fullidentifier
+            	    // org/fudgemsg/proto/antlr/Proto.g:270:38: ',' fullidentifier
             	    {
-            	    char_literal122=(Token)match(input,52,FOLLOW_52_in_message_uses1700); 
-            	    pushFollow(FOLLOW_fullidentifier_in_message_uses1703);
-            	    fullidentifier123=fullidentifier();
+            	    char_literal130=(Token)match(input,52,FOLLOW_52_in_message_uses1726); 
+            	    pushFollow(FOLLOW_fullidentifier_in_message_uses1729);
+            	    fullidentifier131=fullidentifier();
 
             	    state._fsp--;
 
-            	    adaptor.addChild(root_0, fullidentifier123.getTree());
+            	    adaptor.addChild(root_0, fullidentifier131.getTree());
 
             	    }
             	    break;
 
             	default :
-            	    break loop33;
+            	    break loop36;
                 }
             } while (true);
 
@@ -3786,67 +3974,67 @@ public class ProtoParser extends Parser {
     };
 
     // $ANTLR start "message_extends"
-    // org/fudgemsg/proto/antlr/Proto.g:272:1: message_extends : EXTENDS fullidentifier ( ',' fullidentifier )* ;
+    // org/fudgemsg/proto/antlr/Proto.g:273:1: message_extends : EXTENDS fullidentifier ( ',' fullidentifier )* ;
     public final ProtoParser.message_extends_return message_extends() throws RecognitionException {
         ProtoParser.message_extends_return retval = new ProtoParser.message_extends_return();
         retval.start = input.LT(1);
 
         ProtoTree root_0 = null;
 
-        Token EXTENDS124=null;
-        Token char_literal126=null;
-        ProtoParser.fullidentifier_return fullidentifier125 = null;
+        Token EXTENDS132=null;
+        Token char_literal134=null;
+        ProtoParser.fullidentifier_return fullidentifier133 = null;
 
-        ProtoParser.fullidentifier_return fullidentifier127 = null;
+        ProtoParser.fullidentifier_return fullidentifier135 = null;
 
 
-        ProtoTree EXTENDS124_tree=null;
-        ProtoTree char_literal126_tree=null;
+        ProtoTree EXTENDS132_tree=null;
+        ProtoTree char_literal134_tree=null;
 
         try {
-            // org/fudgemsg/proto/antlr/Proto.g:272:17: ( EXTENDS fullidentifier ( ',' fullidentifier )* )
-            // org/fudgemsg/proto/antlr/Proto.g:272:19: EXTENDS fullidentifier ( ',' fullidentifier )*
+            // org/fudgemsg/proto/antlr/Proto.g:273:17: ( EXTENDS fullidentifier ( ',' fullidentifier )* )
+            // org/fudgemsg/proto/antlr/Proto.g:273:19: EXTENDS fullidentifier ( ',' fullidentifier )*
             {
             root_0 = (ProtoTree)adaptor.nil();
 
-            EXTENDS124=(Token)match(input,EXTENDS,FOLLOW_EXTENDS_in_message_extends1715); 
-            EXTENDS124_tree = (ProtoTree)adaptor.create(EXTENDS124);
-            root_0 = (ProtoTree)adaptor.becomeRoot(EXTENDS124_tree, root_0);
+            EXTENDS132=(Token)match(input,EXTENDS,FOLLOW_EXTENDS_in_message_extends1741); 
+            EXTENDS132_tree = (ProtoTree)adaptor.create(EXTENDS132);
+            root_0 = (ProtoTree)adaptor.becomeRoot(EXTENDS132_tree, root_0);
 
-            pushFollow(FOLLOW_fullidentifier_in_message_extends1718);
-            fullidentifier125=fullidentifier();
+            pushFollow(FOLLOW_fullidentifier_in_message_extends1744);
+            fullidentifier133=fullidentifier();
 
             state._fsp--;
 
-            adaptor.addChild(root_0, fullidentifier125.getTree());
-            // org/fudgemsg/proto/antlr/Proto.g:272:43: ( ',' fullidentifier )*
-            loop34:
+            adaptor.addChild(root_0, fullidentifier133.getTree());
+            // org/fudgemsg/proto/antlr/Proto.g:273:43: ( ',' fullidentifier )*
+            loop37:
             do {
-                int alt34=2;
-                int LA34_0 = input.LA(1);
+                int alt37=2;
+                int LA37_0 = input.LA(1);
 
-                if ( (LA34_0==52) ) {
-                    alt34=1;
+                if ( (LA37_0==52) ) {
+                    alt37=1;
                 }
 
 
-                switch (alt34) {
+                switch (alt37) {
             	case 1 :
-            	    // org/fudgemsg/proto/antlr/Proto.g:272:44: ',' fullidentifier
+            	    // org/fudgemsg/proto/antlr/Proto.g:273:44: ',' fullidentifier
             	    {
-            	    char_literal126=(Token)match(input,52,FOLLOW_52_in_message_extends1721); 
-            	    pushFollow(FOLLOW_fullidentifier_in_message_extends1724);
-            	    fullidentifier127=fullidentifier();
+            	    char_literal134=(Token)match(input,52,FOLLOW_52_in_message_extends1747); 
+            	    pushFollow(FOLLOW_fullidentifier_in_message_extends1750);
+            	    fullidentifier135=fullidentifier();
 
             	    state._fsp--;
 
-            	    adaptor.addChild(root_0, fullidentifier127.getTree());
+            	    adaptor.addChild(root_0, fullidentifier135.getTree());
 
             	    }
             	    break;
 
             	default :
-            	    break loop34;
+            	    break loop37;
                 }
             } while (true);
 
@@ -3877,73 +4065,73 @@ public class ProtoParser extends Parser {
     };
 
     // $ANTLR start "namespace"
-    // org/fudgemsg/proto/antlr/Proto.g:274:1: namespace : NAMESPACE fullidentifier '{' ( root_object )* '}' ;
+    // org/fudgemsg/proto/antlr/Proto.g:275:1: namespace : NAMESPACE fullidentifier '{' ( root_object )* '}' ;
     public final ProtoParser.namespace_return namespace() throws RecognitionException {
         ProtoParser.namespace_return retval = new ProtoParser.namespace_return();
         retval.start = input.LT(1);
 
         ProtoTree root_0 = null;
 
-        Token NAMESPACE128=null;
-        Token char_literal130=null;
-        Token char_literal132=null;
-        ProtoParser.fullidentifier_return fullidentifier129 = null;
+        Token NAMESPACE136=null;
+        Token char_literal138=null;
+        Token char_literal140=null;
+        ProtoParser.fullidentifier_return fullidentifier137 = null;
 
-        ProtoParser.root_object_return root_object131 = null;
+        ProtoParser.root_object_return root_object139 = null;
 
 
-        ProtoTree NAMESPACE128_tree=null;
-        ProtoTree char_literal130_tree=null;
-        ProtoTree char_literal132_tree=null;
+        ProtoTree NAMESPACE136_tree=null;
+        ProtoTree char_literal138_tree=null;
+        ProtoTree char_literal140_tree=null;
 
         try {
-            // org/fudgemsg/proto/antlr/Proto.g:274:11: ( NAMESPACE fullidentifier '{' ( root_object )* '}' )
-            // org/fudgemsg/proto/antlr/Proto.g:274:13: NAMESPACE fullidentifier '{' ( root_object )* '}'
+            // org/fudgemsg/proto/antlr/Proto.g:275:11: ( NAMESPACE fullidentifier '{' ( root_object )* '}' )
+            // org/fudgemsg/proto/antlr/Proto.g:275:13: NAMESPACE fullidentifier '{' ( root_object )* '}'
             {
             root_0 = (ProtoTree)adaptor.nil();
 
-            NAMESPACE128=(Token)match(input,NAMESPACE,FOLLOW_NAMESPACE_in_namespace1735); 
-            NAMESPACE128_tree = (ProtoTree)adaptor.create(NAMESPACE128);
-            root_0 = (ProtoTree)adaptor.becomeRoot(NAMESPACE128_tree, root_0);
+            NAMESPACE136=(Token)match(input,NAMESPACE,FOLLOW_NAMESPACE_in_namespace1761); 
+            NAMESPACE136_tree = (ProtoTree)adaptor.create(NAMESPACE136);
+            root_0 = (ProtoTree)adaptor.becomeRoot(NAMESPACE136_tree, root_0);
 
-            pushFollow(FOLLOW_fullidentifier_in_namespace1738);
-            fullidentifier129=fullidentifier();
+            pushFollow(FOLLOW_fullidentifier_in_namespace1764);
+            fullidentifier137=fullidentifier();
 
             state._fsp--;
 
-            adaptor.addChild(root_0, fullidentifier129.getTree());
-            char_literal130=(Token)match(input,46,FOLLOW_46_in_namespace1740); 
-            // org/fudgemsg/proto/antlr/Proto.g:274:44: ( root_object )*
-            loop35:
+            adaptor.addChild(root_0, fullidentifier137.getTree());
+            char_literal138=(Token)match(input,46,FOLLOW_46_in_namespace1766); 
+            // org/fudgemsg/proto/antlr/Proto.g:275:44: ( root_object )*
+            loop38:
             do {
-                int alt35=2;
-                int LA35_0 = input.LA(1);
+                int alt38=2;
+                int LA38_0 = input.LA(1);
 
-                if ( (LA35_0==ABSTRACT||LA35_0==ENUM||LA35_0==EXTERN||LA35_0==MESSAGE||LA35_0==NAMESPACE||LA35_0==TAXONOMY) ) {
-                    alt35=1;
+                if ( (LA38_0==ABSTRACT||LA38_0==ENUM||LA38_0==EXTERN||LA38_0==MESSAGE||LA38_0==NAMESPACE||LA38_0==TAXONOMY) ) {
+                    alt38=1;
                 }
 
 
-                switch (alt35) {
+                switch (alt38) {
             	case 1 :
-            	    // org/fudgemsg/proto/antlr/Proto.g:274:44: root_object
+            	    // org/fudgemsg/proto/antlr/Proto.g:275:44: root_object
             	    {
-            	    pushFollow(FOLLOW_root_object_in_namespace1743);
-            	    root_object131=root_object();
+            	    pushFollow(FOLLOW_root_object_in_namespace1769);
+            	    root_object139=root_object();
 
             	    state._fsp--;
 
-            	    adaptor.addChild(root_0, root_object131.getTree());
+            	    adaptor.addChild(root_0, root_object139.getTree());
 
             	    }
             	    break;
 
             	default :
-            	    break loop35;
+            	    break loop38;
                 }
             } while (true);
 
-            char_literal132=(Token)match(input,47,FOLLOW_47_in_namespace1746); 
+            char_literal140=(Token)match(input,47,FOLLOW_47_in_namespace1772); 
 
             }
 
@@ -3971,48 +4159,48 @@ public class ProtoParser extends Parser {
     };
 
     // $ANTLR start "root"
-    // org/fudgemsg/proto/antlr/Proto.g:276:1: root : ( root_object )* -> ^( ROOT ( root_object )* ) ;
+    // org/fudgemsg/proto/antlr/Proto.g:277:1: root : ( root_object )* -> ^( ROOT ( root_object )* ) ;
     public final ProtoParser.root_return root() throws RecognitionException {
         ProtoParser.root_return retval = new ProtoParser.root_return();
         retval.start = input.LT(1);
 
         ProtoTree root_0 = null;
 
-        ProtoParser.root_object_return root_object133 = null;
+        ProtoParser.root_object_return root_object141 = null;
 
 
         RewriteRuleSubtreeStream stream_root_object=new RewriteRuleSubtreeStream(adaptor,"rule root_object");
         try {
-            // org/fudgemsg/proto/antlr/Proto.g:276:6: ( ( root_object )* -> ^( ROOT ( root_object )* ) )
-            // org/fudgemsg/proto/antlr/Proto.g:276:8: ( root_object )*
+            // org/fudgemsg/proto/antlr/Proto.g:277:6: ( ( root_object )* -> ^( ROOT ( root_object )* ) )
+            // org/fudgemsg/proto/antlr/Proto.g:277:8: ( root_object )*
             {
-            // org/fudgemsg/proto/antlr/Proto.g:276:8: ( root_object )*
-            loop36:
+            // org/fudgemsg/proto/antlr/Proto.g:277:8: ( root_object )*
+            loop39:
             do {
-                int alt36=2;
-                int LA36_0 = input.LA(1);
+                int alt39=2;
+                int LA39_0 = input.LA(1);
 
-                if ( (LA36_0==ABSTRACT||LA36_0==ENUM||LA36_0==EXTERN||LA36_0==MESSAGE||LA36_0==NAMESPACE||LA36_0==TAXONOMY) ) {
-                    alt36=1;
+                if ( (LA39_0==ABSTRACT||LA39_0==ENUM||LA39_0==EXTERN||LA39_0==MESSAGE||LA39_0==NAMESPACE||LA39_0==TAXONOMY) ) {
+                    alt39=1;
                 }
 
 
-                switch (alt36) {
+                switch (alt39) {
             	case 1 :
-            	    // org/fudgemsg/proto/antlr/Proto.g:276:8: root_object
+            	    // org/fudgemsg/proto/antlr/Proto.g:277:8: root_object
             	    {
-            	    pushFollow(FOLLOW_root_object_in_root1756);
-            	    root_object133=root_object();
+            	    pushFollow(FOLLOW_root_object_in_root1782);
+            	    root_object141=root_object();
 
             	    state._fsp--;
 
-            	    stream_root_object.add(root_object133.getTree());
+            	    stream_root_object.add(root_object141.getTree());
 
             	    }
             	    break;
 
             	default :
-            	    break loop36;
+            	    break loop39;
                 }
             } while (true);
 
@@ -4029,14 +4217,14 @@ public class ProtoParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             root_0 = (ProtoTree)adaptor.nil();
-            // 276:21: -> ^( ROOT ( root_object )* )
+            // 277:21: -> ^( ROOT ( root_object )* )
             {
-                // org/fudgemsg/proto/antlr/Proto.g:276:24: ^( ROOT ( root_object )* )
+                // org/fudgemsg/proto/antlr/Proto.g:277:24: ^( ROOT ( root_object )* )
                 {
                 ProtoTree root_1 = (ProtoTree)adaptor.nil();
                 root_1 = (ProtoTree)adaptor.becomeRoot((ProtoTree)adaptor.create(ROOT, "ROOT"), root_1);
 
-                // org/fudgemsg/proto/antlr/Proto.g:276:31: ( root_object )*
+                // org/fudgemsg/proto/antlr/Proto.g:277:31: ( root_object )*
                 while ( stream_root_object.hasNext() ) {
                     adaptor.addChild(root_1, stream_root_object.nextTree());
 
@@ -4075,82 +4263,82 @@ public class ProtoParser extends Parser {
     };
 
     // $ANTLR start "root_object"
-    // org/fudgemsg/proto/antlr/Proto.g:278:1: root_object : ( EXTERN ( MESSAGE | TAXONOMY | ENUM ) fullidentifier ( ';' )? | message | message_enum | namespace | taxonomy );
+    // org/fudgemsg/proto/antlr/Proto.g:279:1: root_object : ( EXTERN ( MESSAGE | TAXONOMY | ENUM ) fullidentifier ( ';' )? | message | message_enum | namespace | taxonomy );
     public final ProtoParser.root_object_return root_object() throws RecognitionException {
         ProtoParser.root_object_return retval = new ProtoParser.root_object_return();
         retval.start = input.LT(1);
 
         ProtoTree root_0 = null;
 
-        Token EXTERN134=null;
-        Token set135=null;
-        Token char_literal137=null;
-        ProtoParser.fullidentifier_return fullidentifier136 = null;
+        Token EXTERN142=null;
+        Token set143=null;
+        Token char_literal145=null;
+        ProtoParser.fullidentifier_return fullidentifier144 = null;
 
-        ProtoParser.message_return message138 = null;
+        ProtoParser.message_return message146 = null;
 
-        ProtoParser.message_enum_return message_enum139 = null;
+        ProtoParser.message_enum_return message_enum147 = null;
 
-        ProtoParser.namespace_return namespace140 = null;
+        ProtoParser.namespace_return namespace148 = null;
 
-        ProtoParser.taxonomy_return taxonomy141 = null;
+        ProtoParser.taxonomy_return taxonomy149 = null;
 
 
-        ProtoTree EXTERN134_tree=null;
-        ProtoTree set135_tree=null;
-        ProtoTree char_literal137_tree=null;
+        ProtoTree EXTERN142_tree=null;
+        ProtoTree set143_tree=null;
+        ProtoTree char_literal145_tree=null;
 
         try {
-            // org/fudgemsg/proto/antlr/Proto.g:279:3: ( EXTERN ( MESSAGE | TAXONOMY | ENUM ) fullidentifier ( ';' )? | message | message_enum | namespace | taxonomy )
-            int alt38=5;
+            // org/fudgemsg/proto/antlr/Proto.g:280:3: ( EXTERN ( MESSAGE | TAXONOMY | ENUM ) fullidentifier ( ';' )? | message | message_enum | namespace | taxonomy )
+            int alt41=5;
             switch ( input.LA(1) ) {
             case EXTERN:
                 {
-                alt38=1;
+                alt41=1;
                 }
                 break;
             case ABSTRACT:
             case MESSAGE:
                 {
-                alt38=2;
+                alt41=2;
                 }
                 break;
             case ENUM:
                 {
-                alt38=3;
+                alt41=3;
                 }
                 break;
             case NAMESPACE:
                 {
-                alt38=4;
+                alt41=4;
                 }
                 break;
             case TAXONOMY:
                 {
-                alt38=5;
+                alt41=5;
                 }
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("", 38, 0, input);
+                    new NoViableAltException("", 41, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt38) {
+            switch (alt41) {
                 case 1 :
-                    // org/fudgemsg/proto/antlr/Proto.g:279:5: EXTERN ( MESSAGE | TAXONOMY | ENUM ) fullidentifier ( ';' )?
+                    // org/fudgemsg/proto/antlr/Proto.g:280:5: EXTERN ( MESSAGE | TAXONOMY | ENUM ) fullidentifier ( ';' )?
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    EXTERN134=(Token)match(input,EXTERN,FOLLOW_EXTERN_in_root_object1776); 
-                    EXTERN134_tree = (ProtoTree)adaptor.create(EXTERN134);
-                    root_0 = (ProtoTree)adaptor.becomeRoot(EXTERN134_tree, root_0);
+                    EXTERN142=(Token)match(input,EXTERN,FOLLOW_EXTERN_in_root_object1802); 
+                    EXTERN142_tree = (ProtoTree)adaptor.create(EXTERN142);
+                    root_0 = (ProtoTree)adaptor.becomeRoot(EXTERN142_tree, root_0);
 
-                    set135=(Token)input.LT(1);
+                    set143=(Token)input.LT(1);
                     if ( input.LA(1)==ENUM||input.LA(1)==MESSAGE||input.LA(1)==TAXONOMY ) {
                         input.consume();
-                        adaptor.addChild(root_0, (ProtoTree)adaptor.create(set135));
+                        adaptor.addChild(root_0, (ProtoTree)adaptor.create(set143));
                         state.errorRecovery=false;
                     }
                     else {
@@ -4158,26 +4346,26 @@ public class ProtoParser extends Parser {
                         throw mse;
                     }
 
-                    pushFollow(FOLLOW_fullidentifier_in_root_object1791);
-                    fullidentifier136=fullidentifier();
+                    pushFollow(FOLLOW_fullidentifier_in_root_object1817);
+                    fullidentifier144=fullidentifier();
 
                     state._fsp--;
 
-                    adaptor.addChild(root_0, fullidentifier136.getTree());
-                    // org/fudgemsg/proto/antlr/Proto.g:279:56: ( ';' )?
-                    int alt37=2;
-                    int LA37_0 = input.LA(1);
+                    adaptor.addChild(root_0, fullidentifier144.getTree());
+                    // org/fudgemsg/proto/antlr/Proto.g:280:56: ( ';' )?
+                    int alt40=2;
+                    int LA40_0 = input.LA(1);
 
-                    if ( (LA37_0==48) ) {
-                        alt37=1;
+                    if ( (LA40_0==48) ) {
+                        alt40=1;
                     }
-                    switch (alt37) {
+                    switch (alt40) {
                         case 1 :
-                            // org/fudgemsg/proto/antlr/Proto.g:279:56: ';'
+                            // org/fudgemsg/proto/antlr/Proto.g:280:56: ';'
                             {
-                            char_literal137=(Token)match(input,48,FOLLOW_48_in_root_object1793); 
-                            char_literal137_tree = (ProtoTree)adaptor.create(char_literal137);
-                            adaptor.addChild(root_0, char_literal137_tree);
+                            char_literal145=(Token)match(input,48,FOLLOW_48_in_root_object1819); 
+                            char_literal145_tree = (ProtoTree)adaptor.create(char_literal145);
+                            adaptor.addChild(root_0, char_literal145_tree);
 
 
                             }
@@ -4189,58 +4377,58 @@ public class ProtoParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // org/fudgemsg/proto/antlr/Proto.g:280:4: message
+                    // org/fudgemsg/proto/antlr/Proto.g:281:4: message
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    pushFollow(FOLLOW_message_in_root_object1799);
-                    message138=message();
+                    pushFollow(FOLLOW_message_in_root_object1825);
+                    message146=message();
 
                     state._fsp--;
 
-                    adaptor.addChild(root_0, message138.getTree());
+                    adaptor.addChild(root_0, message146.getTree());
 
                     }
                     break;
                 case 3 :
-                    // org/fudgemsg/proto/antlr/Proto.g:281:4: message_enum
+                    // org/fudgemsg/proto/antlr/Proto.g:282:4: message_enum
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    pushFollow(FOLLOW_message_enum_in_root_object1804);
-                    message_enum139=message_enum();
+                    pushFollow(FOLLOW_message_enum_in_root_object1830);
+                    message_enum147=message_enum();
 
                     state._fsp--;
 
-                    adaptor.addChild(root_0, message_enum139.getTree());
+                    adaptor.addChild(root_0, message_enum147.getTree());
 
                     }
                     break;
                 case 4 :
-                    // org/fudgemsg/proto/antlr/Proto.g:282:4: namespace
+                    // org/fudgemsg/proto/antlr/Proto.g:283:4: namespace
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    pushFollow(FOLLOW_namespace_in_root_object1809);
-                    namespace140=namespace();
+                    pushFollow(FOLLOW_namespace_in_root_object1835);
+                    namespace148=namespace();
 
                     state._fsp--;
 
-                    adaptor.addChild(root_0, namespace140.getTree());
+                    adaptor.addChild(root_0, namespace148.getTree());
 
                     }
                     break;
                 case 5 :
-                    // org/fudgemsg/proto/antlr/Proto.g:283:4: taxonomy
+                    // org/fudgemsg/proto/antlr/Proto.g:284:4: taxonomy
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    pushFollow(FOLLOW_taxonomy_in_root_object1814);
-                    taxonomy141=taxonomy();
+                    pushFollow(FOLLOW_taxonomy_in_root_object1840);
+                    taxonomy149=taxonomy();
 
                     state._fsp--;
 
-                    adaptor.addChild(root_0, taxonomy141.getTree());
+                    adaptor.addChild(root_0, taxonomy149.getTree());
 
                     }
                     break;
@@ -4270,71 +4458,71 @@ public class ProtoParser extends Parser {
     };
 
     // $ANTLR start "taxonomy"
-    // org/fudgemsg/proto/antlr/Proto.g:286:1: taxonomy : TAXONOMY IDENTIFIER '{' ( taxonomy_element )* '}' ;
+    // org/fudgemsg/proto/antlr/Proto.g:287:1: taxonomy : TAXONOMY IDENTIFIER '{' ( taxonomy_element )* '}' ;
     public final ProtoParser.taxonomy_return taxonomy() throws RecognitionException {
         ProtoParser.taxonomy_return retval = new ProtoParser.taxonomy_return();
         retval.start = input.LT(1);
 
         ProtoTree root_0 = null;
 
-        Token TAXONOMY142=null;
-        Token IDENTIFIER143=null;
-        Token char_literal144=null;
-        Token char_literal146=null;
-        ProtoParser.taxonomy_element_return taxonomy_element145 = null;
+        Token TAXONOMY150=null;
+        Token IDENTIFIER151=null;
+        Token char_literal152=null;
+        Token char_literal154=null;
+        ProtoParser.taxonomy_element_return taxonomy_element153 = null;
 
 
-        ProtoTree TAXONOMY142_tree=null;
-        ProtoTree IDENTIFIER143_tree=null;
-        ProtoTree char_literal144_tree=null;
-        ProtoTree char_literal146_tree=null;
+        ProtoTree TAXONOMY150_tree=null;
+        ProtoTree IDENTIFIER151_tree=null;
+        ProtoTree char_literal152_tree=null;
+        ProtoTree char_literal154_tree=null;
 
         try {
-            // org/fudgemsg/proto/antlr/Proto.g:286:10: ( TAXONOMY IDENTIFIER '{' ( taxonomy_element )* '}' )
-            // org/fudgemsg/proto/antlr/Proto.g:286:12: TAXONOMY IDENTIFIER '{' ( taxonomy_element )* '}'
+            // org/fudgemsg/proto/antlr/Proto.g:287:10: ( TAXONOMY IDENTIFIER '{' ( taxonomy_element )* '}' )
+            // org/fudgemsg/proto/antlr/Proto.g:287:12: TAXONOMY IDENTIFIER '{' ( taxonomy_element )* '}'
             {
             root_0 = (ProtoTree)adaptor.nil();
 
-            TAXONOMY142=(Token)match(input,TAXONOMY,FOLLOW_TAXONOMY_in_taxonomy1824); 
-            TAXONOMY142_tree = (ProtoTree)adaptor.create(TAXONOMY142);
-            root_0 = (ProtoTree)adaptor.becomeRoot(TAXONOMY142_tree, root_0);
+            TAXONOMY150=(Token)match(input,TAXONOMY,FOLLOW_TAXONOMY_in_taxonomy1850); 
+            TAXONOMY150_tree = (ProtoTree)adaptor.create(TAXONOMY150);
+            root_0 = (ProtoTree)adaptor.becomeRoot(TAXONOMY150_tree, root_0);
 
-            IDENTIFIER143=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_taxonomy1827); 
-            IDENTIFIER143_tree = (ProtoTree)adaptor.create(IDENTIFIER143);
-            adaptor.addChild(root_0, IDENTIFIER143_tree);
+            IDENTIFIER151=(Token)match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_taxonomy1853); 
+            IDENTIFIER151_tree = (ProtoTree)adaptor.create(IDENTIFIER151);
+            adaptor.addChild(root_0, IDENTIFIER151_tree);
 
-            char_literal144=(Token)match(input,46,FOLLOW_46_in_taxonomy1829); 
-            // org/fudgemsg/proto/antlr/Proto.g:286:38: ( taxonomy_element )*
-            loop39:
+            char_literal152=(Token)match(input,46,FOLLOW_46_in_taxonomy1855); 
+            // org/fudgemsg/proto/antlr/Proto.g:287:38: ( taxonomy_element )*
+            loop42:
             do {
-                int alt39=2;
-                int LA39_0 = input.LA(1);
+                int alt42=2;
+                int LA42_0 = input.LA(1);
 
-                if ( (LA39_0==BINDING||LA39_0==IMPORT||LA39_0==IDENTIFIER) ) {
-                    alt39=1;
+                if ( (LA42_0==BINDING||LA42_0==IMPORT||LA42_0==IDENTIFIER) ) {
+                    alt42=1;
                 }
 
 
-                switch (alt39) {
+                switch (alt42) {
             	case 1 :
-            	    // org/fudgemsg/proto/antlr/Proto.g:286:38: taxonomy_element
+            	    // org/fudgemsg/proto/antlr/Proto.g:287:38: taxonomy_element
             	    {
-            	    pushFollow(FOLLOW_taxonomy_element_in_taxonomy1832);
-            	    taxonomy_element145=taxonomy_element();
+            	    pushFollow(FOLLOW_taxonomy_element_in_taxonomy1858);
+            	    taxonomy_element153=taxonomy_element();
 
             	    state._fsp--;
 
-            	    adaptor.addChild(root_0, taxonomy_element145.getTree());
+            	    adaptor.addChild(root_0, taxonomy_element153.getTree());
 
             	    }
             	    break;
 
             	default :
-            	    break loop39;
+            	    break loop42;
                 }
             } while (true);
 
-            char_literal146=(Token)match(input,47,FOLLOW_47_in_taxonomy1835); 
+            char_literal154=(Token)match(input,47,FOLLOW_47_in_taxonomy1861); 
 
             }
 
@@ -4362,71 +4550,71 @@ public class ProtoParser extends Parser {
     };
 
     // $ANTLR start "taxonomy_element"
-    // org/fudgemsg/proto/antlr/Proto.g:288:1: taxonomy_element : ( enum_element | IMPORT fullidentifier ';' );
+    // org/fudgemsg/proto/antlr/Proto.g:289:1: taxonomy_element : ( enum_element | IMPORT fullidentifier ';' );
     public final ProtoParser.taxonomy_element_return taxonomy_element() throws RecognitionException {
         ProtoParser.taxonomy_element_return retval = new ProtoParser.taxonomy_element_return();
         retval.start = input.LT(1);
 
         ProtoTree root_0 = null;
 
-        Token IMPORT148=null;
-        Token char_literal150=null;
-        ProtoParser.enum_element_return enum_element147 = null;
+        Token IMPORT156=null;
+        Token char_literal158=null;
+        ProtoParser.enum_element_return enum_element155 = null;
 
-        ProtoParser.fullidentifier_return fullidentifier149 = null;
+        ProtoParser.fullidentifier_return fullidentifier157 = null;
 
 
-        ProtoTree IMPORT148_tree=null;
-        ProtoTree char_literal150_tree=null;
+        ProtoTree IMPORT156_tree=null;
+        ProtoTree char_literal158_tree=null;
 
         try {
-            // org/fudgemsg/proto/antlr/Proto.g:289:2: ( enum_element | IMPORT fullidentifier ';' )
-            int alt40=2;
-            int LA40_0 = input.LA(1);
+            // org/fudgemsg/proto/antlr/Proto.g:290:2: ( enum_element | IMPORT fullidentifier ';' )
+            int alt43=2;
+            int LA43_0 = input.LA(1);
 
-            if ( (LA40_0==BINDING||LA40_0==IDENTIFIER) ) {
-                alt40=1;
+            if ( (LA43_0==BINDING||LA43_0==IDENTIFIER) ) {
+                alt43=1;
             }
-            else if ( (LA40_0==IMPORT) ) {
-                alt40=2;
+            else if ( (LA43_0==IMPORT) ) {
+                alt43=2;
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("", 40, 0, input);
+                    new NoViableAltException("", 43, 0, input);
 
                 throw nvae;
             }
-            switch (alt40) {
+            switch (alt43) {
                 case 1 :
-                    // org/fudgemsg/proto/antlr/Proto.g:289:4: enum_element
+                    // org/fudgemsg/proto/antlr/Proto.g:290:4: enum_element
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    pushFollow(FOLLOW_enum_element_in_taxonomy_element1846);
-                    enum_element147=enum_element();
+                    pushFollow(FOLLOW_enum_element_in_taxonomy_element1872);
+                    enum_element155=enum_element();
 
                     state._fsp--;
 
-                    adaptor.addChild(root_0, enum_element147.getTree());
+                    adaptor.addChild(root_0, enum_element155.getTree());
 
                     }
                     break;
                 case 2 :
-                    // org/fudgemsg/proto/antlr/Proto.g:290:4: IMPORT fullidentifier ';'
+                    // org/fudgemsg/proto/antlr/Proto.g:291:4: IMPORT fullidentifier ';'
                     {
                     root_0 = (ProtoTree)adaptor.nil();
 
-                    IMPORT148=(Token)match(input,IMPORT,FOLLOW_IMPORT_in_taxonomy_element1851); 
-                    IMPORT148_tree = (ProtoTree)adaptor.create(IMPORT148);
-                    root_0 = (ProtoTree)adaptor.becomeRoot(IMPORT148_tree, root_0);
+                    IMPORT156=(Token)match(input,IMPORT,FOLLOW_IMPORT_in_taxonomy_element1877); 
+                    IMPORT156_tree = (ProtoTree)adaptor.create(IMPORT156);
+                    root_0 = (ProtoTree)adaptor.becomeRoot(IMPORT156_tree, root_0);
 
-                    pushFollow(FOLLOW_fullidentifier_in_taxonomy_element1854);
-                    fullidentifier149=fullidentifier();
+                    pushFollow(FOLLOW_fullidentifier_in_taxonomy_element1880);
+                    fullidentifier157=fullidentifier();
 
                     state._fsp--;
 
-                    adaptor.addChild(root_0, fullidentifier149.getTree());
-                    char_literal150=(Token)match(input,48,FOLLOW_48_in_taxonomy_element1856); 
+                    adaptor.addChild(root_0, fullidentifier157.getTree());
+                    char_literal158=(Token)match(input,48,FOLLOW_48_in_taxonomy_element1882); 
 
                     }
                     break;
@@ -4454,7 +4642,7 @@ public class ProtoParser extends Parser {
 
 
     protected DFA11 dfa11 = new DFA11(this);
-    protected DFA30 dfa30 = new DFA30(this);
+    protected DFA33 dfa33 = new DFA33(this);
     static final String DFA11_eotS =
         "\43\uffff";
     static final String DFA11_eofS =
@@ -4541,19 +4729,19 @@ public class ProtoParser extends Parser {
             return "235:1: field_type : ( field_basetype | field_arraytype );";
         }
     }
-    static final String DFA30_eotS =
+    static final String DFA33_eotS =
         "\6\uffff";
-    static final String DFA30_eofS =
+    static final String DFA33_eofS =
         "\6\uffff";
-    static final String DFA30_minS =
+    static final String DFA33_minS =
         "\1\20\1\17\1\uffff\1\47\2\uffff";
-    static final String DFA30_maxS =
+    static final String DFA33_maxS =
         "\2\104\1\uffff\1\62\2\uffff";
-    static final String DFA30_acceptS =
+    static final String DFA33_acceptS =
         "\2\uffff\1\1\1\uffff\1\2\1\3";
-    static final String DFA30_specialS =
+    static final String DFA33_specialS =
         "\6\uffff}>";
-    static final String[] DFA30_transitionS = {
+    static final String[] DFA33_transitionS = {
             "\1\1\1\uffff\1\1\1\uffff\3\1\1\uffff\14\2\3\uffff\1\2\15\uffff"+
             "\20\2",
             "\1\3\1\1\1\uffff\1\1\1\uffff\3\1\1\uffff\14\2\3\uffff\1\2\15"+
@@ -4564,37 +4752,37 @@ public class ProtoParser extends Parser {
             ""
     };
 
-    static final short[] DFA30_eot = DFA.unpackEncodedString(DFA30_eotS);
-    static final short[] DFA30_eof = DFA.unpackEncodedString(DFA30_eofS);
-    static final char[] DFA30_min = DFA.unpackEncodedStringToUnsignedChars(DFA30_minS);
-    static final char[] DFA30_max = DFA.unpackEncodedStringToUnsignedChars(DFA30_maxS);
-    static final short[] DFA30_accept = DFA.unpackEncodedString(DFA30_acceptS);
-    static final short[] DFA30_special = DFA.unpackEncodedString(DFA30_specialS);
-    static final short[][] DFA30_transition;
+    static final short[] DFA33_eot = DFA.unpackEncodedString(DFA33_eotS);
+    static final short[] DFA33_eof = DFA.unpackEncodedString(DFA33_eofS);
+    static final char[] DFA33_min = DFA.unpackEncodedStringToUnsignedChars(DFA33_minS);
+    static final char[] DFA33_max = DFA.unpackEncodedStringToUnsignedChars(DFA33_maxS);
+    static final short[] DFA33_accept = DFA.unpackEncodedString(DFA33_acceptS);
+    static final short[] DFA33_special = DFA.unpackEncodedString(DFA33_specialS);
+    static final short[][] DFA33_transition;
 
     static {
-        int numStates = DFA30_transitionS.length;
-        DFA30_transition = new short[numStates][];
+        int numStates = DFA33_transitionS.length;
+        DFA33_transition = new short[numStates][];
         for (int i=0; i<numStates; i++) {
-            DFA30_transition[i] = DFA.unpackEncodedString(DFA30_transitionS[i]);
+            DFA33_transition[i] = DFA.unpackEncodedString(DFA33_transitionS[i]);
         }
     }
 
-    class DFA30 extends DFA {
+    class DFA33 extends DFA {
 
-        public DFA30(BaseRecognizer recognizer) {
+        public DFA33(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 30;
-            this.eot = DFA30_eot;
-            this.eof = DFA30_eof;
-            this.min = DFA30_min;
-            this.max = DFA30_max;
-            this.accept = DFA30_accept;
-            this.special = DFA30_special;
-            this.transition = DFA30_transition;
+            this.decisionNumber = 33;
+            this.eot = DFA33_eot;
+            this.eof = DFA33_eof;
+            this.min = DFA33_min;
+            this.max = DFA33_max;
+            this.accept = DFA33_accept;
+            this.special = DFA33_special;
+            this.transition = DFA33_transition;
         }
         public String getDescription() {
-            return "260:1: message_field : ( ( field_modifier )* field_type IDENTIFIER ( field_ordinal )? ( field_constraints )? ';' -> ^( FIELD field_type IDENTIFIER ( field_modifier )* ( field_ordinal )? ( field_constraints )? ) | ( field_modifier )+ MESSAGE IDENTIFIER ( field_ordinal )? ( field_constraints )? ';' -> ^( FIELD MESSAGE IDENTIFIER ( field_modifier )* ( field_ordinal )? ( field_constraints )? ) | ( field_modifier )+ MESSAGE ( dimension )+ IDENTIFIER ( field_ordinal )? ( field_constraints )? ';' -> ^( FIELD ^( ARRAY MESSAGE ( dimension )+ ) IDENTIFIER ( field_modifier )* ( field_ordinal )? ( field_constraints )? ) );";
+            return "261:1: message_field : ( ( field_modifier )* field_type IDENTIFIER ( field_ordinal )? ( field_constraints )? ';' -> ^( FIELD field_type IDENTIFIER ( field_modifier )* ( field_ordinal )? ( field_constraints )? ) | ( field_modifier )+ MESSAGE IDENTIFIER ( field_ordinal )? ( field_constraints )? ';' -> ^( FIELD MESSAGE IDENTIFIER ( field_modifier )* ( field_ordinal )? ( field_constraints )? ) | ( field_modifier )+ MESSAGE ( dimension )+ IDENTIFIER ( field_ordinal )? ( field_constraints )? ';' -> ^( FIELD ^( ARRAY MESSAGE ( dimension )+ ) IDENTIFIER ( field_modifier )* ( field_ordinal )? ( field_constraints )? ) );";
         }
     }
  
@@ -4615,7 +4803,7 @@ public class ProtoParser extends Parser {
     public static final BitSet FOLLOW_fullidentifier_in_binding_text923 = new BitSet(new long[]{0x0001000000000000L});
     public static final BitSet FOLLOW_48_in_binding_text925 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_DEFAULT_in_constraint_default936 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_49_in_constraint_default939 = new BitSet(new long[]{0x0000138000000000L});
+    public static final BitSet FOLLOW_49_in_constraint_default939 = new BitSet(new long[]{0x0000138000000000L,0x0000000000000040L});
     public static final BitSet FOLLOW_literal_in_constraint_default942 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_50_in_dimension952 = new BitSet(new long[]{0x0000010000000000L});
     public static final BitSet FOLLOW_INTEGER_in_dimension954 = new BitSet(new long[]{0x0008000000000000L});
@@ -4675,79 +4863,87 @@ public class ProtoParser extends Parser {
     public static final BitSet FOLLOW_69_in_fullidentifier1415 = new BitSet(new long[]{0x000000BFFF77DCD0L});
     public static final BitSet FOLLOW_IDENTIFIER_in_fullidentifier1419 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000020L});
     public static final BitSet FOLLOW_anyword_in_fullidentifier1423 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000020L});
-    public static final BitSet FOLLOW_set_in_literal0 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ABSTRACT_in_message1461 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_MESSAGE_in_message1464 = new BitSet(new long[]{0x0000008000000000L});
-    public static final BitSet FOLLOW_IDENTIFIER_in_message1467 = new BitSet(new long[]{0x0000402000000800L});
-    public static final BitSet FOLLOW_message_uses_in_message1469 = new BitSet(new long[]{0x0000400000000800L});
-    public static final BitSet FOLLOW_message_extends_in_message1472 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_message1475 = new BitSet(new long[]{0xFFE0808FFF758450L,0x000000000000001FL});
-    public static final BitSet FOLLOW_message_element_in_message1478 = new BitSet(new long[]{0xFFE0808FFF758450L,0x000000000000001FL});
-    public static final BitSet FOLLOW_47_in_message1481 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_message_enum_in_message_element1492 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_message_field_in_message_element1497 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_message_submsg_in_message_element1502 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_binding_in_message_element1507 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ENUM_in_message_enum1517 = new BitSet(new long[]{0x0000008000000000L});
-    public static final BitSet FOLLOW_IDENTIFIER_in_message_enum1520 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_message_enum1522 = new BitSet(new long[]{0xFFE0808FFF758450L,0x000000000000001FL});
-    public static final BitSet FOLLOW_enum_element_in_message_enum1525 = new BitSet(new long[]{0xFFE0808FFF758450L,0x000000000000001FL});
-    public static final BitSet FOLLOW_47_in_message_enum1528 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_field_modifier_in_message_field1540 = new BitSet(new long[]{0xFFE0008FFF750000L,0x000000000000001FL});
-    public static final BitSet FOLLOW_field_type_in_message_field1543 = new BitSet(new long[]{0x0000008000000000L});
-    public static final BitSet FOLLOW_IDENTIFIER_in_message_field1545 = new BitSet(new long[]{0x0007000000000000L});
-    public static final BitSet FOLLOW_field_ordinal_in_message_field1547 = new BitSet(new long[]{0x0005000000000000L});
-    public static final BitSet FOLLOW_field_constraints_in_message_field1550 = new BitSet(new long[]{0x0001000000000000L});
-    public static final BitSet FOLLOW_48_in_message_field1553 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_field_modifier_in_message_field1578 = new BitSet(new long[]{0x0000000000758000L});
-    public static final BitSet FOLLOW_MESSAGE_in_message_field1581 = new BitSet(new long[]{0x0000008000000000L});
-    public static final BitSet FOLLOW_IDENTIFIER_in_message_field1583 = new BitSet(new long[]{0x0007000000000000L});
-    public static final BitSet FOLLOW_field_ordinal_in_message_field1585 = new BitSet(new long[]{0x0005000000000000L});
-    public static final BitSet FOLLOW_field_constraints_in_message_field1588 = new BitSet(new long[]{0x0001000000000000L});
-    public static final BitSet FOLLOW_48_in_message_field1591 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_field_modifier_in_message_field1616 = new BitSet(new long[]{0x0000000000758000L});
-    public static final BitSet FOLLOW_MESSAGE_in_message_field1619 = new BitSet(new long[]{0x0004000000000000L});
-    public static final BitSet FOLLOW_dimension_in_message_field1621 = new BitSet(new long[]{0x0004008000000000L});
-    public static final BitSet FOLLOW_IDENTIFIER_in_message_field1624 = new BitSet(new long[]{0x0007000000000000L});
-    public static final BitSet FOLLOW_field_ordinal_in_message_field1626 = new BitSet(new long[]{0x0005000000000000L});
-    public static final BitSet FOLLOW_field_constraints_in_message_field1629 = new BitSet(new long[]{0x0001000000000000L});
-    public static final BitSet FOLLOW_48_in_message_field1632 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ABSTRACT_in_message_submsg1669 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_MESSAGE_in_message_submsg1672 = new BitSet(new long[]{0x0000008000000000L});
-    public static final BitSet FOLLOW_IDENTIFIER_in_message_submsg1675 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_message_submsg1677 = new BitSet(new long[]{0xFFE0808FFF758450L,0x000000000000001FL});
-    public static final BitSet FOLLOW_message_element_in_message_submsg1680 = new BitSet(new long[]{0xFFE0808FFF758450L,0x000000000000001FL});
-    public static final BitSet FOLLOW_47_in_message_submsg1683 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_USES_in_message_uses1694 = new BitSet(new long[]{0x0000008000000000L});
-    public static final BitSet FOLLOW_fullidentifier_in_message_uses1697 = new BitSet(new long[]{0x0010000000000002L});
-    public static final BitSet FOLLOW_52_in_message_uses1700 = new BitSet(new long[]{0x0000008000000000L});
-    public static final BitSet FOLLOW_fullidentifier_in_message_uses1703 = new BitSet(new long[]{0x0010000000000002L});
-    public static final BitSet FOLLOW_EXTENDS_in_message_extends1715 = new BitSet(new long[]{0x0000008000000000L});
-    public static final BitSet FOLLOW_fullidentifier_in_message_extends1718 = new BitSet(new long[]{0x0010000000000002L});
-    public static final BitSet FOLLOW_52_in_message_extends1721 = new BitSet(new long[]{0x0000008000000000L});
-    public static final BitSet FOLLOW_fullidentifier_in_message_extends1724 = new BitSet(new long[]{0x0010000000000002L});
-    public static final BitSet FOLLOW_NAMESPACE_in_namespace1735 = new BitSet(new long[]{0x0000008000000000L});
-    public static final BitSet FOLLOW_fullidentifier_in_namespace1738 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_namespace1740 = new BitSet(new long[]{0x0000801000029410L});
-    public static final BitSet FOLLOW_root_object_in_namespace1743 = new BitSet(new long[]{0x0000801000029410L});
-    public static final BitSet FOLLOW_47_in_namespace1746 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_root_object_in_root1756 = new BitSet(new long[]{0x0000001000029412L});
-    public static final BitSet FOLLOW_EXTERN_in_root_object1776 = new BitSet(new long[]{0x0000001000008400L});
-    public static final BitSet FOLLOW_set_in_root_object1779 = new BitSet(new long[]{0x0000008000000000L});
-    public static final BitSet FOLLOW_fullidentifier_in_root_object1791 = new BitSet(new long[]{0x0001000000000002L});
-    public static final BitSet FOLLOW_48_in_root_object1793 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_message_in_root_object1799 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_message_enum_in_root_object1804 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_namespace_in_root_object1809 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_taxonomy_in_root_object1814 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_TAXONOMY_in_taxonomy1824 = new BitSet(new long[]{0x0000008000000000L});
-    public static final BitSet FOLLOW_IDENTIFIER_in_taxonomy1827 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_taxonomy1829 = new BitSet(new long[]{0xFFE0808FFF75C450L,0x000000000000001FL});
-    public static final BitSet FOLLOW_taxonomy_element_in_taxonomy1832 = new BitSet(new long[]{0xFFE0808FFF75C450L,0x000000000000001FL});
-    public static final BitSet FOLLOW_47_in_taxonomy1835 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_enum_element_in_taxonomy_element1846 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_IMPORT_in_taxonomy_element1851 = new BitSet(new long[]{0x0000008000000000L});
-    public static final BitSet FOLLOW_fullidentifier_in_taxonomy_element1854 = new BitSet(new long[]{0x0001000000000000L});
-    public static final BitSet FOLLOW_48_in_taxonomy_element1856 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_IDENTIFIER_in_literal1436 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INTEGER_in_literal1441 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_FLOAT_in_literal1446 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_STRING_in_literal1451 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_70_in_literal1456 = new BitSet(new long[]{0x0010138000000000L,0x00000000000000C0L});
+    public static final BitSet FOLLOW_literal_in_literal1458 = new BitSet(new long[]{0x0010000000000000L,0x0000000000000080L});
+    public static final BitSet FOLLOW_52_in_literal1462 = new BitSet(new long[]{0x0000138000000000L,0x0000000000000040L});
+    public static final BitSet FOLLOW_literal_in_literal1464 = new BitSet(new long[]{0x0010000000000000L,0x0000000000000080L});
+    public static final BitSet FOLLOW_71_in_literal1468 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ABSTRACT_in_message1487 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_MESSAGE_in_message1490 = new BitSet(new long[]{0x0000008000000000L});
+    public static final BitSet FOLLOW_IDENTIFIER_in_message1493 = new BitSet(new long[]{0x0000402000000800L});
+    public static final BitSet FOLLOW_message_uses_in_message1495 = new BitSet(new long[]{0x0000400000000800L});
+    public static final BitSet FOLLOW_message_extends_in_message1498 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_46_in_message1501 = new BitSet(new long[]{0xFFE0808FFF758450L,0x000000000000001FL});
+    public static final BitSet FOLLOW_message_element_in_message1504 = new BitSet(new long[]{0xFFE0808FFF758450L,0x000000000000001FL});
+    public static final BitSet FOLLOW_47_in_message1507 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_message_enum_in_message_element1518 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_message_field_in_message_element1523 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_message_submsg_in_message_element1528 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_binding_in_message_element1533 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ENUM_in_message_enum1543 = new BitSet(new long[]{0x0000008000000000L});
+    public static final BitSet FOLLOW_IDENTIFIER_in_message_enum1546 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_46_in_message_enum1548 = new BitSet(new long[]{0xFFE0808FFF758450L,0x000000000000001FL});
+    public static final BitSet FOLLOW_enum_element_in_message_enum1551 = new BitSet(new long[]{0xFFE0808FFF758450L,0x000000000000001FL});
+    public static final BitSet FOLLOW_47_in_message_enum1554 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_field_modifier_in_message_field1566 = new BitSet(new long[]{0xFFE0008FFF750000L,0x000000000000001FL});
+    public static final BitSet FOLLOW_field_type_in_message_field1569 = new BitSet(new long[]{0x0000008000000000L});
+    public static final BitSet FOLLOW_IDENTIFIER_in_message_field1571 = new BitSet(new long[]{0x0007000000000000L});
+    public static final BitSet FOLLOW_field_ordinal_in_message_field1573 = new BitSet(new long[]{0x0005000000000000L});
+    public static final BitSet FOLLOW_field_constraints_in_message_field1576 = new BitSet(new long[]{0x0001000000000000L});
+    public static final BitSet FOLLOW_48_in_message_field1579 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_field_modifier_in_message_field1604 = new BitSet(new long[]{0x0000000000758000L});
+    public static final BitSet FOLLOW_MESSAGE_in_message_field1607 = new BitSet(new long[]{0x0000008000000000L});
+    public static final BitSet FOLLOW_IDENTIFIER_in_message_field1609 = new BitSet(new long[]{0x0007000000000000L});
+    public static final BitSet FOLLOW_field_ordinal_in_message_field1611 = new BitSet(new long[]{0x0005000000000000L});
+    public static final BitSet FOLLOW_field_constraints_in_message_field1614 = new BitSet(new long[]{0x0001000000000000L});
+    public static final BitSet FOLLOW_48_in_message_field1617 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_field_modifier_in_message_field1642 = new BitSet(new long[]{0x0000000000758000L});
+    public static final BitSet FOLLOW_MESSAGE_in_message_field1645 = new BitSet(new long[]{0x0004000000000000L});
+    public static final BitSet FOLLOW_dimension_in_message_field1647 = new BitSet(new long[]{0x0004008000000000L});
+    public static final BitSet FOLLOW_IDENTIFIER_in_message_field1650 = new BitSet(new long[]{0x0007000000000000L});
+    public static final BitSet FOLLOW_field_ordinal_in_message_field1652 = new BitSet(new long[]{0x0005000000000000L});
+    public static final BitSet FOLLOW_field_constraints_in_message_field1655 = new BitSet(new long[]{0x0001000000000000L});
+    public static final BitSet FOLLOW_48_in_message_field1658 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ABSTRACT_in_message_submsg1695 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_MESSAGE_in_message_submsg1698 = new BitSet(new long[]{0x0000008000000000L});
+    public static final BitSet FOLLOW_IDENTIFIER_in_message_submsg1701 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_46_in_message_submsg1703 = new BitSet(new long[]{0xFFE0808FFF758450L,0x000000000000001FL});
+    public static final BitSet FOLLOW_message_element_in_message_submsg1706 = new BitSet(new long[]{0xFFE0808FFF758450L,0x000000000000001FL});
+    public static final BitSet FOLLOW_47_in_message_submsg1709 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_USES_in_message_uses1720 = new BitSet(new long[]{0x0000008000000000L});
+    public static final BitSet FOLLOW_fullidentifier_in_message_uses1723 = new BitSet(new long[]{0x0010000000000002L});
+    public static final BitSet FOLLOW_52_in_message_uses1726 = new BitSet(new long[]{0x0000008000000000L});
+    public static final BitSet FOLLOW_fullidentifier_in_message_uses1729 = new BitSet(new long[]{0x0010000000000002L});
+    public static final BitSet FOLLOW_EXTENDS_in_message_extends1741 = new BitSet(new long[]{0x0000008000000000L});
+    public static final BitSet FOLLOW_fullidentifier_in_message_extends1744 = new BitSet(new long[]{0x0010000000000002L});
+    public static final BitSet FOLLOW_52_in_message_extends1747 = new BitSet(new long[]{0x0000008000000000L});
+    public static final BitSet FOLLOW_fullidentifier_in_message_extends1750 = new BitSet(new long[]{0x0010000000000002L});
+    public static final BitSet FOLLOW_NAMESPACE_in_namespace1761 = new BitSet(new long[]{0x0000008000000000L});
+    public static final BitSet FOLLOW_fullidentifier_in_namespace1764 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_46_in_namespace1766 = new BitSet(new long[]{0x0000801000029410L});
+    public static final BitSet FOLLOW_root_object_in_namespace1769 = new BitSet(new long[]{0x0000801000029410L});
+    public static final BitSet FOLLOW_47_in_namespace1772 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_root_object_in_root1782 = new BitSet(new long[]{0x0000001000029412L});
+    public static final BitSet FOLLOW_EXTERN_in_root_object1802 = new BitSet(new long[]{0x0000001000008400L});
+    public static final BitSet FOLLOW_set_in_root_object1805 = new BitSet(new long[]{0x0000008000000000L});
+    public static final BitSet FOLLOW_fullidentifier_in_root_object1817 = new BitSet(new long[]{0x0001000000000002L});
+    public static final BitSet FOLLOW_48_in_root_object1819 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_message_in_root_object1825 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_message_enum_in_root_object1830 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_namespace_in_root_object1835 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_taxonomy_in_root_object1840 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_TAXONOMY_in_taxonomy1850 = new BitSet(new long[]{0x0000008000000000L});
+    public static final BitSet FOLLOW_IDENTIFIER_in_taxonomy1853 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_46_in_taxonomy1855 = new BitSet(new long[]{0xFFE0808FFF75C450L,0x000000000000001FL});
+    public static final BitSet FOLLOW_taxonomy_element_in_taxonomy1858 = new BitSet(new long[]{0xFFE0808FFF75C450L,0x000000000000001FL});
+    public static final BitSet FOLLOW_47_in_taxonomy1861 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_enum_element_in_taxonomy_element1872 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_IMPORT_in_taxonomy_element1877 = new BitSet(new long[]{0x0000008000000000L});
+    public static final BitSet FOLLOW_fullidentifier_in_taxonomy_element1880 = new BitSet(new long[]{0x0001000000000000L});
+    public static final BitSet FOLLOW_48_in_taxonomy_element1882 = new BitSet(new long[]{0x0000000000000002L});
 
 }

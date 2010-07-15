@@ -5,7 +5,132 @@
  */
 // Created from Literals.proto:3(8)
 public class Literals implements java.io.Serializable {
-  private static final long serialVersionUID = -6304599754091825719l;
+  private static final long serialVersionUID = 7796259540701571262l;
+  // Created from Literals.proto:31(9)
+  public static class Simple implements java.io.Serializable {
+    private static final long serialVersionUID = -1735244435369l;
+    private final String _foo;
+    public static final String FOO_KEY = "foo";
+    private final Integer _bar;
+    public static final String BAR_KEY = "bar";
+    public static class Builder {
+      private String _foo;
+      private Integer _bar;
+      public Builder () {
+      }
+      protected Builder (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
+        org.fudgemsg.FudgeField fudgeField;
+        fudgeField = fudgeMsg.getByName (FOO_KEY);
+        if (fudgeField != null)  {
+          try {
+            foo ((fudgeField.getValue () != null) ? fudgeField.getValue ().toString () : null);
+          }
+          catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException ("Fudge message is not a Simple - field 'foo' is not string", e);
+          }
+        }
+        fudgeField = fudgeMsg.getByName (BAR_KEY);
+        if (fudgeField != null)  {
+          try {
+            bar (fudgeMsg.getFieldValue (Integer.class, fudgeField));
+          }
+          catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException ("Fudge message is not a Simple - field 'bar' is not integer", e);
+          }
+        }
+      }
+      public Builder foo (String foo) {
+        _foo = foo;
+        return this;
+      }
+      public Builder bar (Integer bar) {
+        _bar = bar;
+        return this;
+      }
+      public Simple build () {
+        return new Simple (this);
+      }
+    }
+    protected Simple (final Builder builder) {
+      _foo = builder._foo;
+      _bar = builder._bar;
+    }
+    public Simple (String foo, Integer bar) {
+      _foo = foo;
+      _bar = bar;
+    }
+    protected Simple (final Simple source) {
+      if (source == null) throw new NullPointerException ("'source' must not be null");
+      _foo = source._foo;
+      _bar = source._bar;
+    }
+    public org.fudgemsg.FudgeFieldContainer toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext) {
+      if (fudgeContext == null) throw new NullPointerException ("fudgeContext must not be null");
+      final org.fudgemsg.MutableFudgeFieldContainer msg = fudgeContext.newMessage ();
+      toFudgeMsg (fudgeContext, msg);
+      return msg;
+    }
+    public void toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext, final org.fudgemsg.MutableFudgeFieldContainer msg) {
+      if (_foo != null)  {
+        msg.add (FOO_KEY, null, _foo);
+      }
+      if (_bar != null)  {
+        msg.add (BAR_KEY, null, _bar);
+      }
+    }
+    public static Simple fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
+      final java.util.List<org.fudgemsg.FudgeField> types = fudgeMsg.getAllByOrdinal (0);
+      for (org.fudgemsg.FudgeField field : types) {
+        final String className = (String)field.getValue ();
+        if ("Literals.Simple".equals (className)) break;
+        try {
+          return (Literals.Simple)Class.forName (className).getDeclaredMethod ("fromFudgeMsg", org.fudgemsg.FudgeFieldContainer.class).invoke (null, fudgeMsg);
+        }
+        catch (Throwable t) {
+          // no-action
+        }
+      }
+      return new Builder (fudgeMsg).build ();
+    }
+    public String getFoo () {
+      return _foo;
+    }
+    public Integer getBar () {
+      return _bar;
+    }
+    public boolean equals (final Object o) {
+      if (o == this) return true;
+      if (o == null) return false;
+      if (!(o instanceof Simple)) return false;
+      Simple msg = (Simple)o;
+      if (_foo != null) {
+        if (msg._foo != null) {
+          if (!_foo.equals (msg._foo)) return false;
+        }
+        else return false;
+      }
+      else if (msg._foo != null) return false;
+      if (_bar != null) {
+        if (msg._bar != null) {
+          if (!_bar.equals (msg._bar)) return false;
+        }
+        else return false;
+      }
+      else if (msg._bar != null) return false;
+      return true;
+    }
+    public int hashCode () {
+      int hc = 1;
+      hc *= 31;
+      if (_foo != null) hc += _foo.hashCode ();
+      hc *= 31;
+      if (_bar != null) hc += _bar.hashCode ();
+      return hc;
+    }
+    public String toString () {
+      return org.apache.commons.lang.builder.ToStringBuilder.reflectionToString(this, org.apache.commons.lang.builder.ToStringStyle.SHORT_PREFIX_STYLE);
+    }
+  }
   private final Double _nullDouble;
   public static final String NULLDOUBLE_KEY = "nullDouble";
   private final Double _zeroDouble;
@@ -50,6 +175,10 @@ public class Literals implements java.io.Serializable {
   public static final String SIMPLESTRING_KEY = "simpleString";
   private final String _escapeString;
   public static final String ESCAPESTRING_KEY = "escapeString";
+  private final Literals.Simple _nullPerson;
+  public static final String NULLPERSON_KEY = "nullPerson";
+  private final Literals.Simple _simplePerson;
+  public static final String SIMPLEPERSON_KEY = "simplePerson";
   public static class Builder {
     private Double _nullDouble;
     private Double _zeroDouble;
@@ -73,6 +202,8 @@ public class Literals implements java.io.Serializable {
     private String _emptyString;
     private String _simpleString;
     private String _escapeString;
+    private Literals.Simple _nullPerson;
+    private Literals.Simple _simplePerson;
     public Builder () {
       zeroDouble (0.0);
       posDouble (4.0);
@@ -92,6 +223,7 @@ public class Literals implements java.io.Serializable {
       emptyString ("");
       simpleString ("abc123");
       escapeString ("\"\\\r\n\"\0\377");
+      simplePerson (new Literals.Simple ("Foo", 42));
     }
     protected Builder (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
       org.fudgemsg.FudgeField fudgeField;
@@ -293,6 +425,28 @@ public class Literals implements java.io.Serializable {
           throw new IllegalArgumentException ("Fudge message is not a Literals - field 'escapeString' is not string", e);
         }
       }
+      fudgeField = fudgeMsg.getByName (NULLPERSON_KEY);
+      if (fudgeField != null)  {
+        try {
+          final Literals.Simple fudge1;
+          fudge1 = Literals.Simple.fromFudgeMsg (fudgeMsg.getFieldValue (org.fudgemsg.FudgeFieldContainer.class, fudgeField));
+          nullPerson (fudge1);
+        }
+        catch (IllegalArgumentException e) {
+          throw new IllegalArgumentException ("Fudge message is not a Literals - field 'nullPerson' is not Simple message", e);
+        }
+      }
+      fudgeField = fudgeMsg.getByName (SIMPLEPERSON_KEY);
+      if (fudgeField != null)  {
+        try {
+          final Literals.Simple fudge1;
+          fudge1 = Literals.Simple.fromFudgeMsg (fudgeMsg.getFieldValue (org.fudgemsg.FudgeFieldContainer.class, fudgeField));
+          simplePerson (fudge1);
+        }
+        catch (IllegalArgumentException e) {
+          throw new IllegalArgumentException ("Fudge message is not a Literals - field 'simplePerson' is not Simple message", e);
+        }
+      }
     }
     public Builder nullDouble (Double nullDouble) {
       _nullDouble = nullDouble;
@@ -382,6 +536,20 @@ public class Literals implements java.io.Serializable {
       _escapeString = escapeString;
       return this;
     }
+    public Builder nullPerson (Literals.Simple nullPerson) {
+      if (nullPerson == null) _nullPerson = null;
+      else {
+        _nullPerson = nullPerson;
+      }
+      return this;
+    }
+    public Builder simplePerson (Literals.Simple simplePerson) {
+      if (simplePerson == null) _simplePerson = null;
+      else {
+        _simplePerson = simplePerson;
+      }
+      return this;
+    }
     public Literals build () {
       return new Literals (this);
     }
@@ -409,8 +577,16 @@ public class Literals implements java.io.Serializable {
     _emptyString = builder._emptyString;
     _simpleString = builder._simpleString;
     _escapeString = builder._escapeString;
+    if (builder._nullPerson == null) _nullPerson = null;
+    else {
+      _nullPerson = builder._nullPerson;
+    }
+    if (builder._simplePerson == null) _simplePerson = null;
+    else {
+      _simplePerson = builder._simplePerson;
+    }
   }
-  public Literals (Double nullDouble, Double zeroDouble, Double posDouble, Double negDouble, Double piDouble, Double bigDouble, Double tinyDouble, Float nullFloat, Float zeroFloat, Float posFloat, Float negFloat, Float piFloat, Float bigFloat, Float tinyFloat, Integer nullInt, Integer zeroInt, Integer posInt, Integer negInt, String nullString, String emptyString, String simpleString, String escapeString) {
+  public Literals (Double nullDouble, Double zeroDouble, Double posDouble, Double negDouble, Double piDouble, Double bigDouble, Double tinyDouble, Float nullFloat, Float zeroFloat, Float posFloat, Float negFloat, Float piFloat, Float bigFloat, Float tinyFloat, Integer nullInt, Integer zeroInt, Integer posInt, Integer negInt, String nullString, String emptyString, String simpleString, String escapeString, Literals.Simple nullPerson, Literals.Simple simplePerson) {
     _nullDouble = nullDouble;
     _zeroDouble = zeroDouble;
     _posDouble = posDouble;
@@ -433,6 +609,14 @@ public class Literals implements java.io.Serializable {
     _emptyString = emptyString;
     _simpleString = simpleString;
     _escapeString = escapeString;
+    if (nullPerson == null) _nullPerson = null;
+    else {
+      _nullPerson = nullPerson;
+    }
+    if (simplePerson == null) _simplePerson = null;
+    else {
+      _simplePerson = simplePerson;
+    }
   }
   protected Literals (final Literals source) {
     if (source == null) throw new NullPointerException ("'source' must not be null");
@@ -440,6 +624,10 @@ public class Literals implements java.io.Serializable {
     _nullFloat = source._nullFloat;
     _nullInt = source._nullInt;
     _nullString = source._nullString;
+    if (source._nullPerson == null) _nullPerson = null;
+    else {
+      _nullPerson = source._nullPerson;
+    }
     _zeroDouble = source._zeroDouble;
     _posDouble = source._posDouble;
     _negDouble = source._negDouble;
@@ -458,6 +646,10 @@ public class Literals implements java.io.Serializable {
     _emptyString = source._emptyString;
     _simpleString = source._simpleString;
     _escapeString = source._escapeString;
+    if (source._simplePerson == null) _simplePerson = null;
+    else {
+      _simplePerson = source._simplePerson;
+    }
   }
   public org.fudgemsg.FudgeFieldContainer toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext) {
     if (fudgeContext == null) throw new NullPointerException ("fudgeContext must not be null");
@@ -531,6 +723,26 @@ public class Literals implements java.io.Serializable {
     }
     if (_escapeString != null)  {
       msg.add (ESCAPESTRING_KEY, null, _escapeString);
+    }
+    if (_nullPerson != null)  {
+      final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
+      Class<?> fudge2 = _nullPerson.getClass ();
+      while (!Literals.Simple.class.equals (fudge2)) {
+        fudge1.add (null, 0, org.fudgemsg.types.StringFieldType.INSTANCE, fudge2.getName ());
+        fudge2 = fudge2.getSuperclass ();
+      }
+      _nullPerson.toFudgeMsg (fudgeContext, fudge1);
+      msg.add (NULLPERSON_KEY, null, fudge1);
+    }
+    if (_simplePerson != null)  {
+      final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
+      Class<?> fudge2 = _simplePerson.getClass ();
+      while (!Literals.Simple.class.equals (fudge2)) {
+        fudge1.add (null, 0, org.fudgemsg.types.StringFieldType.INSTANCE, fudge2.getName ());
+        fudge2 = fudge2.getSuperclass ();
+      }
+      _simplePerson.toFudgeMsg (fudgeContext, fudge1);
+      msg.add (SIMPLEPERSON_KEY, null, fudge1);
     }
   }
   public static Literals fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
@@ -612,6 +824,12 @@ public class Literals implements java.io.Serializable {
   }
   public String getEscapeString () {
     return _escapeString;
+  }
+  public Literals.Simple getNullPerson () {
+    return _nullPerson;
+  }
+  public Literals.Simple getSimplePerson () {
+    return _simplePerson;
   }
   public boolean equals (final Object o) {
     if (o == this) return true;
@@ -772,6 +990,20 @@ public class Literals implements java.io.Serializable {
       else return false;
     }
     else if (msg._escapeString != null) return false;
+    if (_nullPerson != null) {
+      if (msg._nullPerson != null) {
+        if (!_nullPerson.equals (msg._nullPerson)) return false;
+      }
+      else return false;
+    }
+    else if (msg._nullPerson != null) return false;
+    if (_simplePerson != null) {
+      if (msg._simplePerson != null) {
+        if (!_simplePerson.equals (msg._simplePerson)) return false;
+      }
+      else return false;
+    }
+    else if (msg._simplePerson != null) return false;
     return true;
   }
   public int hashCode () {
@@ -820,6 +1052,10 @@ public class Literals implements java.io.Serializable {
     if (_simpleString != null) hc += _simpleString.hashCode ();
     hc *= 31;
     if (_escapeString != null) hc += _escapeString.hashCode ();
+    hc *= 31;
+    if (_nullPerson != null) hc += _nullPerson.hashCode ();
+    hc *= 31;
+    if (_simplePerson != null) hc += _simplePerson.hashCode ();
     return hc;
   }
   public String toString () {

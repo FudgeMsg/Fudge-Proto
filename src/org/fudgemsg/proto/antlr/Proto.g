@@ -244,6 +244,7 @@ literal
 	| INTEGER
 	| FLOAT
 	| STRING
+	| '(' literal? (',' literal)* ')' -> ^(MESSAGE literal*)
 	;
 
 message : ABSTRACT? MESSAGE^ IDENTIFIER message_uses? message_extends? '{'! message_element* '}'! ;
