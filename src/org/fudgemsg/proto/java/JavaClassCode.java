@@ -911,7 +911,13 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   private void writeToFudgeMsg(JavaWriter writer, final MessageDefinition message) throws IOException {
     final String contextClass = message.hasExternalMessageReferences() ? CLASS_FUDGESERIALISATIONCONTEXT
         : CLASS_FUDGEMESSAGEFACTORY;
-    if (!message.isAbstract()) {
+    if (message.isAbstract()) {
+      if (message.getExtends() == null) {
+        writer.method("public abstract", CLASS_FUDGEFIELDCONTAINER, "toFudgeMsg", "final " + contextClass
+            + " fudgeContext");
+        endStmt(writer);
+      }
+    } else {
       writer.method("public", CLASS_FUDGEFIELDCONTAINER, "toFudgeMsg", "final " + contextClass + " fudgeContext");
       writer = beginBlock(writer); // toFudgeMsg
       writer.ifNull("fudgeContext");
