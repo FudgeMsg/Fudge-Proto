@@ -6,7 +6,7 @@
 // Created from inheritance.proto:26(9)
 package org.fudgemsg.proto.tests.inheritance;
 public class SubClassA extends org.fudgemsg.proto.tests.inheritance.BaseClassA implements java.io.Serializable {
-  private static final long serialVersionUID = 2411978123198397829l;
+  private static final long serialVersionUID = 2488456727493338032l;
   private final Integer _scA_o;
   public static final String SCA_O_KEY = "scA_o";
   private final java.util.List<Integer> _scA_r;
@@ -18,21 +18,13 @@ public class SubClassA extends org.fudgemsg.proto.tests.inheritance.BaseClassA i
   public static class Builder extends org.fudgemsg.proto.tests.inheritance.BaseClassA.Builder {
     private Integer _scA_o;
     private java.util.List<Integer> _scA_r;
-    private final int _scA_q;
-    private final java.util.List<Integer> _scA_rq;
-    public Builder (int bcA_q, java.util.Collection<? extends Integer> bcA_rq, int scA_q, java.util.Collection<? extends Integer> scA_rq) {
-      super (bcA_q, bcA_rq);
-      _scA_q = scA_q;
-      if (scA_rq == null) throw new NullPointerException ("'scA_rq' cannot be null");
-      else {
-        final java.util.List<Integer> fudge0 = new java.util.ArrayList<Integer> (scA_rq);
-        if (scA_rq.size () == 0) throw new IllegalArgumentException ("'scA_rq' cannot be an empty list");
-        for (java.util.ListIterator<Integer> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
-          Integer fudge2 = fudge1.next ();
-          if (fudge2 == null) throw new NullPointerException ("List element of 'scA_rq' cannot be null");
-        }
-        _scA_rq = fudge0;
-      }
+    private int _scA_q;
+    private java.util.List<Integer> _scA_rq;
+    public Builder (java.util.Collection<? extends Integer> bcA_rq, int scA_q, java.util.Collection<? extends Integer> scA_rq) {
+      super (42, bcA_rq);
+      scA_q (scA_q);
+      scA_rq (scA_rq);
+      bcA_o (42);
     }
     protected Builder (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
       super (fudgeMsg);
@@ -109,6 +101,37 @@ public class SubClassA extends org.fudgemsg.proto.tests.inheritance.BaseClassA i
       if (scA_r == null) throw new NullPointerException ("'scA_r' cannot be null");
       if (_scA_r == null) _scA_r = new java.util.ArrayList<Integer> ();
       _scA_r.add (scA_r);
+      return this;
+    }
+    public Builder scA_q (int scA_q) {
+      _scA_q = scA_q;
+      return this;
+    }
+    public Builder scA_rq (Integer scA_rq) {
+      if (scA_rq == null) throw new NullPointerException ("'scA_rq' cannot be null");
+      else {
+        _scA_rq = new java.util.ArrayList<Integer> (1);
+        addScA_rq (scA_rq);
+      }
+      return this;
+    }
+    public Builder scA_rq (java.util.Collection<? extends Integer> scA_rq) {
+      if (scA_rq == null) throw new NullPointerException ("'scA_rq' cannot be null");
+      else {
+        final java.util.List<Integer> fudge0 = new java.util.ArrayList<Integer> (scA_rq);
+        if (scA_rq.size () == 0) throw new IllegalArgumentException ("'scA_rq' cannot be an empty list");
+        for (java.util.ListIterator<Integer> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
+          Integer fudge2 = fudge1.next ();
+          if (fudge2 == null) throw new NullPointerException ("List element of 'scA_rq' cannot be null");
+        }
+        _scA_rq = fudge0;
+      }
+      return this;
+    }
+    public Builder addScA_rq (Integer scA_rq) {
+      if (scA_rq == null) throw new NullPointerException ("'scA_rq' cannot be null");
+      if (_scA_rq == null) _scA_rq = new java.util.ArrayList<Integer> ();
+      _scA_rq.add (scA_rq);
       return this;
     }
     public SubClassA build () {

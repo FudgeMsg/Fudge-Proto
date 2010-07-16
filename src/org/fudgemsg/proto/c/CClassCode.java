@@ -109,29 +109,47 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
     endStmt(writer);
     // Message field accessor/mutators
     for (FieldDefinition field : message.getFieldDefinitions()) {
-      writer.write("FudgeStatus " + getIdentifier(message) + "_get" + camelCaseFieldName(field) + " (FudgeMsg msg, ");
-      if (field.isRepeated()) {
-        writer.write(typeString(field.getType(), false) + "** value, int *repeatCount");
+      if (field.getOverride() != null) {
+        field = field.getOverride();
+        writer.write("#define " + getIdentifier(message) + "_get" + camelCaseFieldName(field) + " "
+            + getIdentifier(field.getOuterMessage()) + "_get" + camelCaseFieldName(field));
+        writer.newLine();
+        writer.write("#define " + getIdentifier(message) + "_set" + camelCaseFieldName(field) + " "
+            + getIdentifier(field.getOuterMessage()) + "_set" + camelCaseFieldName(field));
+        writer.newLine();
+        if (field.getType().getFudgeFieldType() == FudgeTypeDictionary.FUDGE_MSG_TYPE_ID) {
+          writer.write("#define " + getIdentifier(message) + "_getFudgeMsg" + camelCaseFieldName(field) + " "
+              + getIdentifier(field.getOuterMessage()) + "_getFudgeMsg" + camelCaseFieldName(field));
+          writer.newLine();
+          writer.write("#define " + getIdentifier(message) + "_setFudgeMsg" + camelCaseFieldName(field) + " "
+              + getIdentifier(field.getOuterMessage()) + "_setFudgeMsg" + camelCaseFieldName(field));
+          writer.newLine();
+        }
       } else {
-        writer.write(typeString(field.getType(), false) + "* value");
-      }
-      writer.write(")");
-      endStmt(writer);
-      writer.write("FudgeStatus " + getIdentifier(message) + "_set" + camelCaseFieldName(field) + " (FudgeMsg msg, ");
-      if (field.isRepeated()) {
-        writer.write(typeString(field.getType(), false) + "* value, int repeatCount");
-      } else {
-        writer.write(typeString(field.getType(), true) + " value");
-      }
-      writer.write(")");
-      endStmt(writer);
-      if (field.getType().getFudgeFieldType() == FudgeTypeDictionary.FUDGE_MSG_TYPE_ID) {
-        writer.write("FudgeStatus " + getIdentifier(message) + "_getFudgeMsg" + camelCaseFieldName(field)
-            + " (FudgeMsg msg, FudgeMsg *subMsg)");
+        writer.write("FudgeStatus " + getIdentifier(message) + "_get" + camelCaseFieldName(field) + " (FudgeMsg msg, ");
+        if (field.isRepeated()) {
+          writer.write(typeString(field.getType(), false) + "** value, int *repeatCount");
+        } else {
+          writer.write(typeString(field.getType(), false) + "* value");
+        }
+        writer.write(")");
         endStmt(writer);
-        writer.write("FudgeStatus " + getIdentifier(message) + "_setFudgeMsg" + camelCaseFieldName(field)
-            + " (FudgeMsg msg, FudgeMsg subMsg)");
+        writer.write("FudgeStatus " + getIdentifier(message) + "_set" + camelCaseFieldName(field) + " (FudgeMsg msg, ");
+        if (field.isRepeated()) {
+          writer.write(typeString(field.getType(), false) + "* value, int repeatCount");
+        } else {
+          writer.write(typeString(field.getType(), true) + " value");
+        }
+        writer.write(")");
         endStmt(writer);
+        if (field.getType().getFudgeFieldType() == FudgeTypeDictionary.FUDGE_MSG_TYPE_ID) {
+          writer.write("FudgeStatus " + getIdentifier(message) + "_getFudgeMsg" + camelCaseFieldName(field)
+              + " (FudgeMsg msg, FudgeMsg *subMsg)");
+          endStmt(writer);
+          writer.write("FudgeStatus " + getIdentifier(message) + "_setFudgeMsg" + camelCaseFieldName(field)
+              + " (FudgeMsg msg, FudgeMsg subMsg)");
+          endStmt(writer);
+        }
       }
     }
     // Message struct operators
@@ -227,17 +245,21 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
   @Override
   public void writeClassHeaderAttribute(final Compiler.Context context, final FieldDefinition field,
       final IndentWriter writer) throws IOException {
-    if (field.isRepeated()) {
-      writer.write("int fudgeCount" + camelCaseFieldName(field));
-      endStmt(writer);
-      writer.write(typeString(field.getType(), false) + "* " + privateFieldName(field));
+    if (field.getOverride() != null) {
+      comment(writer, field.getName() + " declared in " + field.getOverride().getOuterMessage().getName());
     } else {
-      writer.write(typeString(field.getType(), true));
-      if (!field.isRequired() && !isPointerType(field.getType()))
-        writer.write("*");
-      writer.write(" " + privateFieldName(field));
+      if (field.isRepeated()) {
+        writer.write("int fudgeCount" + camelCaseFieldName(field));
+        endStmt(writer);
+        writer.write(typeString(field.getType(), false) + "* " + privateFieldName(field));
+      } else {
+        writer.write(typeString(field.getType(), true));
+        if (!field.isRequired() && !isPointerType(field.getType()))
+          writer.write("*");
+        writer.write(" " + privateFieldName(field));
+      }
+      endStmt(writer);
     }
-    endStmt(writer);
   }
 
   @Override
@@ -1150,6 +1172,9 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
   @Override
   public void writeClassImplementationAccessor(final Compiler.Context context, final FieldDefinition field,
       final IndentWriter writer) throws IOException {
+    if (field.getOverride() == null) {
+      return;
+    }
     writeAccessor(writer, field);
     if (field.getType().getFudgeFieldType() == FudgeTypeDictionary.FUDGE_MSG_TYPE_ID) {
       writeSubMessageAccessor(writer, field);
@@ -1250,6 +1275,9 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
       endStmt(writer);
     }
     for (FieldDefinition field : message.getFieldDefinitions()) {
+      if (field.getOverride() != null) {
+        continue;
+      }
       if (field.isRepeated()) {
         writer.write("if (ptr->fudgeCount" + camelCaseFieldName(field) + ")");
         beginBlock(writer); // if
@@ -1319,6 +1347,9 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
     boolean needsStatus = (message.getExtends() != null);
     final Map<FieldType, String> typesDeclared = new HashMap<FieldType, String>();
     for (FieldDefinition field : message.getFieldDefinitions()) {
+      if (field.getOverride() != null) {
+        continue;
+      }
       if (field.isRequired()) {
         needsStatus = true;
       } else {
@@ -1343,6 +1374,9 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
       endStmt(writer);
     }
     for (FieldDefinition field : message.getFieldDefinitions()) {
+      if (field.getOverride() != null) {
+        continue;
+      }
       if (field.isRepeated() || field.isRequired() || isPointerType(field.getType())) {
         if (field.isRequired()) {
           writer.write("if ((status = ");
@@ -1455,6 +1489,9 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
       endStmt(writer);
     }
     for (FieldDefinition field : message.getFieldDefinitions()) {
+      if (field.getOverride() != null) {
+        continue;
+      }
       writer.write("if (");
       if (!field.isRequired()) {
         writer.write("ptr->" + privateFieldName(field) + " && ");

@@ -3,16 +3,16 @@
  *
  * This file is part of the Java unit test generated output.
  */
-// Created from inheritance.proto:47(9)
+// Created from inheritance.proto:49(9)
 package org.fudgemsg.proto.tests.inheritance;
 public class NonBuilderFromBuilder extends org.fudgemsg.proto.tests.inheritance.BuilderBase implements java.io.Serializable {
   private static final long serialVersionUID = 108461l;
   private final int _c;
   public static final String C_KEY = "c";
   public static class Builder extends org.fudgemsg.proto.tests.inheritance.BuilderBase.Builder {
-    private final int _c;
+    private int _c;
     public Builder (int c) {
-      _c = c;
+      c (c);
     }
     protected Builder (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
       super (fudgeMsg);
@@ -25,6 +25,10 @@ public class NonBuilderFromBuilder extends org.fudgemsg.proto.tests.inheritance.
       catch (IllegalArgumentException e) {
         throw new IllegalArgumentException ("Fudge message is not a NonBuilderFromBuilder - field 'c' is not integer", e);
       }
+    }
+    public Builder c (int c) {
+      _c = c;
+      return this;
     }
     public NonBuilderFromBuilder build () {
       return new NonBuilderFromBuilder (this);

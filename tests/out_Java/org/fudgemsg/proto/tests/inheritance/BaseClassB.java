@@ -18,20 +18,11 @@ public class BaseClassB implements java.io.Serializable {
   public static class Builder {
     private Integer _bcB_o;
     private java.util.List<Integer> _bcB_r;
-    private final int _bcB_q;
-    private final java.util.List<Integer> _bcB_rq;
+    private int _bcB_q;
+    private java.util.List<Integer> _bcB_rq;
     public Builder (int bcB_q, java.util.Collection<? extends Integer> bcB_rq) {
-      _bcB_q = bcB_q;
-      if (bcB_rq == null) throw new NullPointerException ("'bcB_rq' cannot be null");
-      else {
-        final java.util.List<Integer> fudge0 = new java.util.ArrayList<Integer> (bcB_rq);
-        if (bcB_rq.size () == 0) throw new IllegalArgumentException ("'bcB_rq' cannot be an empty list");
-        for (java.util.ListIterator<Integer> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
-          Integer fudge2 = fudge1.next ();
-          if (fudge2 == null) throw new NullPointerException ("List element of 'bcB_rq' cannot be null");
-        }
-        _bcB_rq = fudge0;
-      }
+      bcB_q (bcB_q);
+      bcB_rq (bcB_rq);
     }
     protected Builder (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
       org.fudgemsg.FudgeField fudgeField;
@@ -107,6 +98,37 @@ public class BaseClassB implements java.io.Serializable {
       if (bcB_r == null) throw new NullPointerException ("'bcB_r' cannot be null");
       if (_bcB_r == null) _bcB_r = new java.util.ArrayList<Integer> ();
       _bcB_r.add (bcB_r);
+      return this;
+    }
+    public Builder bcB_q (int bcB_q) {
+      _bcB_q = bcB_q;
+      return this;
+    }
+    public Builder bcB_rq (Integer bcB_rq) {
+      if (bcB_rq == null) throw new NullPointerException ("'bcB_rq' cannot be null");
+      else {
+        _bcB_rq = new java.util.ArrayList<Integer> (1);
+        addBcB_rq (bcB_rq);
+      }
+      return this;
+    }
+    public Builder bcB_rq (java.util.Collection<? extends Integer> bcB_rq) {
+      if (bcB_rq == null) throw new NullPointerException ("'bcB_rq' cannot be null");
+      else {
+        final java.util.List<Integer> fudge0 = new java.util.ArrayList<Integer> (bcB_rq);
+        if (bcB_rq.size () == 0) throw new IllegalArgumentException ("'bcB_rq' cannot be an empty list");
+        for (java.util.ListIterator<Integer> fudge1 = fudge0.listIterator (); fudge1.hasNext (); ) {
+          Integer fudge2 = fudge1.next ();
+          if (fudge2 == null) throw new NullPointerException ("List element of 'bcB_rq' cannot be null");
+        }
+        _bcB_rq = fudge0;
+      }
+      return this;
+    }
+    public Builder addBcB_rq (Integer bcB_rq) {
+      if (bcB_rq == null) throw new NullPointerException ("'bcB_rq' cannot be null");
+      if (_bcB_rq == null) _bcB_rq = new java.util.ArrayList<Integer> ();
+      _bcB_rq.add (bcB_rq);
       return this;
     }
     public BaseClassB build () {

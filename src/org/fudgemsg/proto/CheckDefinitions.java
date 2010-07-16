@@ -67,17 +67,40 @@ import java.util.Map;
       if (map == null) map = new HashMap<String,FieldDefinition> ();
       checkMessageInheritance (context, map, message.getExtends ());
     }
-    if (map == null) return;
+    if (map == null) {
+      return;
+    }
     for (FieldDefinition field : message.getFieldDefinitions ()) {
-      final FieldDefinition defined = map.get (field.getName ());
+      final FieldDefinition defined = map.put(field.getName(), field);
       if (defined != null) {
-        if (field.getType ().equals (defined.getType ())) {
-          context.warning (field.getCodePosition (), "'" + field.getName () + "' is already defined in base message '" + defined.getOuterMessage ());
-          message.getFieldDefinitions ().remove (field);
+        String error = null;
+        if (!field.getType().equals(defined.getType())) {
+          error = "with a different type";
         } else {
-          context.error (field.getCodePosition (), "'" + field.getName () + "' is already defined in base message '" + defined.getOuterMessage () + "' with a different type");
+          if (field.isMutable() != defined.isMutable()) {
+            error = "with different mutability";
+          } else if (field.isRepeated() != defined.isRepeated()) {
+            error = "with different repeat";
+          } else if (!field.isRequired() && defined.isRequired()) {
+            error = "with different requirement";
+          } else {
+            LiteralValue defaultValue = field.getDefaultValue();
+            if ((defaultValue == null) || defaultValue.equals(defined.getDefaultValue())) {
+              context.warning(field.getCodePosition(), "'" + field.getName()
+                  + "' is a redundant override of base message '" + defined.getOuterMessage().getIdentifier() + "'");
+              message.getFieldDefinitions().remove(field);
+              field = null;
+            }
+          }
         }
-        context.warning (defined.getCodePosition (), "this is the location of the previous definition");
+        if (error != null) {
+          context.error(field.getCodePosition(), "'" + field.getName() + "' is already defined in base message '"
+              + defined.getOuterMessage().getIdentifier() + "' " + error);
+        } else if (field != null) {
+          field.setOverride(defined);
+          continue;
+        }
+        context.warning(defined.getCodePosition(), "this is the location of the previous definition");
       }
     }
   }

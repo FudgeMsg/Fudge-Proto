@@ -35,11 +35,10 @@ public class Person implements java.io.Serializable {
     private final Person.PhoneType _type;
     public static final int TYPE_ORDINAL = 2;
     public static class Builder {
-      private final String _number;
+      private String _number;
       private Person.PhoneType _type;
       public Builder (String number) {
-        if (number == null) throw new NullPointerException ("number' cannot be null");
-        _number = number;
+        number (number);
         type (Person.PhoneType.HOME);
       }
       protected Builder (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
@@ -63,6 +62,11 @@ public class Person implements java.io.Serializable {
             throw new IllegalArgumentException ("Fudge message is not a PhoneNumber - field 'type' is not PhoneType enum", e);
           }
         }
+      }
+      public Builder number (String number) {
+        if (number == null) throw new NullPointerException ("number' cannot be null");
+        _number = number;
+        return this;
       }
       public Builder type (Person.PhoneType type) {
         _type = type;
@@ -162,14 +166,13 @@ public class Person implements java.io.Serializable {
   private final java.util.List<Person.PhoneNumber> _phone;
   public static final int PHONE_ORDINAL = 4;
   public static class Builder {
-    private final String _name;
-    private final int _id;
+    private String _name;
+    private int _id;
     private String _email;
     private java.util.List<Person.PhoneNumber> _phone;
     public Builder (String name, int id) {
-      if (name == null) throw new NullPointerException ("name' cannot be null");
-      _name = name;
-      _id = id;
+      name (name);
+      id (id);
     }
     protected Builder (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
       org.fudgemsg.FudgeField fudgeField;
@@ -215,6 +218,15 @@ public class Person implements java.io.Serializable {
         }
         phone (fudge1);
       }
+    }
+    public Builder name (String name) {
+      if (name == null) throw new NullPointerException ("name' cannot be null");
+      _name = name;
+      return this;
+    }
+    public Builder id (int id) {
+      _id = id;
+      return this;
     }
     public Builder email (String email) {
       _email = email;

@@ -18,6 +18,8 @@ package org.fudgemsg.proto.java;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -247,7 +249,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     if (superMessage != null) {
       if (!useBuilderPattern(superMessage)) {
         if (!superMessage.isExternal()) {
-          final List<FieldDefinition> superFields = getAllFields(false, superMessage, null);
+          final List<FieldDefinition> superFields = getAllFields(false, superMessage, null, null);
           if (superFields != null) {
             for (FieldDefinition field : superFields) {
               writer.attribute(false, realTypeString(field, false), privateFieldName(field));
@@ -274,21 +276,49 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       }
     }
     for (FieldDefinition field : message.getFieldDefinitions()) {
-      writer.attribute(field.isRequired() && (field.getDefaultValue() == null), realTypeString(field, false),
-          privateFieldName(field));
-      endStmt(writer); // builder field decl
+      if (field.getOverride() == null) {
+        writer.attribute(false, realTypeString(field, false), privateFieldName(field));
+        endStmt(writer); // builder field decl
+      }
     }
   }
 
-  private List<FieldDefinition> getAllFields(final boolean includeOptional, final MessageDefinition message,
-      List<FieldDefinition> params) {
-    if (message == null)
-      return params;
-    params = getAllFields(includeOptional, message.getExtends(), params);
+  private Map<String, FieldDefinition> getOverrideMap(final MessageDefinition message,
+      Map<String, FieldDefinition> overrides) {
     for (FieldDefinition field : message.getFieldDefinitions()) {
+      if (field.getOverride() != null) {
+        if (overrides == null) {
+          overrides = new HashMap<String, FieldDefinition>();
+        }
+        if (!overrides.containsKey(field.getName())) {
+          overrides.put(field.getName(), field);
+        }
+      }
+    }
+    return overrides;
+  }
+
+  private List<FieldDefinition> getAllFields(final boolean includeOptional, final MessageDefinition message,
+      List<FieldDefinition> params, Map<String, FieldDefinition> overrides) {
+    if (message == null) {
+      return params;
+    }
+    overrides = getOverrideMap(message, overrides);
+    params = getAllFields(includeOptional, message.getExtends(), params, overrides);
+    for (FieldDefinition field : message.getFieldDefinitions()) {
+      if (field.getOverride() != null) {
+        continue;
+      }
+      if (overrides != null) {
+        final FieldDefinition override = overrides.get(field.getName());
+        if (override != null) {
+          field = override;
+        }
+      }
       if (includeOptional || (field.isRequired() && (field.getDefaultValue() == null))) {
-        if (params == null)
+        if (params == null) {
           params = new LinkedList<FieldDefinition>();
+        }
         params.add(field);
       }
     }
@@ -310,10 +340,12 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   /**
    * Writes out the constructor for either Builder or the main message
    */
-  private void writePublicConstructor(final IndentWriter writer, final boolean builder, final MessageDefinition message)
+  private void writePublicConstructor(final Compiler.Context context, final IndentWriter writer, final boolean builder,
+      final MessageDefinition message)
       throws IOException {
     final MessageDefinition superMessage = message.getExtends();
-    final List<FieldDefinition> superFields = getAllFields(false, superMessage, null);
+    final Map<String,FieldDefinition> overrideMap = getOverrideMap (message, null);
+    final List<FieldDefinition> superFields = getAllFields(false, superMessage, null, overrideMap);
     final List<FieldDefinition> requiredFields = new LinkedList<FieldDefinition>();
     final List<FieldDefinition> defaultFields = new LinkedList<FieldDefinition>();
     for (FieldDefinition field : message.getFieldDefinitions()) {
@@ -343,14 +375,40 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         }
       } else {
         // we have a superclass constructor
-        if (superFields != null) {
-          writer.write("super (" + fieldsToList(superFields, false) + ")");
+        final List<FieldDefinition> realSuperFields = getAllFields(false, superMessage, null, null);
+        if (realSuperFields != null) {
+          writer.write("super (");
+          boolean first = true;
+          for (FieldDefinition field : realSuperFields) {
+            if (first) {
+              first = false;
+            } else {
+              writer.write(", ");
+            }
+            if ((superFields != null) && superFields.contains(field)) {
+              writer.write(localFieldName(field));
+            } else {
+              final FieldDefinition override = overrideMap.get(field.getName());
+              if (override.getDefaultValue() != null) {
+                writer.write(getLiteral(override.getDefaultValue().assignmentTo(context, field.getType())));
+                defaultFields.remove(override);
+              } else if (override.isRequired()) {
+                writer.write(localFieldName(override));
+              }
+            }
+          }
+          writer.write(")");
           endStmt(writer);
         }
       }
     }
     for (FieldDefinition field : requiredFields) {
-      writeMutatorAssignment(writer, field, localFieldName(field), false, true);
+      if (builder) {
+        writer.write(fieldMethodName(field, null) + " (" + localFieldName(field) + ")");
+        endStmt(writer);
+      } else {
+        writeMutatorAssignment(writer, field, localFieldName(field), false, true);
+      }
     }
     for (FieldDefinition field : defaultFields) {
       writer.write(fieldMethodName(field, builder ? null : "set") + " (" + getLiteral(field.getDefaultValue()) + ")");
@@ -359,18 +417,36 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     endBlock(writer); // constructor
   }
 
+  private List<FieldDefinition> noOverrides (final List<FieldDefinition> list) {
+    List<FieldDefinition> substitute = null;
+    for (FieldDefinition field : list) {
+      if (field.getOverride () != null) {
+        if (substitute == null) {
+          substitute = new ArrayList<FieldDefinition> (list.size ());
+          for (FieldDefinition field2 : list) {
+            if (field2.getOverride() == null) {
+              substitute.add(field2);
+            }
+          }
+          return substitute;
+        }
+      }
+    }
+    return list;
+  }
+
   /**
    * Writes out a constructor which accepts all fields (if not already catered for in the non-builder approach).
    */
   private void writeFullPublicConstructor(final IndentWriter writer, final boolean builder,
       final MessageDefinition message) throws IOException {
-    final List<FieldDefinition> thisFields = message.getFieldDefinitions();
-    final List<FieldDefinition> superFields = getAllFields(true, message.getExtends(), null);
+    final List<FieldDefinition> thisFields = noOverrides(message.getFieldDefinitions());
+    final List<FieldDefinition> superFields = getAllFields(true, message.getExtends(), null, null);
     if (!builder) {
       int totalParamCount = thisFields.size();
       if (superFields != null)
         totalParamCount += superFields.size();
-      final List<FieldDefinition> requiredFields = getAllFields(false, message, null);
+      final List<FieldDefinition> requiredFields = getAllFields(false, message, null, null);
       int requiredParamCount = 0;
       if (requiredFields != null)
         requiredParamCount += requiredFields.size();
@@ -617,7 +693,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
 
   private void writeBuilderClassMethods(final IndentWriter writer, final MessageDefinition message) throws IOException {
     for (FieldDefinition field : message.getFieldDefinitions()) {
-      if (!field.isRequired() || (field.getDefaultValue() != null)) {
+      if (field.getOverride() == null) {
         writeMutatorMethod(writer, true, field);
       }
     }
@@ -644,14 +720,15 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     endBlock(writer);
   }
 
-  private void writeBuilderClass(final IndentWriter writer, MessageDefinition message) throws IOException {
+  private void writeBuilderClass(final Compiler.Context context, final IndentWriter writer, MessageDefinition message)
+      throws IOException {
     final MessageDefinition ext = message.getExtends();
     JavaWriter jWriter = new JavaWriter(writer);
     jWriter.classDef(false, true, "Builder", ((ext != null) && useBuilderPattern(ext)) ? ext.getIdentifier()
         + ".Builder" : null, null);
     jWriter = beginBlock(jWriter); // builder class
     writeBuilderClassFields(jWriter, message);
-    writePublicConstructor(writer, true, message);
+    writePublicConstructor(context, writer, true, message);
     writeProtectedFudgeMsgConstructor(writer, true, message);
     writeBuilderClassMethods(writer, message);
     if (!message.isAbstract()) {
@@ -675,7 +752,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         endStmt(writer);
       } else {
         // Use the partial constructor
-        final List<FieldDefinition> superFields = getAllFields(false, message.getExtends(), null);
+        final List<FieldDefinition> superFields = getAllFields(false, message.getExtends(), null, null);
         writer.write("super (");
         if (superFields != null) {
           boolean first = true;
@@ -693,7 +770,9 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       }
     }
     for (FieldDefinition field : message.getFieldDefinitions()) {
-      writeMutatorAssignment(writer, field, "builder." + privateFieldName(field), true, false);
+      if (field.getOverride() == null) {
+        writeMutatorAssignment(writer, field, "builder." + privateFieldName(field), true, false);
+      }
     }
     endBlock(writer); // constructor
     MessageDefinition msg = superMessage;
@@ -854,6 +933,9 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       endStmt(writer);
     }
     for (FieldDefinition field : message.getFieldDefinitions()) {
+      if (field.getOverride() != null) {
+        continue;
+      }
       final FieldType type = field.getType();
       String value = privateFieldName(field);
       if (field.isRepeated()) {
@@ -1323,6 +1405,9 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     final List<FieldDefinition> optional = new LinkedList<FieldDefinition>();
     boolean fieldDeclared = false, fieldsDeclared = false;
     for (FieldDefinition field : message.getFieldDefinitions()) {
+      if (field.getOverride() != null) {
+        continue;
+      }
       if (field.isRequired()) {
         required.add(field);
       } else {
@@ -1348,7 +1433,8 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     endBlock(writer); // constructor
   }
 
-  private void writeProtectedCopyConstructor(final IndentWriter writer, final MessageDefinition message)
+  private void writeProtectedCopyConstructor(final Compiler.Context context, final IndentWriter writer,
+      final MessageDefinition message)
       throws IOException {
     writer.write("protected " + message.getName() + " (final " + message.getName() + " source)");
     beginBlock(writer); // constructor
@@ -1361,7 +1447,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     for (FieldDefinition field : message.getFieldDefinitions()) {
       if (field.getDefaultValue() != null) {
         optional.add(field);
-      } else {
+      } else if (field.getOverride() == null) {
         required.add(field);
       }
     }
@@ -1380,10 +1466,22 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         beginBlock(writer);
       }
       for (FieldDefinition field : optional) {
-        writeMutatorAssignment(writer, field, "source." + privateFieldName(field), true, false);
+        if (field.getOverride() == null) {
+          writeMutatorAssignment(writer, field, "source." + privateFieldName(field), true, false);
+        }
       }
       if (!nullCheck) {
-        endBlock(writer);
+        endBlock(writer); // if 
+        writer.write("else");
+        beginBlock(writer); // if-else
+        for (FieldDefinition field : optional) {
+          final LiteralValue defaultValue = field.getDefaultValue();
+          if (defaultValue != null) {
+            writeMutatorAssignment(writer, field, getLiteral(defaultValue.assignmentTo(context, field.getType())),
+                true, false);
+          }
+        }
+        endBlock(writer); // if-else
       }
     }
     endBlock(writer); // constructor
@@ -1471,6 +1569,9 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     writer.write(message.getName() + " msg = (" + message.getName() + ")o");
     endStmt(writer);
     for (FieldDefinition field : message.getFieldDefinitions()) {
+      if (field.getOverride() != null) {
+        continue;
+      }
       final String a = privateFieldName(field);
       final String b = "msg." + a;
       final FieldType type = field.getType();
@@ -1535,6 +1636,9 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     writer.write("int hc = " + ((message.getExtends() != null) ? "super.hashCode ()" : "1"));
     endStmt(writer);
     for (FieldDefinition field : message.getFieldDefinitions()) {
+      if (field.getOverride() != null) {
+        continue;
+      }
       final String name = privateFieldName(field);
       final FieldType type = field.getType();
       if (type instanceof FieldType.ArrayType) {
@@ -1618,14 +1722,14 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     final JavaWriter jWriter = new JavaWriter(writer);
     final boolean useBuilder = useBuilderPattern(message);
     if (useBuilder) {
-      writeBuilderClass(writer, message);
+      writeBuilderClass(context, writer, message);
       writeProtectedBuilderConstructor(writer, message);
     } else {
-      writePublicConstructor(writer, false, message);
+      writePublicConstructor(context, writer, false, message);
       writeProtectedFudgeMsgConstructor(writer, false, message);
     }
     writeFullPublicConstructor(writer, useBuilder, message);
-    writeProtectedCopyConstructor(writer, message);
+    writeProtectedCopyConstructor(context, writer, message);
     writeToFudgeMsg(jWriter, message);
     writeFromFudgeMsg(context, writer, message, useBuilder);
   }

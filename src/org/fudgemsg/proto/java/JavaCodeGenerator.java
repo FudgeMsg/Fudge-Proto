@@ -24,6 +24,7 @@ import org.fudgemsg.FudgeContext;
 import org.fudgemsg.proto.Binding;
 import org.fudgemsg.proto.Compiler;
 import org.fudgemsg.proto.Definition;
+import org.fudgemsg.proto.FieldDefinition;
 import org.fudgemsg.proto.IndentWriter;
 import org.fudgemsg.proto.MessageDefinition;
 import org.fudgemsg.proto.proto.InnerClassCodeGenerator;
@@ -119,6 +120,22 @@ public class JavaCodeGenerator extends InnerClassCodeGenerator {
     }
   }
   
+  @Override
+  public void writeClassImplementationAttribute(final Compiler.Context context, final FieldDefinition field,
+      final IndentWriter writer) throws IOException {
+    if (field.getOverride() == null) {
+      super.writeClassImplementationAttribute(context, field, writer);
+    }
+  }
+
+  @Override
+  public void writeClassImplementationAccessor(final Compiler.Context context, final FieldDefinition field,
+      final IndentWriter writer) throws IOException {
+    if (field.getOverride() == null) {
+      super.writeClassImplementationAccessor(context, field, writer);
+    }
+  }
+
   private List<String> methodList (final Definition definition) {
     String m = ProtoBinding.METHODS.get (definition);
     if (m == null) return null;

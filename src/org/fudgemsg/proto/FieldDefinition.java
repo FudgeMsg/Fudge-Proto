@@ -34,6 +34,8 @@ public class FieldDefinition extends Definition {
   
   private boolean _flagMutable;
   
+  private FieldDefinition _override = null;
+
   /* package */ FieldDefinition (final String identifier, final CodePosition codePosition, final MessageDefinition outerMessage, final FieldType type, final boolean mutable, final boolean required) {
     super (identifier, codePosition, outerMessage, outerMessage.isCompilationTarget ());
     _ordinal = null;
@@ -90,4 +92,12 @@ public class FieldDefinition extends Definition {
     return (MessageDefinition) getOuterDefinition ();
   }
   
+  public FieldDefinition getOverride() {
+    return _override;
+  }
+
+  public void setOverride(final FieldDefinition fieldDefinition) {
+    _override = fieldDefinition;
+  }
+
 }

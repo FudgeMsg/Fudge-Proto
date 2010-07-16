@@ -56,7 +56,7 @@ public class InheritanceTest {
   
   @Test
   public void testSubClassA () {
-    SubClassA scA = new SubClassA.Builder (1, INT_LIST, 3, INT_LIST).build ();
+    SubClassA scA = new SubClassA.Builder(INT_LIST, 3, INT_LIST).build();
     FudgeFieldContainer m = scA.toFudgeMsg (new FudgeContext ());
     System.out.println (m);
     scA = SubClassA.fromFudgeMsg (m);
@@ -66,7 +66,7 @@ public class InheritanceTest {
   
   @Test
   public void testSubClassA2 () {
-    SubClassA2 scA2 = new SubClassA2.Builder (1, INT_LIST, 3, INT_LIST, 5, INT_LIST).build ();
+    SubClassA2 scA2 = new SubClassA2.Builder(INT_LIST, 3, INT_LIST, 5, INT_LIST).build();
     FudgeFieldContainer m = scA2.toFudgeMsg (new FudgeContext ());
     System.out.println (m);
     scA2 = SubClassA2.fromFudgeMsg (m);

@@ -3,7 +3,7 @@
  *
  * This file is part of the Java unit test generated output.
  */
-// Created from inheritance.proto:43(9)
+// Created from inheritance.proto:45(9)
 package org.fudgemsg.proto.tests.inheritance;
 public class BuilderBase implements java.io.Serializable {
   private static final long serialVersionUID = -672257859l;

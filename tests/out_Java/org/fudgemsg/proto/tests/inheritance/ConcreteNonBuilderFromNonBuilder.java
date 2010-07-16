@@ -3,17 +3,17 @@
  *
  * This file is part of the Java unit test generated output.
  */
-// Created from inheritance.proto:87(10)
+// Created from inheritance.proto:89(10)
 package org.fudgemsg.proto.tests.inheritance;
 public class ConcreteNonBuilderFromNonBuilder extends org.fudgemsg.proto.tests.inheritance.AbstractNonBuilderFromBuilder implements java.io.Serializable {
   private static final long serialVersionUID = 108523l;
   private final int _e;
   public static final String E_KEY = "e";
   public static class Builder extends org.fudgemsg.proto.tests.inheritance.AbstractNonBuilderFromBuilder.Builder {
-    private final int _e;
+    private int _e;
     public Builder (int c, int d, int e) {
       super (c, d);
-      _e = e;
+      e (e);
     }
     protected Builder (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
       super (fudgeMsg);
@@ -26,6 +26,10 @@ public class ConcreteNonBuilderFromNonBuilder extends org.fudgemsg.proto.tests.i
       catch (IllegalArgumentException e) {
         throw new IllegalArgumentException ("Fudge message is not a ConcreteNonBuilderFromNonBuilder - field 'e' is not integer", e);
       }
+    }
+    public Builder e (int e) {
+      _e = e;
+      return this;
     }
     public ConcreteNonBuilderFromNonBuilder build () {
       return new ConcreteNonBuilderFromNonBuilder (this);

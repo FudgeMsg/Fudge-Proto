@@ -12,10 +12,10 @@ public class SomeSome implements java.io.Serializable {
   private final Integer _bar;
   public static final String BAR_KEY = "bar";
   public static class Builder {
-    private final int _foo;
+    private int _foo;
     private Integer _bar;
     public Builder (int foo) {
-      _foo = foo;
+      foo (foo);
     }
     protected Builder (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
       org.fudgemsg.FudgeField fudgeField;
@@ -36,6 +36,10 @@ public class SomeSome implements java.io.Serializable {
           throw new IllegalArgumentException ("Fudge message is not a SomeSome - field 'bar' is not integer", e);
         }
       }
+    }
+    public Builder foo (int foo) {
+      _foo = foo;
+      return this;
     }
     public Builder bar (Integer bar) {
       _bar = bar;

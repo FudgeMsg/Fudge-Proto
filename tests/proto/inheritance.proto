@@ -24,6 +24,8 @@ namespace org.fudgemsg.proto.tests.inheritance {
 	}
 	
 	message SubClassA extends BaseClassA {
+	  optional int bcA_o [default = 42];
+    required int bcA_q [default = 42];
 		optional int scA_o;
 		repeated int scA_r;
 		required int scA_q;
