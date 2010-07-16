@@ -1477,8 +1477,14 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         for (FieldDefinition field : optional) {
           final LiteralValue defaultValue = field.getDefaultValue();
           if (defaultValue != null) {
-            writeMutatorAssignment(writer, field, getLiteral(defaultValue.assignmentTo(context, field.getType())),
-                true, false);
+            if (field.getOverride() != null) {
+              writer.write(fieldMethodName(field, "set") + " ("
+                  + getLiteral(defaultValue.assignmentTo(context, field.getOverride().getType())) + ")");
+              endStmt(writer);
+            } else {
+              writeMutatorAssignment(writer, field, getLiteral(defaultValue.assignmentTo(context, field.getType())),
+                  true, false);
+            }
           }
         }
         endBlock(writer); // if-else

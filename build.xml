@@ -22,7 +22,11 @@
 	<target name="clean-tests-cs" description="--> delete the output from C# test scripts"><delete dir="${tests.dir}/out_C#" /></target>
 	<target name="clean-tests-cpp" description="--> delete the output from C++ test scripts"><delete dir="${tests.dir}/out_C++" /></target>
 	<target name="clean-tests-default" description="--> delete the output from default test scripts"><delete dir="${tests.dir}/out_default" /></target>
-	<target name="clean-tests-java" description="--> delete the output from Java test scripts"><delete dir="${tests.dir}/out_Java" /></target>
+	<target name="clean-tests-java" description="--> delete the output from Java test scripts">
+		<delete file="${tests.dir}/out_Java/*">
+			<fileset dir="${tests.dir}/out_Java" includes="**/*" excludes=".gitignore" />
+		</delete>
+	</target>
 	<target name="clean-tests-proto" description="--> delete the output from .proto test scripts"><delete dir="${tests.dir}/out_proto" /></target>
 
 	<target name="compile-proto-java"
