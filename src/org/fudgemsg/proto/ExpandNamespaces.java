@@ -149,19 +149,22 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
       localNamespace = identifier.getNodeValue ();
     }
     switch (what.getNodeLabel ()) {
-    case ProtoLexer.ENUM :
-      context.addDefinition (outerMessage.createEnumDefinition (localNamespace, identifier.getCodePosition (), false));
-      break;
-    case ProtoLexer.MESSAGE :
-      final MessageDefinition messageDefinition = outerMessage.createMessageDefinition (localNamespace, identifier.getCodePosition (), false);
-      messageDefinition.setExternal ();
-      context.addDefinition (messageDefinition);
-      break;
-    case ProtoLexer.TAXONOMY :
-      context.addDefinition (new TaxonomyDefinition (localNamespace, identifier.getCodePosition (), false));
-      break;
-    default :
-      throw new IllegalStateException ("unexpected extern type '" + node.getNodeLabel () + "'"); 
+      case ProtoLexer.ENUM:
+        context.addDefinition(outerMessage.createEnumDefinition(localNamespace, identifier.getCodePosition(), false));
+        break;
+      case ProtoLexer.MESSAGE:
+        final MessageDefinition messageDefinition = outerMessage.createMessageDefinition(localNamespace, identifier
+            .getCodePosition(), false);
+        if (children.size() < 3) {
+          messageDefinition.setExternal();
+        }
+        context.addDefinition(messageDefinition);
+        break;
+      case ProtoLexer.TAXONOMY:
+        context.addDefinition(new TaxonomyDefinition(localNamespace, identifier.getCodePosition(), false));
+        break;
+      default:
+        throw new IllegalStateException("unexpected extern type '" + node.getNodeLabel() + "'");
     }
   }
   

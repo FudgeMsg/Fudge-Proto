@@ -3,7 +3,7 @@
 namespace org.fudgemsg.proto.tests.extern {
 
   message ExtendsExtern extends org.fudgemsg.proto.tests.ExternalMessage {
-    int a; 
+    int a;
   } 
   
   message UsesExtern {
@@ -14,5 +14,5 @@ namespace org.fudgemsg.proto.tests.extern {
   message UsesExternArray {
     org.fudgemsg.proto.tests.ExternalMessage[] foo;
   }
-
+  
 }

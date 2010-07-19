@@ -31,6 +31,7 @@ tokens {
 	EXTENDS			= 'extends';
 	EXTERN      = 'extern';
 	FIELD;
+	FORWARD;
 	IMPORT			= 'import';
 	MESSAGE			= 'message';
 	MUTABLE			= 'mutable';
@@ -247,7 +248,10 @@ literal
 	| '(' literal? (',' literal)* ')' -> ^(MESSAGE literal*)
 	;
 
-message : ABSTRACT? MESSAGE^ IDENTIFIER message_uses? message_extends? '{'! message_element* '}'! ;
+message
+  : ABSTRACT? MESSAGE^ IDENTIFIER message_uses? message_extends? '{'! message_element* '}'!
+  | MESSAGE IDENTIFIER ';' -> ^(EXTERN MESSAGE IDENTIFIER FORWARD)
+  ;
 
 message_element
 	: message_enum
@@ -277,7 +281,7 @@ namespace : NAMESPACE^ fullidentifier '{'! root_object* '}'! ;
 root : root_object* -> ^(ROOT root_object*);
 
 root_object
-  : EXTERN^ (MESSAGE | TAXONOMY | ENUM) fullidentifier ';'?
+  : EXTERN^ (MESSAGE | TAXONOMY | ENUM) fullidentifier ';'!
 	| message
 	| message_enum
 	| namespace

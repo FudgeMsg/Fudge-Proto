@@ -319,20 +319,20 @@ public class Compiler {
         if ((prev instanceof MessageDefinition) && (definition instanceof MessageDefinition)) {
           final MessageDefinition mdOld = (MessageDefinition)prev;
           final MessageDefinition mdNew = (MessageDefinition)definition;
-          if (mdOld.isExternal ()) {
-            if (mdNew.isExternal ()) {
-              // duplicate external declaration; ignore
-              return;
+          if (mdOld.isCompilationTarget()) {
+            if (mdNew.isCompilationTarget()) {
+              // error condition
             } else {
-              // now have a non-external definition - replace the previous one
-              break;
+              // already have a CT definition - ignore
+              return;
             }
           } else {
-            if (mdNew.isExternal ()) {
-              // already have a non-external declaration; ignore
-              return;
+            if (mdNew.isCompilationTarget()) {
+              // now have a CT definition - replace the previous
+              break;
             } else {
-              // error condition - drop through to alerts below
+              // duplicate non-CT definition - ignore
+              return;
             }
           }
         }
