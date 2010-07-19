@@ -131,9 +131,7 @@ public class MutableSTypes_Optional implements java.io.Serializable, TypesBase_O
     fudgeField = fudgeMsg.getByName (_CUSTOMENUM_KEY);
     if (fudgeField != null)  {
       try {
-        final org.fudgemsg.proto.tests.types.CustomEnum fudge1;
-        fudge1 = fudgeMsg.getFieldValue (org.fudgemsg.proto.tests.types.CustomEnum.class, fudgeField);
-        set_CustomEnum (fudge1);
+        set_CustomEnum (fudgeMsg.getFieldValue (org.fudgemsg.proto.tests.types.CustomEnum.class, fudgeField));
       }
       catch (IllegalArgumentException e) {
         throw new IllegalArgumentException ("Fudge message is not a MutableSTypes_Optional - field '_CustomEnum' is not CustomEnum enum", e);

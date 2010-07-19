@@ -304,9 +304,7 @@ public class MutableRSTypes_Required implements java.io.Serializable, RSTypesBas
     __CustomEnum = new java.util.ArrayList<org.fudgemsg.proto.tests.types.CustomEnum> (fudgeFields.size ());
     for (org.fudgemsg.FudgeField fudge11 : fudgeFields) {
       try {
-        final org.fudgemsg.proto.tests.types.CustomEnum fudge12;
-        fudge12 = fudgeMsg.getFieldValue (org.fudgemsg.proto.tests.types.CustomEnum.class, fudge11);
-        __CustomEnum.add (fudge12);
+        __CustomEnum.add (fudgeMsg.getFieldValue (org.fudgemsg.proto.tests.types.CustomEnum.class, fudge11));
       }
       catch (IllegalArgumentException e) {
         throw new IllegalArgumentException ("Fudge message is not a MutableRSTypes_Required - field '_CustomEnum' is not CustomEnum enum", e);

@@ -55,6 +55,7 @@ tokens {
 	T_STRING		= 'string';
 	T_TIME      = 'time';
 	TAXONOMY		= 'taxonomy';
+	TYPEDEF     = 'typedef';
 	USES			  = 'uses';
 }
 
@@ -148,6 +149,7 @@ anyword
   | T_STRING
   | T_TIME
   | TAXONOMY
+  | TYPEDEF
   | USES
   ;
 
@@ -258,6 +260,7 @@ message_element
 	| message_field
 	| message_submsg
 	| binding
+	| typedef
 	;
 
 message_enum : ENUM^ IDENTIFIER '{'! enum_element* '}'! ;
@@ -282,10 +285,12 @@ root : root_object* -> ^(ROOT root_object*);
 
 root_object
   : EXTERN^ (MESSAGE | TAXONOMY | ENUM) fullidentifier ';'!
+  | EXTERN^ typedef
 	| message
 	| message_enum
 	| namespace
 	| taxonomy
+	| typedef
 	;
 
 taxonomy : TAXONOMY^ IDENTIFIER '{'! taxonomy_element* '}'! ;
@@ -294,3 +299,5 @@ taxonomy_element
 	: enum_element
 	| IMPORT^ fullidentifier ';'!
 	;
+
+typedef : TYPEDEF^ fullidentifier '='! field_type ';'! ;

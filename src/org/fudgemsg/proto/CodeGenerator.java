@@ -31,6 +31,8 @@ public interface CodeGenerator {
   
   public void generateCode (final Compiler.Context context, final TaxonomyDefinition taxonomy, final File targetPath);
   
+  public void generateCode(final Compiler.Context context, final TypeDefinition typedef, final File targetPath);
+
   public void generationComplete (final Compiler.Context context, final File targetPath);
   
   public void setOption (final String optionKey) throws IllegalArgumentException;

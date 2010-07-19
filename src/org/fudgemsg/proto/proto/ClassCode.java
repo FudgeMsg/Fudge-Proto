@@ -20,12 +20,13 @@ import java.io.File;
 import java.io.IOException;
 
 import org.fudgemsg.proto.Compiler;
+import org.fudgemsg.proto.Definition;
 import org.fudgemsg.proto.EnumDefinition;
 import org.fudgemsg.proto.FieldDefinition;
 import org.fudgemsg.proto.IndentWriter;
 import org.fudgemsg.proto.MessageDefinition;
 import org.fudgemsg.proto.TaxonomyDefinition;
-import org.fudgemsg.proto.Definition;
+import org.fudgemsg.proto.TypeDefinition;
 
 public interface ClassCode {
   
@@ -49,6 +50,9 @@ public interface ClassCode {
   
   public void writeTaxonomyHeaderDeclaration (final Compiler.Context context, final TaxonomyDefinition taxonomyDefinition, final IndentWriter writer) throws IOException;
   
+  public void writeTypedefHeaderDeclaration(final Compiler.Context context, final TypeDefinition typeDefinition,
+      final IndentWriter writer) throws IOException;
+
   public void beginClassImplementationDeclaration (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException;
   
   public void endClassImplementationDeclaration (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException;
@@ -68,6 +72,9 @@ public interface ClassCode {
   public void writeEnumImplementationDeclaration (final Compiler.Context context, final EnumDefinition enumDefinition, final IndentWriter writer) throws IOException;
 
   public void writeTaxonomyImplementationDeclaration (final Compiler.Context context, final TaxonomyDefinition taxonomyDefinition, final IndentWriter writer) throws IOException;
+
+  public void writeTypedefImplementationDeclaration(final Compiler.Context context,
+      final TypeDefinition typeDefinition, final IndentWriter writer) throws IOException;
 
   public File getHeaderFile (final Compiler.Context context, final Definition definition, final File targetPath) throws IOException;
   

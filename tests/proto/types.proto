@@ -421,5 +421,14 @@ namespace org.fudgemsg.proto.tests.types {
     mutable required int[][42]       fixedArray3;
     mutable required int[42][42]     fixedArray4;
   }
+  
+  typedef TypeAlias = string;
+  
+  message TypeAliases {
+    TypeAlias foo;
+    Class bar;
+  }
 
 }
+
+extern typedef Class = string; 

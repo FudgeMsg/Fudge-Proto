@@ -316,18 +316,16 @@ public class Compiler {
     final Definition prev = _definitions.get (definition.getIdentifier ());
     do {
       if (prev != null) {
-        if ((prev instanceof MessageDefinition) && (definition instanceof MessageDefinition)) {
-          final MessageDefinition mdOld = (MessageDefinition)prev;
-          final MessageDefinition mdNew = (MessageDefinition)definition;
-          if (mdOld.isCompilationTarget()) {
-            if (mdNew.isCompilationTarget()) {
+        if (prev.getClass().equals(definition.getClass())) {
+          if (prev.isCompilationTarget()) {
+            if (definition.isCompilationTarget()) {
               // error condition
             } else {
               // already have a CT definition - ignore
               return;
             }
           } else {
-            if (mdNew.isCompilationTarget()) {
+            if (definition.isCompilationTarget()) {
               // now have a CT definition - replace the previous
               break;
             } else {
@@ -427,6 +425,8 @@ public class Compiler {
               getCodeGenerator ().generateCode (_context, (MessageDefinition)definition, _targetPath);
             } else if (definition instanceof TaxonomyDefinition) {
               getCodeGenerator ().generateCode (_context, (TaxonomyDefinition)definition, _targetPath);
+            } else if (definition instanceof TypeDefinition) {
+              getCodeGenerator().generateCode(_context, (TypeDefinition) definition, _targetPath);
             } else {
               throw new IllegalStateException ("no code generation rule for " + definition);
             }

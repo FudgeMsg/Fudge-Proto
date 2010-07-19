@@ -20,12 +20,13 @@ import java.io.File;
 import java.io.IOException;
 
 import org.fudgemsg.proto.Compiler;
+import org.fudgemsg.proto.Definition;
 import org.fudgemsg.proto.EnumDefinition;
 import org.fudgemsg.proto.FieldDefinition;
 import org.fudgemsg.proto.IndentWriter;
 import org.fudgemsg.proto.MessageDefinition;
 import org.fudgemsg.proto.TaxonomyDefinition;
-import org.fudgemsg.proto.Definition;
+import org.fudgemsg.proto.TypeDefinition;
 
 public abstract class ClassCodeAdapter extends BlockCodeAdapter implements ClassCode {
   
@@ -101,6 +102,12 @@ public abstract class ClassCodeAdapter extends BlockCodeAdapter implements Class
   }
   
   @Override
+  public void writeTypedefHeaderDeclaration(final Compiler.Context context, final TypeDefinition typeDefinition,
+      final IndentWriter writer) throws IOException {
+    _delegate.writeTypedefHeaderDeclaration(context, typeDefinition, writer);
+  }
+
+  @Override
   public void beginClassImplementationDeclaration (final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
     _delegate.beginClassImplementationDeclaration (context, message, writer);
   }
@@ -148,6 +155,12 @@ public abstract class ClassCodeAdapter extends BlockCodeAdapter implements Class
   @Override
   public void writeTaxonomyImplementationDeclaration (final Compiler.Context context, final TaxonomyDefinition taxonomyDefinition, final IndentWriter writer) throws IOException {
     _delegate.writeTaxonomyImplementationDeclaration (context, taxonomyDefinition, writer);
+  }
+
+  @Override
+  public void writeTypedefImplementationDeclaration(final Compiler.Context context,
+      final TypeDefinition typeDefinition, final IndentWriter writer) throws IOException {
+    _delegate.writeTypedefImplementationDeclaration(context, typeDefinition, writer);
   }
 
   @Override

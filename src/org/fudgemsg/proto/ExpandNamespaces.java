@@ -90,6 +90,26 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
     }
   }
   
+  private AST walkTypedefNode(final Compiler.Context context, final AST node, final String namespace,
+      final boolean isExtern) {
+    List<AST> children = node.getChildNodes();
+    final AST identifier = fixupFullIdentifier(children.get(0));
+    final String fullIdentifier;
+    if (namespace.length() != 0) {
+      children.set(0, new ASTNode(identifier, fullIdentifier = namespace + "." + identifier.getNodeValue()));
+    } else {
+      children.set(0, identifier);
+      fullIdentifier = identifier.getNodeValue();
+    }
+    final TypeDefinition typedef = new TypeDefinition(fullIdentifier, node.getCodePosition(), !isExtern);
+    if (isExtern) {
+      typedef.setExternal();
+    }
+    context.addDefinition(typedef);
+    children.set(1, walkFieldTypeNode(children.get(1)));
+    return new ASTNode(node, children);
+  }
+
   private AST walkMessageNode (final Compiler.Context context, final AST node, final String namespace, final MessageDefinition outerMessage) {
     final List<AST> children = node.getChildNodes ();
     final String localNamespace;
@@ -113,26 +133,29 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
     for (int i = 1; i < children.size(); i++) {
       final AST element = children.get (i);
       switch (element.getNodeLabel ()) {
-      case ProtoLexer.BINDING :
-        walkBindingNode (context, element, messageDefinition);
-        children.remove (i);
-        i--;
-        break;
-      case ProtoLexer.ENUM :
-        children.set (i, walkEnumNode (context, element, localNamespace, messageDefinition));
-        break;
-      case ProtoLexer.EXTENDS :
-        children.set (i, fixupFullIdentifierList (element));
-        break;
-      case ProtoLexer.FIELD :
-        children.set (i, walkFieldNode (element));
-        break;
-      case ProtoLexer.MESSAGE :
-        children.set (i, walkMessageNode (context, element, localNamespace, messageDefinition));
-        break;
-      case ProtoLexer.USES :
-        children.set (i, fixupFullIdentifierList (element));
-        break;
+        case ProtoLexer.BINDING:
+          walkBindingNode(context, element, messageDefinition);
+          children.remove(i);
+          i--;
+          break;
+        case ProtoLexer.ENUM:
+          children.set(i, walkEnumNode(context, element, localNamespace, messageDefinition));
+          break;
+        case ProtoLexer.EXTENDS:
+          children.set(i, fixupFullIdentifierList(element));
+          break;
+        case ProtoLexer.FIELD:
+          children.set(i, walkFieldNode(element));
+          break;
+        case ProtoLexer.MESSAGE:
+          children.set(i, walkMessageNode(context, element, localNamespace, messageDefinition));
+          break;
+        case ProtoLexer.TYPEDEF:
+          walkTypedefNode(context, element, localNamespace, true);
+          break;
+        case ProtoLexer.USES:
+          children.set(i, fixupFullIdentifierList(element));
+          break;
       }
     }
     return new ASTNode (node, children);
@@ -141,6 +164,14 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
   private void walkExternNode (final Compiler.Context context, final AST node, final String namespace, final MessageDefinition outerMessage) {
     final List<AST> children = node.getChildNodes ();
     final AST what = children.get (0);
+    switch (what.getNodeLabel()) {
+      case ProtoLexer.TYPEDEF: {
+        final AST typedef = walkTypedefNode(context, what, namespace, true);
+        children.set(0, typedef);
+        context.addExpandedRoot(new ASTNode(node, children));
+        return;
+      }
+    }
     final String localNamespace;
     final AST identifier = fixupFullIdentifier (children.get (1));
     if (namespace.length () != 0) {
@@ -232,23 +263,26 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
   
   private void walkRootNode (final Compiler.Context context, final AST node, final String namespace) {
     switch (node.getNodeLabel ()) {
-    case ProtoLexer.ENUM :
-      context.addExpandedRoot (walkEnumNode (context, node, namespace, MessageDefinition.NULL));
-      break;
-    case ProtoLexer.EXTERN :
-      walkExternNode (context, node, namespace, MessageDefinition.NULL);
-      break;
-    case ProtoLexer.MESSAGE :
-      context.addExpandedRoot (walkMessageNode (context, node, namespace, MessageDefinition.NULL));
-      break;
-    case ProtoLexer.NAMESPACE :
-      walkNamespaceNode (context, node, namespace);
-      break;
-    case ProtoLexer.TAXONOMY :
-      context.addExpandedRoot (walkTaxonomyNode (context, node, namespace));
-      break;
-    default :
-      throw new IllegalStateException ("invalid root type '" + node.getNodeLabel () + "'"); 
+      case ProtoLexer.ENUM:
+        context.addExpandedRoot(walkEnumNode(context, node, namespace, MessageDefinition.NULL));
+        break;
+      case ProtoLexer.EXTERN:
+        walkExternNode(context, node, namespace, MessageDefinition.NULL);
+        break;
+      case ProtoLexer.MESSAGE:
+        context.addExpandedRoot(walkMessageNode(context, node, namespace, MessageDefinition.NULL));
+        break;
+      case ProtoLexer.NAMESPACE:
+        walkNamespaceNode(context, node, namespace);
+        break;
+      case ProtoLexer.TAXONOMY:
+        context.addExpandedRoot(walkTaxonomyNode(context, node, namespace));
+        break;
+      case ProtoLexer.TYPEDEF:
+        context.addExpandedRoot(walkTypedefNode(context, node, namespace, false));
+        break;
+      default:
+        throw new IllegalStateException("invalid root type '" + node.getNodeLabel() + "'");
     }
   }
   

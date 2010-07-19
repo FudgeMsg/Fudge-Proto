@@ -37,6 +37,7 @@ import org.fudgemsg.proto.FieldDefinition;
 import org.fudgemsg.proto.IndentWriter;
 import org.fudgemsg.proto.MessageDefinition;
 import org.fudgemsg.proto.TaxonomyDefinition;
+import org.fudgemsg.proto.TypeDefinition;
 
 /**
  * Implementation of a code generator for languages that have class, struct or message constructs. The main work
@@ -411,6 +412,36 @@ public class ClassCodeGenerator extends ClassCodeAdapter implements CodeGenerato
     }
   }
   
+  @Override
+  public void generateCode(final Compiler.Context context, final TypeDefinition typedef, final File targetPath) {
+    // Header output if required
+    try {
+      final IndentWriter writer = openHeaderFile(context, typedef, targetPath);
+      if (writer != null) {
+        try {
+          writeTypedefHeaderDeclaration(context, typedef, writer);
+        } finally {
+          writer.close();
+        }
+      }
+    } catch (IOException e) {
+      context.error(typedef.getCodePosition(), e.getMessage());
+    }
+    // Implementation output if required
+    try {
+      final IndentWriter writer = openImplementationFile(context, typedef, targetPath);
+      if (writer != null) {
+        try {
+          writeTypedefImplementationDeclaration(context, typedef, writer);
+        } finally {
+          writer.close();
+        }
+      }
+    } catch (IOException e) {
+      context.error(typedef.getCodePosition(), e.getMessage());
+    }
+  }
+
   @Override
   public void generationComplete (final Compiler.Context context, final File targetPath) {
     int count = 0;

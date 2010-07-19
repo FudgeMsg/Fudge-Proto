@@ -185,9 +185,7 @@ public class MutableATypes_Optional implements java.io.Serializable, ATypesBase 
         final java.util.List<org.fudgemsg.proto.tests.types.CustomEnum> fudge2 = new java.util.ArrayList<org.fudgemsg.proto.tests.types.CustomEnum> ();
         for (org.fudgemsg.FudgeField fudge3 : fudge1) {
           try {
-            final org.fudgemsg.proto.tests.types.CustomEnum fudge4;
-            fudge4 = fudge1.getFieldValue (org.fudgemsg.proto.tests.types.CustomEnum.class, fudge3);
-            fudge2.add (fudge4);
+            fudge2.add (fudge1.getFieldValue (org.fudgemsg.proto.tests.types.CustomEnum.class, fudge3));
           }
           catch (IllegalArgumentException e) {
             throw new IllegalArgumentException ("Fudge message is not a MutableATypes_Optional - field '_CustomEnum[]' is not CustomEnum enum", e);

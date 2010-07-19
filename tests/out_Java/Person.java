@@ -54,9 +54,7 @@ public class Person implements java.io.Serializable {
         fudgeField = fudgeMsg.getByOrdinal (TYPE_ORDINAL);
         if (fudgeField != null)  {
           try {
-            final Person.PhoneType fudge1;
-            fudge1 = Person.PhoneType.fromFudgeEncoding (fudgeMsg.getFieldValue (Integer.class, fudgeField));
-            type (fudge1);
+            type (Person.PhoneType.fromFudgeEncoding (fudgeMsg.getFieldValue (Integer.class, fudgeField)));
           }
           catch (IllegalArgumentException e) {
             throw new IllegalArgumentException ("Fudge message is not a PhoneNumber - field 'type' is not PhoneType enum", e);

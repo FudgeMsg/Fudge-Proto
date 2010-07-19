@@ -164,6 +164,8 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       return ((FieldType.EnumType)type).getEnumDefinition ().getIdentifier ();
     } else if (type instanceof FieldType.MessageType) {
       return ((FieldType.MessageType)type).getMessageDefinition ().getIdentifier ();
+    } else if (type instanceof FieldType.UserType) {
+      return ((FieldType.UserType) type).getTypeDefinition().getIdentifier();
     } else {
       switch (type.getFudgeFieldType ()) {
       case FudgeTypeDictionary.INDICATOR_TYPE_ID :

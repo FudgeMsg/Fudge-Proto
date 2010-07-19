@@ -243,6 +243,8 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
       return ((MessageDefinition)definition).getFieldType ();
     } else if (definition instanceof EnumDefinition) {
       return ((EnumDefinition)definition).getFieldType ();
+    } else if (definition instanceof TypeDefinition) {
+      return ((TypeDefinition) definition).getFieldType();
     } else {
       context.error (node.getCodePosition (), "cannot use '" + definition.getIdentifier () + "' as a field type");
       return FieldType.INDICATOR_TYPE;
@@ -495,20 +497,46 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
     builder.fillTaxonomy (definition);
   }
   
+  private void walkExternNode(final Compiler.Context context, final AST node) {
+    final List<AST> children = node.getChildNodes();
+    final AST element = children.get(0);
+    switch (element.getNodeLabel()) {
+      case ProtoLexer.TYPEDEF:
+        walkTypedefNode(context, element);
+        break;
+      default:
+        throw new IllegalStateException("Invalid extern element '" + element.getNodeLabel() + "'");
+    }
+  }
+
+  private void walkTypedefNode(final Compiler.Context context, final AST node) {
+    final List<AST> children = node.getChildNodes();
+    final String identifier = children.get(0).getNodeValue();
+    final TypeDefinition definition = (TypeDefinition) context.getDefinition(identifier);
+    final FieldType underlyingType = walkFieldType(context, children.get(1));
+    definition.setUnderlyingType(underlyingType);
+  }
+
   @Override
   public void walkAstNode (final Compiler.Context context, final AST node) {
     switch (node.getNodeLabel ()) {
-    case ProtoLexer.ENUM :
-      walkEnumNode (context, node);
-      break;
-    case ProtoLexer.MESSAGE :
-      walkMessageNode (context, node);
-      break;
-    case ProtoLexer.TAXONOMY :
-      walkTaxonomyNode (context, node);
-      break;
-    default :
-      throw new IllegalStateException ("invalid root type '" + node.getNodeLabel () + "'"); 
+      case ProtoLexer.ENUM:
+        walkEnumNode(context, node);
+        break;
+      case ProtoLexer.MESSAGE:
+        walkMessageNode(context, node);
+        break;
+      case ProtoLexer.TAXONOMY:
+        walkTaxonomyNode(context, node);
+        break;
+      case ProtoLexer.EXTERN:
+        walkExternNode(context, node);
+        break;
+      case ProtoLexer.TYPEDEF:
+        walkTypedefNode(context, node);
+        break;
+      default:
+        throw new IllegalStateException("invalid root type '" + node.getNodeLabel() + "'");
     }
   }
   

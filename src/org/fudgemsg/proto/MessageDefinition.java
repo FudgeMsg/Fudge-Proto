@@ -20,6 +20,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.fudgemsg.FudgeTypeDictionary;
+
 /**
  * Semantic representation of a message.
  * 
@@ -237,6 +239,14 @@ public abstract class MessageDefinition extends Definition {
       return ((FieldType.MessageType)type).getMessageDefinition ().hasExternalMessageReferences (considered);
     } else if (type instanceof FieldType.ArrayType) {
       return hasExternalMessageReferences (((FieldType.ArrayType)type).getBaseType (), considered);
+    } else if (type instanceof FieldType.UserType) {
+      final TypeDefinition typedef = ((FieldType.UserType) type).getTypeDefinition();
+      final FieldType underlying = typedef.getUnderlyingType();
+      if (typedef.isExternal()) {
+        return underlying.getFudgeFieldType() == FudgeTypeDictionary.FUDGE_MSG_TYPE_ID;
+      } else {
+        return hasExternalMessageReferences(underlying, considered);
+      }
     } else {
       return false;
     }

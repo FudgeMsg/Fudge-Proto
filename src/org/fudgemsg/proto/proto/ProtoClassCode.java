@@ -34,6 +34,7 @@ import org.fudgemsg.proto.IndentWriter;
 import org.fudgemsg.proto.LiteralValue;
 import org.fudgemsg.proto.MessageDefinition;
 import org.fudgemsg.proto.TaxonomyDefinition;
+import org.fudgemsg.proto.TypeDefinition;
 import org.fudgemsg.proto.c.CBlockCode;
 
 /**
@@ -71,11 +72,22 @@ class ProtoClassCode extends ImplementationlessClassCode {
     if (!processed.contains (definition)) {
       processed.add (definition);
       if (definition instanceof MessageDefinition) {
-        writer.write ("extern message " + definition.getIdentifier ());
+        if (((MessageDefinition) definition).isExternal()) {
+          writer.write("extern message " + definition.getIdentifier());
+        } else {
+          beginNSDeclaration(writer, definition);
+          writer.write("message " + definition.getName());
+          endStmt(writer);
+          endNSDeclaration(writer, definition);
+          return;
+        }
       } else if (definition instanceof EnumDefinition) {
         writer.write ("extern enum " + definition.getIdentifier ());
       } else if (definition instanceof TaxonomyDefinition) {
         writer.write ("extern taxonomy " + definition.getIdentifier ());
+      } else if (definition instanceof TypeDefinition) {
+        writer.write("extern typedef " + definition.getIdentifier() + " = "
+            + typeString(((TypeDefinition) definition).getUnderlyingType()));
       } else {
         throw new IllegalStateException ("invalid external reference " + definition);
       }
@@ -100,6 +112,8 @@ class ProtoClassCode extends ImplementationlessClassCode {
         if (definition == MessageDefinition.ANONYMOUS) continue;
       } else if (type instanceof FieldType.EnumType) {
         definition = ((FieldType.EnumType)type).getEnumDefinition ();
+      } else if (type instanceof FieldType.UserType) {
+        definition = ((FieldType.UserType) type).getTypeDefinition();
       } else {
         continue;
       }
@@ -197,6 +211,8 @@ class ProtoClassCode extends ImplementationlessClassCode {
       } else {
         return messageDefinition.getIdentifier ();
       }
+    } else if (type instanceof FieldType.UserType) {
+      return ((FieldType.UserType) type).getTypeDefinition().getIdentifier();
     } else {
       switch (type.getFudgeFieldType()) {
       case FudgeTypeDictionary.INDICATOR_TYPE_ID:
@@ -263,6 +279,16 @@ class ProtoClassCode extends ImplementationlessClassCode {
     endNSDeclaration (writer, taxonomy);
   }
   
+  @Override
+  public void writeTypedefHeaderDeclaration(final Compiler.Context context, final TypeDefinition typedef,
+      final IndentWriter writer) throws IOException {
+    super.writeTypedefHeaderDeclaration(context, typedef, writer);
+    beginNSDeclaration(writer, typedef);
+    writer.write("typedef " + typedef.getName() + " = " + typeString(typedef.getUnderlyingType()));
+    endStmt(writer);
+    endNSDeclaration(writer, typedef);
+  }
+
   private void writeBinding (final IndentWriter writer, final Definition definition) throws IOException {
     for (final Map.Entry<String,Binding> entry : definition.getAllLanguageBindings ().entrySet ()) {
       writer.write ("binding \"" + entry.getKey () + "\"");

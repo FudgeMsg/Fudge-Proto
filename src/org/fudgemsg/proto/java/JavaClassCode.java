@@ -35,6 +35,7 @@ import org.fudgemsg.proto.IndentWriter;
 import org.fudgemsg.proto.LiteralValue;
 import org.fudgemsg.proto.MessageDefinition;
 import org.fudgemsg.proto.TaxonomyDefinition;
+import org.fudgemsg.proto.TypeDefinition;
 import org.fudgemsg.proto.java.JavaCodeGenerator.ProtoBinding;
 import org.fudgemsg.proto.proto.DocumentedClassCode;
 import org.fudgemsg.proto.proto.HeaderlessClassCode;
@@ -899,6 +900,10 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
               value = temp1;
             }
           }
+        } else if (type instanceof FieldType.UserType) {
+          writer.invoke("fudgeContext", "objectToFudgeMsg", msg + ", " + name + ", " + ordinal + ", " + value);
+          endStmt(writer);
+          return;
         } else {
           throw new IllegalStateException("type '" + type + "' is not an expected submessage type");
         }
@@ -992,6 +997,8 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       return true;
     } else if (type instanceof FieldType.MessageType) {
       return true;
+    } else if (type instanceof FieldType.UserType) {
+      return isObject(((FieldType.UserType) type).getTypeDefinition().getUnderlyingType());
     } else {
       switch (type.getFudgeFieldType()) {
         case FudgeTypeDictionary.INDICATOR_TYPE_ID:
@@ -1026,6 +1033,8 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     } else if (type instanceof FieldType.MessageType) {
       // assume anonymous message type is immutable which is not very sensible
       return !(type instanceof FieldType.AnonMessageType);
+    } else if (type instanceof FieldType.UserType) {
+      return isBigObject(((FieldType.UserType) type).getTypeDefinition().getUnderlyingType());
     } else {
       switch (type.getFudgeFieldType()) {
         case FudgeTypeDictionary.INDICATOR_TYPE_ID:
@@ -1208,7 +1217,6 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         if (msg.isExternal()) {
           writer.assignment(assignTo, "fudgeContext.fieldValueToObject (" + messageType(msg) + ".class, " + fieldData
               + ")");
-          //writer.assignment (assignTo, "fudgeContext.fudgeMsgToObject (" + messageType (msg) + ".class, " + value + ")");
         } else if (msg.hasExternalMessageReferences()) {
           writer.assignment(assignTo, messageType(msg) + ".fromFudgeMsg (fudgeContext, " + value + ")");
         } else {
@@ -1218,18 +1226,33 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       }
     } else if (type instanceof FieldType.EnumType) {
       final EnumDefinition enumDefinition = ((FieldType.EnumType) type).getEnumDefinition();
+      final String value;
+      if (enumDefinition.getType() == EnumDefinition.Type.INTEGER_ENCODED) {
+        value = enumDefinition.getIdentifier() + ".fromFudgeEncoding ("
+            + fudgeFieldValueExpression(fieldContainer, "Integer", fieldData) + ")";
+      } else {
+        value = fudgeFieldValueExpression (fieldContainer, enumDefinition.getIdentifier(), fieldData);
+      }
       if (appendTo != null) {
-        assignTo = writer.localVariable(enumDefinition.getIdentifier(), true);
+        assignTo = value;
+      } else {
+        writer.assignment (assignTo, value);
+        endStmt (writer);
+      }
+    } else if ((type instanceof FieldType.UserType) && ((FieldType.UserType) type).getTypeDefinition().isExternal()) {
+      final TypeDefinition typedef = ((FieldType.UserType) type).getTypeDefinition();
+      final String value;
+      if (typedef.getUnderlyingType() instanceof FieldType.MessageType) {
+        value = "fudgeContext.fieldValueToObject (" + typedef.getIdentifier() + ".class, " + fieldData + ")";
+      } else {
+        value = fudgeFieldValueExpression(fieldContainer, typedef.getIdentifier(), fieldData);
+      }
+      if (appendTo != null) {
+        assignTo = value;
+      } else {
+        writer.assignment(assignTo, value);
         endStmt(writer);
       }
-      if (enumDefinition.getType() == EnumDefinition.Type.INTEGER_ENCODED) {
-        writer.assignment(assignTo, enumDefinition.getIdentifier() + ".fromFudgeEncoding ("
-            + fudgeFieldValueExpression(fieldContainer, "Integer", fieldData) + ")");
-      } else {
-        writer.assignment(assignTo, fieldContainer + ".getFieldValue (" + enumDefinition.getIdentifier() + ".class, "
-            + fieldData + ")");
-      }
-      endStmt(writer);
     } else {
       switch (type.getFudgeFieldType()) {
         case FudgeTypeDictionary.INDICATOR_TYPE_ID:
@@ -1884,6 +1907,13 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       return ((FieldType.EnumType) type).getEnumDefinition().getIdentifier();
     } else if (type instanceof FieldType.MessageType) {
       return messageType(((FieldType.MessageType) type).getMessageDefinition());
+    } else if (type instanceof FieldType.UserType) {
+      final TypeDefinition typeDefinition = ((FieldType.UserType) type).getTypeDefinition();
+      if (typeDefinition.isExternal()) {
+        return typeDefinition.getIdentifier();
+      } else {
+        return typeString(typeDefinition.getUnderlyingType(), asObject);
+      }
     } else {
       switch (type.getFudgeFieldType()) {
         case FudgeTypeDictionary.INDICATOR_TYPE_ID:

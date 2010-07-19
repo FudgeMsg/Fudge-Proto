@@ -32,9 +32,7 @@ public class UsesExtern implements java.io.Serializable {
       fudgeField = fudgeMsg.getByName (BAR_KEY);
       if (fudgeField != null)  {
         try {
-          final org.fudgemsg.proto.tests.ExternalEnum fudge1;
-          fudge1 = fudgeMsg.getFieldValue (org.fudgemsg.proto.tests.ExternalEnum.class, fudgeField);
-          bar (fudge1);
+          bar (fudgeMsg.getFieldValue (org.fudgemsg.proto.tests.ExternalEnum.class, fudgeField));
         }
         catch (IllegalArgumentException e) {
           throw new IllegalArgumentException ("Fudge message is not a UsesExtern - field 'bar' is not ExternalEnum enum", e);

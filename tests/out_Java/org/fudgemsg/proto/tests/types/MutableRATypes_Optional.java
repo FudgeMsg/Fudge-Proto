@@ -238,9 +238,7 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
           final java.util.List<org.fudgemsg.proto.tests.types.CustomEnum> fudge4 = new java.util.ArrayList<org.fudgemsg.proto.tests.types.CustomEnum> ();
           for (org.fudgemsg.FudgeField fudge5 : fudge3) {
             try {
-              final org.fudgemsg.proto.tests.types.CustomEnum fudge6;
-              fudge6 = fudge3.getFieldValue (org.fudgemsg.proto.tests.types.CustomEnum.class, fudge5);
-              fudge4.add (fudge6);
+              fudge4.add (fudge3.getFieldValue (org.fudgemsg.proto.tests.types.CustomEnum.class, fudge5));
             }
             catch (IllegalArgumentException e) {
               throw new IllegalArgumentException ("Fudge message is not a MutableRATypes_Optional - field '_CustomEnum[]' is not CustomEnum enum", e);

@@ -16,6 +16,7 @@
 
 package org.fudgemsg.proto.java;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -27,6 +28,7 @@ import org.fudgemsg.proto.Definition;
 import org.fudgemsg.proto.FieldDefinition;
 import org.fudgemsg.proto.IndentWriter;
 import org.fudgemsg.proto.MessageDefinition;
+import org.fudgemsg.proto.TypeDefinition;
 import org.fudgemsg.proto.proto.InnerClassCodeGenerator;
 
 /**
@@ -120,6 +122,11 @@ public class JavaCodeGenerator extends InnerClassCodeGenerator {
     }
   }
   
+  @Override
+  public void generateCode(final Compiler.Context context, final TypeDefinition typedef, final File targetPath) {
+    // No-op
+  }
+
   @Override
   public void writeClassImplementationAttribute(final Compiler.Context context, final FieldDefinition field,
       final IndentWriter writer) throws IOException {

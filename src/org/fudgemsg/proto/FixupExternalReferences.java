@@ -15,8 +15,8 @@
 
 package org.fudgemsg.proto;
 
-import java.util.List;
 import java.io.IOException;
+import java.util.List;
 
 import org.fudgemsg.proto.antlr.ProtoLexer;
 
@@ -33,7 +33,8 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
   private FixupExternalReferences () {
   }
   
-  private String resolveIdentifier (final Compiler.Context context, final String[] scope, final int scopeIgnore, final String id, final AST node) {
+  private String resolveIdentifier(final Compiler.Context context, final String[] scope, final int scopeIgnore,
+      final String id, final CodePosition codePosition) {
     // Try from closest scope outwards. Note that this eventually covers the case of us being given a fully qualified identifier to start with
     // Check for something already in memory
     for (int i = scope.length - scopeIgnore; i >= 0; i--) {
@@ -55,7 +56,6 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
       }
       sb.append (id);
       final String fullID = sb.toString ();
-      final CodePosition codePosition = node.getCodePosition ();
       try {
         final Source src = codePosition.getSource ().findSource (fullID);
         if (src != null) {
@@ -69,26 +69,35 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
     // we haven't found anything, so we'll leave what we've got in place to error later when we come to use it
     return id;
   }
+
+  private AST walkTypeNode(final Compiler.Context context, final AST type, final String[] scope) {
+    switch (type.getNodeLabel()) {
+      case ProtoLexer.ARRAY: {
+        final List<AST> children = type.getChildNodes();
+        final AST element = children.get(0);
+        final AST newType = walkTypeNode(context, element, scope);
+        if (element != newType) {
+          children.set(0, newType);
+          return new ASTNode(type, children);
+        } else {
+          return type;
+        }
+      }
+      case ProtoLexer.IDENTIFIER:
+        final String newIdentifier = resolveIdentifier(context, scope, 0, type.getNodeValue(), type.getCodePosition());
+        if (!newIdentifier.equals(type.getNodeValue())) {
+          return new ASTNode(type, newIdentifier);
+        }
+        return type;
+      default:
+        return type;
+    }
+  }
     
   private AST walkFieldNode (final Compiler.Context context, final AST node, final String[] scope) {
     final List<AST> children = node.getChildNodes ();
     final AST type = children.get (0);
-    AST newType;
-    switch (type.getNodeLabel ()) {
-    case ProtoLexer.ARRAY :
-      newType = walkFieldNode (context, type, scope);
-      break;
-    case ProtoLexer.IDENTIFIER :
-      final String newIdentifier = resolveIdentifier (context, scope, 0, type.getNodeValue (), node);
-      if (!newIdentifier.equals (type.getNodeValue ())) {
-        newType = new ASTNode (type, newIdentifier);
-      } else {
-        newType = type;
-      }
-      break;
-    default :
-      return node;
-    }
+    final AST newType = walkTypeNode(context, type, scope);
     if (newType != type) {
       children.set (0, newType);
       return new ASTNode (node, children);
@@ -100,7 +109,7 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
   private AST walkTaxonomyImportNode (final Compiler.Context context, final AST node, final String[] scope) {
     final List<AST> children = node.getChildNodes ();
     final AST identifier = children.get (0);
-    final String newIdentifier = resolveIdentifier (context, scope, 1, identifier.getNodeValue (), node);
+    final String newIdentifier = resolveIdentifier(context, scope, 1, identifier.getNodeValue(), node.getCodePosition());
     if (!newIdentifier.equals (identifier.getNodeValue ())) {
       children.set (0, new ASTNode (identifier, newIdentifier));
       return new ASTNode (node, children);
@@ -114,7 +123,8 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
     boolean changed = false;
     for (int i = 0; i < children.size (); i++) {
       AST identifier = children.get (i);
-      final String newIdentifier = resolveIdentifier (context, scope, 1, identifier.getNodeValue (), identifier);
+      final String newIdentifier = resolveIdentifier(context, scope, 1, identifier.getNodeValue(), identifier
+          .getCodePosition());
       if (!newIdentifier.equals (identifier.getNodeValue ())) {
         children.set (i, new ASTNode (identifier, newIdentifier));
         changed = true;
@@ -186,21 +196,59 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
     return changed ? new ASTNode (node, children) : node;
   }
   
+  private AST walkTypedefNode(final Compiler.Context context, final AST node) {
+    final List<AST> children = node.getChildNodes ();
+    final String[] scope = children.get (0).getNodeValue ().split ("\\.");
+    final AST primaryType = children.get(1);
+    final AST newPrimaryType = walkTypeNode(context, primaryType, scope);
+    if (newPrimaryType != primaryType) {
+      children.set(1, newPrimaryType);
+      return new ASTNode(node, children);
+    } else {
+      return node;
+    }
+  }
+
+  private AST walkExternNode(final Compiler.Context context, final AST node) {
+    final List<AST> children = node.getChildNodes();
+    final AST element = children.get(0);
+    AST newElement;
+    switch (element.getNodeLabel()) {
+      case ProtoLexer.TYPEDEF:
+        newElement = walkTypedefNode(context, element);
+        break;
+      default:
+        throw new IllegalStateException("Invalid extern element '" + element.getNodeLabel() + "'");
+    }
+    if (newElement != element) {
+      children.set(0, newElement);
+      return new ASTNode(node, children);
+    } else {
+      return node;
+    }
+  }
+
   @Override
   public void walkAstNode (final Compiler.Context context, final AST node) {
     switch (node.getNodeLabel ()) {
-    case ProtoLexer.ENUM :
-      // no action required for enums
-      context.addFixedRoot (node);
-      break;
-    case ProtoLexer.MESSAGE :
-      context.addFixedRoot (walkMessageNode (context, node));
-      break;
-    case ProtoLexer.TAXONOMY :
-      context.addFixedRoot (walkTaxonomyNode (context, node));
-      break;
-    default :
-      throw new IllegalStateException ("invalid root type '" + node.getNodeLabel () + "'"); 
+      case ProtoLexer.ENUM:
+        // no action required for enums
+        context.addFixedRoot(node);
+        break;
+      case ProtoLexer.MESSAGE:
+        context.addFixedRoot(walkMessageNode(context, node));
+        break;
+      case ProtoLexer.TAXONOMY:
+        context.addFixedRoot(walkTaxonomyNode(context, node));
+        break;
+      case ProtoLexer.EXTERN:
+        context.addFixedRoot(walkExternNode(context, node));
+        break;
+      case ProtoLexer.TYPEDEF:
+        context.addFixedRoot(walkTypedefNode(context, node));
+        break;
+      default:
+        throw new IllegalStateException("invalid root type '" + node.getNodeLabel() + "'");
     }
   }
   

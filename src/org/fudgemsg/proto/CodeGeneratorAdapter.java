@@ -47,6 +47,11 @@ public class CodeGeneratorAdapter implements CodeGenerator {
   }
   
   @Override
+  public void generateCode(final Compiler.Context context, final TypeDefinition typedef, final File targetPath) {
+    _codeGenerator.generateCode(context, typedef, targetPath);
+  }
+
+  @Override
   public void generationComplete (final Compiler.Context context, final File targetPath) {
     _codeGenerator.generationComplete (context, targetPath);
   }

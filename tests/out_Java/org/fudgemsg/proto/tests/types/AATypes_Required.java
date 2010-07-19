@@ -433,9 +433,7 @@ public class AATypes_Required implements java.io.Serializable, AATypesBase {
           final java.util.List<org.fudgemsg.proto.tests.types.CustomEnum> fudge5 = new java.util.ArrayList<org.fudgemsg.proto.tests.types.CustomEnum> ();
           for (org.fudgemsg.FudgeField fudge6 : fudge4) {
             try {
-              final org.fudgemsg.proto.tests.types.CustomEnum fudge7;
-              fudge7 = fudge4.getFieldValue (org.fudgemsg.proto.tests.types.CustomEnum.class, fudge6);
-              fudge5.add (fudge7);
+              fudge5.add (fudge4.getFieldValue (org.fudgemsg.proto.tests.types.CustomEnum.class, fudge6));
             }
             catch (IllegalArgumentException e) {
               throw new IllegalArgumentException ("Fudge message is not a AATypes_Required - field '_CustomEnum[][]' is not CustomEnum enum", e);

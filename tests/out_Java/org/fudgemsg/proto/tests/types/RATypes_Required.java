@@ -377,9 +377,7 @@ public class RATypes_Required implements java.io.Serializable, RATypesBase {
         final java.util.List<org.fudgemsg.proto.tests.types.CustomEnum> fudge13 = new java.util.ArrayList<org.fudgemsg.proto.tests.types.CustomEnum> ();
         for (org.fudgemsg.FudgeField fudge14 : fudge12) {
           try {
-            final org.fudgemsg.proto.tests.types.CustomEnum fudge15;
-            fudge15 = fudge12.getFieldValue (org.fudgemsg.proto.tests.types.CustomEnum.class, fudge14);
-            fudge13.add (fudge15);
+            fudge13.add (fudge12.getFieldValue (org.fudgemsg.proto.tests.types.CustomEnum.class, fudge14));
           }
           catch (IllegalArgumentException e) {
             throw new IllegalArgumentException ("Fudge message is not a RATypes_Required - field '_CustomEnum[]' is not CustomEnum enum", e);

@@ -147,9 +147,7 @@ public class STypes_Optional implements java.io.Serializable, TypesBase_Optional
       fudgeField = fudgeMsg.getByName (_CUSTOMENUM_KEY);
       if (fudgeField != null)  {
         try {
-          final org.fudgemsg.proto.tests.types.CustomEnum fudge1;
-          fudge1 = fudgeMsg.getFieldValue (org.fudgemsg.proto.tests.types.CustomEnum.class, fudgeField);
-          _CustomEnum (fudge1);
+          _CustomEnum (fudgeMsg.getFieldValue (org.fudgemsg.proto.tests.types.CustomEnum.class, fudgeField));
         }
         catch (IllegalArgumentException e) {
           throw new IllegalArgumentException ("Fudge message is not a STypes_Optional - field '_CustomEnum' is not CustomEnum enum", e);

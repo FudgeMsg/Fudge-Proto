@@ -32,6 +32,7 @@ import org.fudgemsg.proto.IndentWriter;
 import org.fudgemsg.proto.LiteralValue;
 import org.fudgemsg.proto.MessageDefinition;
 import org.fudgemsg.proto.TaxonomyDefinition;
+import org.fudgemsg.proto.TypeDefinition;
 import org.fudgemsg.proto.EnumDefinition.Type;
 import org.fudgemsg.proto.LiteralValue.IntegerValue;
 
@@ -336,6 +337,12 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
   public void writeTaxonomyHeaderDeclaration(final Compiler.Context context,
       final TaxonomyDefinition taxonomyDefinition, final IndentWriter writer) throws IOException {
     comment(writer, "TODO taxonomy header declaration");
+  }
+
+  @Override
+  public void writeTypedefHeaderDeclaration(final Compiler.Context context, final TypeDefinition typedef,
+      final IndentWriter writer) throws IOException {
+    comment(writer, "TODO typedef header declaration");
   }
 
   @Override
@@ -1192,6 +1199,8 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
       return false;
     } else if (type instanceof FieldType.MessageType) {
       return true;
+    } else if (type instanceof FieldType.UserType) {
+      return isPointerType(((FieldType.UserType) type).getTypeDefinition().getUnderlyingType());
     } else {
       switch (type.getFudgeFieldType()) {
         case FudgeTypeDictionary.INDICATOR_TYPE_ID:
@@ -1237,6 +1246,9 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
     } else if (type instanceof FieldType.MessageType) {
       sb.append(getIdentifier(((FieldType.MessageType) type).getMessageDefinition())).append("_free (").append(value)
           .append(")");
+    } else if (type instanceof FieldType.UserType) {
+      sb.append(getFreeFieldValueStmt(((FieldType.UserType) type).getTypeDefinition().getUnderlyingType(), value,
+          constantStringPointer, depthCount));
     } else {
       switch (type.getFudgeFieldType()) {
         case FudgeTypeDictionary.STRING_TYPE_ID:
@@ -1607,6 +1619,12 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
     comment(writer, "TODO taxonomy implementation declaration");
   }
 
+  @Override
+  public void writeTypedefImplementationDeclaration(final Compiler.Context context, final TypeDefinition typedef,
+      final IndentWriter writer) throws IOException {
+    // no-op
+  }
+
   private String messageType(final MessageDefinition message) {
     if (message == MessageDefinition.ANONYMOUS) {
       return "FudgeMsg";
@@ -1626,6 +1644,8 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
       return "enum _" + getIdentifier(((FieldType.EnumType) type).getEnumDefinition());
     } else if (type instanceof FieldType.MessageType) {
       return messageType(((FieldType.MessageType) type).getMessageDefinition());
+    } else if (type instanceof FieldType.UserType) {
+      return typeString(((FieldType.UserType) type).getTypeDefinition().getUnderlyingType(), stringConstantPointer);
     } else {
       switch (type.getFudgeFieldType()) {
         case FudgeTypeDictionary.INDICATOR_TYPE_ID:

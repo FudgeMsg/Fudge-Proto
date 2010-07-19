@@ -20,12 +20,13 @@ import java.io.File;
 import java.io.IOException;
 
 import org.fudgemsg.proto.Compiler;
+import org.fudgemsg.proto.Definition;
+import org.fudgemsg.proto.EnumDefinition;
 import org.fudgemsg.proto.FieldDefinition;
 import org.fudgemsg.proto.IndentWriter;
 import org.fudgemsg.proto.MessageDefinition;
-import org.fudgemsg.proto.EnumDefinition;
 import org.fudgemsg.proto.TaxonomyDefinition;
-import org.fudgemsg.proto.Definition;
+import org.fudgemsg.proto.TypeDefinition;
 
 /**
  * Partial implementation of a ClassCode with no-ops on all "header" functions.
@@ -88,6 +89,12 @@ public abstract class HeaderlessClassCode extends ClassCodeAdapter {
     // deliberate no-op
   }
   
+  @Override
+  public final void writeTypedefHeaderDeclaration(final Compiler.Context context, final TypeDefinition typeDefinition,
+      final IndentWriter writer) throws IOException {
+    // deliberate no-op
+  }
+
   @Override
   public final File getHeaderFile (final Compiler.Context context, final Definition definition, final File targetPath) throws IOException {
     // deliberate no-op

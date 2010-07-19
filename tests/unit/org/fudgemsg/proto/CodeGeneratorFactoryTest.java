@@ -50,6 +50,10 @@ public class CodeGeneratorFactoryTest {
     }
     
     @Override
+    public void generateCode(Context context, TypeDefinition typeDefinition, File targetPath) {
+    }
+
+    @Override
     public void generationComplete (Context context, File targetPath) {
     }
     

@@ -25,6 +25,7 @@ import org.fudgemsg.proto.EnumDefinition;
 import org.fudgemsg.proto.IndentWriter;
 import org.fudgemsg.proto.MessageDefinition;
 import org.fudgemsg.proto.TaxonomyDefinition;
+import org.fudgemsg.proto.TypeDefinition;
 
 /**
  * Writes out brief documentation before various nodes. Subclassing this could be used to build a Javadoc / XMLdoc or
@@ -73,6 +74,12 @@ public class DocumentedClassCode extends ClassCodeAdapter {
   }
   
   @Override
+  public void writeTypedefImplementationDeclaration(final Compiler.Context context, final TypeDefinition typedef,
+      final IndentWriter writer) throws IOException {
+    createdFrom(writer, typedef);
+  }
+
+  @Override
   public void beginClassHeaderDeclaration(final Compiler.Context context, final MessageDefinition message, final IndentWriter writer) throws IOException {
     createdFrom (writer, message);
   }
@@ -82,6 +89,12 @@ public class DocumentedClassCode extends ClassCodeAdapter {
     createdFrom (writer, taxonomy);
   }
   
+  @Override
+  public void writeTypedefHeaderDeclaration(final Compiler.Context context, final TypeDefinition typedef,
+      final IndentWriter writer) throws IOException {
+    createdFrom(writer, typedef);
+  }
+
   @Override
   public void writeEnumHeaderDeclaration (final Compiler.Context context, final EnumDefinition enumDefinition, final IndentWriter writer) throws IOException {
     createdFrom (writer, enumDefinition);

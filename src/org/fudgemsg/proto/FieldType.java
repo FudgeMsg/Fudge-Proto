@@ -333,6 +333,39 @@ public abstract class FieldType {
     
   }
   
+  /**
+   * A custom user type.
+   */
+  public static class UserType extends FieldType {
+
+    private final TypeDefinition _typeDefinition;
+
+    /* package */UserType(final TypeDefinition typeDefinition) {
+      super(typeDefinition.getName() + " typedef");
+      _typeDefinition = typeDefinition;
+    }
+
+    public TypeDefinition getTypeDefinition() {
+      return _typeDefinition;
+    }
+
+    @Override
+    public ArrayType arrayOf(final Integer length) {
+      return new ArrayType(this, length) {
+        @Override
+        public int getFudgeFieldType() {
+          return _typeDefinition.getUnderlyingType().arrayOf(length).getFudgeFieldType();
+        }
+      };
+    }
+
+    @Override
+    public int getFudgeFieldType() {
+      return _typeDefinition.getUnderlyingType().getFudgeFieldType();
+    }
+
+  }
+
   private final String _description;
   
   private FieldType (final String description) {
