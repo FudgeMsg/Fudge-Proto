@@ -99,7 +99,7 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
   private Source findSource (final ZipFile zip, final String[] identifier, final boolean compilationTarget) throws IOException {
     final StringBuilder stem = new StringBuilder ();
     for (int i = 0; i < identifier.length; i++) {
-      if (i > 0) stem.append (File.separatorChar);
+      if (i > 0) stem.append ('/');
       stem.append (identifier[i]);
       final int ext = stem.length ();
       stem.append (".proto");
