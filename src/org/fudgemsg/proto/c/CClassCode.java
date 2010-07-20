@@ -1179,7 +1179,7 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
   @Override
   public void writeClassImplementationAccessor(final Compiler.Context context, final FieldDefinition field,
       final IndentWriter writer) throws IOException {
-    if (field.getOverride() == null) {
+    if (field.getOverride() != null) {
       return;
     }
     writeAccessor(writer, field);
