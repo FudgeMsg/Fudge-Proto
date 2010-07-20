@@ -80,7 +80,6 @@ public class OnlyOnly implements java.io.Serializable {
   }
   public boolean equals (final Object o) {
     if (o == this) return true;
-    if (o == null) return false;
     if (!(o instanceof OnlyOnly)) return false;
     OnlyOnly msg = (OnlyOnly)o;
     if (_foo != msg._foo) return false;

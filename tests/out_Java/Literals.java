@@ -100,7 +100,6 @@ public class Literals implements java.io.Serializable {
     }
     public boolean equals (final Object o) {
       if (o == this) return true;
-      if (o == null) return false;
       if (!(o instanceof Simple)) return false;
       Simple msg = (Simple)o;
       if (_foo != null) {
@@ -852,7 +851,6 @@ public class Literals implements java.io.Serializable {
   }
   public boolean equals (final Object o) {
     if (o == this) return true;
-    if (o == null) return false;
     if (!(o instanceof Literals)) return false;
     Literals msg = (Literals)o;
     if (_nullDouble != null) {

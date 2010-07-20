@@ -164,7 +164,6 @@ public class M4 implements java.io.Serializable {
   }
   public boolean equals (final Object o) {
     if (o == this) return true;
-    if (o == null) return false;
     if (!(o instanceof M4)) return false;
     M4 msg = (M4)o;
     if (_foo != null) {

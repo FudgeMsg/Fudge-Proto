@@ -73,7 +73,6 @@ public class BuilderBase implements java.io.Serializable {
   }
   public boolean equals (final Object o) {
     if (o == this) return true;
-    if (o == null) return false;
     if (!(o instanceof BuilderBase)) return false;
     BuilderBase msg = (BuilderBase)o;
     if (_b != null) {

@@ -236,7 +236,6 @@ public class BaseClassB implements java.io.Serializable {
   }
   public boolean equals (final Object o) {
     if (o == this) return true;
-    if (o == null) return false;
     if (!(o instanceof BaseClassB)) return false;
     BaseClassB msg = (BaseClassB)o;
     if (_bcB_o != null) {

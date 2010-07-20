@@ -770,7 +770,6 @@ public class ATypes_Optional implements java.io.Serializable, ATypesBase {
   }
   public boolean equals (final Object o) {
     if (o == this) return true;
-    if (o == null) return false;
     if (!(o instanceof ATypes_Optional)) return false;
     ATypes_Optional msg = (ATypes_Optional)o;
     if (!java.util.Arrays.equals (__Boolean, msg.__Boolean)) return false;

@@ -55,7 +55,6 @@ public class NonBuilderBase implements java.io.Serializable {
   }
   public boolean equals (final Object o) {
     if (o == this) return true;
-    if (o == null) return false;
     if (!(o instanceof NonBuilderBase)) return false;
     NonBuilderBase msg = (NonBuilderBase)o;
     if (_a != msg._a) return false;

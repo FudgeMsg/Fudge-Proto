@@ -70,7 +70,6 @@ public class M3 extends org.fudgemsg.proto.tests.polymorphism.M1 implements java
   }
   public boolean equals (final Object o) {
     if (o == this) return true;
-    if (o == null) return false;
     if (!(o instanceof M3)) return false;
     M3 msg = (M3)o;
     if (_bar != null) {

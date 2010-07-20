@@ -940,7 +940,6 @@ public class MutableRSTypes_Required implements java.io.Serializable, RSTypesBas
   }
   public boolean equals (final Object o) {
     if (o == this) return true;
-    if (o == null) return false;
     if (!(o instanceof MutableRSTypes_Required)) return false;
     MutableRSTypes_Required msg = (MutableRSTypes_Required)o;
     if (__Boolean != null) {

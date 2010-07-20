@@ -92,7 +92,6 @@ public class DomainSpecificIdentifier implements java.io.Serializable {
   }
   public boolean equals (final Object o) {
     if (o == this) return true;
-    if (o == null) return false;
     if (!(o instanceof DomainSpecificIdentifier)) return false;
     DomainSpecificIdentifier msg = (DomainSpecificIdentifier)o;
     if (_domain != null) {

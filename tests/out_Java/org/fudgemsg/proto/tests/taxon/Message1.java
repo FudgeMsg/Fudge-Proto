@@ -98,7 +98,6 @@ public class Message1 implements java.io.Serializable {
   }
   public boolean equals (final Object o) {
     if (o == this) return true;
-    if (o == null) return false;
     if (!(o instanceof Message1)) return false;
     Message1 msg = (Message1)o;
     if (_foo != null) {

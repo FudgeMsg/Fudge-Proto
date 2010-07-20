@@ -1131,7 +1131,6 @@ public class RSTypes_Optional implements java.io.Serializable, RSTypesBase {
   }
   public boolean equals (final Object o) {
     if (o == this) return true;
-    if (o == null) return false;
     if (!(o instanceof RSTypes_Optional)) return false;
     RSTypes_Optional msg = (RSTypes_Optional)o;
     if (__Boolean != null) {

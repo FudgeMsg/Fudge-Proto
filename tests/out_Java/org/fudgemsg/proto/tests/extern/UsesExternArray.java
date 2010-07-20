@@ -126,7 +126,6 @@ public class UsesExternArray implements java.io.Serializable {
   }
   public boolean equals (final Object o) {
     if (o == this) return true;
-    if (o == null) return false;
     if (!(o instanceof UsesExternArray)) return false;
     UsesExternArray msg = (UsesExternArray)o;
     if (!java.util.Arrays.deepEquals (_foo, msg._foo)) return false;

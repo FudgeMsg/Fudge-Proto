@@ -74,7 +74,6 @@ public class SubMessage implements java.io.Serializable {
   }
   public boolean equals (final Object o) {
     if (o == this) return true;
-    if (o == null) return false;
     if (!(o instanceof SubMessage)) return false;
     SubMessage msg = (SubMessage)o;
     if (_i != msg._i) return false;

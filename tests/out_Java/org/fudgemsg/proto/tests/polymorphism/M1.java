@@ -66,7 +66,6 @@ public class M1 implements java.io.Serializable {
   }
   public boolean equals (final Object o) {
     if (o == this) return true;
-    if (o == null) return false;
     if (!(o instanceof M1)) return false;
     M1 msg = (M1)o;
     if (_id != null) {

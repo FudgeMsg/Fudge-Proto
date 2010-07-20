@@ -77,7 +77,6 @@ public class ConcreteNonBuilderFromNonBuilder extends org.fudgemsg.proto.tests.i
   }
   public boolean equals (final Object o) {
     if (o == this) return true;
-    if (o == null) return false;
     if (!(o instanceof ConcreteNonBuilderFromNonBuilder)) return false;
     ConcreteNonBuilderFromNonBuilder msg = (ConcreteNonBuilderFromNonBuilder)o;
     if (_e != msg._e) return false;

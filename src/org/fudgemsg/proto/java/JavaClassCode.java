@@ -1629,8 +1629,6 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     beginBlock(writer);
     writer.write("if (o == this) return true");
     endStmt(writer);
-    writer.write("if (o == null) return false");
-    endStmt(writer);
     writer.write("if (!(o instanceof " + message.getName() + ")) return false");
     endStmt(writer);
     writer.write(message.getName() + " msg = (" + message.getName() + ")o");

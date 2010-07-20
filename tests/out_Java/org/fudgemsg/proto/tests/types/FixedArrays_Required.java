@@ -245,7 +245,6 @@ public class FixedArrays_Required implements java.io.Serializable {
   }
   public boolean equals (final Object o) {
     if (o == this) return true;
-    if (o == null) return false;
     if (!(o instanceof FixedArrays_Required)) return false;
     FixedArrays_Required msg = (FixedArrays_Required)o;
     if (!java.util.Arrays.equals (_fixedArray1, msg._fixedArray1)) return false;

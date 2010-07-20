@@ -1261,7 +1261,6 @@ public class MutableRATypes_Optional implements java.io.Serializable, RATypesBas
   }
   public boolean equals (final Object o) {
     if (o == this) return true;
-    if (o == null) return false;
     if (!(o instanceof MutableRATypes_Optional)) return false;
     MutableRATypes_Optional msg = (MutableRATypes_Optional)o;
     if (__Boolean != null) {

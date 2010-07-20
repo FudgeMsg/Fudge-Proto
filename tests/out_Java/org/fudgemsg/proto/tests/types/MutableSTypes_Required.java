@@ -364,7 +364,6 @@ public class MutableSTypes_Required implements java.io.Serializable, TypesBase_R
   }
   public boolean equals (final Object o) {
     if (o == this) return true;
-    if (o == null) return false;
     if (!(o instanceof MutableSTypes_Required)) return false;
     MutableSTypes_Required msg = (MutableSTypes_Required)o;
     if (__Boolean != msg.__Boolean) return false;

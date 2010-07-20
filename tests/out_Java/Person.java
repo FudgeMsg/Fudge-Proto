@@ -125,7 +125,6 @@ public class Person implements java.io.Serializable {
     }
     public boolean equals (final Object o) {
       if (o == this) return true;
-      if (o == null) return false;
       if (!(o instanceof PhoneNumber)) return false;
       PhoneNumber msg = (PhoneNumber)o;
       if (_number != null) {
@@ -365,7 +364,6 @@ public class Person implements java.io.Serializable {
   }
   public boolean equals (final Object o) {
     if (o == this) return true;
-    if (o == null) return false;
     if (!(o instanceof Person)) return false;
     Person msg = (Person)o;
     if (_name != null) {

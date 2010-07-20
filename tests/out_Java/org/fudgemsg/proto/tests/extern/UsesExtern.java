@@ -112,7 +112,6 @@ public class UsesExtern implements java.io.Serializable {
   }
   public boolean equals (final Object o) {
     if (o == this) return true;
-    if (o == null) return false;
     if (!(o instanceof UsesExtern)) return false;
     UsesExtern msg = (UsesExtern)o;
     if (_foo != null) {

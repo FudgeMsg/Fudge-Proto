@@ -71,7 +71,6 @@ public class NoneOnly implements java.io.Serializable {
   }
   public boolean equals (final Object o) {
     if (o == this) return true;
-    if (o == null) return false;
     if (!(o instanceof NoneOnly)) return false;
     NoneOnly msg = (NoneOnly)o;
     if (_foo != msg._foo) return false;

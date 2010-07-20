@@ -98,7 +98,6 @@ public class NoneNone implements java.io.Serializable {
   }
   public boolean equals (final Object o) {
     if (o == this) return true;
-    if (o == null) return false;
     if (!(o instanceof NoneNone)) return false;
     NoneNone msg = (NoneNone)o;
     if (_foo != null) {

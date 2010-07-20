@@ -1002,7 +1002,6 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
   }
   public boolean equals (final Object o) {
     if (o == this) return true;
-    if (o == null) return false;
     if (!(o instanceof MutableRSTypes_Optional)) return false;
     MutableRSTypes_Optional msg = (MutableRSTypes_Optional)o;
     if (__Boolean != null) {

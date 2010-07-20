@@ -245,7 +245,6 @@ public class SubClassA extends org.fudgemsg.proto.tests.inheritance.BaseClassA i
   }
   public boolean equals (final Object o) {
     if (o == this) return true;
-    if (o == null) return false;
     if (!(o instanceof SubClassA)) return false;
     SubClassA msg = (SubClassA)o;
     if (_scA_o != null) {

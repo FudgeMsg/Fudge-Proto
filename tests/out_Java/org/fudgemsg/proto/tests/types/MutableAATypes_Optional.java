@@ -1223,7 +1223,6 @@ public class MutableAATypes_Optional implements java.io.Serializable, AATypesBas
   }
   public boolean equals (final Object o) {
     if (o == this) return true;
-    if (o == null) return false;
     if (!(o instanceof MutableAATypes_Optional)) return false;
     MutableAATypes_Optional msg = (MutableAATypes_Optional)o;
     if (!java.util.Arrays.deepEquals (__Boolean, msg.__Boolean)) return false;

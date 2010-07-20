@@ -53,7 +53,6 @@ public abstract class AbstractNonBuilderFromNonBuilder extends org.fudgemsg.prot
   }
   public boolean equals (final Object o) {
     if (o == this) return true;
-    if (o == null) return false;
     if (!(o instanceof AbstractNonBuilderFromNonBuilder)) return false;
     AbstractNonBuilderFromNonBuilder msg = (AbstractNonBuilderFromNonBuilder)o;
     if (_d != msg._d) return false;

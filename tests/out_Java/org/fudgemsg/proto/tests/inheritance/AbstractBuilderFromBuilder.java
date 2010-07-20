@@ -67,7 +67,6 @@ public abstract class AbstractBuilderFromBuilder extends org.fudgemsg.proto.test
   }
   public boolean equals (final Object o) {
     if (o == this) return true;
-    if (o == null) return false;
     if (!(o instanceof AbstractBuilderFromBuilder)) return false;
     AbstractBuilderFromBuilder msg = (AbstractBuilderFromBuilder)o;
     if (_d != msg._d) return false;

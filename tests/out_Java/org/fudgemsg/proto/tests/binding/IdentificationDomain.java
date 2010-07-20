@@ -58,7 +58,6 @@ public class IdentificationDomain implements java.io.Serializable {
   }
   public boolean equals (final Object o) {
     if (o == this) return true;
-    if (o == null) return false;
     if (!(o instanceof IdentificationDomain)) return false;
     IdentificationDomain msg = (IdentificationDomain)o;
     if (_domainName != null) {

@@ -93,7 +93,6 @@ public class ExtendsExtern extends org.fudgemsg.proto.tests.ExternalMessage impl
   }
   public boolean equals (final Object o) {
     if (o == this) return true;
-    if (o == null) return false;
     if (!(o instanceof ExtendsExtern)) return false;
     ExtendsExtern msg = (ExtendsExtern)o;
     if (_a != null) {
