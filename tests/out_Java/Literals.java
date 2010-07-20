@@ -132,53 +132,72 @@ public class Literals implements java.io.Serializable {
     }
   }
   private final Double _nullDouble;
-  public static final String NULLDOUBLE_KEY = "nullDouble";
+  public static final String NULL_DOUBLE_KEY = "nullDouble";
   private final Double _zeroDouble;
-  public static final String ZERODOUBLE_KEY = "zeroDouble";
+  public static final String ZERO_DOUBLE_KEY = "zeroDouble";
   private final Double _posDouble;
-  public static final String POSDOUBLE_KEY = "posDouble";
+  public static final String POS_DOUBLE_KEY = "posDouble";
   private final Double _negDouble;
-  public static final String NEGDOUBLE_KEY = "negDouble";
+  public static final String NEG_DOUBLE_KEY = "negDouble";
   private final Double _piDouble;
-  public static final String PIDOUBLE_KEY = "piDouble";
+  public static final String PI_DOUBLE_KEY = "piDouble";
   private final Double _bigDouble;
-  public static final String BIGDOUBLE_KEY = "bigDouble";
+  public static final String BIG_DOUBLE_KEY = "bigDouble";
   private final Double _tinyDouble;
-  public static final String TINYDOUBLE_KEY = "tinyDouble";
+  public static final String TINY_DOUBLE_KEY = "tinyDouble";
   private final Float _nullFloat;
-  public static final String NULLFLOAT_KEY = "nullFloat";
+  public static final String NULL_FLOAT_KEY = "nullFloat";
   private final Float _zeroFloat;
-  public static final String ZEROFLOAT_KEY = "zeroFloat";
+  public static final String ZERO_FLOAT_KEY = "zeroFloat";
   private final Float _posFloat;
-  public static final String POSFLOAT_KEY = "posFloat";
+  public static final String POS_FLOAT_KEY = "posFloat";
   private final Float _negFloat;
-  public static final String NEGFLOAT_KEY = "negFloat";
+  public static final String NEG_FLOAT_KEY = "negFloat";
   private final Float _piFloat;
-  public static final String PIFLOAT_KEY = "piFloat";
+  public static final String PI_FLOAT_KEY = "piFloat";
   private final Float _bigFloat;
-  public static final String BIGFLOAT_KEY = "bigFloat";
+  public static final String BIG_FLOAT_KEY = "bigFloat";
   private final Float _tinyFloat;
-  public static final String TINYFLOAT_KEY = "tinyFloat";
+  public static final String TINY_FLOAT_KEY = "tinyFloat";
   private final Integer _nullInt;
-  public static final String NULLINT_KEY = "nullInt";
+  public static final String NULL_INT_KEY = "nullInt";
   private final Integer _zeroInt;
-  public static final String ZEROINT_KEY = "zeroInt";
+  public static final String ZERO_INT_KEY = "zeroInt";
   private final Integer _posInt;
-  public static final String POSINT_KEY = "posInt";
+  public static final String POS_INT_KEY = "posInt";
   private final Integer _negInt;
-  public static final String NEGINT_KEY = "negInt";
+  public static final String NEG_INT_KEY = "negInt";
   private final String _nullString;
-  public static final String NULLSTRING_KEY = "nullString";
+  public static final String NULL_STRING_KEY = "nullString";
   private final String _emptyString;
-  public static final String EMPTYSTRING_KEY = "emptyString";
+  public static final String EMPTY_STRING_KEY = "emptyString";
   private final String _simpleString;
-  public static final String SIMPLESTRING_KEY = "simpleString";
+  public static final String SIMPLE_STRING_KEY = "simpleString";
   private final String _escapeString;
-  public static final String ESCAPESTRING_KEY = "escapeString";
+  public static final String ESCAPE_STRING_KEY = "escapeString";
   private final Literals.Simple _nullPerson;
-  public static final String NULLPERSON_KEY = "nullPerson";
+  public static final String NULL_PERSON_KEY = "nullPerson";
   private final Literals.Simple _simplePerson;
-  public static final String SIMPLEPERSON_KEY = "simplePerson";
+  public static final String SIMPLE_PERSON_KEY = "simplePerson";
+  public static final Double ZERO_DOUBLE = 0.0;
+  public static final Double POS_DOUBLE = 4.0;
+  public static final Double NEG_DOUBLE = -4.0;
+  public static final Double PI_DOUBLE = 3.141592;
+  public static final Double BIG_DOUBLE = 3.0E8;
+  public static final Double TINY_DOUBLE = 3.0E-8;
+  public static final Float ZERO_FLOAT = 0.0f;
+  public static final Float POS_FLOAT = 4.0f;
+  public static final Float NEG_FLOAT = -4.0f;
+  public static final Float PI_FLOAT = 3.141592f;
+  public static final Float BIG_FLOAT = 3.0E8f;
+  public static final Float TINY_FLOAT = 3.0E-8f;
+  public static final Integer ZERO_INT = 0;
+  public static final Integer POS_INT = 42;
+  public static final Integer NEG_INT = -42;
+  public static final String EMPTY_STRING = "";
+  public static final String SIMPLE_STRING = "abc123";
+  public static final String ESCAPE_STRING = "\"\\\r\n\"\0\377";
+  public static final Literals.Simple SIMPLE_PERSON = new Literals.Simple ("Foo", 42);
   public static class Builder {
     private Double _nullDouble;
     private Double _zeroDouble;
@@ -205,29 +224,29 @@ public class Literals implements java.io.Serializable {
     private Literals.Simple _nullPerson;
     private Literals.Simple _simplePerson;
     public Builder () {
-      zeroDouble (0.0);
-      posDouble (4.0);
-      negDouble (-4.0);
-      piDouble (3.141592);
-      bigDouble (3.0E8);
-      tinyDouble (3.0E-8);
-      zeroFloat (0.0f);
-      posFloat (4.0f);
-      negFloat (-4.0f);
-      piFloat (3.141592f);
-      bigFloat (3.0E8f);
-      tinyFloat (3.0E-8f);
-      zeroInt (0);
-      posInt (42);
-      negInt (-42);
-      emptyString ("");
-      simpleString ("abc123");
-      escapeString ("\"\\\r\n\"\0\377");
-      simplePerson (new Literals.Simple ("Foo", 42));
+      zeroDouble (ZERO_DOUBLE);
+      posDouble (POS_DOUBLE);
+      negDouble (NEG_DOUBLE);
+      piDouble (PI_DOUBLE);
+      bigDouble (BIG_DOUBLE);
+      tinyDouble (TINY_DOUBLE);
+      zeroFloat (ZERO_FLOAT);
+      posFloat (POS_FLOAT);
+      negFloat (NEG_FLOAT);
+      piFloat (PI_FLOAT);
+      bigFloat (BIG_FLOAT);
+      tinyFloat (TINY_FLOAT);
+      zeroInt (ZERO_INT);
+      posInt (POS_INT);
+      negInt (NEG_INT);
+      emptyString (EMPTY_STRING);
+      simpleString (SIMPLE_STRING);
+      escapeString (ESCAPE_STRING);
+      simplePerson (SIMPLE_PERSON);
     }
     protected Builder (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
       org.fudgemsg.FudgeField fudgeField;
-      fudgeField = fudgeMsg.getByName (NULLDOUBLE_KEY);
+      fudgeField = fudgeMsg.getByName (NULL_DOUBLE_KEY);
       if (fudgeField != null)  {
         try {
           nullDouble (fudgeMsg.getFieldValue (Double.class, fudgeField));
@@ -236,7 +255,7 @@ public class Literals implements java.io.Serializable {
           throw new IllegalArgumentException ("Fudge message is not a Literals - field 'nullDouble' is not double", e);
         }
       }
-      fudgeField = fudgeMsg.getByName (ZERODOUBLE_KEY);
+      fudgeField = fudgeMsg.getByName (ZERO_DOUBLE_KEY);
       if (fudgeField != null)  {
         try {
           zeroDouble (fudgeMsg.getFieldValue (Double.class, fudgeField));
@@ -245,7 +264,7 @@ public class Literals implements java.io.Serializable {
           throw new IllegalArgumentException ("Fudge message is not a Literals - field 'zeroDouble' is not double", e);
         }
       }
-      fudgeField = fudgeMsg.getByName (POSDOUBLE_KEY);
+      fudgeField = fudgeMsg.getByName (POS_DOUBLE_KEY);
       if (fudgeField != null)  {
         try {
           posDouble (fudgeMsg.getFieldValue (Double.class, fudgeField));
@@ -254,7 +273,7 @@ public class Literals implements java.io.Serializable {
           throw new IllegalArgumentException ("Fudge message is not a Literals - field 'posDouble' is not double", e);
         }
       }
-      fudgeField = fudgeMsg.getByName (NEGDOUBLE_KEY);
+      fudgeField = fudgeMsg.getByName (NEG_DOUBLE_KEY);
       if (fudgeField != null)  {
         try {
           negDouble (fudgeMsg.getFieldValue (Double.class, fudgeField));
@@ -263,7 +282,7 @@ public class Literals implements java.io.Serializable {
           throw new IllegalArgumentException ("Fudge message is not a Literals - field 'negDouble' is not double", e);
         }
       }
-      fudgeField = fudgeMsg.getByName (PIDOUBLE_KEY);
+      fudgeField = fudgeMsg.getByName (PI_DOUBLE_KEY);
       if (fudgeField != null)  {
         try {
           piDouble (fudgeMsg.getFieldValue (Double.class, fudgeField));
@@ -272,7 +291,7 @@ public class Literals implements java.io.Serializable {
           throw new IllegalArgumentException ("Fudge message is not a Literals - field 'piDouble' is not double", e);
         }
       }
-      fudgeField = fudgeMsg.getByName (BIGDOUBLE_KEY);
+      fudgeField = fudgeMsg.getByName (BIG_DOUBLE_KEY);
       if (fudgeField != null)  {
         try {
           bigDouble (fudgeMsg.getFieldValue (Double.class, fudgeField));
@@ -281,7 +300,7 @@ public class Literals implements java.io.Serializable {
           throw new IllegalArgumentException ("Fudge message is not a Literals - field 'bigDouble' is not double", e);
         }
       }
-      fudgeField = fudgeMsg.getByName (TINYDOUBLE_KEY);
+      fudgeField = fudgeMsg.getByName (TINY_DOUBLE_KEY);
       if (fudgeField != null)  {
         try {
           tinyDouble (fudgeMsg.getFieldValue (Double.class, fudgeField));
@@ -290,7 +309,7 @@ public class Literals implements java.io.Serializable {
           throw new IllegalArgumentException ("Fudge message is not a Literals - field 'tinyDouble' is not double", e);
         }
       }
-      fudgeField = fudgeMsg.getByName (NULLFLOAT_KEY);
+      fudgeField = fudgeMsg.getByName (NULL_FLOAT_KEY);
       if (fudgeField != null)  {
         try {
           nullFloat (fudgeMsg.getFieldValue (Float.class, fudgeField));
@@ -299,7 +318,7 @@ public class Literals implements java.io.Serializable {
           throw new IllegalArgumentException ("Fudge message is not a Literals - field 'nullFloat' is not float", e);
         }
       }
-      fudgeField = fudgeMsg.getByName (ZEROFLOAT_KEY);
+      fudgeField = fudgeMsg.getByName (ZERO_FLOAT_KEY);
       if (fudgeField != null)  {
         try {
           zeroFloat (fudgeMsg.getFieldValue (Float.class, fudgeField));
@@ -308,7 +327,7 @@ public class Literals implements java.io.Serializable {
           throw new IllegalArgumentException ("Fudge message is not a Literals - field 'zeroFloat' is not float", e);
         }
       }
-      fudgeField = fudgeMsg.getByName (POSFLOAT_KEY);
+      fudgeField = fudgeMsg.getByName (POS_FLOAT_KEY);
       if (fudgeField != null)  {
         try {
           posFloat (fudgeMsg.getFieldValue (Float.class, fudgeField));
@@ -317,7 +336,7 @@ public class Literals implements java.io.Serializable {
           throw new IllegalArgumentException ("Fudge message is not a Literals - field 'posFloat' is not float", e);
         }
       }
-      fudgeField = fudgeMsg.getByName (NEGFLOAT_KEY);
+      fudgeField = fudgeMsg.getByName (NEG_FLOAT_KEY);
       if (fudgeField != null)  {
         try {
           negFloat (fudgeMsg.getFieldValue (Float.class, fudgeField));
@@ -326,7 +345,7 @@ public class Literals implements java.io.Serializable {
           throw new IllegalArgumentException ("Fudge message is not a Literals - field 'negFloat' is not float", e);
         }
       }
-      fudgeField = fudgeMsg.getByName (PIFLOAT_KEY);
+      fudgeField = fudgeMsg.getByName (PI_FLOAT_KEY);
       if (fudgeField != null)  {
         try {
           piFloat (fudgeMsg.getFieldValue (Float.class, fudgeField));
@@ -335,7 +354,7 @@ public class Literals implements java.io.Serializable {
           throw new IllegalArgumentException ("Fudge message is not a Literals - field 'piFloat' is not float", e);
         }
       }
-      fudgeField = fudgeMsg.getByName (BIGFLOAT_KEY);
+      fudgeField = fudgeMsg.getByName (BIG_FLOAT_KEY);
       if (fudgeField != null)  {
         try {
           bigFloat (fudgeMsg.getFieldValue (Float.class, fudgeField));
@@ -344,7 +363,7 @@ public class Literals implements java.io.Serializable {
           throw new IllegalArgumentException ("Fudge message is not a Literals - field 'bigFloat' is not float", e);
         }
       }
-      fudgeField = fudgeMsg.getByName (TINYFLOAT_KEY);
+      fudgeField = fudgeMsg.getByName (TINY_FLOAT_KEY);
       if (fudgeField != null)  {
         try {
           tinyFloat (fudgeMsg.getFieldValue (Float.class, fudgeField));
@@ -353,7 +372,7 @@ public class Literals implements java.io.Serializable {
           throw new IllegalArgumentException ("Fudge message is not a Literals - field 'tinyFloat' is not float", e);
         }
       }
-      fudgeField = fudgeMsg.getByName (NULLINT_KEY);
+      fudgeField = fudgeMsg.getByName (NULL_INT_KEY);
       if (fudgeField != null)  {
         try {
           nullInt (fudgeMsg.getFieldValue (Integer.class, fudgeField));
@@ -362,7 +381,7 @@ public class Literals implements java.io.Serializable {
           throw new IllegalArgumentException ("Fudge message is not a Literals - field 'nullInt' is not integer", e);
         }
       }
-      fudgeField = fudgeMsg.getByName (ZEROINT_KEY);
+      fudgeField = fudgeMsg.getByName (ZERO_INT_KEY);
       if (fudgeField != null)  {
         try {
           zeroInt (fudgeMsg.getFieldValue (Integer.class, fudgeField));
@@ -371,7 +390,7 @@ public class Literals implements java.io.Serializable {
           throw new IllegalArgumentException ("Fudge message is not a Literals - field 'zeroInt' is not integer", e);
         }
       }
-      fudgeField = fudgeMsg.getByName (POSINT_KEY);
+      fudgeField = fudgeMsg.getByName (POS_INT_KEY);
       if (fudgeField != null)  {
         try {
           posInt (fudgeMsg.getFieldValue (Integer.class, fudgeField));
@@ -380,7 +399,7 @@ public class Literals implements java.io.Serializable {
           throw new IllegalArgumentException ("Fudge message is not a Literals - field 'posInt' is not integer", e);
         }
       }
-      fudgeField = fudgeMsg.getByName (NEGINT_KEY);
+      fudgeField = fudgeMsg.getByName (NEG_INT_KEY);
       if (fudgeField != null)  {
         try {
           negInt (fudgeMsg.getFieldValue (Integer.class, fudgeField));
@@ -389,7 +408,7 @@ public class Literals implements java.io.Serializable {
           throw new IllegalArgumentException ("Fudge message is not a Literals - field 'negInt' is not integer", e);
         }
       }
-      fudgeField = fudgeMsg.getByName (NULLSTRING_KEY);
+      fudgeField = fudgeMsg.getByName (NULL_STRING_KEY);
       if (fudgeField != null)  {
         try {
           nullString ((fudgeField.getValue () != null) ? fudgeField.getValue ().toString () : null);
@@ -398,7 +417,7 @@ public class Literals implements java.io.Serializable {
           throw new IllegalArgumentException ("Fudge message is not a Literals - field 'nullString' is not string", e);
         }
       }
-      fudgeField = fudgeMsg.getByName (EMPTYSTRING_KEY);
+      fudgeField = fudgeMsg.getByName (EMPTY_STRING_KEY);
       if (fudgeField != null)  {
         try {
           emptyString ((fudgeField.getValue () != null) ? fudgeField.getValue ().toString () : null);
@@ -407,7 +426,7 @@ public class Literals implements java.io.Serializable {
           throw new IllegalArgumentException ("Fudge message is not a Literals - field 'emptyString' is not string", e);
         }
       }
-      fudgeField = fudgeMsg.getByName (SIMPLESTRING_KEY);
+      fudgeField = fudgeMsg.getByName (SIMPLE_STRING_KEY);
       if (fudgeField != null)  {
         try {
           simpleString ((fudgeField.getValue () != null) ? fudgeField.getValue ().toString () : null);
@@ -416,7 +435,7 @@ public class Literals implements java.io.Serializable {
           throw new IllegalArgumentException ("Fudge message is not a Literals - field 'simpleString' is not string", e);
         }
       }
-      fudgeField = fudgeMsg.getByName (ESCAPESTRING_KEY);
+      fudgeField = fudgeMsg.getByName (ESCAPE_STRING_KEY);
       if (fudgeField != null)  {
         try {
           escapeString ((fudgeField.getValue () != null) ? fudgeField.getValue ().toString () : null);
@@ -425,7 +444,7 @@ public class Literals implements java.io.Serializable {
           throw new IllegalArgumentException ("Fudge message is not a Literals - field 'escapeString' is not string", e);
         }
       }
-      fudgeField = fudgeMsg.getByName (NULLPERSON_KEY);
+      fudgeField = fudgeMsg.getByName (NULL_PERSON_KEY);
       if (fudgeField != null)  {
         try {
           final Literals.Simple fudge1;
@@ -436,7 +455,7 @@ public class Literals implements java.io.Serializable {
           throw new IllegalArgumentException ("Fudge message is not a Literals - field 'nullPerson' is not Simple message", e);
         }
       }
-      fudgeField = fudgeMsg.getByName (SIMPLEPERSON_KEY);
+      fudgeField = fudgeMsg.getByName (SIMPLE_PERSON_KEY);
       if (fudgeField != null)  {
         try {
           final Literals.Simple fudge1;
@@ -659,70 +678,70 @@ public class Literals implements java.io.Serializable {
   }
   public void toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext, final org.fudgemsg.MutableFudgeFieldContainer msg) {
     if (_nullDouble != null)  {
-      msg.add (NULLDOUBLE_KEY, null, _nullDouble);
+      msg.add (NULL_DOUBLE_KEY, null, _nullDouble);
     }
     if (_zeroDouble != null)  {
-      msg.add (ZERODOUBLE_KEY, null, _zeroDouble);
+      msg.add (ZERO_DOUBLE_KEY, null, _zeroDouble);
     }
     if (_posDouble != null)  {
-      msg.add (POSDOUBLE_KEY, null, _posDouble);
+      msg.add (POS_DOUBLE_KEY, null, _posDouble);
     }
     if (_negDouble != null)  {
-      msg.add (NEGDOUBLE_KEY, null, _negDouble);
+      msg.add (NEG_DOUBLE_KEY, null, _negDouble);
     }
     if (_piDouble != null)  {
-      msg.add (PIDOUBLE_KEY, null, _piDouble);
+      msg.add (PI_DOUBLE_KEY, null, _piDouble);
     }
     if (_bigDouble != null)  {
-      msg.add (BIGDOUBLE_KEY, null, _bigDouble);
+      msg.add (BIG_DOUBLE_KEY, null, _bigDouble);
     }
     if (_tinyDouble != null)  {
-      msg.add (TINYDOUBLE_KEY, null, _tinyDouble);
+      msg.add (TINY_DOUBLE_KEY, null, _tinyDouble);
     }
     if (_nullFloat != null)  {
-      msg.add (NULLFLOAT_KEY, null, _nullFloat);
+      msg.add (NULL_FLOAT_KEY, null, _nullFloat);
     }
     if (_zeroFloat != null)  {
-      msg.add (ZEROFLOAT_KEY, null, _zeroFloat);
+      msg.add (ZERO_FLOAT_KEY, null, _zeroFloat);
     }
     if (_posFloat != null)  {
-      msg.add (POSFLOAT_KEY, null, _posFloat);
+      msg.add (POS_FLOAT_KEY, null, _posFloat);
     }
     if (_negFloat != null)  {
-      msg.add (NEGFLOAT_KEY, null, _negFloat);
+      msg.add (NEG_FLOAT_KEY, null, _negFloat);
     }
     if (_piFloat != null)  {
-      msg.add (PIFLOAT_KEY, null, _piFloat);
+      msg.add (PI_FLOAT_KEY, null, _piFloat);
     }
     if (_bigFloat != null)  {
-      msg.add (BIGFLOAT_KEY, null, _bigFloat);
+      msg.add (BIG_FLOAT_KEY, null, _bigFloat);
     }
     if (_tinyFloat != null)  {
-      msg.add (TINYFLOAT_KEY, null, _tinyFloat);
+      msg.add (TINY_FLOAT_KEY, null, _tinyFloat);
     }
     if (_nullInt != null)  {
-      msg.add (NULLINT_KEY, null, _nullInt);
+      msg.add (NULL_INT_KEY, null, _nullInt);
     }
     if (_zeroInt != null)  {
-      msg.add (ZEROINT_KEY, null, _zeroInt);
+      msg.add (ZERO_INT_KEY, null, _zeroInt);
     }
     if (_posInt != null)  {
-      msg.add (POSINT_KEY, null, _posInt);
+      msg.add (POS_INT_KEY, null, _posInt);
     }
     if (_negInt != null)  {
-      msg.add (NEGINT_KEY, null, _negInt);
+      msg.add (NEG_INT_KEY, null, _negInt);
     }
     if (_nullString != null)  {
-      msg.add (NULLSTRING_KEY, null, _nullString);
+      msg.add (NULL_STRING_KEY, null, _nullString);
     }
     if (_emptyString != null)  {
-      msg.add (EMPTYSTRING_KEY, null, _emptyString);
+      msg.add (EMPTY_STRING_KEY, null, _emptyString);
     }
     if (_simpleString != null)  {
-      msg.add (SIMPLESTRING_KEY, null, _simpleString);
+      msg.add (SIMPLE_STRING_KEY, null, _simpleString);
     }
     if (_escapeString != null)  {
-      msg.add (ESCAPESTRING_KEY, null, _escapeString);
+      msg.add (ESCAPE_STRING_KEY, null, _escapeString);
     }
     if (_nullPerson != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
@@ -732,7 +751,7 @@ public class Literals implements java.io.Serializable {
         fudge2 = fudge2.getSuperclass ();
       }
       _nullPerson.toFudgeMsg (fudgeContext, fudge1);
-      msg.add (NULLPERSON_KEY, null, fudge1);
+      msg.add (NULL_PERSON_KEY, null, fudge1);
     }
     if (_simplePerson != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
@@ -742,7 +761,7 @@ public class Literals implements java.io.Serializable {
         fudge2 = fudge2.getSuperclass ();
       }
       _simplePerson.toFudgeMsg (fudgeContext, fudge1);
-      msg.add (SIMPLEPERSON_KEY, null, fudge1);
+      msg.add (SIMPLE_PERSON_KEY, null, fudge1);
     }
   }
   public static Literals fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {

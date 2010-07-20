@@ -8,13 +8,13 @@ package org.fudgemsg.proto.tests.inheritance;
 public class BaseClassB implements java.io.Serializable {
   private static final long serialVersionUID = 1979610526745109285l;
   private final Integer _bcB_o;
-  public static final String BCB_O_KEY = "bcB_o";
+  public static final String BC_B_O_KEY = "bcB_o";
   private final java.util.List<Integer> _bcB_r;
-  public static final String BCB_R_KEY = "bcB_r";
+  public static final String BC_B_R_KEY = "bcB_r";
   private final int _bcB_q;
-  public static final String BCB_Q_KEY = "bcB_q";
+  public static final String BC_B_Q_KEY = "bcB_q";
   private final java.util.List<Integer> _bcB_rq;
-  public static final String BCB_RQ_KEY = "bcB_rq";
+  public static final String BC_B_RQ_KEY = "bcB_rq";
   public static class Builder {
     private Integer _bcB_o;
     private java.util.List<Integer> _bcB_r;
@@ -27,7 +27,7 @@ public class BaseClassB implements java.io.Serializable {
     protected Builder (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
       org.fudgemsg.FudgeField fudgeField;
       java.util.List<org.fudgemsg.FudgeField> fudgeFields;
-      fudgeField = fudgeMsg.getByName (BCB_Q_KEY);
+      fudgeField = fudgeMsg.getByName (BC_B_Q_KEY);
       if (fudgeField == null) throw new IllegalArgumentException ("Fudge message is not a BaseClassB - field 'bcB_q' is not present");
       try {
         _bcB_q = fudgeMsg.getFieldValue (Integer.class, fudgeField);
@@ -35,7 +35,7 @@ public class BaseClassB implements java.io.Serializable {
       catch (IllegalArgumentException e) {
         throw new IllegalArgumentException ("Fudge message is not a BaseClassB - field 'bcB_q' is not integer", e);
       }
-      fudgeFields = fudgeMsg.getAllByName (BCB_RQ_KEY);
+      fudgeFields = fudgeMsg.getAllByName (BC_B_RQ_KEY);
       if (fudgeFields.size () == 0) throw new IllegalArgumentException ("Fudge message is not a BaseClassB - field 'bcB_rq' is not present");
       _bcB_rq = new java.util.ArrayList<Integer> (fudgeFields.size ());
       for (org.fudgemsg.FudgeField fudge1 : fudgeFields) {
@@ -46,7 +46,7 @@ public class BaseClassB implements java.io.Serializable {
           throw new IllegalArgumentException ("Fudge message is not a BaseClassB - field 'bcB_rq' is not integer", e);
         }
       }
-      fudgeField = fudgeMsg.getByName (BCB_O_KEY);
+      fudgeField = fudgeMsg.getByName (BC_B_O_KEY);
       if (fudgeField != null)  {
         try {
           bcB_o (fudgeMsg.getFieldValue (Integer.class, fudgeField));
@@ -55,7 +55,7 @@ public class BaseClassB implements java.io.Serializable {
           throw new IllegalArgumentException ("Fudge message is not a BaseClassB - field 'bcB_o' is not integer", e);
         }
       }
-      fudgeFields = fudgeMsg.getAllByName (BCB_R_KEY);
+      fudgeFields = fudgeMsg.getAllByName (BC_B_R_KEY);
       if (fudgeFields.size () > 0)  {
         final java.util.List<Integer> fudge1;
         fudge1 = new java.util.ArrayList<Integer> (fudgeFields.size ());
@@ -191,17 +191,17 @@ public class BaseClassB implements java.io.Serializable {
   }
   public void toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext, final org.fudgemsg.MutableFudgeFieldContainer msg) {
     if (_bcB_o != null)  {
-      msg.add (BCB_O_KEY, null, _bcB_o);
+      msg.add (BC_B_O_KEY, null, _bcB_o);
     }
     if (_bcB_r != null)  {
       for (Integer fudge1 : _bcB_r) {
-        msg.add (BCB_R_KEY, null, fudge1);
+        msg.add (BC_B_R_KEY, null, fudge1);
       }
     }
-    msg.add (BCB_Q_KEY, null, _bcB_q);
+    msg.add (BC_B_Q_KEY, null, _bcB_q);
     if (_bcB_rq != null)  {
       for (Integer fudge1 : _bcB_rq) {
-        msg.add (BCB_RQ_KEY, null, fudge1);
+        msg.add (BC_B_RQ_KEY, null, fudge1);
       }
     }
   }

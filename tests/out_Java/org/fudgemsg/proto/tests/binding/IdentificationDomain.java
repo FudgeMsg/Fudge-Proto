@@ -8,14 +8,14 @@ package org.fudgemsg.proto.tests.binding;
 public class IdentificationDomain implements java.io.Serializable {
   private static final long serialVersionUID = -40374780829l;
   private final String _domainName;
-  public static final String DOMAINNAME_KEY = "domainName";
+  public static final String DOMAIN_NAME_KEY = "domainName";
   public IdentificationDomain (String domainName) {
     if (domainName == null) throw new NullPointerException ("domainName' cannot be null");
     _domainName = domainName;
   }
   protected IdentificationDomain (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
     org.fudgemsg.FudgeField fudgeField;
-    fudgeField = fudgeMsg.getByName (DOMAINNAME_KEY);
+    fudgeField = fudgeMsg.getByName (DOMAIN_NAME_KEY);
     if (fudgeField == null) throw new IllegalArgumentException ("Fudge message is not a IdentificationDomain - field 'domainName' is not present");
     try {
       _domainName = fudgeField.getValue ().toString ();
@@ -36,7 +36,7 @@ public class IdentificationDomain implements java.io.Serializable {
   }
   public void toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext, final org.fudgemsg.MutableFudgeFieldContainer msg) {
     if (_domainName != null)  {
-      msg.add (DOMAINNAME_KEY, null, _domainName);
+      msg.add (DOMAIN_NAME_KEY, null, _domainName);
     }
   }
   public static IdentificationDomain fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {

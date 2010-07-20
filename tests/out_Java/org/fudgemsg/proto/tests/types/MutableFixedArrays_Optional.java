@@ -8,18 +8,18 @@ package org.fudgemsg.proto.tests.types;
 public class MutableFixedArrays_Optional implements java.io.Serializable {
   private static final long serialVersionUID = -3340035727419015371l;
   private int[] _fixedArray1;
-  public static final String FIXEDARRAY1_KEY = "fixedArray1";
+  public static final String FIXED_ARRAY1_KEY = "fixedArray1";
   private int[][] _fixedArray2;
-  public static final String FIXEDARRAY2_KEY = "fixedArray2";
+  public static final String FIXED_ARRAY2_KEY = "fixedArray2";
   private int[][] _fixedArray3;
-  public static final String FIXEDARRAY3_KEY = "fixedArray3";
+  public static final String FIXED_ARRAY3_KEY = "fixedArray3";
   private int[][] _fixedArray4;
-  public static final String FIXEDARRAY4_KEY = "fixedArray4";
+  public static final String FIXED_ARRAY4_KEY = "fixedArray4";
   public MutableFixedArrays_Optional () {
   }
   protected MutableFixedArrays_Optional (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
     org.fudgemsg.FudgeField fudgeField;
-    fudgeField = fudgeMsg.getByName (FIXEDARRAY1_KEY);
+    fudgeField = fudgeMsg.getByName (FIXED_ARRAY1_KEY);
     if (fudgeField != null)  {
       try {
         if (fudgeMsg.getFieldValue (int[].class, fudgeField).length != 42) throw new IllegalArgumentException ("Fudge message is not a MutableFixedArrays_Optional - field 'fixedArray1' is not integer[42]");
@@ -29,7 +29,7 @@ public class MutableFixedArrays_Optional implements java.io.Serializable {
         throw new IllegalArgumentException ("Fudge message is not a MutableFixedArrays_Optional - field 'fixedArray1' is not integer[42]", e);
       }
     }
-    fudgeField = fudgeMsg.getByName (FIXEDARRAY2_KEY);
+    fudgeField = fudgeMsg.getByName (FIXED_ARRAY2_KEY);
     if (fudgeField != null)  {
       try {
         final org.fudgemsg.FudgeFieldContainer fudge1 = fudgeMsg.getFieldValue (org.fudgemsg.FudgeFieldContainer.class, fudgeField);
@@ -49,7 +49,7 @@ public class MutableFixedArrays_Optional implements java.io.Serializable {
         throw new IllegalArgumentException ("Fudge message is not a MutableFixedArrays_Optional - field 'fixedArray2' is not integer[42][]", e);
       }
     }
-    fudgeField = fudgeMsg.getByName (FIXEDARRAY3_KEY);
+    fudgeField = fudgeMsg.getByName (FIXED_ARRAY3_KEY);
     if (fudgeField != null)  {
       try {
         final org.fudgemsg.FudgeFieldContainer fudge1 = fudgeMsg.getFieldValue (org.fudgemsg.FudgeFieldContainer.class, fudgeField);
@@ -69,7 +69,7 @@ public class MutableFixedArrays_Optional implements java.io.Serializable {
         throw new IllegalArgumentException ("Fudge message is not a MutableFixedArrays_Optional - field 'fixedArray3' is not integer[][42]", e);
       }
     }
-    fudgeField = fudgeMsg.getByName (FIXEDARRAY4_KEY);
+    fudgeField = fudgeMsg.getByName (FIXED_ARRAY4_KEY);
     if (fudgeField != null)  {
       try {
         final org.fudgemsg.FudgeFieldContainer fudge1 = fudgeMsg.getFieldValue (org.fudgemsg.FudgeFieldContainer.class, fudgeField);
@@ -187,7 +187,7 @@ public class MutableFixedArrays_Optional implements java.io.Serializable {
   }
   public void toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext, final org.fudgemsg.MutableFudgeFieldContainer msg) {
     if (_fixedArray1 != null)  {
-      msg.add (FIXEDARRAY1_KEY, null, _fixedArray1);
+      msg.add (FIXED_ARRAY1_KEY, null, _fixedArray1);
     }
     if (_fixedArray2 != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
@@ -199,7 +199,7 @@ public class MutableFixedArrays_Optional implements java.io.Serializable {
           fudge1.add (null, null, org.fudgemsg.types.IndicatorType.INSTANCE);
         }
       }
-      msg.add (FIXEDARRAY2_KEY, null, fudge1);
+      msg.add (FIXED_ARRAY2_KEY, null, fudge1);
     }
     if (_fixedArray3 != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
@@ -211,7 +211,7 @@ public class MutableFixedArrays_Optional implements java.io.Serializable {
           fudge1.add (null, null, org.fudgemsg.types.IndicatorType.INSTANCE);
         }
       }
-      msg.add (FIXEDARRAY3_KEY, null, fudge1);
+      msg.add (FIXED_ARRAY3_KEY, null, fudge1);
     }
     if (_fixedArray4 != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
@@ -223,7 +223,7 @@ public class MutableFixedArrays_Optional implements java.io.Serializable {
           fudge1.add (null, null, org.fudgemsg.types.IndicatorType.INSTANCE);
         }
       }
-      msg.add (FIXEDARRAY4_KEY, null, fudge1);
+      msg.add (FIXED_ARRAY4_KEY, null, fudge1);
     }
   }
   public static MutableFixedArrays_Optional fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {

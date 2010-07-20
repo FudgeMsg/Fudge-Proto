@@ -26,15 +26,15 @@ public class AATypes_Optional implements java.io.Serializable, AATypesBase {
   private final String[][] __String;
   public static final String _STRING_KEY = "_String";
   private final org.fudgemsg.proto.tests.types.SubMessage[][] __SubMessage;
-  public static final String _SUBMESSAGE_KEY = "_SubMessage";
+  public static final String _SUB_MESSAGE_KEY = "_SubMessage";
   private final org.fudgemsg.proto.tests.types.CustomEnum[][] __CustomEnum;
-  public static final String _CUSTOMENUM_KEY = "_CustomEnum";
+  public static final String _CUSTOM_ENUM_KEY = "_CustomEnum";
   private final org.fudgemsg.FudgeFieldContainer[][] __Message;
   public static final String _MESSAGE_KEY = "_Message";
   private final javax.time.calendar.DateProvider[][] __Date;
   public static final String _DATE_KEY = "_Date";
   private final javax.time.calendar.DateTimeProvider[][] __DateTime;
-  public static final String _DATETIME_KEY = "_DateTime";
+  public static final String _DATE_TIME_KEY = "_DateTime";
   private final javax.time.calendar.TimeProvider[][] __Time;
   public static final String _TIME_KEY = "_Time";
   public static class Builder {
@@ -263,7 +263,7 @@ public class AATypes_Optional implements java.io.Serializable, AATypesBase {
           throw new IllegalArgumentException ("Fudge message is not a AATypes_Optional - field '_String' is not string[][]", e);
         }
       }
-      fudgeField = fudgeMsg.getByName (_SUBMESSAGE_KEY);
+      fudgeField = fudgeMsg.getByName (_SUB_MESSAGE_KEY);
       if (fudgeField != null)  {
         try {
           final org.fudgemsg.FudgeFieldContainer fudge1 = fudgeMsg.getFieldValue (org.fudgemsg.FudgeFieldContainer.class, fudgeField);
@@ -294,7 +294,7 @@ public class AATypes_Optional implements java.io.Serializable, AATypesBase {
           throw new IllegalArgumentException ("Fudge message is not a AATypes_Optional - field '_SubMessage' is not SubMessage message[][]", e);
         }
       }
-      fudgeField = fudgeMsg.getByName (_CUSTOMENUM_KEY);
+      fudgeField = fudgeMsg.getByName (_CUSTOM_ENUM_KEY);
       if (fudgeField != null)  {
         try {
           final org.fudgemsg.FudgeFieldContainer fudge1 = fudgeMsg.getFieldValue (org.fudgemsg.FudgeFieldContainer.class, fudgeField);
@@ -383,7 +383,7 @@ public class AATypes_Optional implements java.io.Serializable, AATypesBase {
           throw new IllegalArgumentException ("Fudge message is not a AATypes_Optional - field '_Date' is not date[][]", e);
         }
       }
-      fudgeField = fudgeMsg.getByName (_DATETIME_KEY);
+      fudgeField = fudgeMsg.getByName (_DATE_TIME_KEY);
       if (fudgeField != null)  {
         try {
           final org.fudgemsg.FudgeFieldContainer fudge1 = fudgeMsg.getFieldValue (org.fudgemsg.FudgeFieldContainer.class, fudgeField);
@@ -1267,7 +1267,7 @@ public class AATypes_Optional implements java.io.Serializable, AATypesBase {
           fudge1.add (null, null, org.fudgemsg.types.IndicatorType.INSTANCE);
         }
       }
-      msg.add (_SUBMESSAGE_KEY, null, fudge1);
+      msg.add (_SUB_MESSAGE_KEY, null, fudge1);
     }
     if (__CustomEnum != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
@@ -1283,7 +1283,7 @@ public class AATypes_Optional implements java.io.Serializable, AATypesBase {
           fudge1.add (null, null, org.fudgemsg.types.IndicatorType.INSTANCE);
         }
       }
-      msg.add (_CUSTOMENUM_KEY, null, fudge1);
+      msg.add (_CUSTOM_ENUM_KEY, null, fudge1);
     }
     if (__Message != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
@@ -1331,7 +1331,7 @@ public class AATypes_Optional implements java.io.Serializable, AATypesBase {
           fudge1.add (null, null, org.fudgemsg.types.IndicatorType.INSTANCE);
         }
       }
-      msg.add (_DATETIME_KEY, null, fudge1);
+      msg.add (_DATE_TIME_KEY, null, fudge1);
     }
     if (__Time != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();

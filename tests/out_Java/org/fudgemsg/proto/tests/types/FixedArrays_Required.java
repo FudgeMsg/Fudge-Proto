@@ -8,13 +8,13 @@ package org.fudgemsg.proto.tests.types;
 public class FixedArrays_Required implements java.io.Serializable {
   private static final long serialVersionUID = -3340035727419015371l;
   private final int[] _fixedArray1;
-  public static final String FIXEDARRAY1_KEY = "fixedArray1";
+  public static final String FIXED_ARRAY1_KEY = "fixedArray1";
   private final int[][] _fixedArray2;
-  public static final String FIXEDARRAY2_KEY = "fixedArray2";
+  public static final String FIXED_ARRAY2_KEY = "fixedArray2";
   private final int[][] _fixedArray3;
-  public static final String FIXEDARRAY3_KEY = "fixedArray3";
+  public static final String FIXED_ARRAY3_KEY = "fixedArray3";
   private final int[][] _fixedArray4;
-  public static final String FIXEDARRAY4_KEY = "fixedArray4";
+  public static final String FIXED_ARRAY4_KEY = "fixedArray4";
   public FixedArrays_Required (int[] fixedArray1, int[][] fixedArray2, int[][] fixedArray3, int[][] fixedArray4) {
     if (fixedArray1 == null) throw new NullPointerException ("'fixedArray1' cannot be null");
     else {
@@ -65,7 +65,7 @@ public class FixedArrays_Required implements java.io.Serializable {
   }
   protected FixedArrays_Required (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
     org.fudgemsg.FudgeField fudgeField;
-    fudgeField = fudgeMsg.getByName (FIXEDARRAY1_KEY);
+    fudgeField = fudgeMsg.getByName (FIXED_ARRAY1_KEY);
     if (fudgeField == null) throw new IllegalArgumentException ("Fudge message is not a FixedArrays_Required - field 'fixedArray1' is not present");
     try {
       _fixedArray1 = fudgeMsg.getFieldValue (int[].class, fudgeField);
@@ -74,7 +74,7 @@ public class FixedArrays_Required implements java.io.Serializable {
     catch (IllegalArgumentException e) {
       throw new IllegalArgumentException ("Fudge message is not a FixedArrays_Required - field 'fixedArray1' is not integer[42]", e);
     }
-    fudgeField = fudgeMsg.getByName (FIXEDARRAY2_KEY);
+    fudgeField = fudgeMsg.getByName (FIXED_ARRAY2_KEY);
     if (fudgeField == null) throw new IllegalArgumentException ("Fudge message is not a FixedArrays_Required - field 'fixedArray2' is not present");
     try {
       final org.fudgemsg.FudgeFieldContainer fudge1 = fudgeMsg.getFieldValue (org.fudgemsg.FudgeFieldContainer.class, fudgeField);
@@ -93,7 +93,7 @@ public class FixedArrays_Required implements java.io.Serializable {
     catch (IllegalArgumentException e) {
       throw new IllegalArgumentException ("Fudge message is not a FixedArrays_Required - field 'fixedArray2' is not integer[42][]", e);
     }
-    fudgeField = fudgeMsg.getByName (FIXEDARRAY3_KEY);
+    fudgeField = fudgeMsg.getByName (FIXED_ARRAY3_KEY);
     if (fudgeField == null) throw new IllegalArgumentException ("Fudge message is not a FixedArrays_Required - field 'fixedArray3' is not present");
     try {
       final org.fudgemsg.FudgeFieldContainer fudge1 = fudgeMsg.getFieldValue (org.fudgemsg.FudgeFieldContainer.class, fudgeField);
@@ -112,7 +112,7 @@ public class FixedArrays_Required implements java.io.Serializable {
     catch (IllegalArgumentException e) {
       throw new IllegalArgumentException ("Fudge message is not a FixedArrays_Required - field 'fixedArray3' is not integer[][42]", e);
     }
-    fudgeField = fudgeMsg.getByName (FIXEDARRAY4_KEY);
+    fudgeField = fudgeMsg.getByName (FIXED_ARRAY4_KEY);
     if (fudgeField == null) throw new IllegalArgumentException ("Fudge message is not a FixedArrays_Required - field 'fixedArray4' is not present");
     try {
       final org.fudgemsg.FudgeFieldContainer fudge1 = fudgeMsg.getFieldValue (org.fudgemsg.FudgeFieldContainer.class, fudgeField);
@@ -178,7 +178,7 @@ public class FixedArrays_Required implements java.io.Serializable {
   }
   public void toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext, final org.fudgemsg.MutableFudgeFieldContainer msg) {
     if (_fixedArray1 != null)  {
-      msg.add (FIXEDARRAY1_KEY, null, _fixedArray1);
+      msg.add (FIXED_ARRAY1_KEY, null, _fixedArray1);
     }
     if (_fixedArray2 != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
@@ -190,7 +190,7 @@ public class FixedArrays_Required implements java.io.Serializable {
           fudge1.add (null, null, org.fudgemsg.types.IndicatorType.INSTANCE);
         }
       }
-      msg.add (FIXEDARRAY2_KEY, null, fudge1);
+      msg.add (FIXED_ARRAY2_KEY, null, fudge1);
     }
     if (_fixedArray3 != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
@@ -202,7 +202,7 @@ public class FixedArrays_Required implements java.io.Serializable {
           fudge1.add (null, null, org.fudgemsg.types.IndicatorType.INSTANCE);
         }
       }
-      msg.add (FIXEDARRAY3_KEY, null, fudge1);
+      msg.add (FIXED_ARRAY3_KEY, null, fudge1);
     }
     if (_fixedArray4 != null)  {
       final org.fudgemsg.MutableFudgeFieldContainer fudge1 = fudgeContext.newMessage ();
@@ -214,7 +214,7 @@ public class FixedArrays_Required implements java.io.Serializable {
           fudge1.add (null, null, org.fudgemsg.types.IndicatorType.INSTANCE);
         }
       }
-      msg.add (FIXEDARRAY4_KEY, null, fudge1);
+      msg.add (FIXED_ARRAY4_KEY, null, fudge1);
     }
   }
   public static FixedArrays_Required fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {

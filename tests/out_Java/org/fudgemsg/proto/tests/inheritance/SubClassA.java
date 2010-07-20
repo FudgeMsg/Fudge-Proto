@@ -8,29 +8,31 @@ package org.fudgemsg.proto.tests.inheritance;
 public class SubClassA extends org.fudgemsg.proto.tests.inheritance.BaseClassA implements java.io.Serializable {
   private static final long serialVersionUID = 2488456727493338032l;
   private final Integer _scA_o;
-  public static final String SCA_O_KEY = "scA_o";
+  public static final String SC_A_O_KEY = "scA_o";
   private final java.util.List<Integer> _scA_r;
-  public static final String SCA_R_KEY = "scA_r";
+  public static final String SC_A_R_KEY = "scA_r";
   private final int _scA_q;
-  public static final String SCA_Q_KEY = "scA_q";
+  public static final String SC_A_Q_KEY = "scA_q";
   private final java.util.List<Integer> _scA_rq;
-  public static final String SCA_RQ_KEY = "scA_rq";
+  public static final String SC_A_RQ_KEY = "scA_rq";
+  public static final Integer BC_A_O = 42;
+  public static final int BC_A_Q = 42;
   public static class Builder extends org.fudgemsg.proto.tests.inheritance.BaseClassA.Builder {
     private Integer _scA_o;
     private java.util.List<Integer> _scA_r;
     private int _scA_q;
     private java.util.List<Integer> _scA_rq;
     public Builder (java.util.Collection<? extends Integer> bcA_rq, int scA_q, java.util.Collection<? extends Integer> scA_rq) {
-      super (42, bcA_rq);
+      super (BC_A_Q, bcA_rq);
       scA_q (scA_q);
       scA_rq (scA_rq);
-      bcA_o (42);
+      bcA_o (BC_A_O);
     }
     protected Builder (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
       super (fudgeMsg);
       org.fudgemsg.FudgeField fudgeField;
       java.util.List<org.fudgemsg.FudgeField> fudgeFields;
-      fudgeField = fudgeMsg.getByName (SCA_Q_KEY);
+      fudgeField = fudgeMsg.getByName (SC_A_Q_KEY);
       if (fudgeField == null) throw new IllegalArgumentException ("Fudge message is not a SubClassA - field 'scA_q' is not present");
       try {
         _scA_q = fudgeMsg.getFieldValue (Integer.class, fudgeField);
@@ -38,7 +40,7 @@ public class SubClassA extends org.fudgemsg.proto.tests.inheritance.BaseClassA i
       catch (IllegalArgumentException e) {
         throw new IllegalArgumentException ("Fudge message is not a SubClassA - field 'scA_q' is not integer", e);
       }
-      fudgeFields = fudgeMsg.getAllByName (SCA_RQ_KEY);
+      fudgeFields = fudgeMsg.getAllByName (SC_A_RQ_KEY);
       if (fudgeFields.size () == 0) throw new IllegalArgumentException ("Fudge message is not a SubClassA - field 'scA_rq' is not present");
       _scA_rq = new java.util.ArrayList<Integer> (fudgeFields.size ());
       for (org.fudgemsg.FudgeField fudge1 : fudgeFields) {
@@ -49,7 +51,7 @@ public class SubClassA extends org.fudgemsg.proto.tests.inheritance.BaseClassA i
           throw new IllegalArgumentException ("Fudge message is not a SubClassA - field 'scA_rq' is not integer", e);
         }
       }
-      fudgeField = fudgeMsg.getByName (SCA_O_KEY);
+      fudgeField = fudgeMsg.getByName (SC_A_O_KEY);
       if (fudgeField != null)  {
         try {
           scA_o (fudgeMsg.getFieldValue (Integer.class, fudgeField));
@@ -58,7 +60,7 @@ public class SubClassA extends org.fudgemsg.proto.tests.inheritance.BaseClassA i
           throw new IllegalArgumentException ("Fudge message is not a SubClassA - field 'scA_o' is not integer", e);
         }
       }
-      fudgeFields = fudgeMsg.getAllByName (SCA_R_KEY);
+      fudgeFields = fudgeMsg.getAllByName (SC_A_R_KEY);
       if (fudgeFields.size () > 0)  {
         final java.util.List<Integer> fudge1;
         fudge1 = new java.util.ArrayList<Integer> (fudgeFields.size ());
@@ -198,17 +200,17 @@ public class SubClassA extends org.fudgemsg.proto.tests.inheritance.BaseClassA i
   public void toFudgeMsg (final org.fudgemsg.FudgeMessageFactory fudgeContext, final org.fudgemsg.MutableFudgeFieldContainer msg) {
     super.toFudgeMsg (fudgeContext, msg);
     if (_scA_o != null)  {
-      msg.add (SCA_O_KEY, null, _scA_o);
+      msg.add (SC_A_O_KEY, null, _scA_o);
     }
     if (_scA_r != null)  {
       for (Integer fudge1 : _scA_r) {
-        msg.add (SCA_R_KEY, null, fudge1);
+        msg.add (SC_A_R_KEY, null, fudge1);
       }
     }
-    msg.add (SCA_Q_KEY, null, _scA_q);
+    msg.add (SC_A_Q_KEY, null, _scA_q);
     if (_scA_rq != null)  {
       for (Integer fudge1 : _scA_rq) {
-        msg.add (SCA_RQ_KEY, null, fudge1);
+        msg.add (SC_A_RQ_KEY, null, fudge1);
       }
     }
   }

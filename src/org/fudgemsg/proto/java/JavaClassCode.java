@@ -221,19 +221,43 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   }
 
   private String fieldKey(final FieldDefinition field) {
-    return field.getName().toUpperCase() + "_KEY";
+    return fieldConstant(field) + "_KEY";
   }
 
   private String fieldOrdinal(final FieldDefinition field) {
-    return field.getName().toUpperCase() + "_ORDINAL";
+    return fieldConstant(field) + "_ORDINAL";
+  }
+
+  private String fieldConstant(final FieldDefinition field) {
+    final StringBuilder sb = new StringBuilder();
+    final String name = field.getName();
+    boolean lowercase = false;
+    for (int i = 0; i < name.length(); i++) {
+      final char c = name.charAt(i);
+      if (Character.isUpperCase(c)) {
+        if (lowercase) {
+          sb.append('_');
+          lowercase = false;
+        }
+        sb.append(c);
+      } else if (c == '_') {
+        sb.append(c);
+        lowercase = false;
+      } else {
+        sb.append(Character.toUpperCase(c));
+        lowercase = true;
+      }
+    }
+    return sb.toString();
   }
 
   @Override
   public void writeClassImplementationAttribute(final Compiler.Context context, final FieldDefinition field,
       final IndentWriter writer) throws IOException {
     writer.write("private ");
-    if (!field.isMutable())
+    if (!field.isMutable()) {
       writer.write("final ");
+    }
     writer.write(realTypeString(field, false) + " " + privateFieldName(field));
     endStmt(writer); // attribute decl
     if (field.getOrdinal() != null) {
@@ -243,6 +267,17 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     }
     endStmt(writer); // public field name/ordinal
     // TODO 2010-01-26 Andrew -- if the message references a specific taxonomy, we should use references to the string place holders there instead of local ones
+  }
+
+  private void writeDefaultValues(final Compiler.Context context, final IndentWriter writer,
+      final MessageDefinition message) throws IOException {
+    for (FieldDefinition field : message.getFieldDefinitions()) {
+      if (field.getDefaultValue() != null) {
+        writer.write("public static final " + realTypeString(field, false) + " " + fieldConstant(field) + " = "
+            + getLiteral(field.getDefaultValue().assignmentTo(context, field.getType())));
+        endStmt(writer);
+      }
+    }
   }
 
   private void writeBuilderClassFields(JavaWriter writer, MessageDefinition message) throws IOException {
@@ -391,7 +426,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
             } else {
               final FieldDefinition override = overrideMap.get(field.getName());
               if (override.getDefaultValue() != null) {
-                writer.write(getLiteral(override.getDefaultValue().assignmentTo(context, field.getType())));
+                writer.write(fieldConstant(override));
                 defaultFields.remove(override);
               } else if (override.isRequired()) {
                 writer.write(localFieldName(override));
@@ -412,7 +447,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       }
     }
     for (FieldDefinition field : defaultFields) {
-      writer.write(fieldMethodName(field, builder ? null : "set") + " (" + getLiteral(field.getDefaultValue()) + ")");
+      writer.write(fieldMethodName(field, builder ? null : "set") + " (" + fieldConstant(field) + ")");
       endStmt(writer);
     }
     endBlock(writer); // constructor
@@ -1504,15 +1539,12 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         writer.write("else");
         beginBlock(writer); // if-else
         for (FieldDefinition field : optional) {
-          final LiteralValue defaultValue = field.getDefaultValue();
-          if (defaultValue != null) {
+          if (field.getDefaultValue() != null) {
             if (field.getOverride() != null) {
-              writer.write(fieldMethodName(field, "set") + " ("
-                  + getLiteral(defaultValue.assignmentTo(context, field.getOverride().getType())) + ")");
+              writer.write(fieldMethodName(field, "set") + " (" + fieldConstant(field) + ")");
               endStmt(writer);
             } else {
-              writeMutatorAssignment(writer, field, getLiteral(defaultValue.assignmentTo(context, field.getType())),
-                  true, false);
+              writeMutatorAssignment(writer, field, fieldConstant(field), true, false);
             }
           }
         }
@@ -1756,6 +1788,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       final IndentWriter writer) throws IOException {
     final JavaWriter jWriter = new JavaWriter(writer);
     final boolean useBuilder = useBuilderPattern(message);
+    writeDefaultValues(context, writer, message);
     if (useBuilder) {
       writeBuilderClass(context, writer, message);
       writeProtectedBuilderConstructor(writer, message);

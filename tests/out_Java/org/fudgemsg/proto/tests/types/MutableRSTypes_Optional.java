@@ -26,15 +26,15 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
   private java.util.List<String> __String;
   public static final String _STRING_KEY = "_String";
   private java.util.List<org.fudgemsg.proto.tests.types.SubMessage> __SubMessage;
-  public static final String _SUBMESSAGE_KEY = "_SubMessage";
+  public static final String _SUB_MESSAGE_KEY = "_SubMessage";
   private java.util.List<org.fudgemsg.proto.tests.types.CustomEnum> __CustomEnum;
-  public static final String _CUSTOMENUM_KEY = "_CustomEnum";
+  public static final String _CUSTOM_ENUM_KEY = "_CustomEnum";
   private java.util.List<org.fudgemsg.FudgeFieldContainer> __Message;
   public static final String _MESSAGE_KEY = "_Message";
   private java.util.List<javax.time.calendar.DateProvider> __Date;
   public static final String _DATE_KEY = "_Date";
   private java.util.List<javax.time.calendar.DateTimeProvider> __DateTime;
-  public static final String _DATETIME_KEY = "_DateTime";
+  public static final String _DATE_TIME_KEY = "_DateTime";
   private java.util.List<javax.time.calendar.TimeProvider> __Time;
   public static final String _TIME_KEY = "_Time";
   public MutableRSTypes_Optional () {
@@ -162,7 +162,7 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
       }
       set_String (fudge1);
     }
-    fudgeFields = fudgeMsg.getAllByName (_SUBMESSAGE_KEY);
+    fudgeFields = fudgeMsg.getAllByName (_SUB_MESSAGE_KEY);
     if (fudgeFields.size () > 0)  {
       final java.util.List<org.fudgemsg.proto.tests.types.SubMessage> fudge1;
       fudge1 = new java.util.ArrayList<org.fudgemsg.proto.tests.types.SubMessage> (fudgeFields.size ());
@@ -178,7 +178,7 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
       }
       set_SubMessage (fudge1);
     }
-    fudgeFields = fudgeMsg.getAllByName (_CUSTOMENUM_KEY);
+    fudgeFields = fudgeMsg.getAllByName (_CUSTOM_ENUM_KEY);
     if (fudgeFields.size () > 0)  {
       final java.util.List<org.fudgemsg.proto.tests.types.CustomEnum> fudge1;
       fudge1 = new java.util.ArrayList<org.fudgemsg.proto.tests.types.CustomEnum> (fudgeFields.size ());
@@ -222,7 +222,7 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
       }
       set_Date (fudge1);
     }
-    fudgeFields = fudgeMsg.getAllByName (_DATETIME_KEY);
+    fudgeFields = fudgeMsg.getAllByName (_DATE_TIME_KEY);
     if (fudgeFields.size () > 0)  {
       final java.util.List<javax.time.calendar.DateTimeProvider> fudge1;
       fudge1 = new java.util.ArrayList<javax.time.calendar.DateTimeProvider> (fudgeFields.size ());
@@ -521,12 +521,12 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
           fudge3 = fudge3.getSuperclass ();
         }
         fudge1.toFudgeMsg (fudgeContext, fudge2);
-        msg.add (_SUBMESSAGE_KEY, null, fudge2);
+        msg.add (_SUB_MESSAGE_KEY, null, fudge2);
       }
     }
     if (__CustomEnum != null)  {
       for (org.fudgemsg.proto.tests.types.CustomEnum fudge1 : __CustomEnum) {
-        msg.add (_CUSTOMENUM_KEY, null, fudge1.name ());
+        msg.add (_CUSTOM_ENUM_KEY, null, fudge1.name ());
       }
     }
     if (__Message != null)  {
@@ -541,7 +541,7 @@ public class MutableRSTypes_Optional implements java.io.Serializable, RSTypesBas
     }
     if (__DateTime != null)  {
       for (javax.time.calendar.DateTimeProvider fudge1 : __DateTime) {
-        msg.add (_DATETIME_KEY, null, fudge1);
+        msg.add (_DATE_TIME_KEY, null, fudge1);
       }
     }
     if (__Time != null)  {

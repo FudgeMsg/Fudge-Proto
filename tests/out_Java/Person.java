@@ -34,12 +34,13 @@ public class Person implements java.io.Serializable {
     public static final int NUMBER_ORDINAL = 1;
     private final Person.PhoneType _type;
     public static final int TYPE_ORDINAL = 2;
+    public static final Person.PhoneType TYPE = Person.PhoneType.HOME;
     public static class Builder {
       private String _number;
       private Person.PhoneType _type;
       public Builder (String number) {
         number (number);
-        type (Person.PhoneType.HOME);
+        type (TYPE);
       }
       protected Builder (final org.fudgemsg.FudgeFieldContainer fudgeMsg) {
         org.fudgemsg.FudgeField fudgeField;
