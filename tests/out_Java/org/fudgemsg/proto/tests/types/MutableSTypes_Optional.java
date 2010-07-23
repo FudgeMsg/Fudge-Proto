@@ -477,21 +477,21 @@ public class MutableSTypes_Optional implements java.io.Serializable, TypesBase_O
     else if (msg.__Message != null) return false;
     if (__Date != null) {
       if (msg.__Date != null) {
-        if (!__Date.equals (msg.__Date)) return false;
+        if (!__Date.toLocalDate ().equals (msg.__Date.toLocalDate ())) return false;
       }
       else return false;
     }
     else if (msg.__Date != null) return false;
     if (__DateTime != null) {
       if (msg.__DateTime != null) {
-        if (!__DateTime.equals (msg.__DateTime)) return false;
+        if (!__DateTime.toLocalDateTime ().equals (msg.__DateTime.toLocalDateTime ())) return false;
       }
       else return false;
     }
     else if (msg.__DateTime != null) return false;
     if (__Time != null) {
       if (msg.__Time != null) {
-        if (!__Time.equals (msg.__Time)) return false;
+        if (!__Time.toLocalTime ().equals (msg.__Time.toLocalTime ())) return false;
       }
       else return false;
     }
@@ -525,11 +525,11 @@ public class MutableSTypes_Optional implements java.io.Serializable, TypesBase_O
     hc *= 31;
     if (__Message != null) hc += __Message.hashCode ();
     hc *= 31;
-    if (__Date != null) hc += __Date.hashCode ();
+    if (__Date != null) hc += __Date.toLocalDate ().hashCode ();
     hc *= 31;
-    if (__DateTime != null) hc += __DateTime.hashCode ();
+    if (__DateTime != null) hc += __DateTime.toLocalDateTime ().hashCode ();
     hc *= 31;
-    if (__Time != null) hc += __Time.hashCode ();
+    if (__Time != null) hc += __Time.toLocalTime ().hashCode ();
     return hc;
   }
   public String toString () {

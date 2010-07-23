@@ -1622,6 +1622,25 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     endBlock(writer); // fromFudgeMsg
   }
 
+  private String getResolve(final FieldDefinition field) {
+    final FieldType type = field.getType();
+    if ((type instanceof FieldType.UserType) || field.isRepeated()) {
+      // Repeated date/time/datetime fields won't be handled properly
+      return "";
+    } else {
+      switch (type.getFudgeFieldType()) {
+        case FudgeTypeDictionary.DATE_TYPE_ID:
+          return ".toLocalDate ()";
+        case FudgeTypeDictionary.DATETIME_TYPE_ID:
+          return ".toLocalDateTime ()";
+        case FudgeTypeDictionary.TIME_TYPE_ID:
+          return ".toLocalTime ()";
+        default:
+          return "";
+      }
+    }
+  }
+
   @Override
   public void writeClassImplementationEquality(final Compiler.Context context, final MessageDefinition message,
       final IndentWriter writer) throws IOException {
@@ -1671,7 +1690,8 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
           beginBlock(writer); // if !a
           writer.write("if (" + b + " != null)");
           beginBlock(writer); // if !b
-          writer.write("if (!" + a + ".equals (" + b + ")) return false");
+          final String resolve = getResolve(field);
+          writer.write("if (!" + a + resolve + ".equals (" + b + resolve + ")) return false");
           endStmt(writer);
           endBlock(writer); // if !b
           writer.write("else return false");
@@ -1722,7 +1742,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         if (isObject(type) || field.isRepeated() || !field.isRequired()) {
           writer.write("hc *= 31");
           endStmt(writer);
-          writer.write("if (" + name + " != null) hc += " + name + ".hashCode ()");
+          writer.write("if (" + name + " != null) hc += " + name + getResolve(field) + ".hashCode ()");
         } else {
           switch (type.getFudgeFieldType()) {
             case FudgeTypeDictionary.BOOLEAN_TYPE_ID:
