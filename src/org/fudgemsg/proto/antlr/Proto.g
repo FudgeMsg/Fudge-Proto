@@ -112,8 +112,7 @@ tokens {
 }
 
 COMMENT : '//' ( options { greedy = false; } : . )* ('\n'|'\r') { skip (); } ;
-IDENTIFIER_PREFIX : '#' { skip (); } ;
-IDENTIFIER : IDENTIFIER_PREFIX? ('a'..'z'|'A'..'Z'|'_')('a'..'z'|'A'..'Z'|'0'..'9'|'_')* ;
+IDENTIFIER : '$'? ('a'..'z'|'A'..'Z'|'_')('a'..'z'|'A'..'Z'|'0'..'9'|'_')* ;
 INTEGER : ('+'|'-')? '0'..'9'+ ;
 FLOAT : ('+'|'-')? ('0'..'9')* '.' ('0'..'9')+ ( ('e'|'E') ('+'|'-')? ('0'..'9')+ )? 'f'? ;
 ML_COMMENT : '/*' ( options { greedy = false; } : . )* '*/' { skip (); } ;

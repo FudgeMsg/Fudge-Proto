@@ -16,11 +16,13 @@
 
 package org.fudgemsg.proto.proto;
 
+import java.util.Collection;
+
 import org.fudgemsg.proto.LiteralValue;
 import org.fudgemsg.proto.c.CStyleLiteralCode;
 
 /**
- * Implementation of a code generator for C languages that can be reused for others with a similar syntax.
+ * Implementation of a code generator for .proto files
  * 
  * @author Andrew
  */
@@ -33,6 +35,23 @@ public class ProtoLiteralCode extends CStyleLiteralCode {
     escape ((char)013, "v");
   }
   
+  @Override
+  protected Collection<String> getReservedWords() {
+    final Collection<String> collection = super.getReservedWords();
+    for (String reservedWord : new String[] {"abstract", "binding", "default", "enum", "extends", "extern", "import",
+        "message", "mutable", "namespace", "optional", "readonly", "repeated", "required", "boolean", "byte", "date",
+        "datetime", "double", "float", "indicator", "int", "long", "short", "string", "time", "taxonomy", "typedef",
+        "uses"}) {
+      collection.add(reservedWord);
+    }
+    return collection;
+  }
+
+  @Override
+  protected String escapedReservedWord(final String identifier) {
+    return "$" + identifier;
+  }
+
   @Override
   protected String getLiteral (final LiteralValue.EnumValue value) {
     return value.get ();

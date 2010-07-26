@@ -3,8 +3,8 @@
 namespace org.fudgemsg.proto.tests.types {
 
   message SubMessage {
-    required int  i;
-    required string s;
+    required int  $int;
+    required string $string;
   }
   
   enum CustomEnum {

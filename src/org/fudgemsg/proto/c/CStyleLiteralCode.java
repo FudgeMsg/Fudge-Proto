@@ -16,7 +16,10 @@
 
 package org.fudgemsg.proto.c;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
 
 import org.fudgemsg.proto.FieldDefinition;
 import org.fudgemsg.proto.LiteralValue;
@@ -30,7 +33,9 @@ import org.fudgemsg.proto.proto.LiteralCode;
 public abstract class CStyleLiteralCode implements LiteralCode {
   
   private final HashMap<Character,String> _escapeChars = new HashMap<Character,String>();
-  
+
+  private final Map<String, Boolean> _reservedWords = new HashMap<String, Boolean>();
+
   protected CStyleLiteralCode () {
     escape ('\0', "0");
     escape ((char)007, "a");
@@ -43,8 +48,22 @@ public abstract class CStyleLiteralCode implements LiteralCode {
     escape ('\'', "'");
     escape ('\"', "\"");
     escape ('\\', "\\");
+    for (String reservedWord : getReservedWords ()) {
+      _reservedWords.put (reservedWord, true);
+    }
   }
-  
+
+  /**
+   * Returns a mutable list of reserved words that cannot be used as identifiers.
+   */
+  protected Collection<String> getReservedWords() {
+    return new LinkedList<String>();
+  }
+
+  protected String escapedReservedWord(final String identifier) {
+    return identifier + "Value";
+  }
+
   /**
    * Add additional characters that have special escape sequences to the standard set.
    */ 
@@ -54,18 +73,22 @@ public abstract class CStyleLiteralCode implements LiteralCode {
   
   @Override
   public String camelCaseFieldName (final FieldDefinition field) {
-    final String name = localFieldName (field);
+    final String name = field.getName();
     return Character.toUpperCase (name.charAt (0)) + name.substring (1);
   }
 
   @Override
   public String localFieldName (final FieldDefinition field) {
-    return field.getName ();
+    if (_reservedWords.containsKey(field.getName())) {
+      return escapedReservedWord (field.getName ());
+    } else {
+      return field.getName ();
+    }
   }
 
   @Override
   public String privateFieldName (final FieldDefinition field) {
-    return "_" + localFieldName (field);
+    return "_" + field.getName();
   }
 
   /**

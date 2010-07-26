@@ -70,8 +70,8 @@ public class TypesTest {
     if ((object1 == null) && (object2 == null)) return;
     assertNotNull (object1);
     assertNotNull (object2);
-    assertEquals (object1.getI (), object2.getI ());
-    assertEquals (object1.getS (), object2.getS ());
+    assertEquals(object1.getInt(), object2.getInt());
+    assertEquals(object1.getString(), object2.getString());
     assertEquals (object1, object2);
   }
   

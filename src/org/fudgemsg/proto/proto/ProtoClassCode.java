@@ -51,7 +51,7 @@ class ProtoClassCode extends ImplementationlessClassCode {
   private ProtoClassCode() {
     super (new DocumentedClassCode (blockCodeDelegate (new CBlockCode (literalCodeDelegate (ProtoLiteralCode.INSTANCE)))));
   }
-  
+
   private void beginNSDeclaration (final IndentWriter writer, final Definition definition) throws IOException {
     if (definition.getOuterDefinition () == null) {
       final String ns = definition.getNamespace ();
@@ -152,7 +152,7 @@ class ProtoClassCode extends ImplementationlessClassCode {
     writer.write(field.isRequired() ? "required " : "optional ");
     if (field.isRepeated()) writer.write("repeated ");
     writer.write (field.isMutable () ? "mutable " : "readonly ");
-    writer.write (typeString(field.getType ()) + " " + field.getName ());
+    writer.write(typeString(field.getType()) + " " + localFieldName(field));
     final Integer ordinal = field.getOrdinal();
     if (ordinal != null) {
       writer.write (" = " + ordinal.toString ());

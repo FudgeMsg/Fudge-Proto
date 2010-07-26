@@ -53,7 +53,36 @@ import org.fudgemsg.proto.antlr.ProtoParser;
       }
     }
   }
-  
+
+  /**
+   * Ideally the lexer should discard leading $ symbols on identifiers. I couldn't work out how
+   * to do that so we have this initial fixup pass. Someone with more ANTLR know-how should fix
+   * this properly in the grammar file.
+   */
+  private AST fixIdentifiers(AST node) {
+    if (node.getNodeLabel() == ProtoLexer.IDENTIFIER) {
+      if (node.getNodeValue().charAt(0) == '$') {
+        node = new ASTNode(node, node.getNodeValue().substring(1));
+      }
+    }
+    final List<AST> children = node.getChildNodes();
+    boolean changed = false;
+    if (children != null) {
+      for (int i = 0; i < children.size(); i++) {
+        final AST child = children.get(i);
+        final AST newChild = fixIdentifiers(child);
+        if (newChild != child) {
+          children.set(i, newChild);
+          changed = true;
+        }
+      }
+    }
+    if (changed) {
+      node = new ASTNode(node, children);
+    }
+    return node;
+  }
+
   @Override
   public void parseSource (final Compiler.Context context, final Source source) {
     try {
@@ -65,7 +94,7 @@ import org.fudgemsg.proto.antlr.ProtoParser;
       final ProtoParser parser = new ProtoParser (context, source, tokens);
       
       // Parse the root node
-      final AST root = (AST)parser.root ().getTree ();
+      final AST root = fixIdentifiers((AST) parser.root().getTree());
 
       //System.out.println (source);
       //debug_print_tree(root, "");

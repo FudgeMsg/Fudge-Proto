@@ -16,6 +16,8 @@
 
 package org.fudgemsg.proto.java;
 
+import java.util.Collection;
+
 import org.fudgemsg.proto.LiteralValue;
 import org.fudgemsg.proto.c.CStyleLiteralCode;
 import org.fudgemsg.proto.proto.LiteralCode;
@@ -27,11 +29,24 @@ import org.fudgemsg.proto.proto.LiteralCode;
  */
 public class JavaLiteralCode extends CStyleLiteralCode {
   
-  public static final LiteralCode INSTANCE = new JavaLiteralCode ();
-  
+  public static final LiteralCode INSTANCE = new JavaLiteralCode();
+
   private JavaLiteralCode () {
   }
   
+  @Override
+  protected Collection<String> getReservedWords() {
+    Collection<String> collection = super.getReservedWords();
+    for (String reservedWord : new String[] {"abstract", "continue", "for", "new", "switch", "assert", "default",
+        "goto", "package", "synchronized", "boolean", "do", "if", "private", "this", "break", "double", "implements",
+        "protected", "throw", "byte", "else", "import", "public", "throws", "case", "enum", "instanceof", "return",
+        "transient", "catch", "extends", "int", "short", "try", "char", "final", "interface", "static", "void",
+        "class", "finally", "long", "strictfp", "volatile", "const", "float", "native", "super", "while"}) {
+      collection.add(reservedWord);
+    }
+    return collection;
+  }
+
   @Override
   protected String getLiteral (final LiteralValue.EnumValue value) {
     final StringBuilder sb = new StringBuilder (value.getEnumDefinition ().getIdentifier ());

@@ -16,6 +16,8 @@
 
 package org.fudgemsg.proto.c;
 
+import java.util.Collection;
+
 import org.fudgemsg.proto.LiteralValue;
 import org.fudgemsg.proto.proto.LiteralCode;
 
@@ -33,6 +35,18 @@ public class CLiteralCode extends CStyleLiteralCode {
     escape ((char)013, "v");
   }
   
+  @Override
+  protected Collection<String> getReservedWords() {
+    Collection<String> collection = super.getReservedWords();
+    for (String reservedWord : new String[] {"auto", "if", "break", "int", "case", "long", "char", "register",
+        "continue", "return", "default", "short", "do", "sizeof", "double", "static", "else", "struct", "entry",
+        "switch", "extern", "typedef", "float", "union", "for", "unsigned", "goto", "while", "enum", "void", "const",
+        "signed", "volatile"}) {
+      collection.add(reservedWord);
+    }
+    return collection;
+  }
+
   @Override
   protected String getLiteral (final LiteralValue.EnumValue value) {
     return value.get ();
