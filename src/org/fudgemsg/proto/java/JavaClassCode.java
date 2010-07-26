@@ -575,8 +575,20 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
           return source;
         }
       }
-    } else {
+    } else if (type instanceof FieldType.UserType) {
+      // User type - all bets are off
       return source;
+    } else {
+      switch (type.getFudgeFieldType()) {
+        case FudgeTypeDictionary.DATE_TYPE_ID:
+          return source + ".toLocalDate ()";
+        case FudgeTypeDictionary.DATETIME_TYPE_ID:
+          return source + ".toLocalDateTime ()";
+        case FudgeTypeDictionary.TIME_TYPE_ID:
+          return source + ".toLocalTime ()";
+        default:
+          return source;
+      }
     }
   }
 
@@ -1081,10 +1093,11 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         case FudgeTypeDictionary.FLOAT_TYPE_ID:
         case FudgeTypeDictionary.DOUBLE_TYPE_ID:
         case FudgeTypeDictionary.STRING_TYPE_ID:
+          return false;
         case FudgeTypeDictionary.DATE_TYPE_ID:
         case FudgeTypeDictionary.DATETIME_TYPE_ID:
         case FudgeTypeDictionary.TIME_TYPE_ID:
-          return false;
+          return true;
         default:
           throw new IllegalStateException("type '" + type + "' is not an expected type (fudge field type "
               + type.getFudgeFieldType() + ")");
@@ -1126,11 +1139,15 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
 
   private String writeDecodeSimpleFudgeField(final JavaWriter writer, final String displayType, final String javaType,
       final String fieldData, final String fieldRef, final String fieldContainer, final String assignTo,
-      final String appendTo) throws IOException {
+      final String appendTo, final String ffveSuffix) throws IOException {
+    final StringBuilder sb = new StringBuilder(fudgeFieldValueExpression(fieldContainer, javaType, fieldData));
+    if (ffveSuffix != null) {
+      sb.append('.').append(ffveSuffix);
+    }
     if (appendTo != null) {
-      return fudgeFieldValueExpression(fieldContainer, javaType, fieldData);
+      return sb.toString();
     } else {
-      writer.assignment(assignTo, fudgeFieldValueExpression(fieldContainer, javaType, fieldData));
+      writer.assignment(assignTo, sb.toString());
       endStmt(writer);
       return assignTo;
     }
@@ -1159,11 +1176,11 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         case FudgeTypeDictionary.BYTE_ARR_256_TYPE_ID:
         case FudgeTypeDictionary.BYTE_ARR_512_TYPE_ID:
           assignTo = writeDecodeSimpleFudgeField(writer, "byte[]", "byte[]", fieldData, fieldRef, fieldContainer,
-              assignTo, appendTo);
+              assignTo, appendTo, null);
           break;
         case FudgeTypeDictionary.SHORT_ARRAY_TYPE_ID:
           assignTo = writeDecodeSimpleFudgeField(writer, "short[]", "short[]", fieldData, fieldRef, fieldContainer,
-              assignTo, appendTo);
+              assignTo, appendTo, null);
           break;
         case FudgeTypeDictionary.INT_ARRAY_TYPE_ID: {
           if (baseType instanceof FieldType.EnumType) {
@@ -1185,21 +1202,21 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
             writer = endBlock(writer); // for
           } else {
             assignTo = writeDecodeSimpleFudgeField(writer, "int[]", "int[]", fieldData, fieldRef, fieldContainer,
-                assignTo, appendTo);
+                assignTo, appendTo, null);
           }
           break;
         }
         case FudgeTypeDictionary.LONG_ARRAY_TYPE_ID:
           assignTo = writeDecodeSimpleFudgeField(writer, "long[]", "long[]", fieldData, fieldRef, fieldContainer,
-              assignTo, appendTo);
+              assignTo, appendTo, null);
           break;
         case FudgeTypeDictionary.FLOAT_ARRAY_TYPE_ID:
           assignTo = writeDecodeSimpleFudgeField(writer, "float[]", "float[]", fieldData, fieldRef, fieldContainer,
-              assignTo, appendTo);
+              assignTo, appendTo, null);
           break;
         case FudgeTypeDictionary.DOUBLE_ARRAY_TYPE_ID:
           assignTo = writeDecodeSimpleFudgeField(writer, "double[]", "double[]", fieldData, fieldRef, fieldContainer,
-              assignTo, appendTo);
+              assignTo, appendTo, null);
           break;
         case FudgeTypeDictionary.FUDGE_MSG_TYPE_ID:
           // arbitrary array
@@ -1302,33 +1319,33 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
           break;
         case FudgeTypeDictionary.BOOLEAN_TYPE_ID: {
           assignTo = writeDecodeSimpleFudgeField(writer, "boolean", "Boolean", fieldData, fieldRef, fieldContainer,
-              assignTo, appendTo);
+              assignTo, appendTo, null);
           break;
         }
         case FudgeTypeDictionary.BYTE_TYPE_ID: {
           assignTo = writeDecodeSimpleFudgeField(writer, "byte", "Byte", fieldData, fieldRef, fieldContainer, assignTo,
-              appendTo);
+              appendTo, null);
           break;
         }
         case FudgeTypeDictionary.SHORT_TYPE_ID:
           assignTo = writeDecodeSimpleFudgeField(writer, "short", "Short", fieldData, fieldRef, fieldContainer,
-              assignTo, appendTo);
+              assignTo, appendTo, null);
           break;
         case FudgeTypeDictionary.INT_TYPE_ID:
           assignTo = writeDecodeSimpleFudgeField(writer, "int", "Integer", fieldData, fieldRef, fieldContainer,
-              assignTo, appendTo);
+              assignTo, appendTo, null);
           break;
         case FudgeTypeDictionary.LONG_TYPE_ID:
           assignTo = writeDecodeSimpleFudgeField(writer, "long", "Long", fieldData, fieldRef, fieldContainer, assignTo,
-              appendTo);
+              appendTo, null);
           break;
         case FudgeTypeDictionary.FLOAT_TYPE_ID:
           assignTo = writeDecodeSimpleFudgeField(writer, "float", "Float", fieldData, fieldRef, fieldContainer,
-              assignTo, appendTo);
+              assignTo, appendTo, null);
           break;
         case FudgeTypeDictionary.DOUBLE_TYPE_ID:
           assignTo = writeDecodeSimpleFudgeField(writer, "double", "Double", fieldData, fieldRef, fieldContainer,
-              assignTo, appendTo);
+              assignTo, appendTo, null);
           break;
         case FudgeTypeDictionary.STRING_TYPE_ID: {
           final String value = fieldData + ".getValue ()";
@@ -1348,15 +1365,15 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         }
         case FudgeTypeDictionary.DATE_TYPE_ID:
           assignTo = writeDecodeSimpleFudgeField(writer, CLASS_DATEPROVIDER, CLASS_DATEPROVIDER, fieldData, fieldRef,
-              fieldContainer, assignTo, appendTo);
+              fieldContainer, assignTo, appendTo, "toLocalDate ()");
           break;
         case FudgeTypeDictionary.DATETIME_TYPE_ID:
           assignTo = writeDecodeSimpleFudgeField(writer, CLASS_DATETIMEPROVIDER, CLASS_DATETIMEPROVIDER, fieldData,
-              fieldRef, fieldContainer, assignTo, appendTo);
+              fieldRef, fieldContainer, assignTo, appendTo, "toLocalDateTime ()");
           break;
         case FudgeTypeDictionary.TIME_TYPE_ID:
           assignTo = writeDecodeSimpleFudgeField(writer, CLASS_TIMEPROVIDER, CLASS_TIMEPROVIDER, fieldData, fieldRef,
-              fieldContainer, assignTo, appendTo);
+              fieldContainer, assignTo, appendTo, "toLocalTime ()");
           break;
         default:
           throw new IllegalStateException("type '" + type + "' is not an expected type (fudge field type "
@@ -1622,25 +1639,6 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
     endBlock(writer); // fromFudgeMsg
   }
 
-  private String getResolve(final FieldDefinition field) {
-    final FieldType type = field.getType();
-    if ((type instanceof FieldType.UserType) || field.isRepeated()) {
-      // Repeated date/time/datetime fields won't be handled properly
-      return "";
-    } else {
-      switch (type.getFudgeFieldType()) {
-        case FudgeTypeDictionary.DATE_TYPE_ID:
-          return ".toLocalDate ()";
-        case FudgeTypeDictionary.DATETIME_TYPE_ID:
-          return ".toLocalDateTime ()";
-        case FudgeTypeDictionary.TIME_TYPE_ID:
-          return ".toLocalTime ()";
-        default:
-          return "";
-      }
-    }
-  }
-
   @Override
   public void writeClassImplementationEquality(final Compiler.Context context, final MessageDefinition message,
       final IndentWriter writer) throws IOException {
@@ -1690,8 +1688,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
           beginBlock(writer); // if !a
           writer.write("if (" + b + " != null)");
           beginBlock(writer); // if !b
-          final String resolve = getResolve(field);
-          writer.write("if (!" + a + resolve + ".equals (" + b + resolve + ")) return false");
+          writer.write("if (!" + a + ".equals (" + b + ")) return false");
           endStmt(writer);
           endBlock(writer); // if !b
           writer.write("else return false");
@@ -1742,7 +1739,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         if (isObject(type) || field.isRepeated() || !field.isRequired()) {
           writer.write("hc *= 31");
           endStmt(writer);
-          writer.write("if (" + name + " != null) hc += " + name + getResolve(field) + ".hashCode ()");
+          writer.write("if (" + name + " != null) hc += " + name + ".hashCode ()");
         } else {
           switch (type.getFudgeFieldType()) {
             case FudgeTypeDictionary.BOOLEAN_TYPE_ID:
