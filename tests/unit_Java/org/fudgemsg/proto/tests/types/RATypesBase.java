@@ -17,9 +17,9 @@ package org.fudgemsg.proto.tests.types;
 
 import java.util.List;
 
-import javax.time.calendar.DateProvider;
-import javax.time.calendar.DateTimeProvider;
-import javax.time.calendar.TimeProvider;
+import javax.time.calendar.LocalDate;
+import javax.time.calendar.LocalDateTime;
+import javax.time.calendar.LocalTime;
 
 import org.fudgemsg.FudgeFieldContainer;
 
@@ -36,7 +36,7 @@ public interface RATypesBase {
   public List<SubMessage[]> get_SubMessage ();
   public List<CustomEnum[]> get_CustomEnum ();
   public List<FudgeFieldContainer[]> get_Message ();
-  public List<DateProvider[]> get_Date ();
-  public List<DateTimeProvider[]> get_DateTime ();
-  public List<TimeProvider[]> get_Time ();
+  public List<LocalDate[]> get_Date ();
+  public List<LocalDateTime[]> get_DateTime ();
+  public List<LocalTime[]> get_Time ();
 }

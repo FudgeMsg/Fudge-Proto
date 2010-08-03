@@ -1,4 +1,4 @@
-// $ANTLR 3.2 Fedora release 12 (Constantine) Thu Apr 29 14:41:02 UTC 2010 org/fudgemsg/proto/antlr/Proto.g 2010-07-26 10:30:57
+// $ANTLR 3.2 Fedora release 12 (Constantine) Thu Apr 29 14:41:02 UTC 2010 org/fudgemsg/proto/antlr/Proto.g 2010-08-03 17:51:43
 
   package org.fudgemsg.proto.antlr;
   import org.fudgemsg.proto.Compiler;

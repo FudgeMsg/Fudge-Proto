@@ -427,6 +427,10 @@ namespace org.fudgemsg.proto.tests.types {
   message TypeAliases {
     TypeAlias foo;
     Class bar;
+    datetime cow;
+    binding Java {
+      datetime "javax.time.Instant=javax.time.InstantProvider/toInstant";
+    }
   }
 
 }

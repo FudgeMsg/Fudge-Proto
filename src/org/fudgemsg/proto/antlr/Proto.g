@@ -157,6 +157,7 @@ binding : BINDING^ binding_anyword '{'! binding_element * '}'! ;
 
 binding_anyword
 	: fullidentifier
+	| anyword
 	| STRING
 	;
 

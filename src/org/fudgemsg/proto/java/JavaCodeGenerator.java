@@ -46,6 +46,13 @@ public class JavaCodeGenerator extends InnerClassCodeGenerator {
      */
     BODY ("body"),
     /**
+     * Alternative class to use for DateTime types. E.g.
+     *   javax.time.calendar.LocalDateTime=javax.time.calendar.DateTimeProvider/toLocalDateTime
+     *   org.fudgemsg.types.FudgeDateTime
+     *   javax.time.Instant=javax.time.InstantProvider/toInstant
+     */
+    DATETIME("datetime"),
+    /**
      * Class to be instantiated in place of the generated one by Builder, clone, and fromFudgeMsg. It will need to be a subclass of the generated one.
      */ 
     DELEGATE ("delegate"),

@@ -15,9 +15,9 @@
 
 package org.fudgemsg.proto.tests.types;
 
-import javax.time.calendar.DateProvider;
-import javax.time.calendar.DateTimeProvider;
-import javax.time.calendar.TimeProvider;
+import javax.time.calendar.LocalDate;
+import javax.time.calendar.LocalDateTime;
+import javax.time.calendar.LocalTime;
 
 import org.fudgemsg.FudgeFieldContainer;
 
@@ -34,7 +34,7 @@ public interface AATypesBase {
   public SubMessage[][] get_SubMessage ();
   public CustomEnum[][] get_CustomEnum ();
   public FudgeFieldContainer[][] get_Message ();
-  public DateProvider[][] get_Date ();
-  public DateTimeProvider[][] get_DateTime ();
-  public TimeProvider[][] get_Time ();
+  public LocalDate[][] get_Date ();
+  public LocalDateTime[][] get_DateTime ();
+  public LocalTime[][] get_Time ();
 }
