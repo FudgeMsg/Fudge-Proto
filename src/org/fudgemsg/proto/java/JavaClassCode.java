@@ -986,22 +986,13 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
           } else {
             final MessageDefinition messageDefinition = ((FieldType.MessageType) type).getMessageDefinition();
             if (messageDefinition.isExternal()) {
-              writer.invoke("fudgeContext", "objectToFudgeMsg", msg + ", " + name + ", " + ordinal + ", " + value);
-              endStmt(writer);
-              return;
+              value = CLASS_FUDGESERIALISATIONCONTEXT + ".addClassHeader (fudgeContext.objectToFudgeMsg (" + value
+                  + "), " + value + ".getClass (), " + messageDefinition.getIdentifier() + ".class)";
             } else {
               final String temp1 = writer.localVariable(CLASS_MUTABLEFUDGEFIELDCONTAINER, true,
-                  "fudgeContext.newMessage ()");
+                  CLASS_FUDGESERIALISATIONCONTEXT + ".addClassHeader (fudgeContext.newMessage (), " + value
+                      + ".getClass (), " + messageDefinition.getIdentifier() + ".class)");
               endStmt(writer);
-              final String temp2 = writer.localVariable("Class<?>", false, value + ".getClass ()");
-              endStmt(writer);
-              writer.whileBool("!" + messageDefinition.getIdentifier() + ".class.equals (" + temp2 + ")");
-              writer = beginBlock(writer); // while
-              writer.invoke(temp1, "add", "null, 0, " + CLASS_FUDGESTRINGTYPE + ".INSTANCE, " + temp2 + ".getName ()");
-              endStmt(writer);
-              writer.assignment(temp2, temp2 + ".getSuperclass ()");
-              endStmt(writer);
-              writer = endBlock(writer); // while
               writer.invoke(value, "toFudgeMsg", "fudgeContext, " + temp1);
               endStmt(writer);
               value = temp1;
@@ -1016,6 +1007,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         }
         break;
     }
+    // Add to the message
     writer.invoke(msg, "add", name + ", " + ordinal + ", " + value);
     endStmt(writer);
   }
