@@ -32,6 +32,8 @@ public class JavaLiteralCode extends CStyleLiteralCode {
   public static final LiteralCode INSTANCE = new JavaLiteralCode();
 
   private JavaLiteralCode () {
+    setTrueLiteral("true");
+    setFalseLiteral("false");
   }
   
   @Override

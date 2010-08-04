@@ -33,6 +33,8 @@ public class CLiteralCode extends CStyleLiteralCode {
   private CLiteralCode () {
     escape ((char)007, "a");
     escape ((char)013, "v");
+    setTrueLiteral("~0");
+    setFalseLiteral("0");
   }
   
   @Override

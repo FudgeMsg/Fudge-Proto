@@ -33,6 +33,8 @@ public class ProtoLiteralCode extends CStyleLiteralCode {
   private ProtoLiteralCode () {
     escape ((char)007, "a");
     escape ((char)013, "v");
+    setTrueLiteral("true");
+    setFalseLiteral("false");
   }
   
   @Override

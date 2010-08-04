@@ -68,17 +68,25 @@ public abstract class LiteralValue {
         return null;
       }
       switch (fieldType.getFudgeFieldType ()) {
-      case FudgeTypeDictionary.BOOLEAN_TYPE_ID : return new IntegerValue (getCodePosition (), (getNumber ().doubleValue () != 0) ? 1 : 0);
-      case FudgeTypeDictionary.BYTE_TYPE_ID : return longCastRange (context, Byte.MIN_VALUE, Byte.MAX_VALUE);
-      case FudgeTypeDictionary.SHORT_TYPE_ID : return longCastRange (context, Short.MIN_VALUE, Short.MAX_VALUE);
-      case FudgeTypeDictionary.INT_TYPE_ID : return longCastRange (context, Integer.MIN_VALUE, Integer.MAX_VALUE);
-      case FudgeTypeDictionary.LONG_TYPE_ID : return longCastRange (context, Long.MIN_VALUE, Long.MAX_VALUE);
-      case FudgeTypeDictionary.FLOAT_TYPE_ID : return floatCast (context);
-      case FudgeTypeDictionary.DOUBLE_TYPE_ID : return doubleCast (context);
-      case FudgeTypeDictionary.STRING_TYPE_ID : return new StringValue (getCodePosition (), getNumber ().toString ());
-      default :
-        context.error (getCodePosition (), "invalid default value for type '" + fieldType + "'");
-        return null;
+        case FudgeTypeDictionary.BOOLEAN_TYPE_ID:
+          return new BooleanValue(getCodePosition(), (getNumber().doubleValue() != 0));
+        case FudgeTypeDictionary.BYTE_TYPE_ID:
+          return longCastRange(context, Byte.MIN_VALUE, Byte.MAX_VALUE);
+        case FudgeTypeDictionary.SHORT_TYPE_ID:
+          return longCastRange(context, Short.MIN_VALUE, Short.MAX_VALUE);
+        case FudgeTypeDictionary.INT_TYPE_ID:
+          return longCastRange(context, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        case FudgeTypeDictionary.LONG_TYPE_ID:
+          return longCastRange(context, Long.MIN_VALUE, Long.MAX_VALUE);
+        case FudgeTypeDictionary.FLOAT_TYPE_ID:
+          return floatCast(context);
+        case FudgeTypeDictionary.DOUBLE_TYPE_ID:
+          return doubleCast(context);
+        case FudgeTypeDictionary.STRING_TYPE_ID:
+          return new StringValue(getCodePosition(), getNumber().toString());
+        default:
+          context.error(getCodePosition(), "invalid default value for type '" + fieldType + "'");
+          return null;
       }
     }
     
@@ -304,10 +312,15 @@ public abstract class LiteralValue {
           return null;
         }
         return new EnumValue (this, enumDefinition);
-      } else {
-        context.error (getCodePosition (), "invalid default value for type '" + fieldType + "'");
-        return null;
+      } else if (fieldType.getFudgeFieldType() == FudgeTypeDictionary.BOOLEAN_TYPE_ID) {
+        if ("false".equalsIgnoreCase(_value) || "f".equalsIgnoreCase(_value)) {
+          return new BooleanValue(getCodePosition(), false);
+        } else if ("true".equalsIgnoreCase(_value) || "t".equalsIgnoreCase(_value)) {
+          return new BooleanValue(getCodePosition(), true);
+        }
       }
+      context.error(getCodePosition(), "invalid default value for type '" + fieldType + "'");
+      return null;
     }
     
     @Override
@@ -317,6 +330,35 @@ public abstract class LiteralValue {
     
   }
   
+  public static class BooleanValue extends LiteralValue {
+
+    private final boolean _value;
+
+    private BooleanValue(final CodePosition codePosition, final boolean value) {
+      super(codePosition);
+      _value = value;
+    }
+
+    @Override
+    public LiteralValue assignmentTo(Context context, FieldType fieldType) {
+      if (fieldType.getFudgeFieldType() != FudgeTypeDictionary.BOOLEAN_TYPE_ID) {
+        context.error(getCodePosition(), "invalid default value for type '" + fieldType + "'");
+        return null;
+      }
+      return this;
+    }
+
+    @Override
+    protected Object getInternalValue() {
+      return (Boolean) _value;
+    }
+
+    public boolean get() {
+      return _value;
+    }
+
+  }
+
   public static class MessageValue extends LiteralValue {
 
     private final List<LiteralValue> _parameters;

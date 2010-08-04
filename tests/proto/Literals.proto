@@ -36,4 +36,10 @@ message Literals {
 	Simple nullPerson;
 	Simple simplePerson [default = ("Foo", 42)];
 	
+	boolean nullBoolean;
+	boolean trueBoolean1 [default = true];
+	boolean falseBoolean1 [default = false]; 
+  boolean trueBoolean2 [default = 1];
+  boolean falseBoolean2 [default = 0]; 
+	
 }

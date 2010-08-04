@@ -36,6 +36,9 @@ public abstract class CStyleLiteralCode implements LiteralCode {
 
   private final Map<String, Boolean> _reservedWords = new HashMap<String, Boolean>();
 
+  private String _falseLiteral;
+  private String _trueLiteral;
+
   protected CStyleLiteralCode () {
     escape ('\0', "0");
     escape ((char)007, "a");
@@ -91,6 +94,22 @@ public abstract class CStyleLiteralCode implements LiteralCode {
     return "_" + field.getName();
   }
 
+  protected void setFalseLiteral(final String falseLiteral) {
+    _falseLiteral = falseLiteral;
+  }
+
+  protected String getFalseLiteral() {
+    return _falseLiteral;
+  }
+
+  protected void setTrueLiteral(final String trueLiteral) {
+    _trueLiteral = trueLiteral;
+  }
+
+  protected String getTrueLiteral() {
+    return _trueLiteral;
+  }
+
   /**
    * Protected forms of this exist for specific literal subclasses so that this can be used as a trivial bases
    * for any languages which differ only slightly from C-style literal encodings.
@@ -111,6 +130,8 @@ public abstract class CStyleLiteralCode implements LiteralCode {
       return getLiteral ((LiteralValue.StringValue)value);
     } else if (value instanceof LiteralValue.MessageValue) {
       return getLiteral((LiteralValue.MessageValue) value);
+    } else if (value instanceof LiteralValue.BooleanValue) {
+      return getLiteral((LiteralValue.BooleanValue) value);
     } else {
       throw new IllegalStateException ("LiteralValue '" + value + "' is not an expected type");
     }
@@ -129,6 +150,10 @@ public abstract class CStyleLiteralCode implements LiteralCode {
   protected abstract String getLiteral (final LiteralValue.EnumValue value);
 
   protected abstract String getLiteral(final LiteralValue.MessageValue value);
+
+  protected String getLiteral(final LiteralValue.BooleanValue value) {
+    return value.get() ? getTrueLiteral() : getFalseLiteral();
+  }
 
   protected String getLiteral (final LiteralValue.FloatValue value) {
     final StringBuilder sb = new StringBuilder (value.getNumber ().toString ()).append ('f');
