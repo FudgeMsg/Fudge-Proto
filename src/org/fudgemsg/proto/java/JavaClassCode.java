@@ -78,7 +78,6 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   private static final String CLASS_DATE = "javax.time.calendar.LocalDate";
   private static final String CLASS_TIMEPROVIDER = "javax.time.calendar.TimeProvider";
   private static final String CLASS_TIME = "javax.time.calendar.LocalTime";
-  private static final String CLASS_FUDGESTRINGTYPE = org.fudgemsg.types.StringFieldType.class.getName();
 
   private static final String VALUE_INDICATOR = CLASS_INDICATOR + ".INSTANCE";
 
@@ -986,8 +985,10 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
           } else {
             final MessageDefinition messageDefinition = ((FieldType.MessageType) type).getMessageDefinition();
             if (messageDefinition.isExternal()) {
-              value = CLASS_FUDGESERIALISATIONCONTEXT + ".addClassHeader (fudgeContext.objectToFudgeMsg (" + value
-                  + "), " + value + ".getClass (), " + messageDefinition.getIdentifier() + ".class)";
+              writer.invoke("fudgeContext", "objectToFudgeMsgWithClassHeaders", msg + ", " + name + ", " + ordinal
+                  + ", " + value + ", " + messageDefinition.getIdentifier() + ".class");
+              endStmt(writer);
+              return;
             } else {
               final String temp1 = writer.localVariable(CLASS_MUTABLEFUDGEFIELDCONTAINER, true,
                   CLASS_FUDGESERIALISATIONCONTEXT + ".addClassHeader (fudgeContext.newMessage (), " + value
