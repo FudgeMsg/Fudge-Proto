@@ -36,7 +36,7 @@ public class CBlockCode extends BlockCodeAdapter {
   
   @Override
   public IndentWriter createIndentWriter (final Writer writer) {
-    return new IndentWriter (writer, "\n", "  ");
+    return new IndentWriter (writer, System.getProperty("line.separator"), "  ");
   }
   
   @Override
