@@ -71,6 +71,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   private static final String CLASS_LISTITERATOR = java.util.ListIterator.class.getName();
   private static final String CLASS_FUDGEFIELD = org.fudgemsg.FudgeField.class.getName();
   private static final String CLASS_INDICATOR = org.fudgemsg.types.IndicatorType.class.getName();
+  private static final String CLASS_INDICATORTYPE = org.fudgemsg.types.IndicatorFieldType.class.getName();
   private static final String CLASS_TOSTRINGBUILDER = org.apache.commons.lang.builder.ToStringBuilder.class.getName();
   private static final String CLASS_TOSTRINGSTYLE = org.apache.commons.lang.builder.ToStringStyle.class.getName();
   private static final String CLASS_SERIALIZABLE = java.io.Serializable.class.getName();
@@ -1283,10 +1284,13 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
               + listTypeString(message, baseType, true) + " ()");
           endStmt(writer);
           final String msgElement = writer.forEach(CLASS_FUDGEFIELD, subMessage);
-          writer = beginBlock(writer); // iteration
+          writer.ifBool(msgElement + ".getType() != " + CLASS_INDICATORTYPE + ".INSTANCE");
+          writer = beginBlock(writer); // if
           writeDecodeFudgeField(writer, baseType, message, msgElement, fieldRef + "[]", subMessage, null, slaveList
               + ".add", true);
-          writer = endBlock(writer); // iteration
+          writer = endBlock(writer); // if
+          writer.getWriter().write("else " + slaveList + ".add (null)");
+          endStmt(writer);
           if (appendTo != null) {
             if (checkLength) {
               writer.ifSizeNot(slaveList, "size ()", arrayType.getFixedLength());
