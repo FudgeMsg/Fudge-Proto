@@ -62,7 +62,7 @@ public class CommandLineTest extends DefaultSettings {
   private void writeJar (final JarOutputStream jos, String baseDir, final File file) throws IOException {
     if (file.isDirectory ()) {
       if (baseDir.length () > 0) {
-        baseDir = baseDir + File.separatorChar;
+        baseDir = baseDir + '/';
       }
       for (File child : file.listFiles ()) {
         writeJar (jos, baseDir + child.getName (), child);
