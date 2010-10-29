@@ -2,7 +2,6 @@ build/
 classes/
 dist/
 docs/
-bootstrap/
 lib/
 tests/build/
 tests/classes/
