@@ -603,7 +603,7 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
           break;
         case FudgeTypeDictionary.STRING_TYPE_ID:
           final String varLen = "len" + unwind.size();
-          writer.write("int " + varLen);
+          writer.write("size_t " + varLen);
           endStmt(writer);
           fieldValueToString(writer, source, "*" + target, unwind, allowNull, varLen);
           break;
