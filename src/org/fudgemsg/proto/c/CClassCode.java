@@ -419,7 +419,8 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
   }
 
   private void decodeFieldValue(final IndentWriter writer, final FieldType type, final String source,
-      final String target, final Stack<String> unwind, final boolean allowNull) throws IOException {
+      final String target, final Stack<String> unwind, final boolean allowNull, boolean deallocateFailedTarget)
+      throws IOException {
     if (type instanceof FieldType.MessageType) {
       writer.write("if (" + source + ".type == FUDGE_TYPE_FUDGE_MSG)");
       beginBlock(writer);
@@ -512,7 +513,7 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
           returnAndUnwindStmt(writer, unwind, "FUDGE_OUT_OF_MEMORY");
           writer.write("memset (*" + target + ", 0, sizeof (" + cType + ") * (" + varN + " + 1))");
           endStmt(writer);
-          if (unwind.size() == 1) {
+          if (deallocateFailedTarget) {
             final StringBuilder sb = new StringBuilder();
             if (isPointerType(arrayType.getBaseType())) {
               sb.append("do ");
@@ -528,9 +529,9 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
           writer.write("for (" + varI + " = 0; " + varI + " < " + varN + "; " + varI + "++)");
           beginBlock(writer); // for
           decodeFieldValue(writer, arrayType.getBaseType(), varFields + "[" + varI + "]", "(*" + target + " + " + varI
-              + ")", unwind, true);
+              + ")", unwind, true, false);
           endBlock(writer); // for
-          if (unwind.size() == 2) {
+          if (deallocateFailedTarget) {
             unwind.pop(); // memory allocation release
           }
           writer.write(unwind.pop());
@@ -712,7 +713,7 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
       beginBlock(writer); // for
       writeIfFieldMatches(writer, field, "fields[i]");
       beginBlock(writer); // if
-      decodeFieldValue(writer, field.getType(), "fields[i]", "(*value + j)", unwind, false);
+      decodeFieldValue(writer, field.getType(), "fields[i]", "(*value + j)", unwind, false, true);
       writer.write("j++");
       endStmt(writer);
       endBlock(writer); // if
@@ -721,13 +722,11 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
       writer.write("*repeatCount = j");
       endStmt(writer);
       unwind.pop(); // free (*value)
-      unwind.pop(); // free (fields)
-      writer.write("free (fields)");
-      endStmt(writer);
+      unwindStmts(writer, unwind);
       writer.write("return FUDGE_OK");
       endStmt(writer);
       endBlock(writer); // if count > 0
-      writer.write("free (fields)");
+      writer.write(unwind.pop()); // free (fields)
       endStmt(writer);
       endBlock(writer); // if total > 0
       if (field.getDefaultValue() != null) {
@@ -758,7 +757,7 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
       } else {
         writer.write(") == FUDGE_OK)");
         beginBlock(writer); // if
-        decodeFieldValue(writer, field.getType(), "field", "value", unwind, false);
+        decodeFieldValue(writer, field.getType(), "field", "value", unwind, false, true);
         assert (unwind.size() <= 1);
         endBlock(writer); // if
         writer.write("else ");
