@@ -284,8 +284,6 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
   public void writeEnumHeaderDeclaration(final Compiler.Context context, final EnumDefinition enumDefinition,
       final IndentWriter writer) throws IOException {
     super.writeEnumHeaderDeclaration(context, enumDefinition, writer);
-    writer.write("typedef enum _" + getIdentifier(enumDefinition) + " " + getIdentifier(enumDefinition));
-    endStmt(writer);
     writer.write("enum _" + getIdentifier(enumDefinition));
     beginBlock(writer);
     boolean first = true;
@@ -302,6 +300,8 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
       }
     }
     endBlock(writer);
+    endStmt(writer);
+    writer.write("typedef enum _" + getIdentifier(enumDefinition) + " " + getIdentifier(enumDefinition));
     endStmt(writer);
     if (enumDefinition.getType() == Type.INTEGER_ENCODED) {
       writer.write("#define " + getIdentifier(enumDefinition) + "_toFudgeEncoding(_v_) ((int)(_v_))");
