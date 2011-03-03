@@ -291,7 +291,7 @@
 		<fixcrlf srcdir="${dist.dir}/${dist.name}" includes="LICENSE.txt" eol="lf" eof="remove" />
 		<fixcrlf srcdir="${dist.dir}/${dist.name}" includes="README.txt" eol="lf" eof="remove" />
 		<mkdir dir="${dist.dir}/${dist.name}/lib" />
-		<ivy:retrieve type="jar" conf="opengamma" pattern="${dist.dir}/${dist.name}/lib/[organization]-[module]-[artifact]-[revision].[ext]" />
+		<ivy:retrieve type="jar" pattern="${dist.dir}/${dist.name}/lib/[organization]-[module]-[artifact]-[revision].[ext]" />
 	</target>
 
 	<target name="tarball" depends="dist" description="--> generate a tarball for distribution">
@@ -305,6 +305,9 @@
 		<zip destfile="${dist.dir}/${dist.name}-${version}.zip" basedir="${dist.dir}">
 			<include name="${dist.name}/**/*" />
 		</zip>
+	</target>
+
+	<target name="tarzip" depends="clean-dist,tarball,zipfile" description="--> generate a tarball and zipfile">
 	</target>
 
 	<target name="clean-local" depends="load-ivy"
